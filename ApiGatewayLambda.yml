@@ -1,0 +1,158 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  SpringLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: LambdaBucket
+        S3Key:
+          Ref: LambdaArtifact
+      FunctionName:
+        Ref: TestSpringLambdaName
+      Handler: com.bot.LambdaRequestHandler::handleRequest
+      MemorySize: 512
+      Role: !GetAtt SpringLambdaRole.Arn
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Runtime: java11
+      Timeout: 300
+  SpringLambdaVersion:
+    Type: AWS::Lambda::Version
+    Properties:
+      FunctionName:
+        Ref: TestSpringLambdaName
+    DependsOn:
+      - SpringLambda
+  SpringLambdaAlias:
+    Type: AWS::Lambda::Alias
+    Properties:
+      FunctionName:
+        Ref: TestSpringLambdaName
+      FunctionVersion: !GetAtt SpringLambdaVersion.Version
+      Name:
+        Ref: SpringLambdaAliasName
+    DependsOn:
+      - SpringLambdaVersion
+  SpringLambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: lambda_policy_test_api
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:BatchGetItem'
+                  - 'dynamodb:BatchWriteItem'
+                  - 'dynamodb:TagResource'
+                  - 'dynamodb:UntagResource'
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:DeleteItem'
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:UpdateItem'
+                  - 'ssm:*'
+                  - 's3:*'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - 'logs:CreateLogStream'
+                  - 'logs:CreateLogGroup'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+  APIGatewayRestAPI:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      Name:
+        Ref: APIName
+    DependsOn:
+      - SpringLambda
+  APIGatewayResourceRoot:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref APIGatewayRestAPI
+      ParentId: !GetAtt
+        - APIGatewayRestAPI
+        - RootResourceId
+      PathPart: bot
+    DependsOn:
+      - APIGatewayRestAPI
+  APIGatewayResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref APIGatewayRestAPI
+      ParentId: !Ref APIGatewayResourceRoot
+      PathPart: test
+    DependsOn:
+      - APIGatewayResourceRoot
+  SpringLambdaGet:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref APIGatewayRestAPI
+      ResourceId: !Ref APIGatewayResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: 200
+        - StatusCode: 300
+        - StatusCode: 400
+        - StatusCode: 500
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/", !Ref SpringLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - APIGatewayResource
+  APIGatewayDeployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    Properties:
+      RestApiId: !Ref APIGatewayRestAPI
+      StageName:
+        Ref: EnvironmentName
+    DependsOn:
+      - SpringLambdaGet
+  APIGatewayPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref SpringLambdaAlias
+      Principal: apigateway.amazonaws.com
+    DependsOn:
+      - APIGatewayDeployment
+Parameters:
+  TestSpringLambdaName:
+    Type: String
+    Default: spring-lambda
+  SpringLambdaAliasName:
+    Type: String
+    Default: springLambdaAlias
+  LambdaBucket:
+    Type: String
+    Default: appointment-deployment-bucket
+  LambdaArtifact:
+    Type: String
+    Default: lambdaSpring-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+  APIName:
+    Type: String
+    Default: appointment
+  EnvironmentName:
+    Type: String
+    Default: dev
