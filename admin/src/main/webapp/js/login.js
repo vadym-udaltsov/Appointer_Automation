@@ -1,5 +1,6 @@
 $(window).ready(function () {
 
+    $('#register').prop('disabled', true);
     $("#verify").click(function() {
            var email = $("#verifyEmailValue").val();
            console.log(email)
@@ -7,6 +8,7 @@ $(window).ready(function () {
            var body = new Object();
            var additionalParams = new Object();
            executeGet('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/email-verify?email=' + email)
+           $('#spinner-container').html('<div class="spinner"></div>');
            return false;
     });
 
@@ -31,13 +33,16 @@ function executeGet(url) {
         contentType: "application/json",
         success: function (data) {
             alert('Please, check your email and follow the confirmation link.')
+            $('#register').prop('disabled', false);
             console.log(data)
         },
         error: function (data) {
-            alert('Auth not working')
+            alert('Please, enter valid email.')
+            $('#register').prop('disabled', true);
             console.log(data)
         },
         complete: function (data) {
+            $('#spinner-container').empty();
             console.log(data)
         }
     });
