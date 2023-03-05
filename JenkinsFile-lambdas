@@ -1,0 +1,29 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'lambdaName', defaultValue: '', description: 'Lambda name')
+        booleanParam(name: 'allLambdas', defaultValue: true, description: 'All lambdas')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    sh "chmod +x ./updateLambdaCode.sh"
+                    if (params.allLambdas) {
+                        sh './updateLambdaCode.sh all'
+                    } else {
+                        sh './updateLambdaCode.sh ' + params.lambdaName
+                    }
+                }
+            }
+        }
+    }
+}

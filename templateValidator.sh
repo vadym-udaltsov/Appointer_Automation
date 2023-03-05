@@ -1,5 +1,5 @@
 #!/bin/bash
 
-aws cloudformation validate-template --template-body file://ApiGatewayLambda.yml
+aws cloudformation validate-template --template-body file://deploymentResources-infra.yml
 
 $SHELL

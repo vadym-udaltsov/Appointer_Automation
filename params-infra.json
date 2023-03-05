@@ -1,0 +1,26 @@
+[
+  {
+    "ParameterKey": "AdminLambdaName",
+    "ParameterValue": "adminLambda"
+  },
+  {
+    "ParameterKey": "AdminLambdaAliasName",
+    "ParameterValue": "adminLambdaAlias"
+  },
+  {
+    "ParameterKey": "LambdaBucket",
+    "ParameterValue": "appointment-deployment-bucket"
+  },
+  {
+    "ParameterKey": "AdminLambdaArtifact",
+    "ParameterValue": "admin-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
+  },
+  {
+    "ParameterKey": "APIName",
+    "ParameterValue": "appointer"
+  },
+  {
+    "ParameterKey": "EnvironmentName",
+    "ParameterValue": "dev"
+  }
+]

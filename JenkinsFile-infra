@@ -1,0 +1,32 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'Action', choices: ['deploy', 'destroy'])
+    }
+
+    stages {
+        stage('Build') {
+            when {
+                expression { params.Action != 'destroy' }
+            }
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    if (params.Action == 'destroy') {
+                        sh "chmod +x ./destroy.sh"
+                        sh "./destroy.sh"
+                    } else {
+                        sh "chmod +x ./deploy.sh"
+                        sh './deploy.sh'
+                    }
+                }
+            }
+        }
+    }
+}

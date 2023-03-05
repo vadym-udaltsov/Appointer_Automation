@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="sidenav">
+    <div class="login-main-text">
+        <h2>Appointer<br> Login Page</h2>
+        <p>Login or register from here to access.</p>
+    </div>
+</div>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+            <form>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="pass" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-black" id="log">Login</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#emailModal">
+                    Register
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade custom-modal" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Please, enter your email and hit 'Verify email' button. Then check you email and follow the link
+                        in verification email.
+                        After email is confirmed, return here and hit 'Register' button for registration</p>
+                </div>
+                <div class="row" style="margin: 25px;">
+                    <div class="col-md-3">
+                        <p>Email:</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="verifyEmailValue" style="width: 300px">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<!--                    <a class="btn btn-primary"-->
+<!--                       href="https://appointer.auth.eu-central-1.amazoncognito.com/signup?client_id=2be9cmp6lugbp4ptt3km62dql6&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fappointer-ui.s3.eu-central-1.amazonaws.com%2Flogin.html"-->
+<!--                       role="button">Register</a>-->
+                    <button type="button" class="btn btn-primary" id="register">Register</button>
+                    <button type="button" class="btn btn-primary" id="verify">Verify email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="../js/login.js"></script>
+<script type="text/javascript" src="../js/vars.js"></script>
+</html>

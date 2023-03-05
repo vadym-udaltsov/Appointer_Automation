@@ -2,21 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
+    <packaging>pom</packaging>
+    <modules>
+        <module>admin</module>
+    </modules>
+
+    <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.3</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>lambdaSpring</artifactId>
+
+	<groupId>com.bot</groupId>
+	<artifactId>appointer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lambdaSpring</name>
-	<description>Demo project for Spring Boot</description>
+	<name>appointer</name>
+	<description>Telegram bot for making appointments</description>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -28,14 +35,39 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<version>2.7.3</version>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-xray-recorder-sdk-core</artifactId>
+			<version>2.13.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-ses</artifactId>
+			<version>1.12.414</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-xray-recorder-sdk-aws-sdk-v2-instrumentor</artifactId>
+			<version>2.13.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-ssm</artifactId>
+			<version>1.12.414</version>
 		</dependency>
 		<dependency>
 			<groupId>com.amazonaws.serverless</groupId>
 			<artifactId>aws-serverless-java-container-springboot2</artifactId>
 			<version>1.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>cognitoidentityprovider</artifactId>
+			<version>2.20.9</version>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>cognitoidentity</artifactId>
+			<version>2.20.9</version>
 		</dependency>
 
 		<dependency>
