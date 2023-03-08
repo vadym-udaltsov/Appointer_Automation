@@ -1,4 +1,4 @@
-package com.bot.service;
+package com.bot.service.aws;
 
 public interface ISsmService {
 

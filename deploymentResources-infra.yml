@@ -6,18 +6,42 @@ Resources:
     Properties:
       Code:
         S3Bucket:
-          Ref: LambdaBucket
-        S3Key:
-          Ref: AdminLambdaArtifact
+          Ref: DeploymentBucket
+        S3Key: !Join [ "", [ !Ref AdminLambdaArtifact, !Ref ArtifactSuff ] ]
       FunctionName:
         Ref: AdminLambdaName
       Handler: com.bot.AdminLambda::handleRequest
+      Layers:
+        - !Ref AdminLayer
+      MemorySize: 1024
+      Role: !GetAtt AdminLambdaRole.Arn
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Runtime: java11
+      Timeout: 300
+    DependsOn:
+      - AdminLayer
+  PostSignUpLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: DeploymentBucket
+        S3Key: !Join [ "", [ !Ref PostSignUpArtifact, !Ref ArtifactSuff ] ]
+      FunctionName:
+        Ref: SignUpLambdaName
+      Handler: com.bot.RegistrationLambda::handleRequest
+      Layers:
+        - !Ref AdminLayer
       MemorySize: 512
       Role: !GetAtt AdminLambdaRole.Arn
       SnapStart:
         ApplyOn: PublishedVersions
       Runtime: java11
       Timeout: 300
+    DependsOn:
+      - AdminLayer
+#Lambda versions
   AdminLambdaVersion:
     Type: AWS::Lambda::Version
     Properties:
@@ -25,6 +49,14 @@ Resources:
         Ref: AdminLambdaName
     DependsOn:
       - AdminLambda
+  PostSignUpLambdaVersion:
+    Type: AWS::Lambda::Version
+    Properties:
+      FunctionName:
+        Ref: SignUpLambdaName
+    DependsOn:
+      - PostSignUpLambda
+#Lambda aliases
   AdminLambdaAlias:
     Type: AWS::Lambda::Alias
     Properties:
@@ -35,6 +67,16 @@ Resources:
         Ref: AdminLambdaAliasName
     DependsOn:
       - AdminLambdaVersion
+  PostSignUpLambdaAlias:
+    Type: AWS::Lambda::Alias
+    Properties:
+      FunctionName:
+        Ref: SignUpLambdaName
+      FunctionVersion: !GetAtt PostSignUpLambdaVersion.Version
+      Name: !Join [ "", [ !Ref SignUpLambdaName, "Alias" ] ]
+    DependsOn:
+      - PostSignUpLambdaVersion
+#Lambda roles
   AdminLambdaRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -97,6 +139,30 @@ Resources:
                   - 'mobiletargeting:GetApps'
                   - 'acm:ListCertificates'
                 Resource: '*'
+#Lambda permissions
+  PostSignUpLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref SignUpLambdaName
+      Action: lambda:InvokeFunction
+      Principal: cognito-idp.amazonaws.com
+      SourceArn: !Join [ "", [ "arn:aws:cognito-idp:", !Ref Region, ":", !Ref AccountId, ":userpool/", !Ref UserPool ] ]
+    DependsOn:
+      - UserPool
+#Layer
+  AdminLayer:
+    Type: 'AWS::Lambda::LayerVersion'
+    Properties:
+      CompatibleRuntimes:
+        - java11
+      Content:
+        S3Bucket:
+          Ref: DeploymentBucket
+        S3Key:
+          Ref: LayerFileName
+      Description: Bot lambdas 3rd party dependencies.
+      LayerName:
+        Ref: LayerName
 #S3 buckets
   StaticWebsiteBucket:
     Type: AWS::S3::Bucket
@@ -121,6 +187,18 @@ Resources:
             Principal: '*'
             Action: 's3:GetObject'
             Resource: !Sub 'arn:aws:s3:::${StaticWebsiteBucket}/*'
+#DynamoDbTables
+  CustomerTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: email
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      TableName: customer
 #Api Gateway
   BotApi:
     Type: 'AWS::ApiGateway::RestApi'
@@ -204,7 +282,7 @@ Resources:
         IntegrationResponses:
           - StatusCode: 200
         IntegrationHttpMethod: POST
-        Uri: !Join [ "", [ "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - AuthResource
   CompanyGet:
@@ -233,7 +311,7 @@ Resources:
         IntegrationResponses:
           - StatusCode: 200
         IntegrationHttpMethod: POST
-        Uri: !Join [ "", [ "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - CompanyResource
   EmailVerifyGet:
@@ -261,7 +339,7 @@ Resources:
         IntegrationResponses:
           - StatusCode: 200
         IntegrationHttpMethod: POST
-        Uri: !Join [ "", [ "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - EmailVerifyResource
 #Options
@@ -379,10 +457,12 @@ Resources:
         - email
       EmailConfiguration:
         EmailSendingAccount: DEVELOPER
-        From: sergii.udaltsov@gmail.com
-        SourceArn: arn:aws:ses:eu-central-1:773974733061:identity/sergii.udaltsov@gmail.com
+        From: !Ref VerifiedIdentityEmail
+        SourceArn: !Join [ "", [ "arn:aws:ses:", !Ref Region, ":", !Ref AccountId, ":identity/", !Ref VerifiedIdentityEmail ] ]
       UsernameAttributes:
         - email
+      LambdaConfig:
+        PostConfirmation: !GetAtt PostSignUpLambda.Arn
       Schema:
         - Name: email
           AttributeDataType: String
@@ -404,7 +484,7 @@ Resources:
       GenerateSecret: false
       UserPoolId: !Ref UserPool
       CallbackURLs:
-        - https://appointer-ui.s3.eu-central-1.amazonaws.com/html/login.html
+        - !Join [ "", [ "https://appointer-ui.s3.", !Ref Region, ".amazonaws.com/html/login.html" ] ]
       SupportedIdentityProviders:
         - COGNITO
       AllowedOAuthFlows:
@@ -444,16 +524,34 @@ Outputs:
 Parameters:
   AdminLambdaName:
     Type: String
-    Default: adminlambda
+    Default: adminLambda
+  SignUpLambdaName:
+    Type: String
+    Default: postSignUpLambda
   AdminLambdaAliasName:
     Type: String
     Default: adminLambdaAlias
-  LambdaBucket:
+  LayerName:
+    Type: String
+    Default: adminLayer
+  LayerFileName:
+    Type: String
+    Default: bot-3d-layer.jar
+  DeploymentBucket:
     Type: String
     Default: appointment-deployment-bucket
+  LayerArtefact:
+    Type: String
+    Default: bot-3d-layer.jar
   AdminLambdaArtifact:
     Type: String
-    Default: adminLambda-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+    Default: admin
+  PostSignUpArtifact:
+    Type: String
+    Default: registration
+  ArtifactSuff:
+    Type: String
+    Default: -0.0.1-SNAPSHOT.jar
   APIName:
     Type: String
     Default: appointer
@@ -475,3 +573,12 @@ Parameters:
   EnvironmentName:
     Type: String
     Default: dev
+  Region:
+    Type: String
+    Default: eu-central-1
+  AccountId:
+    Type: String
+    Default: 773974733061----
+  VerifiedIdentityEmail:
+    Type: String
+    Default: sergii.udaltsov@gmail.com

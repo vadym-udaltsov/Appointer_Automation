@@ -12,9 +12,10 @@ do
   do
     names_array+=($i)
   done
+
   lambda_name=${names_array[0]}
-  lambda_artefact=${names_array[1]}
-  alias_name=${names_array[2]}
+  lambda_artefact=${names_array[1]}/target/${names_array[1]}$artefactSuff
+  alias_name=${names_array[0]}Alias
 
   if [ "$1" = "all" ] || [ "$1" = "${lambda_name}" ]
   then

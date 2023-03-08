@@ -1,5 +1,8 @@
 package com.bot.config;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagement;
@@ -36,4 +39,14 @@ public class AwsConfig {
         return AWSSimpleSystemsManagementClientBuilder.defaultClient();
     }
 
+    @Bean
+    public AmazonDynamoDB dynamoDb() {
+        log.info("DynamoDb initialized");
+        return AmazonDynamoDBClientBuilder.standard().build();
+    }
+
+    @Bean
+    public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB dynamoDB) {
+        return new DynamoDBMapper(dynamoDB);
+    }
 }
