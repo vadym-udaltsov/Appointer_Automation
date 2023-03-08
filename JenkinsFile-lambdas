@@ -5,6 +5,7 @@ pipeline {
     parameters {
         string(name: 'lambdaName', defaultValue: '', description: 'Lambda name')
         booleanParam(name: 'allLambdas', defaultValue: true, description: 'All lambdas')
+        booleanParam(name: 'withLayer', defaultValue: false, description: 'Update layer')
     }
 
     stages {
@@ -16,11 +17,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh "chmod +x ./updateLambdaCode.sh"
-                    if (params.allLambdas) {
-                        sh './updateLambdaCode.sh all'
+                    def lambdaName = "all"
+                    if (!params.allLambdas) {
+                        lambdaName = params.lambdaName
+                    }
+                    if (params.withLayer) {
+                        sh "chmod +x ./updateLambdasWithLayer.sh"
+                        sh './updateLambdasWithLayer.sh ' + lambdaName
                     } else {
-                        sh './updateLambdaCode.sh ' + params.lambdaName
+                        sh "chmod +x ./updateOnlyLambdasCode.sh"
+                        sh './updateOnlyLambdasCode.sh ' + lambdaName
                     }
                 }
             }

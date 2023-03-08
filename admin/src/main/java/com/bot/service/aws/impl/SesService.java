@@ -1,8 +1,8 @@
-package com.bot.service.impl;
+package com.bot.service.aws.impl;
 
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.VerifyEmailIdentityRequest;
-import com.bot.service.ISesService;
+import com.bot.service.aws.ISesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'Action', choices: ['deploy', 'destroy'])
+        choice(name: 'Action', choices: ['deploy', 'destroy', 'redeploy'])
     }
 
     stages {
@@ -18,13 +18,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    if (params.Action == 'destroy') {
+                    if (params.Action == 'destroy' || params.Action == 'redeploy') {
                         sh "chmod +x ./destroy.sh"
                         sh "./destroy.sh"
-                    } else {
+                    }
+                    if (params.Action == 'deploy' || params.Action == 'redeploy')
                         sh "chmod +x ./deploy.sh"
                         sh './deploy.sh'
-                    }
+
                 }
             }
         }
