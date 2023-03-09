@@ -35,8 +35,6 @@ Resources:
         - !Ref AdminLayer
       MemorySize: 512
       Role: !GetAtt AdminLambdaRole.Arn
-      SnapStart:
-        ApplyOn: PublishedVersions
       Runtime: java11
       Timeout: 300
     DependsOn:
@@ -49,13 +47,13 @@ Resources:
         Ref: AdminLambdaName
     DependsOn:
       - AdminLambda
-  PostSignUpLambdaVersion:
-    Type: AWS::Lambda::Version
-    Properties:
-      FunctionName:
-        Ref: SignUpLambdaName
-    DependsOn:
-      - PostSignUpLambda
+#  PostSignUpLambdaVersion:
+#    Type: AWS::Lambda::Version
+#    Properties:
+#      FunctionName:
+#        Ref: SignUpLambdaName
+#    DependsOn:
+#      - PostSignUpLambda
 #Lambda aliases
   AdminLambdaAlias:
     Type: AWS::Lambda::Alias
@@ -67,15 +65,15 @@ Resources:
         Ref: AdminLambdaAliasName
     DependsOn:
       - AdminLambdaVersion
-  PostSignUpLambdaAlias:
-    Type: AWS::Lambda::Alias
-    Properties:
-      FunctionName:
-        Ref: SignUpLambdaName
-      FunctionVersion: !GetAtt PostSignUpLambdaVersion.Version
-      Name: !Join [ "", [ !Ref SignUpLambdaName, "Alias" ] ]
-    DependsOn:
-      - PostSignUpLambdaVersion
+#  PostSignUpLambdaAlias:
+#    Type: AWS::Lambda::Alias
+#    Properties:
+#      FunctionName:
+#        Ref: SignUpLambdaName
+#      FunctionVersion: !GetAtt PostSignUpLambdaVersion.Version
+#      Name: !Join [ "", [ !Ref SignUpLambdaName, "Alias" ] ]
+#    DependsOn:
+#      - PostSignUpLambdaVersion
 #Lambda roles
   AdminLambdaRole:
     Type: 'AWS::IAM::Role'
