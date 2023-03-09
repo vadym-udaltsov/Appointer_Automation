@@ -2,11 +2,11 @@ package com.bot.controller;
 
 import com.bot.model.AuthData;
 import com.bot.model.SimpleResponse;
-import com.bot.service.admin.ICustomerService;
-import com.bot.service.aws.ICognitoService;
-import com.bot.service.aws.ISesService;
-import com.bot.service.aws.impl.SesService;
+import com.bot.service.ICognitoService;
+import com.bot.service.ISesService;
+import com.bot.service.impl.SesService;
 import com.commons.model.Customer;
+import com.commons.service.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +39,7 @@ public class AdminController {
     @PostMapping("auth")
     public ResponseEntity<SimpleResponse> getToken(@RequestBody AuthData authData) {
         String email = authData.getEmail();
+        log.info("Customer service is null ------------ {}", customerService == null);
         try {
             String customerToken = cognitoService.getCustomerToken(authData);
             return new ResponseEntity<>(SimpleResponse.builder().body(customerToken).build(), HttpStatus.OK);
@@ -59,8 +60,7 @@ public class AdminController {
     @GetMapping("company")
     public ResponseEntity<SimpleResponse> testAuth() {
         log.info("Got authorization test request");
-        Customer customer = new Customer();
-        customer.setEmail("email");
+        Customer customer = Customer.builder().email("test").build();
         customerService.createCustomer(customer);
         return new ResponseEntity<>(SimpleResponse.builder().body("Authorized").build(), HttpStatus.OK);
     }

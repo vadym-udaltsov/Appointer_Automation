@@ -6,10 +6,12 @@ import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
 import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-
-@SpringBootApplication
 @Slf4j
+@SpringBootApplication
+@ComponentScan({"com.commons.config", "com.commons.service", "com.commons.dao", "com.bot.controller", "com.bot.filter",
+"com.bot.service", "com.bot.lambda"})
 public class LambdaApplication {
 
     public static SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;

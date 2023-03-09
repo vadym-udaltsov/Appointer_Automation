@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDao<T> {
 
-    @Autowired
     private DynamoDBMapper dynamoDBMapper;
     private String tableName;
 
-    protected AbstractDao(String tableName) {
+    public AbstractDao(DynamoDBMapper dynamoDBMapper, String tableName) {
+        this.dynamoDBMapper = dynamoDBMapper;
         this.tableName = tableName;
     }
 

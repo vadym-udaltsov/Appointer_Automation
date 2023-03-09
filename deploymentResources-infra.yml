@@ -10,7 +10,7 @@ Resources:
         S3Key: !Join [ "", [ !Ref AdminLambdaArtifact, !Ref ArtifactSuff ] ]
       FunctionName:
         Ref: AdminLambdaName
-      Handler: com.bot.AdminLambda::handleRequest
+      Handler: com.bot.lambda.AdminLambda::handleRequest
       Layers:
         - !Ref AdminLayer
       MemorySize: 1024
@@ -30,13 +30,11 @@ Resources:
         S3Key: !Join [ "", [ !Ref PostSignUpArtifact, !Ref ArtifactSuff ] ]
       FunctionName:
         Ref: SignUpLambdaName
-      Handler: com.bot.RegistrationLambda::handleRequest
+      Handler: com.bot.lambda.RegistrationLambda::handleRequest
       Layers:
         - !Ref AdminLayer
       MemorySize: 512
       Role: !GetAtt AdminLambdaRole.Arn
-      SnapStart:
-        ApplyOn: PublishedVersions
       Runtime: java11
       Timeout: 300
     DependsOn:
@@ -49,14 +47,6 @@ Resources:
         Ref: AdminLambdaName
     DependsOn:
       - AdminLambda
-  PostSignUpLambdaVersion:
-    Type: AWS::Lambda::Version
-    Properties:
-      FunctionName:
-        Ref: SignUpLambdaName
-    DependsOn:
-      - PostSignUpLambda
-#Lambda aliases
   AdminLambdaAlias:
     Type: AWS::Lambda::Alias
     Properties:
@@ -67,16 +57,6 @@ Resources:
         Ref: AdminLambdaAliasName
     DependsOn:
       - AdminLambdaVersion
-  PostSignUpLambdaAlias:
-    Type: AWS::Lambda::Alias
-    Properties:
-      FunctionName:
-        Ref: SignUpLambdaName
-      FunctionVersion: !GetAtt PostSignUpLambdaVersion.Version
-      Name: !Join [ "", [ !Ref SignUpLambdaName, "Alias" ] ]
-    DependsOn:
-      - PostSignUpLambdaVersion
-#Lambda roles
   AdminLambdaRole:
     Type: 'AWS::IAM::Role'
     Properties:

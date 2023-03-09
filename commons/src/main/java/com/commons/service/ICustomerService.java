@@ -1,4 +1,4 @@
-package com.bot.service.admin;
+package com.commons.service;
 
 import com.commons.model.Customer;
 

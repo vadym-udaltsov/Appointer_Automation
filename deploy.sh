@@ -2,6 +2,7 @@
 
 source ${WORKSPACE}/deployment.config
 
+#Uploading needed lambda artefacts
 for lambda_pair in $lambdas
 do
   :

@@ -1,4 +1,4 @@
-package com.bot.service.aws;
+package com.bot.service;
 
 import com.bot.model.AuthData;
 
