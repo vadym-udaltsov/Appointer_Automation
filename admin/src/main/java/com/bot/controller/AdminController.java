@@ -39,7 +39,6 @@ public class AdminController {
     @PostMapping("auth")
     public ResponseEntity<SimpleResponse> getToken(@RequestBody AuthData authData) {
         String email = authData.getEmail();
-        log.info("Customer service is null ------------ {}", customerService == null);
         try {
             String customerToken = cognitoService.getCustomerToken(authData);
             return new ResponseEntity<>(SimpleResponse.builder().body(customerToken).build(), HttpStatus.OK);
@@ -57,12 +56,10 @@ public class AdminController {
         return new ResponseEntity<>(SimpleResponse.builder().body("Verified").build(), HttpStatus.OK);
     }
 
-    @GetMapping("company")
-    public ResponseEntity<SimpleResponse> testAuth() {
-        log.info("Got authorization test request");
-        Customer customer = Customer.builder().email("test").build();
-        customerService.createCustomer(customer);
-        return new ResponseEntity<>(SimpleResponse.builder().body("Authorized").build(), HttpStatus.OK);
+    @GetMapping("customer")
+    public ResponseEntity<Customer> getCustomer(@RequestParam("email") String email) {
+        Customer customer = customerService.getCustomerByEmail(email);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 }
 

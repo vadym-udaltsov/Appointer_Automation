@@ -12,6 +12,7 @@ public class CustomerDao extends AbstractDao<Customer> implements ICustomerDao {
 
     @Autowired
     public CustomerDao(DynamoDBMapper dynamoDBMapper) {
-        super(dynamoDBMapper, "customer");
+        super(dynamoDBMapper, Customer.class, "customer");
     }
+
 }

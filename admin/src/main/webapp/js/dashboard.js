@@ -3,8 +3,11 @@ $(window).ready(function () {
         headers: { 'token': localStorage.getItem('token')}
     });
 
+    var customer = executeGetRequest('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/customer');
+    console.log("Customer: " + customer.email);
+
     $("#test").click(function() {
-        executeGetRequest('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/company')
+        executeGetRequest('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/company');
         return false;
     });
 });
@@ -14,8 +17,8 @@ function executeGetRequest(url) {
         type: 'get',
         url: url,
         success: function (data) {
-            alert('Auth working')
             console.log(data)
+            return data;
         },
         error: function (data) {
             alert('Auth not working')

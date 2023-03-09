@@ -6,4 +6,6 @@ import com.commons.model.Customer;
 public interface ICustomerDao {
 
     void createItem(Customer customer);
+
+    Customer getItemByHashKeyString(String email);
 }
