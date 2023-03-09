@@ -1,4 +1,4 @@
-package com.bot.config;
+package com.commons.config;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;

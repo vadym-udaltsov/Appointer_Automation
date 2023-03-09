@@ -2,6 +2,15 @@
 
 source deployment.config
 
+echo "Copying 3rd party dependency layer jar to s3..."
+aws s3 cp ${layerArtefact} s3://${deploymentBucket}
+
+echo "Publishing new version of layer..."
+layer_version=$(aws lambda publish-layer-version \
+    --layer-name "$adminLayerName" \
+    --content S3Bucket="$deploymentBucket",S3Key=bot-3d-layer.jar \
+    --compatible-runtimes "$runtime" --query LayerVersionArn --output text --region $home_region)
+
   # shellcheck disable=SC2154
 for lambda_pair in $lambdas
 do
@@ -34,6 +43,9 @@ do
     echo "lambda update-alias --function-name $lambda_name --name adminLambdaAlias"
     aws lambda update-alias --function-name $lambda_name --name $alias_name --function-version "${lambda_version}"
   fi
+
+  echo "Attaching new version of layer to $lambda_name function..."
+  aws lambda update-function-configuration --function-name $lambda_name --layers $layer_version --region $home_region
 done
 
 $SHELL
