@@ -147,7 +147,7 @@ Resources:
   StaticWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref UiBucketName
+      BucketName: !Join [ "", [ "appointer-ui-", !Ref AccountId ] ]
       WebsiteConfiguration:
         IndexDocument: login.html
       CorsConfiguration:
@@ -464,7 +464,7 @@ Resources:
       GenerateSecret: false
       UserPoolId: !Ref UserPool
       CallbackURLs:
-        - !Join [ "", [ "https://", !Ref UiBucketName, ".s3.", !Ref Region, ".amazonaws.com/html/login.html" ] ]
+        - !Join [ "", [ "https://appointer-ui-", !Ref AccountId, ".s3.", !Ref Region, ".amazonaws.com/html/login.html" ] ]
       SupportedIdentityProviders:
         - COGNITO
       AllowedOAuthFlows:
@@ -520,9 +520,6 @@ Parameters:
   DeploymentBucket:
     Type: String
     Default: appointment-deployment-bucket
-  UiBucketName:
-    Type: String
-    Default: appointer-ui-!Ref AccountId
   LayerArtefact:
     Type: String
     Default: bot-3d-layer.jar
