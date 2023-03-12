@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @ComponentScan({"com.commons.config", "com.commons.service", "com.commons.dao", "com.bot.controller", "com.bot.filter",
-"com.bot.service", "com.bot.lambda"})
+        "com.bot.service", "com.bot.lambda"})
 public class LambdaApplication {
 
     public static SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;

@@ -21,6 +21,8 @@ $(window).ready(function () {
         var customer = new Object();
         customer.email = $("#email").val();
         customer.password = $("#pass").val();
+        localStorage.setItem('customer', customer.email);
+        console.log("put email to storage: " + customer.email);
         executePost(JSON.stringify(customer), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/auth')
         return false;
     });
@@ -34,16 +36,13 @@ function executeGet(url) {
         success: function (data) {
             alert('Please, check your email and follow the confirmation link.')
             $('#register').prop('disabled', false);
-            console.log(data)
         },
         error: function (data) {
             alert('Please, enter valid email.')
             $('#register').prop('disabled', true);
-            console.log(data)
         },
         complete: function (data) {
             $('#spinner-container').empty();
-            console.log(data)
         }
     });
 

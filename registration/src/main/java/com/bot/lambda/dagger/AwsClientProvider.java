@@ -2,7 +2,7 @@ package com.bot.lambda.dagger;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.commons.dao.impl.DynamoDbFactory;
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,8 +13,8 @@ public class AwsClientProvider {
 
     @Provides
     @Singleton
-    public DynamoDBMapper dynamoDBMapper() {
+    public DynamoDbFactory dynamoDBMapper() {
         AmazonDynamoDB dynamoDB = AmazonDynamoDBClientBuilder.standard().build();
-        return new DynamoDBMapper(dynamoDB);
+        return new DynamoDbFactory(dynamoDB);
     }
 }

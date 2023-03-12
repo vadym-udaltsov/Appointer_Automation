@@ -1,4 +1,4 @@
-package com.bot.service;
+package com.commons.service;
 
 public interface ISsmService {
 

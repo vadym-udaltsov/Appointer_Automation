@@ -6,6 +6,7 @@ import com.bot.service.ICognitoService;
 import com.bot.service.ISesService;
 import com.bot.service.impl.SesService;
 import com.commons.model.Customer;
+import com.commons.model.Department;
 import com.commons.service.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import javax.ws.rs.NotAuthorizedException;
 
 @RestController
@@ -61,5 +63,13 @@ public class AdminController {
         Customer customer = customerService.getCustomerByEmail(email);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
+
+    @GetMapping("department")
+    public ResponseEntity<SimpleResponse> createDepartment(String customerEmail, Department department) {
+        customerService.addCustomerDepartment("sergii.udaltsov@gmail.com", new Department());
+
+        return null;
+    }
+
 }
 
