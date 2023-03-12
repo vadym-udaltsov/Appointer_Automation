@@ -41,6 +41,8 @@ echo "poolId: ${poolId}"
 
 sed -i 's/botApiId/'${apiId}'/' admin/src/main/webapp/js/vars.js
 sed -i 's/poolClientId/'${poolId}'/' admin/src/main/webapp/js/vars.js
+sed -i 's/uiBucketName/'${uiBucket}'/' admin/src/main/webapp/js/vars.js
+sed -i 's/userPoolDomainName/'appointer-${accountId}'/' admin/src/main/webapp/js/vars.js
 
 echo "Uploading UI files for admin functionality..."
 cd admin/src/main/webapp
@@ -48,5 +50,5 @@ cd admin/src/main/webapp
 for folder in *
 do
   echo "Uploading files from folder ${folder}"
-  aws s3 sync $folder s3://appointer-ui/$folder/ --acl public-read
+  aws s3 sync $folder s3://${uiBucket}/$folder/ --acl public-read
 done
