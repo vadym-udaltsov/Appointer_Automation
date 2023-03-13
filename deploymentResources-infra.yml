@@ -147,7 +147,7 @@ Resources:
   StaticWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Join [ "", [ "appointer-ui-", !Ref AccountId ] ]
+      BucketName: !Ref UiBucketName
       WebsiteConfiguration:
         IndexDocument: login.html
       CorsConfiguration:
@@ -517,6 +517,9 @@ Parameters:
   LayerFileName:
     Type: String
     Default: bot-3d-layer.jar
+  UiBucketName:
+    Type: String
+    Default: appointment-ui-bucket
   DeploymentBucket:
     Type: String
     Default: appointment-deployment-bucket
