@@ -29,20 +29,34 @@ aws cloudformation deploy --stack-name ${infraStack} --template-file ${infraTemp
 AccountId=${accountId} \
 Region=${home_region} \
 VerifiedIdentityEmail=${verifiedEmail} \
-ArtifactSuff=${artefactSuff}
+ArtifactSuff=${artefactSuff} \
+UiBucketName=${uiBucket} \
+DeploymentBucket=${deploymentBucket}
 
-
+creationStatus=$(aws cloudformation describe-stacks --stack-name ${infraStack} --query 'Stacks[0].StackStatus' --output text | tr -d '\n')
 apiId=$(aws cloudformation describe-stacks --stack-name ${infraStack} --query 'Stacks[0].Outputs[?OutputKey==`BotApiId`].OutputValue' --output text | tr -d '\n')
 poolId=$(aws cloudformation describe-stacks --stack-name ${infraStack} --query 'Stacks[0].Outputs[?OutputKey==`UserPoolClientId`].OutputValue' --output text | tr -d '\n')
+
+echo "creationStatus: ${creationStatus}"
+
+if [[ "CREATE_COMPLETE" == "${creationStatus}" ]]; then
+    echo "Stack created."
+else
+    echo "Stack failed with status: ${creationStatus}";
+    #echo "Destroying stack and clean bucket...";
+    #sh ./destroy.sh
+    #echo "Stack destroyed, bucket is cleaned.";
+    exit 1;
+fi
 
 echo "Replacing values in vars.js file..."
 echo "apiId: ${apiId}"
 echo "poolId: ${poolId}"
 
-sed -i 's/botApiId/'${apiId}'/' admin/src/main/webapp/js/vars.js
-sed -i 's/poolClientId/'${poolId}'/' admin/src/main/webapp/js/vars.js
-sed -i 's/uiBucketName/'${uiBucket}'/' admin/src/main/webapp/js/vars.js
-sed -i 's/userPoolDomainName/'appointer-${accountId}'/' admin/src/main/webapp/js/vars.js
+sed -i'' -e 's/botApiId/'${apiId}'/g' admin/src/main/webapp/js/vars.js
+sed -i'' -e 's/poolClientId/'${poolId}'/g' admin/src/main/webapp/js/vars.js
+sed -i'' -e 's/uiBucketName/'${uiBucket}'/g' admin/src/main/webapp/js/vars.js
+sed -i'' -e 's/userPoolDomainName/'appointer-${accountId}'/g' admin/src/main/webapp/js/vars.js
 
 echo "Uploading UI files for admin functionality..."
 cd admin/src/main/webapp
