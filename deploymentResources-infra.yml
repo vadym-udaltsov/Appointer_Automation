@@ -147,7 +147,7 @@ Resources:
   StaticWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: appointer-ui
+      BucketName: !Ref UiBucketName
       WebsiteConfiguration:
         IndexDocument: login.html
       CorsConfiguration:
@@ -530,7 +530,7 @@ Resources:
       GenerateSecret: false
       UserPoolId: !Ref UserPool
       CallbackURLs:
-        - !Join [ "", [ "https://appointer-ui.s3.", !Ref Region, ".amazonaws.com/html/login.html" ] ]
+        - !Join [ "", [ "https://appointer-ui-", !Ref AccountId, ".s3.", !Ref Region, ".amazonaws.com/html/login.html" ] ]
       SupportedIdentityProviders:
         - COGNITO
       AllowedOAuthFlows:
@@ -543,7 +543,7 @@ Resources:
   UserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
     Properties:
-      Domain: !Ref DomainName
+      Domain: !Join [ "", [ !Ref DomainName, "-", !Ref AccountId ] ]
       UserPoolId: !Ref UserPool
 #SsmParameters
   UserPoolParam:
@@ -583,6 +583,9 @@ Parameters:
   LayerFileName:
     Type: String
     Default: bot-3d-layer.jar
+  UiBucketName:
+    Type: String
+    Default: appointment-ui-bucket
   DeploymentBucket:
     Type: String
     Default: appointment-deployment-bucket
@@ -624,7 +627,7 @@ Parameters:
     Default: eu-central-1
   AccountId:
     Type: String
-    Default: 773974733061----
+    Default: 773974733061
   VerifiedIdentityEmail:
     Type: String
     Default: sergii.udaltsov@gmail.com

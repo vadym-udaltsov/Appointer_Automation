@@ -13,7 +13,7 @@ $(window).ready(function () {
     });
 
     $("#register").click(function() {
-           $(location).attr('href', 'https://appointer.auth.eu-central-1.amazoncognito.com/signup?client_id=' + userPoolClientId +'&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2Fappointer-ui.s3.eu-central-1.amazonaws.com%2Fhtml%2Flogin.html');
+           $(location).attr('href', 'https://' + userPoolDomain + '.auth.eu-central-1.amazoncognito.com/signup?client_id=' + userPoolClientId +'&response_type=code&scope=email+openid+phone&redirect_uri=https%3A%2F%2F' + uiBucket + '.s3.eu-central-1.amazonaws.com%2Fhtml%2Flogin.html');
            return false;
     });
 
@@ -63,7 +63,7 @@ function executePost(data, url) {
                 error.style.color = "red"
             } else {
                 localStorage.setItem('token', data.body);
-                $(location).attr('href', 'https://appointer-ui.s3.eu-central-1.amazonaws.com/html/dashboard.html');
+                $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
             }
         },
         error: function (data) {
