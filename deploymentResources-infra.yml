@@ -673,7 +673,6 @@ Resources:
       - CompanyGet
       - CustomerGet
       - BotLambdaPost
-      - BotGet
 #ApiGateway permission
   AdminApiPermission:
     Type: 'AWS::Lambda::Permission'
