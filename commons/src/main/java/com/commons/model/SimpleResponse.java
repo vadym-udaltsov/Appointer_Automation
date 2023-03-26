@@ -1,4 +1,4 @@
-package com.bot.model;
+package com.commons.model;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,5 +7,4 @@ import lombok.Data;
 @Builder
 public class SimpleResponse {
     private String body;
-
 }

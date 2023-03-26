@@ -1,12 +1,14 @@
 package com.bot.controller;
 
 import com.bot.model.AuthData;
-import com.bot.model.SimpleResponse;
+import com.commons.model.SimpleResponse;
 import com.bot.service.ICognitoService;
 import com.bot.service.ISesService;
 import com.bot.service.impl.SesService;
 import com.commons.model.Customer;
+import com.commons.model.Department;
 import com.commons.service.ICustomerService;
+import com.commons.service.IDepartmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,18 +30,20 @@ public class AdminController {
     private final ICognitoService cognitoService;
     private final ISesService sesService;
     private final ICustomerService customerService;
+    private final IDepartmentService departmentService;
 
     @Autowired
-    public AdminController(ICognitoService cognitoService, SesService sesService, ICustomerService customerService) {
+    public AdminController(ICognitoService cognitoService, SesService sesService, ICustomerService customerService,
+                           IDepartmentService departmentService) {
         this.cognitoService = cognitoService;
         this.sesService = sesService;
         this.customerService = customerService;
+        this.departmentService = departmentService;
     }
 
     @PostMapping("auth")
     public ResponseEntity<SimpleResponse> getToken(@RequestBody AuthData authData) {
         String email = authData.getEmail();
-        log.info("Customer service is null ------------ {}", customerService == null);
         try {
             String customerToken = cognitoService.getCustomerToken(authData);
             return new ResponseEntity<>(SimpleResponse.builder().body(customerToken).build(), HttpStatus.OK);
@@ -57,12 +61,23 @@ public class AdminController {
         return new ResponseEntity<>(SimpleResponse.builder().body("Verified").build(), HttpStatus.OK);
     }
 
-    @GetMapping("company")
-    public ResponseEntity<SimpleResponse> testAuth() {
-        log.info("Got authorization test request");
-        Customer customer = Customer.builder().email("test").build();
-        customerService.createCustomer(customer);
-        return new ResponseEntity<>(SimpleResponse.builder().body("Authorized").build(), HttpStatus.OK);
+    @GetMapping("customer")
+    public ResponseEntity<Customer> getCustomer(@RequestParam("email") String email) {
+        Customer customer = customerService.getCustomerByEmail(email);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
+
+    @PostMapping("department")
+    public ResponseEntity<SimpleResponse> createDepartment(@RequestBody Department department) {
+        log.info("Got request for creation new department------");
+        if (departmentService.createDepartment(department)) {
+
+        }
+        log.info("Name: {}", department.getName());
+        log.info("Customer: {}", department.getCustomer());
+        log.info("Type: {}", department.getType());
+        return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
+    }
+
 }
 

@@ -1,8 +1,8 @@
 package com.bot.lambda.dagger;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.commons.dao.ICustomerDao;
 import com.commons.dao.impl.CustomerDao;
+import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.service.ICustomerService;
 import com.commons.service.impl.CustomerService;
 import dagger.Module;
@@ -15,8 +15,8 @@ public class ServiceProvider {
 
     @Provides
     @Singleton
-    public ICustomerDao customerDao(DynamoDBMapper mapper) {
-        return new CustomerDao(mapper);
+    public ICustomerDao customerDao(DynamoDbFactory factory) {
+        return new CustomerDao(factory);
     }
 
     @Provides

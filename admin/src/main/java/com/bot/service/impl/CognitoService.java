@@ -2,7 +2,7 @@ package com.bot.service.impl;
 
 import com.bot.model.AuthData;
 import com.bot.service.ICognitoService;
-import com.bot.service.ISsmService;
+import com.commons.service.ISsmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
