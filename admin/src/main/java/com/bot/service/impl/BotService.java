@@ -47,10 +47,10 @@ public class BotService implements IBotService {
         return null;
     }
 
-    @PostConstruct
-    public void test() {
-        registerNewBot("MyNewtestudalBot");
-    }
+//    @PostConstruct
+//    public void test() {
+//        registerNewBot("MyNewtestudalBot");
+//    }
 
     @Override
     public void deleteBot(String botName) {

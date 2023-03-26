@@ -4,15 +4,18 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.AttributeUpdate;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
+import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
+import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.commons.dao.impl.DynamoDbFactory;
+import com.commons.model.DynamoDbEntity;
 import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
-public abstract class AbstractDao<T> {
+public abstract class AbstractDao<T extends DynamoDbEntity> {
 
     private DynamoDbFactory dynamoDbFactory;
     private Class<T> tClass;
@@ -42,10 +45,18 @@ public abstract class AbstractDao<T> {
         log.info("Successfully updated item in the table: {}", tableName);
     }
 
-    public void createItem(T item) {
-        log.info("Creating item: {}", JsonUtils.convertObjectToString(item));
-        getMapper().save(item);
-        log.info("Successfully saved item to {} table", tableName);
+    public boolean createItem(T item) {
+        try {
+            PutItemSpec putItemSpec = new PutItemSpec()
+                    .withItem(item.toItem())
+                    .withConditionExpression(item.getCondition());
+            getDynamoDb().getTable(tableName).putItem(putItemSpec);
+            log.info("Successfully saved item to {} table", tableName);
+            return true;
+        } catch (ConditionalCheckFailedException e) {
+            log.warn("Condition: {} failed", item.getCondition());
+            return false;
+        }
     }
 
     public T getItemByHashKeyString(String hashKey) {

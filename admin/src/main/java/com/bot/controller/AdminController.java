@@ -1,13 +1,14 @@
 package com.bot.controller;
 
 import com.bot.model.AuthData;
-import com.bot.model.SimpleResponse;
+import com.commons.model.SimpleResponse;
 import com.bot.service.ICognitoService;
 import com.bot.service.ISesService;
 import com.bot.service.impl.SesService;
 import com.commons.model.Customer;
 import com.commons.model.Department;
 import com.commons.service.ICustomerService;
+import com.commons.service.IDepartmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import javax.ws.rs.NotAuthorizedException;
 
 @RestController
@@ -30,12 +30,15 @@ public class AdminController {
     private final ICognitoService cognitoService;
     private final ISesService sesService;
     private final ICustomerService customerService;
+    private final IDepartmentService departmentService;
 
     @Autowired
-    public AdminController(ICognitoService cognitoService, SesService sesService, ICustomerService customerService) {
+    public AdminController(ICognitoService cognitoService, SesService sesService, ICustomerService customerService,
+                           IDepartmentService departmentService) {
         this.cognitoService = cognitoService;
         this.sesService = sesService;
         this.customerService = customerService;
+        this.departmentService = departmentService;
     }
 
     @PostMapping("auth")
@@ -64,11 +67,16 @@ public class AdminController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    @GetMapping("department")
-    public ResponseEntity<SimpleResponse> createDepartment(String customerEmail, Department department) {
-        customerService.addCustomerDepartment("sergii.udaltsov@gmail.com", new Department());
+    @PostMapping("department")
+    public ResponseEntity<SimpleResponse> createDepartment(@RequestBody Department department) {
+        log.info("Got request for creation new department------");
+        if (departmentService.createDepartment(department)) {
 
-        return null;
+        }
+        log.info("Name: {}", department.getName());
+        log.info("Customer: {}", department.getCustomer());
+        log.info("Type: {}", department.getType());
+        return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
     }
 
 }

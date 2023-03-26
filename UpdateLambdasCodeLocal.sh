@@ -40,7 +40,6 @@ do
     aws lambda wait function-updated --function-name $lambda_name
 
     echo "Updating lambda alias..."
-    echo "lambda update-alias --function-name $lambda_name --name adminLambdaAlias"
     aws lambda update-alias --function-name $lambda_name --name $alias_name --function-version "${lambda_version}"
   fi
 

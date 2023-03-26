@@ -9,6 +9,7 @@
         <module>commons</module>
         <module>layer</module>
         <module>annotation-processor</module>
+        <module>bot</module>
     </modules>
 
     <parent>

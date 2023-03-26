@@ -6,7 +6,7 @@ import com.commons.model.Department;
 
 public interface ICustomerDao {
 
-    void createItem(Customer customer);
+    boolean createItem(Customer customer);
 
     Customer getItemByHashKeyString(String email);
 

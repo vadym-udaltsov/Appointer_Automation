@@ -2,6 +2,8 @@ package com.commons.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,21 +19,31 @@ import java.util.List;
 @Builder
 @NoArgsConstructor()
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Customer {
+public class Customer extends DynamoDbEntity{
 
     @DynamoDBHashKey(attributeName="email")
     private String email;
     private String phone;
-
-    private List<Department> departments;
     private List<Specialist> specialists;
     private List<CustomerService> services;
 
-    public void addDepartment(Department department) {
-        if (CollectionUtils.isEmpty(departments)) {
-            departments = new ArrayList<>();
-        }
-        departments.add(department);
+    @Override
+    public PrimaryKey getPrimaryKey() {
+        return null;
     }
 
+    @Override
+    public Item toItem() {
+        return new Item()
+                .with("email", email)
+                .with("phone", phone)
+                .withList("specialists", specialists)
+                .withList("services", services);
+    }
+
+    @Override
+    public String getCondition() {
+        return "attribute_not_exists(email)";
+
+    }
 }

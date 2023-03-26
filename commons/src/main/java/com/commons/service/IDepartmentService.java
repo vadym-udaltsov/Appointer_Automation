@@ -4,5 +4,5 @@ import com.commons.model.Department;
 
 public interface IDepartmentService {
 
-    void createDepartment(String customerEmail, Department department);
+    boolean createDepartment(Department department);
 }

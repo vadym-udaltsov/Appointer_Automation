@@ -13,7 +13,7 @@ Resources:
       Handler: com.bot.lambda.AdminLambda::handleRequest
       Layers:
         - !Ref AdminLayer
-      MemorySize: 1024
+      MemorySize: 512
       Role: !GetAtt AdminLambdaRole.Arn
       SnapStart:
         ApplyOn: PublishedVersions
@@ -39,6 +39,41 @@ Resources:
       Timeout: 300
     DependsOn:
       - AdminLayer
+  RegisterBotLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: DeploymentBucket
+        S3Key: package.zip
+      FunctionName: registerBotLambda
+      Handler: FunctionHandler.lambda_handler
+      MemorySize: 512
+      Role: !GetAtt AdminLambdaRole.Arn
+      Runtime: python3.7
+      Timeout: 300
+    DependsOn:
+      - AdminLambdaRole
+  BotLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: DeploymentBucket
+        S3Key: !Join [ "", [ !Ref BotLambdaArtifact, !Ref ArtifactSuff ] ]
+      FunctionName:
+        Ref: BotLambdaName
+      Handler: com.bot.lambda.BotLambda::handleRequest
+      Layers:
+        - !Ref AdminLayer
+      MemorySize: 512
+      Role: !GetAtt AdminLambdaRole.Arn
+      SnapStart:
+        ApplyOn: PublishedVersions
+      Runtime: java11
+      Timeout: 300
+    DependsOn:
+      - AdminLayer
 #Lambda versions
   AdminLambdaVersion:
     Type: AWS::Lambda::Version
@@ -53,13 +88,29 @@ Resources:
       FunctionName:
         Ref: AdminLambdaName
       FunctionVersion: !GetAtt AdminLambdaVersion.Version
-      Name:
-        Ref: AdminLambdaAliasName
+      Name: !Join [ "", [ !Ref AdminLambdaName, "Alias" ] ]
     DependsOn:
       - AdminLambdaVersion
+  BotLambdaVersion:
+    Type: AWS::Lambda::Version
+    Properties:
+      FunctionName:
+        Ref: BotLambdaName
+    DependsOn:
+      - BotLambda
+  BotLambdaAlias:
+    Type: AWS::Lambda::Alias
+    Properties:
+      FunctionName:
+        Ref: BotLambdaName
+      FunctionVersion: !GetAtt BotLambdaVersion.Version
+      Name: !Join [ "", [ !Ref BotLambdaName, "Alias" ] ]
+    DependsOn:
+      - BotLambdaVersion
   AdminLambdaRole:
     Type: 'AWS::IAM::Role'
     Properties:
+      RoleName: AdminLambdaRole
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -179,6 +230,30 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
       TableName: customer
+  DepartmentTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: c
+          AttributeType: S
+        - AttributeName: n
+          AttributeType: S
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: c
+          KeyType: HASH
+        - AttributeName: n
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: id-index
+          KeySchema:
+            - AttributeName: id
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      TableName: department
 #Api Gateway
   BotApi:
     Type: 'AWS::ApiGateway::RestApi'
@@ -212,6 +287,24 @@ Resources:
       PathPart: admin
     DependsOn:
       - BotApi
+  BotResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref BotApi
+      ParentId: !GetAtt
+        - BotApi
+        - RootResourceId
+      PathPart: bot
+    DependsOn:
+      - BotApi
+  BotPostResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref BotApi
+      ParentId: !Ref BotResource
+      PathPart: '{id}'
+    DependsOn:
+      - BotApi
   AuthResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -226,6 +319,14 @@ Resources:
       RestApiId: !Ref BotApi
       ParentId: !Ref AdminResource
       PathPart: customer
+    DependsOn:
+      - AdminResource
+  DepartmentResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref BotApi
+      ParentId: !Ref AdminResource
+      PathPart: department
     DependsOn:
       - AdminResource
   CompanyResource:
@@ -273,6 +374,35 @@ Resources:
         Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - AuthResource
+  BotLambdaPost:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref BotPostResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref BotLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - BotPostResource
+      - BotLambdaAlias
   CustomerGet:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -300,6 +430,34 @@ Resources:
           - StatusCode: 200
         IntegrationHttpMethod: POST
         Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - CustomerResource
+  BotGet:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref BotResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref BotLambdaAlias, "/invocations" ] ]
     DependsOn:
       - CustomerResource
   CompanyGet:
@@ -359,6 +517,35 @@ Resources:
         Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - EmailVerifyResource
+  DepartmentPost:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref DepartmentResource
+      HttpMethod: POST
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref Authorizer
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !GetAtt RegisterBotLambda.Arn, "/invocations" ] ]
+    DependsOn:
+      - DepartmentResource
 #Options
   AuthOptions:
     Type: AWS::ApiGateway::Method
@@ -373,6 +560,34 @@ Resources:
             ResponseParameters:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
               method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        Type: MOCK
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: 'Empty'
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: false
+            method.response.header.Access-Control-Allow-Methods: false
+            method.response.header.Access-Control-Allow-Origin: false
+  BotOptions:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref BotResource
+      HttpMethod: OPTIONS
+      Integration:
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,GET,OPTIONS'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
             ResponseTemplates:
               application/json: ''
@@ -472,6 +687,34 @@ Resources:
             method.response.header.Access-Control-Allow-Headers: false
             method.response.header.Access-Control-Allow-Methods: false
             method.response.header.Access-Control-Allow-Origin: false
+  DepartmentOptions:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref DepartmentResource
+      HttpMethod: OPTIONS
+      Integration:
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        Type: MOCK
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: 'Empty'
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: false
+            method.response.header.Access-Control-Allow-Methods: false
+            method.response.header.Access-Control-Allow-Origin: false
 #Deployment
   AdminDeployment:
     Type: 'AWS::ApiGateway::Deployment'
@@ -485,12 +728,30 @@ Resources:
       - EmailVerifyGet
       - CompanyGet
       - CustomerGet
+      - BotLambdaPost
+      - BotGet
 #ApiGateway permission
-  BotApiPermission:
+  AdminApiPermission:
     Type: 'AWS::Lambda::Permission'
     Properties:
       Action: 'lambda:InvokeFunction'
       FunctionName: !Ref AdminLambdaAlias
+      Principal: apigateway.amazonaws.com
+    DependsOn:
+      - AdminDeployment
+  BotApiPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref BotLambdaAlias
+      Principal: apigateway.amazonaws.com
+    DependsOn:
+      - AdminDeployment
+  RegisterBotPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref RegisterBotLambda
       Principal: apigateway.amazonaws.com
     DependsOn:
       - AdminDeployment
@@ -560,7 +821,15 @@ Resources:
       Tier: Standard
       Type: String
       Value: !Ref UserPoolClient
-
+  BotUrlParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: bot_url
+      Tier: Standard
+      Type: String
+      Value: !Join [ "", [ "https://", !Ref BotApi, ".execute-api.eu-central-1.amazonaws.com/dev/bot/" ] ]
+    DependsOn:
+      - BotApi
 Outputs:
   BotApiId:
     Value: !Ref BotApi
@@ -571,6 +840,9 @@ Parameters:
   AdminLambdaName:
     Type: String
     Default: adminLambda
+  BotLambdaName:
+    Type: String
+    Default: appointerBotLambda
   SignUpLambdaName:
     Type: String
     Default: postSignUpLambda
@@ -595,6 +867,9 @@ Parameters:
   AdminLambdaArtifact:
     Type: String
     Default: admin
+  BotLambdaArtifact:
+    Type: String
+    Default: bot
   PostSignUpArtifact:
     Type: String
     Default: registration
