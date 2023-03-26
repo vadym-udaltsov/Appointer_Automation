@@ -13,7 +13,7 @@ Resources:
       Handler: com.bot.lambda.AdminLambda::handleRequest
       Layers:
         - !Ref AdminLayer
-      MemorySize: 512
+      MemorySize: 1024
       Role: !GetAtt AdminLambdaRole.Arn
       SnapStart:
         ApplyOn: PublishedVersions
@@ -432,34 +432,6 @@ Resources:
         Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - CustomerResource
-  BotGet:
-    Type: 'AWS::ApiGateway::Method'
-    Properties:
-      RestApiId: !Ref BotApi
-      ResourceId: !Ref BotResource
-      HttpMethod: GET
-      AuthorizationType: NONE
-      MethodResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-        - StatusCode: 300
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-        - StatusCode: 400
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-        - StatusCode: 500
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-      Integration:
-        Type: AWS_PROXY
-        IntegrationResponses:
-          - StatusCode: 200
-        IntegrationHttpMethod: POST
-        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref BotLambdaAlias, "/invocations" ] ]
-    DependsOn:
-      - CustomerResource
   CompanyGet:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -560,34 +532,6 @@ Resources:
             ResponseParameters:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
               method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-            ResponseTemplates:
-              application/json: ''
-        PassthroughBehavior: WHEN_NO_MATCH
-        RequestTemplates:
-          application/json: '{"statusCode": 200}'
-        Type: MOCK
-      MethodResponses:
-        - StatusCode: 200
-          ResponseModels:
-            application/json: 'Empty'
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: false
-            method.response.header.Access-Control-Allow-Methods: false
-            method.response.header.Access-Control-Allow-Origin: false
-  BotOptions:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      AuthorizationType: NONE
-      RestApiId: !Ref BotApi
-      ResourceId: !Ref BotResource
-      HttpMethod: OPTIONS
-      Integration:
-        IntegrationResponses:
-          - StatusCode: 200
-            ResponseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
-              method.response.header.Access-Control-Allow-Methods: "'POST,GET,OPTIONS'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
             ResponseTemplates:
               application/json: ''

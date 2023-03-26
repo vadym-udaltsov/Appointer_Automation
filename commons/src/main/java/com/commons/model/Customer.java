@@ -24,8 +24,6 @@ public class Customer extends DynamoDbEntity{
     @DynamoDBHashKey(attributeName="email")
     private String email;
     private String phone;
-    private List<Specialist> specialists;
-    private List<CustomerService> services;
 
     @Override
     public PrimaryKey getPrimaryKey() {
@@ -36,9 +34,7 @@ public class Customer extends DynamoDbEntity{
     public Item toItem() {
         return new Item()
                 .with("email", email)
-                .with("phone", phone)
-                .withList("specialists", specialists)
-                .withList("services", services);
+                .with("phone", phone);
     }
 
     @Override
