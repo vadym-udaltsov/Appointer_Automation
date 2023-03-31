@@ -2,36 +2,43 @@ $(window).ready(function () {
     $.ajaxSetup({
         headers: { 'token': localStorage.getItem('token')}
     });
-
     var email = localStorage.getItem('customer');
+
+    var select = $("#typeSelect");
+    var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/sergii.udaltsov@gmail.com';
+    loadTypes(url, select);
+
     $("#serviceRef").click(function() {
         $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/service.html');
         return false;
     });
 
-    $("#departmentRef").click(function() {
-        $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/department.html');
-        return false;
-    });
-
-    $("#depCreateBtn").click(function() {
+     $("#create").click(function() {
         var department = new Object();
         department.departmentName = $("#depName").val();
         department.email = email;
+        department.type = $("#typeSelect").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
         return false;
-    });
-
-    $("#servCreateBtn").click(function() {
-        var service = new Object();
-        service.name = $("#servName").val();
-        service.duration = $("#servDuration").val();
-        service.price = $("#servPrice").val();
-        executeGetRequest('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/company');
-        return false;
-    });
+     });
 });
 
+function loadTypes(url, select) {
+    $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+
+        success: function (data) {
+            console.log(data);
+            $.each(data.availableTypes, function () {
+                console.log(this)
+                var opt = $("<option value='" + this + "'></option>").text(this);
+                select.append(opt);
+            });
+        }
+    });
+}
 function executePost(data, url) {
     $.ajax({
         type: 'post',
@@ -46,7 +53,7 @@ function executePost(data, url) {
                 error.textContent = "Request is not authorized"
                 error.style.color = "red"
             } else {
-                $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
+//                $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
             }
         },
         error: function (data) {

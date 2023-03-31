@@ -21,24 +21,6 @@ Resources:
       Timeout: 300
     DependsOn:
       - AdminLayer
-  PostSignUpLambda:
-    Type: 'AWS::Lambda::Function'
-    Properties:
-      Code:
-        S3Bucket:
-          Ref: DeploymentBucket
-        S3Key: !Join [ "", [ !Ref PostSignUpArtifact, !Ref ArtifactSuff ] ]
-      FunctionName:
-        Ref: SignUpLambdaName
-      Handler: com.bot.lambda.RegistrationLambda::handleRequest
-      Layers:
-        - !Ref AdminLayer
-      MemorySize: 512
-      Role: !GetAtt AdminLambdaRole.Arn
-      Runtime: java11
-      Timeout: 300
-    DependsOn:
-      - AdminLayer
   RegisterBotLambda:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -46,12 +28,30 @@ Resources:
         S3Bucket:
           Ref: DeploymentBucket
         S3Key: package.zip
-      FunctionName: registerBotLambda
+      FunctionName: !Ref RegisterBotLambdaName
       Handler: FunctionHandler.lambda_handler
       MemorySize: 512
       Role: !GetAtt AdminLambdaRole.Arn
       Runtime: python3.7
-      Timeout: 300
+      Timeout: 60
+    DependsOn:
+      - AdminLambdaRole
+  PostSignUpPythonLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: DeploymentBucket
+        S3Key: package.zip
+      FunctionName: !Ref PostSignUpLambdaName
+      Handler: PostSignUpHandler.lambda_handler
+      MemorySize: 512
+      Role: !GetAtt AdminLambdaRole.Arn
+      Runtime: python3.7
+      Timeout: 30
+      Environment:
+        Variables:
+          accountId: !Ref AccountId
     DependsOn:
       - AdminLambdaRole
   BotLambda:
@@ -107,6 +107,7 @@ Resources:
       Name: !Join [ "", [ !Ref BotLambdaName, "Alias" ] ]
     DependsOn:
       - BotLambdaVersion
+#Lambda permissions
   AdminLambdaRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -140,6 +141,7 @@ Resources:
                   - 'dynamodb:UpdateItem'
                   - 'ssm:*'
                   - 's3:*'
+                  - 'sqs:*'
                 Resource: '*'
               - Effect: Allow
                 Action:
@@ -170,11 +172,10 @@ Resources:
                   - 'mobiletargeting:GetApps'
                   - 'acm:ListCertificates'
                 Resource: '*'
-#Lambda permissions
   PostSignUpLambdaPermission:
     Type: AWS::Lambda::Permission
     Properties:
-      FunctionName: !Ref SignUpLambdaName
+      FunctionName: !Ref PostSignUpLambdaName
       Action: lambda:InvokeFunction
       Principal: cognito-idp.amazonaws.com
       SourceArn: !Join [ "", [ "arn:aws:cognito-idp:", !Ref Region, ":", !Ref AccountId, ":userpool/", !Ref UserPool ] ]
@@ -254,6 +255,27 @@ Resources:
           Projection:
             ProjectionType: ALL
       TableName: department
+#Sqs queues
+  BotQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: !Ref BotQueueName
+      VisibilityTimeout: 61
+      RedrivePolicy:
+        deadLetterTargetArn:
+          Fn::GetAtt: [ BotDeadLetterQueue, Arn ]
+        maxReceiveCount: 1
+  BotDeadLetterQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: !Ref BotDlqName
+  BotEventSourceMapping:
+    Type: "AWS::Lambda::EventSourceMapping"
+    Properties:
+      BatchSize: 10
+      Enabled: true
+      EventSourceArn: !GetAtt [ BotQueue, Arn ]
+      FunctionName: !Ref RegisterBotLambdaName
 #Api Gateway
   BotApi:
     Type: 'AWS::ApiGateway::RestApi'
@@ -329,6 +351,22 @@ Resources:
       PathPart: department
     DependsOn:
       - AdminResource
+  DepartmentDataResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref BotApi
+      ParentId: !Ref DepartmentResource
+      PathPart: data
+    DependsOn:
+      - DepartmentResource
+  DepartmentDataGetResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref BotApi
+      ParentId: !Ref DepartmentDataResource
+      PathPart: '{customer}'
+    DependsOn:
+      - DepartmentDataResource
   CompanyResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -380,7 +418,8 @@ Resources:
       RestApiId: !Ref BotApi
       ResourceId: !Ref BotPostResource
       HttpMethod: POST
-      AuthorizationType: NONE
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref Authorizer
       MethodResponses:
         - StatusCode: 200
           ResponseParameters:
@@ -518,6 +557,35 @@ Resources:
         Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !GetAtt RegisterBotLambda.Arn, "/invocations" ] ]
     DependsOn:
       - DepartmentResource
+  DepartmentDataGet:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref DepartmentDataGetResource
+      HttpMethod: GET
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref Authorizer
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - DepartmentDataGetResource
 #Options
   AuthOptions:
     Type: AWS::ApiGateway::Method
@@ -659,6 +727,34 @@ Resources:
             method.response.header.Access-Control-Allow-Headers: false
             method.response.header.Access-Control-Allow-Methods: false
             method.response.header.Access-Control-Allow-Origin: false
+  DepartmentDataGetOptions:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref DepartmentDataGetResource
+      HttpMethod: OPTIONS
+      Integration:
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        Type: MOCK
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: 'Empty'
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: false
+            method.response.header.Access-Control-Allow-Methods: false
+            method.response.header.Access-Control-Allow-Origin: false
 #Deployment
   AdminDeployment:
     Type: 'AWS::ApiGateway::Deployment'
@@ -673,6 +769,7 @@ Resources:
       - CompanyGet
       - CustomerGet
       - BotLambdaPost
+      - DepartmentDataGet
 #ApiGateway permission
   AdminApiPermission:
     Type: 'AWS::Lambda::Permission'
@@ -712,7 +809,7 @@ Resources:
       UsernameAttributes:
         - email
       LambdaConfig:
-        PostConfirmation: !GetAtt PostSignUpLambda.Arn
+        PostConfirmation: !GetAtt PostSignUpPythonLambda.Arn
       Schema:
         - Name: email
           AttributeDataType: String
@@ -786,9 +883,12 @@ Parameters:
   BotLambdaName:
     Type: String
     Default: appointerBotLambda
-  SignUpLambdaName:
+  PostSignUpLambdaName:
     Type: String
-    Default: postSignUpLambda
+    Default: postSignUpPythonLambda
+  RegisterBotLambdaName:
+    Type: String
+    Default: registerBotPythonLambda
   AdminLambdaAliasName:
     Type: String
     Default: adminLambdaAlias
@@ -828,6 +928,12 @@ Parameters:
   DomainName:
     Type: String
     Default: appointer
+  BotQueueName:
+    Type: String
+    Default: botQueue
+  BotDlqName:
+    Type: String
+    Default: botDlq
   UserPoolName:
     Type: String
     Default: AppointerUserPool

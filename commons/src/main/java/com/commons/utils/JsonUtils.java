@@ -31,6 +31,15 @@ public class JsonUtils {
         }
     }
 
+    public static <T> T parseStringToObject(String objectStr, Class<T> type) {
+        try {
+            return MAPPER.readValue(objectStr, type);
+        } catch (JsonProcessingException e) {
+            log.error("Error during parsing string {}", objectStr);
+            throw new RuntimeException("Error during parsing string: " + e.getMessage(), e);
+        }
+    }
+
     public static <T> T getObjectFromInputStreamByType(InputStream json, TypeReference<T> type) {
         try {
             return MAPPER.readValue(json, type);

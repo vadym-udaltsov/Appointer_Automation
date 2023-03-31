@@ -1,6 +1,8 @@
 package com.bot.controller;
 
 import com.bot.model.AuthData;
+import com.bot.model.DepartmentData;
+import com.commons.model.DepartmentType;
 import com.commons.model.SimpleResponse;
 import com.bot.service.ICognitoService;
 import com.bot.service.ISesService;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.NotAuthorizedException;
+import java.util.List;
 
 @RestController
 @RequestMapping("admin")
@@ -67,17 +71,7 @@ public class AdminController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    @PostMapping("department")
-    public ResponseEntity<SimpleResponse> createDepartment(@RequestBody Department department) {
-        log.info("Got request for creation new department------");
-        if (departmentService.createDepartment(department)) {
 
-        }
-        log.info("Name: {}", department.getName());
-        log.info("Customer: {}", department.getCustomer());
-        log.info("Type: {}", department.getType());
-        return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
-    }
 
 }
 

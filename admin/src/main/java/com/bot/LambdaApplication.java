@@ -19,5 +19,6 @@ public class LambdaApplication {
 
     public static void main(String[] args) throws ContainerInitializationException {
         handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(LambdaApplication.class);
+//        SpringApplication.run(LambdaApplication.class);
     }
 }

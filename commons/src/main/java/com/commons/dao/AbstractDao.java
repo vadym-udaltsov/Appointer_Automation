@@ -1,18 +1,30 @@
 package com.commons.dao;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.AttributeUpdate;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.Page;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
+import com.amazonaws.services.dynamodbv2.model.QueryResult;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.DynamoDbEntity;
 import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public abstract class AbstractDao<T extends DynamoDbEntity> {
@@ -59,11 +71,32 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
         }
     }
 
+    public List<T> findAllByQuery(QuerySpec querySpec) {
+        ItemCollection<QueryOutcome> queryOutcome = getDynamoDb().getTable(tableName).query(querySpec);
+        List<Item> items = getItemsFromQueryResult(queryOutcome);
+        if (items.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return items.stream()
+                .map(i -> JsonUtils.parseStringToObject(i.toJSON(), tClass))
+                .collect(Collectors.toList());
+    }
+
     public T getItemByHashKeyString(String hashKey) {
         log.info("Getting object from table: {} with hashKey: {}", tableName, hashKey);
         T item = getMapper().load(tClass, hashKey);
         log.info("Successfully got item from table: {}, hash key: {}", tableName, hashKey);
         return item;
+    }
+
+    private List<Item> getItemsFromQueryResult(ItemCollection<QueryOutcome> queryOutcome) {
+        List<Item> queryResult = new ArrayList<>();
+        for (Page<Item, QueryOutcome> page : queryOutcome.pages()) {
+            for (Item item : page) {
+                queryResult.add(item);
+            }
+        }
+        return queryResult;
     }
 
     private DynamoDBMapper getMapper() {
