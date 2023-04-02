@@ -5,7 +5,7 @@ $(window).ready(function () {
     var email = localStorage.getItem('customer');
 
     var select = $("#typeSelect");
-    var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/sergii.udaltsov@gmail.com';
+    var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
     loadTypes(url, select);
 
     $("#serviceRef").click(function() {

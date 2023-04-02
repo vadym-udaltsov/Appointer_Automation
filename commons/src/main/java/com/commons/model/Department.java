@@ -52,6 +52,9 @@ public class Department extends DynamoDbEntity {
     @JsonProperty("as")
     private List<String> availableSpecialists = new ArrayList<>();
 
+    @JsonProperty("s")
+    private List<CustomerService> services = new ArrayList<>();
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -65,7 +68,8 @@ public class Department extends DynamoDbEntity {
                 .with(RANGE_KEY, name)
                 .with("id", id)
                 .with("tp", type.name())
-                .withList("as", availableSpecialists);
+                .withList("as", availableSpecialists)
+                .withList("s", services);
     }
 
     @Override

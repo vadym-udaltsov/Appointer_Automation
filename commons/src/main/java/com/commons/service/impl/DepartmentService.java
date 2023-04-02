@@ -2,6 +2,7 @@ package com.commons.service.impl;
 
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.commons.dao.IDepartmentDao;
+import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.service.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,11 @@ public class DepartmentService implements IDepartmentService {
 
     @Autowired
     private IDepartmentDao departmentDao;
+
+    @Override
+    public void addCustomerService(String email, String departmentName, CustomerService service) {
+        departmentDao.addNewService(email, departmentName, service);
+    }
 
     @Override
     public List<Department> getCustomerDepartments(String customer) {

@@ -38,23 +38,16 @@ public class DepartmentController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<SimpleResponse> createDepartment(@RequestBody Department department) {//should be checked if needed
-        log.info("Got request for creation new department------");
-        if (departmentService.createDepartment(department)) {
-
-        }
-        log.info("Name: {}", department.getName());
-        log.info("Customer: {}", department.getCustomer());
-        log.info("Type: {}", department.getType());
-        return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
-    }
-
-//    @PostConstruct
-//    public void testMethod() {
-//        List<Department> customerDepartments = departmentService.getCustomerDepartments("sergii.udaltsov@gmail.com");
-//        Department department = customerDepartments.get(0);
-//        String s = JsonUtils.convertObjectToString(department);
-//        System.out.println();
+//    @PostMapping()
+//    public ResponseEntity<SimpleResponse> createDepartment(@RequestBody Department department) {//should be checked if needed
+//        log.info("Got request for creation new department------");
+//        if (departmentService.createDepartment(department)) {
+//
+//        }
+//        log.info("Name: {}", department.getName());
+//        log.info("Customer: {}", department.getCustomer());
+//        log.info("Type: {}", department.getType());
+//        return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
 //    }
+
 }
