@@ -10,6 +10,8 @@ public interface IDepartmentDao {
 
     boolean createItem(Department department);
 
+    Department getDepartmentById(String departmentId);
+
     List<Department> findAllByQuery(QuerySpec querySpec);
 
     void addNewService(String email, String departmentName, CustomerService service);

@@ -13,8 +13,17 @@ import java.util.List;
 @Service
 public class DepartmentService implements IDepartmentService {
 
-    @Autowired
     private IDepartmentDao departmentDao;
+
+    @Autowired
+    public DepartmentService(IDepartmentDao departmentDao) {
+        this.departmentDao = departmentDao;
+    }
+
+    @Override
+    public Department getDepartmentById(String departmentId) {
+        return departmentDao.getDepartmentById(departmentId);
+    }
 
     @Override
     public void addCustomerService(String email, String departmentName, CustomerService service) {

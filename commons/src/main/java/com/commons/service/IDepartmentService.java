@@ -11,5 +11,7 @@ public interface IDepartmentService {
 
     List<Department> getCustomerDepartments(String customer);
 
+    Department getDepartmentById(String departmentId);
+
     void addCustomerService(String email, String departmentName, CustomerService service);
 }

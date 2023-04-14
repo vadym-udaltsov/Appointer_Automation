@@ -5,7 +5,9 @@ import dagger.Component;
 
 import javax.inject.Singleton;
 
-@Component
+@Component(modules = {ServiceProvider.class,
+        ProcessorProvider.class
+})
 @Singleton
 public interface BotLambdaComponent {
 

@@ -1,0 +1,52 @@
+{
+  "name": "askLang",
+  "key": "any",
+  "nested": [
+    {
+      "name": "setLangAskContact",
+      "key": "any",
+      "nested": [
+        {
+          "name": "setContactStartDash",
+          "key": "any",
+          "nested": [
+            {
+              "name": "startCreateApp",
+              "key": "Create appointment",
+              "nested": [
+                {
+                  "name": "setAppDateAskSpec",
+                  "key": "any",
+                  "nested": [
+                    {
+                      "name": "setSpecAskService",
+                      "key": "any",
+                      "nested": [
+                        {
+                          "name": "setServiceAskSlot",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "createAppointment",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "startMyApps",
+              "key": "My appointments",
+              "nested": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

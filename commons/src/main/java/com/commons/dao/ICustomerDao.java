@@ -8,7 +8,7 @@ public interface ICustomerDao {
 
     boolean createItem(Customer customer);
 
-    Customer getItemByHashKeyString(String email);
+    Customer getItemByHashKey(Object email);
 
     void addCustomerDepartment(String email, Department department);
 }

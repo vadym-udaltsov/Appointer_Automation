@@ -1,5 +1,8 @@
 package com.commons.dao.impl;
 
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.commons.dao.AbstractDao;
@@ -20,6 +23,17 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     }
 
     @Override
+    public Department getDepartmentById(String departmentId) {
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("#id = :id")
+                .withNameMap(new NameMap()
+                        .with("#id", "id"))
+                .withValueMap(new ValueMap()
+                        .withString(":id", departmentId));
+        return getItemByIndexQuery(spec, Department.INDEX_NAME);
+    }
+
+    @Override
     public void addNewService(String email, String departmentName, CustomerService service) {
         String listAttributeName = "s";
         AttributeValue newService = new AttributeValue().withM(Map.of(
@@ -28,7 +42,7 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
                 "price", new AttributeValue().withN(String.valueOf(service.getPrice()))));
 
         UpdateItemRequest request = new UpdateItemRequest()
-                .withTableName("department")
+                .withTableName(Department.TABLE_NAME)
                 .withKey(Map.of(
                         "c", new AttributeValue(email),
                         "n", new AttributeValue(departmentName)))

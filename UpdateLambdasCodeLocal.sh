@@ -2,10 +2,10 @@
 
 source deployment.config
 
-lambdasLocal="adminLambda||admin||true"
+lambdasLocal="appointerBotLambda||bot||true"
 #lambdas="adminLambda||admin||true appointerBotLambda||bot||true"
 #lambdasLocal="postSignUpLambda||registration||false"
-update_layer="y"
+update_layer="n"
 
 if [ "y" = ${update_layer} ];
 then

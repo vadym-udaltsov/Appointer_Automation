@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.AttributeUpdate;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.Page;
@@ -20,6 +21,7 @@ import com.commons.model.DynamoDbEntity;
 import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,7 +84,14 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
                 .collect(Collectors.toList());
     }
 
-    public T getItemByHashKeyString(String hashKey) {
+    public T getItemByIndexQuery(QuerySpec querySpec, String indexName) {
+        Index index = dynamoDbFactory.getDynamoDB().getTable(tableName).getIndex(indexName);
+        ItemCollection<QueryOutcome> result = index.query(querySpec);
+        Item item = getItemsFromQueryResult(result).get(0);
+        return JsonUtils.parseStringToObject(item.toJSON(), tClass);
+    }
+
+    public T getItemByHashKey(Object hashKey) {
         log.info("Getting object from table: {} with hashKey: {}", tableName, hashKey);
         T item = getMapper().load(tClass, hashKey);
         log.info("Successfully got item from table: {}, hash key: {}", tableName, hashKey);

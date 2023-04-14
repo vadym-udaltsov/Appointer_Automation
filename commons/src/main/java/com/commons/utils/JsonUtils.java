@@ -2,6 +2,7 @@ package com.commons.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,20 +41,20 @@ public class JsonUtils {
         }
     }
 
-    public static <T> T getObjectFromInputStreamByType(InputStream json, TypeReference<T> type) {
+    public static <T> T parseInputStreamToObject(InputStream json, TypeReference<T> type) {
         try {
             return MAPPER.readValue(json, type);
         } catch (IOException e) {
             log.error("Error during paring inputStream");
-            throw new RuntimeException("Error during paring inputStream", e);
+            throw new RuntimeException("Error during parsing inputStream", e);
         }
     }
 
-    public static <T> T getObjectFromInputStream(Class<T> type, InputStream json) {
+    public static JsonNode parseStreamToJsonNode(InputStream stream) {
         try {
-            return MAPPER.readValue(json, type);
+            return MAPPER.readTree(stream);
         } catch (IOException e) {
-            log.error("Error during paring inputStream");
+            log.error("Error during parsing inputStream");
             throw new RuntimeException("Error during paring inputStream", e);
         }
     }

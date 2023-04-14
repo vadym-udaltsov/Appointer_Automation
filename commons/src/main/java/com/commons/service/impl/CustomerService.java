@@ -24,7 +24,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer getCustomerByEmail(String email) {
-        return customerDao.getItemByHashKeyString(email);
+        return customerDao.getItemByHashKey(email);
     }
 
     @Override
