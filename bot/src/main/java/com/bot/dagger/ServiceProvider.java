@@ -1,11 +1,14 @@
 package com.bot.dagger;
 
+import com.bot.dao.IAppointmentDao;
 import com.bot.dao.IContextDao;
 import com.bot.lambda.TelegramBot;
 import com.bot.localization.ILocalizer;
 import com.bot.localization.Localizer;
 import com.bot.processor.IProcessorFactory;
+import com.bot.service.IAppointmentService;
 import com.bot.service.IContextService;
+import com.bot.service.impl.AppointmentService;
 import com.bot.service.impl.ContextService;
 import com.commons.dao.IDepartmentDao;
 import com.commons.service.IDepartmentService;
@@ -24,6 +27,12 @@ public class ServiceProvider {
     public TelegramBot botExecutor(IProcessorFactory factory, IContextService contextService,
                                    IDepartmentService departmentService, ILocalizer localizer) {
         return new TelegramBot(factory, contextService, departmentService, localizer);
+    }
+
+    @Provides
+    @Singleton
+    IAppointmentService appointmentService(IAppointmentDao appointmentDao) {
+        return new AppointmentService(appointmentDao);
     }
 
     @Provides

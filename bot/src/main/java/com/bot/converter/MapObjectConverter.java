@@ -1,23 +1,29 @@
 package com.bot.converter;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemUtils;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.commons.utils.JsonUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Serhii_Udaltsov on 5/1/2021
  */
-public class MapObjectConverter implements DynamoDBTypeConverter<String, Map<String, Object>> {
+public class MapObjectConverter implements DynamoDBTypeConverter<Map<String, AttributeValue>, Map<String, Object>> {
 
     @Override
-    public String convert(Map<String, Object> map) {
-        return JsonUtils.convertObjectToString(map);
+    public Map<String, Object> unconvert(Map<String, AttributeValue> attributeValueMap) {
+        return attributeValueMap.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> ItemUtils.toSimpleValue(e.getValue())));
     }
 
     @Override
-    public Map<String, Object> unconvert(String mapJson) {
-        return JsonUtils.parseStringToObject(mapJson, new TypeReference<>(){});
+    public Map<String, AttributeValue> convert(Map<String, Object> map) {
+        Item item = new Item().withJSON("document", JsonUtils.convertObjectToString(map));
+        Map<String, AttributeValue> attributes = ItemUtils.toAttributeValues(item);
+        return attributes.get("document").getM();
     }
 }

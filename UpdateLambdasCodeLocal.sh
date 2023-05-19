@@ -5,7 +5,7 @@ source deployment.config
 lambdasLocal="appointerBotLambda||bot||true"
 #lambdas="adminLambda||admin||true appointerBotLambda||bot||true"
 #lambdasLocal="postSignUpLambda||registration||false"
-update_layer="n"
+update_layer="y"
 
 if [ "y" = ${update_layer} ];
 then

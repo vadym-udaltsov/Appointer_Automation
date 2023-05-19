@@ -53,10 +53,19 @@ public class Department extends DynamoDbEntity {
     private String token;
 
     @JsonProperty("as")
-    private List<String> availableSpecialists = new ArrayList<>();
+    private List<Specialist> availableSpecialists = new ArrayList<>();
 
     @JsonProperty("s")
     private List<CustomerService> services = new ArrayList<>();
+
+    @JsonProperty("sw")
+    private int startWork;
+
+    @JsonProperty("ew")
+    private int endWork;
+
+    @JsonProperty("z")
+    private int zoneOffset;
 
     @Override
     @JsonIgnore

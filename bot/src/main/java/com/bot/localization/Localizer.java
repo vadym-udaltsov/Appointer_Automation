@@ -12,8 +12,10 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
@@ -75,6 +77,15 @@ public class Localizer implements ILocalizer {
             List<KeyboardRow> rows = replyMarkup.getKeyboard();
             for (KeyboardRow row : rows) {
                 for (KeyboardButton button : row) {
+                    button.setText(localizeString(button.getText(), dictionary));
+                }
+            }
+        }
+        if (keyboard instanceof InlineKeyboardMarkup) {
+            InlineKeyboardMarkup inlineKeyboard = (InlineKeyboardMarkup) keyboard;
+            List<List<InlineKeyboardButton>> rows = inlineKeyboard.getKeyboard();
+            for (List<InlineKeyboardButton> row : rows) {
+                for (InlineKeyboardButton button : row) {
                     button.setText(localizeString(button.getText(), dictionary));
                 }
             }

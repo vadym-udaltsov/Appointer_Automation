@@ -7,7 +7,11 @@ public abstract class DynamoDbEntity {
 
     public abstract PrimaryKey getPrimaryKey();
 
-    public abstract Item toItem();
+    public Item toItem() {
+        return new Item();
+    }
 
-    public abstract String getCondition();
+    public String getCondition() {
+        return "";
+    }
 }

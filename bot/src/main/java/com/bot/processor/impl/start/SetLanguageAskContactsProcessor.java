@@ -1,11 +1,12 @@
 package com.bot.processor.impl.start;
 
-import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
+import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.service.IContextService;
 import com.bot.util.MessageUtils;
+import com.commons.model.Department;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MarkerFactory;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -23,7 +24,8 @@ public class SetLanguageAskContactsProcessor implements IProcessor {
     }
 
     @Override
-    public List<MessageHolder> processRequest(Update update, Context context) {
+    public List<MessageHolder> processRequest(ProcessRequest request) {
+        Update update = request.getUpdate();
         long id = MessageUtils.getUserIdFromUpdate(update);
         String languageName = MessageUtils.getTextFromUpdate(update);
         Language language = Language.fromValue(languageName);
@@ -31,8 +33,9 @@ public class SetLanguageAskContactsProcessor implements IProcessor {
             log.warn(MarkerFactory.getMarker("SEV3"), "Default dictionary will be used");
             return Collections.singletonList(MessageUtils.getLanguageMessageHolder());
         }
-        contextService.updateLocale(id, language);
-        context.setLanguage(language);
+        Department department = request.getDepartment();
+        contextService.updateLocale(id, department.getId(), language);
+        request.getContext().setLanguage(language);
         MessageHolder holder = MessageUtils.getContactsMessageHolder();
         return Collections.singletonList(holder);
     }

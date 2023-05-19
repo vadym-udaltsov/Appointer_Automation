@@ -25,15 +25,24 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
     }
 
     @Override
-    public Context getContext(long userId) {
-        return getItemByHashKey(userId);
+    public void updateContext(Context context) {
+        overwriteItem(context);
+    }
+
+    @Override
+    public Context getContext(long userId, String departmentId) {
+        Context context = new Context();
+        context.setUserId(userId);
+        context.setDepartmentId(departmentId);
+        return getItem(context);
     }
 
     @Override
     public void resetLocationToDashboard(Context context) {
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Context.TABLE_NAME)
-                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId()))))
+                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId())),
+                        Context.RANGE_KEY, new AttributeValue().withS(context.getDepartmentId())))
                 .withUpdateExpression("SET n = :newLocation")
                 .withExpressionAttributeValues(Map.of(":newLocation",
                         new AttributeValue().withL(
@@ -47,17 +56,19 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
     public void setPhoneNumber(Context context, String number) {
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Context.TABLE_NAME)
-                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId()))))
+                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId())),
+                        Context.RANGE_KEY, new AttributeValue().withS(context.getDepartmentId())))
                 .withUpdateExpression("SET pn = :phoneNumber")
                 .withExpressionAttributeValues(Map.of(":phoneNumber", new AttributeValue(number)));
         updateItem(request);
     }
 
     @Override
-    public void updateLocale(long id, Language language) {
+    public void updateLocale(long id, String departmentId, Language language) {
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Context.TABLE_NAME)
-                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(id))))
+                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(id)),
+                        Context.RANGE_KEY, new AttributeValue().withS(departmentId)))
                 .addAttributeUpdatesEntry(Context.LOCALE_FIELD,
                         new AttributeValueUpdate().withValue(new AttributeValue(language.name())));
         updateItem(request);
@@ -66,10 +77,10 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
     @Override
     public void updateLocation(Context context, String location) {
         List<String> navigation = context.getNavigation();
-
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Context.TABLE_NAME)
-                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId()))))
+                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId())),
+                        Context.RANGE_KEY, new AttributeValue().withS(context.getDepartmentId())))
                 .withUpdateExpression("SET n[" + (navigation.size()) + "] = :newLocation")
                 .withConditionExpression("NOT contains(n, :newLocation)")
                 .withExpressionAttributeValues(Map.of(":newLocation", new AttributeValue(location)));
@@ -82,7 +93,8 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
 
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Context.TABLE_NAME)
-                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId()))))
+                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId())),
+                        Context.RANGE_KEY, new AttributeValue().withS(context.getDepartmentId())))
                 .withUpdateExpression("REMOVE n[" + (navigation.size() - 1) + "]");
         updateItem(request);
     }

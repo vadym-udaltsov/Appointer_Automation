@@ -3,13 +3,17 @@ package com.bot.service.impl;
 import com.bot.dao.IContextDao;
 import com.bot.model.Context;
 import com.bot.model.Language;
+import com.bot.model.Strategy;
 import com.bot.service.IContextService;
+import com.bot.util.Constants;
 import com.bot.util.MessageUtils;
+import com.bot.util.StrategyProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,12 +22,17 @@ public class ContextService implements IContextService {
     private final IContextDao contextDao;
 
     @Override
-    public Context getContext(Update update) {
-        return contextDao.getContext(MessageUtils.getUserIdFromUpdate(update));
+    public Context getContext(Update update, String departmentId) {
+        return contextDao.getContext(MessageUtils.getUserIdFromUpdate(update), departmentId);
     }
 
     @Override
-    public void save(Context context) {
+    public void update(Context context) {
+        contextDao.updateContext(context);
+    }
+
+    @Override
+    public void create(Context context) {
         contextDao.saveContext(context);
     }
 
@@ -31,6 +40,13 @@ public class ContextService implements IContextService {
     public void setPhoneNumber(Context context, String number) {
         log.info("Setting phone number: {} to context id: {}", number, context.getUserId());
         contextDao.setPhoneNumber(context, number);
+    }
+
+    @Override
+    public void skipNextStep(Context context, String nextStepKey) {
+        Strategy nextStep = StrategyProvider.getStrategyByLocationAndKey(context.getNavigation(), Constants.ANY);
+        context.getNavigation().add(nextStep.getName());
+        update(context);
     }
 
     @Override
@@ -42,7 +58,10 @@ public class ContextService implements IContextService {
     @Override
     public void resetLocationToDashboard(Context context) {
         log.info("Resetting location to dashboard");
-        contextDao.resetLocationToDashboard(context);
+        context.setParams(Map.of());
+        context.setNavigation(List.of(Constants.Processors.ASK_LANG, Constants.Processors.SET_LANG_ASK_CONT,
+                Constants.Processors.SET_CONT_START_DASH));
+        contextDao.updateContext(context);
     }
 
     @Override
@@ -53,7 +72,7 @@ public class ContextService implements IContextService {
     }
 
     @Override
-    public void updateLocale(long id, Language language) {
-        contextDao.updateLocale(id, language);
+    public void updateLocale(long id, String departmentId, Language language) {
+        contextDao.updateLocale(id, departmentId, language);
     }
 }

@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * @author Serhii_Udaltsov on 12/24/2021
@@ -17,9 +18,9 @@ public enum ButtonsType {
     DATE_PICKER(KeyBoardUtils::buildDatePicker),
     INLINE(KeyBoardUtils::buildInlineKeyboard);
 
-    private final BiFunction<Map<String, String>, KeyBoardType, ReplyKeyboard> buttonsFunction;
+    private final Function<BuildKeyboardRequest, ReplyKeyboard> buttonsFunction;
 
-    ButtonsType(BiFunction<Map<String, String>, KeyBoardType, ReplyKeyboard> buttonsFunction) {
+    ButtonsType(Function<BuildKeyboardRequest, ReplyKeyboard> buttonsFunction) {
         this.buttonsFunction = buttonsFunction;
     }
 }

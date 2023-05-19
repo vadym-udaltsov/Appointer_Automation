@@ -22,5 +22,6 @@ public class MessageHolder {
     private KeyBoardType keyBoardType;
     private ButtonsType buttonsType;
     private boolean withCommonButtons;
+    private BuildKeyboardRequest keyboardRequest;
     private Map<String, String> placeholders = new HashMap<>();
 }

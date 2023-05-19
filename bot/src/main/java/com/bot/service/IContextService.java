@@ -6,11 +6,15 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 public interface IContextService {
 
-    Context getContext(Update update);
+    Context getContext(Update update, String departmentId);
 
-    void save(Context context);
+    void create(Context context);
 
-    void updateLocale(long id, Language language);
+    void update(Context context);
+
+    void updateLocale(long id, String departmentId, Language language);
+
+    void skipNextStep(Context context, String nextStepKey);
 
     void removeLastLocation(Context context);
 

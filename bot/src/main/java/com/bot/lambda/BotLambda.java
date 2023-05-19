@@ -6,6 +6,7 @@ import com.bot.dagger.DaggerBotLambdaComponent;
 import com.commons.model.ProxyResponse;
 import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.Getter;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+@Getter
 public class BotLambda implements RequestStreamHandler {
 
     TelegramBot botExecutor;
@@ -40,12 +42,9 @@ public class BotLambda implements RequestStreamHandler {
         output.write(JsonUtils.convertObjectToString(response).getBytes(StandardCharsets.UTF_8));
     }
 
-    public void testMethod(Update update) {
-        botExecutor.processBotMessage("9de82f54", update);
-    }
-
     @Inject
     public void setTelegramBot(TelegramBot telegramBot) {
         this.botExecutor = telegramBot;
     }
+
 }

@@ -1,5 +1,6 @@
 package com.bot.util;
 
+import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.Button;
 import com.bot.model.ButtonsType;
 import com.bot.model.KeyBoardType;
@@ -12,6 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Contact;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
+import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,8 +28,11 @@ public class MessageUtils {
     private static final List<String> DASHBOARD = Arrays.asList("Create appointment", "My appointments");
 
     public static MessageHolder getLanguageMessageHolder() {
-        return holder(MessageUtils.getFlags(), "Select language",
-                KeyBoardType.VERTICAL, false, ButtonsType.INLINE);
+        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.VERTICAL)
+                .buttonsMap(buildButtons(commonButtons(getFlags()), false))
+                .build();
+        return holder("Select language", ButtonsType.INLINE, request);
     }
 
     public static List<String> getFlags() {
@@ -37,8 +42,11 @@ public class MessageUtils {
     }
 
     public static MessageHolder getContactsMessageHolder() {
-        return holder(Collections.singletonList(Constants.Messages.SHARE_CONTACT), Constants.Messages.SHARE_CONTACT,
-                KeyBoardType.VERTICAL, false, ButtonsType.CONTACTS);
+        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.VERTICAL)
+                .buttonsMap(buildButtons(commonButtons(Collections.singletonList(Constants.Messages.SHARE_CONTACT)), false))
+                .build();
+        return holder(Constants.Messages.SHARE_CONTACT, ButtonsType.CONTACTS, request);
     }
 
     public static long getUserIdFromUpdate(Update update) {
@@ -58,18 +66,19 @@ public class MessageUtils {
     }
 
     public static MessageHolder buildDashboardHolder() {
-        return holder(DASHBOARD, "Select action", KeyBoardType.TWO_ROW, false,
-                ButtonsType.KEYBOARD);
+        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.TWO_ROW)
+                .buttonsMap(buildButtons(commonButtons(DASHBOARD), false))
+                .build();
+        return holder("Select action", ButtonsType.KEYBOARD, request);
     }
 
-    public static MessageHolder holder(List<String> titles, String message, KeyBoardType type,
-                                       boolean withCommonButtons, ButtonsType buttonsType) {
+    public static MessageHolder holder(String message, ButtonsType buttonsType,
+                                       BuildKeyboardRequest request) {
         return MessageHolder.builder()
-                .withCommonButtons(withCommonButtons)
                 .message(message)
-                .buttons(commonButtons(titles))
                 .buttonsType(buttonsType)
-                .keyBoardType(type)
+                .keyboardRequest(request)
                 .build();
     }
 
@@ -83,10 +92,9 @@ public class MessageUtils {
 
     public static SendMessage buildMessage(MessageHolder holder, long operatorId) {
         SendMessage sendMessage = new SendMessage(String.valueOf(operatorId), holder.getMessage());
-        Map<String, String> buttonsMap = buildButtons(holder.getButtons(), holder.isWithCommonButtons());
         ReplyKeyboard keyboard = holder.getButtonsType()
                 .getButtonsFunction()
-                .apply(buttonsMap, holder.getKeyBoardType());
+                .apply(holder.getKeyboardRequest());
         sendMessage.setReplyMarkup(keyboard);
         return sendMessage;
     }
@@ -110,6 +118,13 @@ public class MessageUtils {
             return callbackQuery.getData();
         }
         return update.getMessage().getText();
+    }
+
+    public static void setTextToUpdate(Update update, String text) {
+        update.setCallbackQuery(null);
+        Message message = new Message();
+        message.setText(text);
+        update.setMessage(message);
     }
 
     public static Map<String, String> commonButtonsMap() {

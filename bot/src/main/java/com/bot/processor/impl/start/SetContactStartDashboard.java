@@ -2,6 +2,7 @@ package com.bot.processor.impl.start;
 
 import com.bot.model.Context;
 import com.bot.model.MessageHolder;
+import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
@@ -19,7 +20,9 @@ public class SetContactStartDashboard implements IProcessor {
     private final IContextService contextService;
 
     @Override
-    public List<MessageHolder> processRequest(Update update, Context context) throws TelegramApiException {
+    public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
+        Update update = request.getUpdate();
+        Context context = request.getContext();
         String text = MessageUtils.getTextFromUpdate(update);
         if (Constants.BACK.equals(text) || Constants.HOME.equals(text)) {
             return List.of(MessageUtils.buildDashboardHolder());

@@ -16,8 +16,11 @@ public enum CommandType {
     SET_CONT_START_DASH(Constants.Processors.SET_CONT_START_DASH),
 
     //appointment
-    START_CREATE_APP(Constants.Processors.START_CREATE_APP),
-    SET_APP_DATE_ASK_SPECIALIST(Constants.Processors.SET_APP_DATE_ASK_SPEC),
+    CREATE_APP_1(Constants.Processors.START_CREATE_APP),
+    CREATE_APP_2(Constants.Processors.SET_APP_DATE_ASK_SPEC),
+    CREATE_APP_3(Constants.Processors.SET_SPEC_ASK_SERVICE),
+    CREATE_APP_4(Constants.Processors.SET_SERVICE_ASK_SLOT),
+    CREATE_APP_5(Constants.Processors.CREATE_APPOINTMENT),
     MY_APPOINTMENTS(Constants.Processors.MY_APPS);
 
     private final String value;

@@ -1,6 +1,9 @@
 package com.bot.util;
 
+import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.KeyBoardType;
+import com.commons.model.Department;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -8,44 +11,62 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * @author Serhii_Udaltsov on 4/8/2021
  */
+@Slf4j
 public class KeyBoardUtils {
 
-    public static InlineKeyboardMarkup buildDatePicker(Map<String, String> buttonsMap, KeyBoardType type) {
+    public static InlineKeyboardMarkup buildDatePicker(BuildKeyboardRequest request) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+
+        Map<String, Object> params = request.getParams();
+        Department department = (Department) params.get("department");
+        boolean isNextMonth = (boolean) params.get("isNextMonth");
 
         LocalDate currentDate = LocalDate.now();
         int currentMonth = currentDate.getMonthValue();
         int currentYear = currentDate.getYear();
+        int currentDay = currentDate.getDayOfMonth();
+
+        long endOfWorkingDay = DateUtils.getPointOfDay(currentMonth, currentDay, department.getEndWork());
+        long now = DateUtils.now(department);
+
+        boolean todayIsFinished = now > endOfWorkingDay;
+        Set<String> busyDays = request.getButtonsMap().keySet();
+
+        if (isNextMonth) {
+            currentMonth++;
+            currentDay = 1;
+            todayIsFinished = false;
+        } else {
+            List<InlineKeyboardButton> firstRow = new ArrayList<>();
+            firstRow.add(buildButton(busyDays, currentDay, todayIsFinished ? Constants.UNAVAILABLE_DATE : Constants.TODAY));
+            firstRow.add(buildButton(busyDays, currentDay + 1, Constants.TOMORROW));
+            keyboard.add(firstRow);
+        }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd");
-
-        List<InlineKeyboardButton> firstRow = new ArrayList<>();
-        InlineKeyboardButton todayButton = new InlineKeyboardButton();
-        todayButton.setText("Today");
-        todayButton.setCallbackData("Today");
-        firstRow.add(todayButton);
-
-        InlineKeyboardButton tomorrowButton = new InlineKeyboardButton();
-        tomorrowButton.setText("Tomorrow");
-        tomorrowButton.setCallbackData("Tomorrow");
-        firstRow.add(tomorrowButton);
-        keyboard.add(firstRow);
-
         List<InlineKeyboardButton> dayTitlesRow = new ArrayList<>();
         for (String dayTitle : Constants.DAY_TITLES) {
             InlineKeyboardButton titleButton = new InlineKeyboardButton();
             titleButton.setText(dayTitle);
-            titleButton.setCallbackData("ignore");
+            titleButton.setCallbackData(Constants.IGNORE);
             dayTitlesRow.add(titleButton);
         }
         keyboard.add(dayTitlesRow);
@@ -53,44 +74,56 @@ public class KeyBoardUtils {
         Month month = Month.of(currentMonth);
         LocalDate date = LocalDate.of(currentYear, currentMonth, 1);
         int daysInMonth = month.length(currentDate.isLeapYear());
-        int todaysDay = currentDate.getDayOfMonth();
         for (int i = 1; i <= daysInMonth; i++) {
             if (i == 1 || date.getDayOfWeek().getValue() == 1) {
                 List<InlineKeyboardButton> row = new ArrayList<>();
                 keyboard.add(row);
             }
-
             String buttonText;
-            if (i < todaysDay) {
+            if (i < currentDay || (i == currentDay && todayIsFinished) || busyDays.contains(String.valueOf(i))) {
                 buttonText = Constants.UNAVAILABLE_DATE;
             } else {
                 buttonText = date.format(formatter);
             }
             InlineKeyboardButton dateButton = new InlineKeyboardButton();
             dateButton.setText(buttonText);
-            dateButton.setCallbackData(buttonText.equals(Constants.UNAVAILABLE_DATE) ? "ignore" : buttonText);
+            dateButton.setCallbackData(buttonText.equals(Constants.UNAVAILABLE_DATE) ? Constants.IGNORE : buttonText);
+            int previousMonthDays = date.getDayOfWeek().getValue() - i;
+            if (i == 1 && previousMonthDays != 0) {
+                InlineKeyboardButton emptyButton = new InlineKeyboardButton();
+                emptyButton.setText(Constants.EMPTY_DATE);
+                emptyButton.setCallbackData(Constants.IGNORE);
+                IntStream.range(0, previousMonthDays).forEach(n -> keyboard.get(keyboard.size() - 1).add(emptyButton));
+            }
             keyboard.get(keyboard.size() - 1).add(dateButton);
-
             date = date.plusDays(1);
         }
-        Month nextMoth = month.plus(1);
+        List<InlineKeyboardButton> lastDaysRow = keyboard.get(keyboard.size() - 1);
+        int lastDaysRowSize = lastDaysRow.size();
+        if (lastDaysRowSize < Constants.DAYS_IN_WEEK) {
+            InlineKeyboardButton emptyButton = new InlineKeyboardButton();
+            emptyButton.setText(Constants.EMPTY_DATE);
+            emptyButton.setCallbackData(Constants.IGNORE);
+            IntStream.range(lastDaysRowSize, Constants.DAYS_IN_WEEK).forEach(n -> lastDaysRow.add(emptyButton));
+        }
+        Month nextMoth = month.plus(isNextMonth ? -1 : 1);
         List<InlineKeyboardButton> lastRow = new ArrayList<>();
         InlineKeyboardButton nextMonthButton = new InlineKeyboardButton();
         nextMonthButton.setText(nextMoth.name());
-        nextMonthButton.setCallbackData(nextMoth.name());
+        nextMonthButton.setCallbackData(isNextMonth ? Constants.CURRENT_MONTH : Constants.NEXT_MONTH);
         lastRow.add(nextMonthButton);
         keyboard.add(lastRow);
-        keyboard.removeIf(r -> r.stream().allMatch(b -> b.getText().equals(Constants.UNAVAILABLE_DATE)));
+        keyboard.removeIf(r -> r.stream().allMatch(b -> Constants.UNAVAILABLE_DATE.equals(b.getText())));
         inlineKeyboardMarkup.setKeyboard(keyboard);
         return inlineKeyboardMarkup;
     }
 
-    public static InlineKeyboardMarkup buildInlineKeyboard(Map<String, String> buttonsMap, KeyBoardType type) {
+    public static InlineKeyboardMarkup buildInlineKeyboard(BuildKeyboardRequest request) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        for (Map.Entry<String, String> entry : buttonsMap.entrySet()) {
-            if (rowInline.size() == type.getElementsInRow()) {
+        for (Map.Entry<String, String> entry : request.getButtonsMap().entrySet()) {
+            if (rowInline.size() == request.getType().getElementsInRow()) {
                 rowsInline.add(rowInline);
                 rowInline = new ArrayList<>();
             }
@@ -104,7 +137,9 @@ public class KeyBoardUtils {
         return markupInline;
     }
 
-    public static ReplyKeyboardMarkup buildReplyKeyboard(Map<String, String> buttonsMap, KeyBoardType type) {
+    public static ReplyKeyboardMarkup buildReplyKeyboard(BuildKeyboardRequest request) {
+        Map<String, String> buttonsMap = request.getButtonsMap();
+        KeyBoardType type = request.getType();
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         List<KeyboardRow> rows = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
@@ -125,7 +160,7 @@ public class KeyBoardUtils {
         return keyboard;
     }
 
-    public static ReplyKeyboardMarkup buildContactsKeyboard(Map<String, String> buttonsMap, KeyBoardType type) {
+    public static ReplyKeyboardMarkup buildContactsKeyboard(BuildKeyboardRequest request) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
@@ -144,4 +179,13 @@ public class KeyBoardUtils {
         return replyKeyboardMarkup;
     }
 
+    private static InlineKeyboardButton buildButton(Set<String> busyDays, int currentDay, String value) {
+        String currentDayValue = String.valueOf(currentDay);
+        String todayTitle = busyDays.contains(currentDayValue) ? Constants.UNAVAILABLE_DATE : value;
+        String todayCallBack = Constants.UNAVAILABLE_DATE.equals(todayTitle) ? Constants.IGNORE : currentDayValue;
+        InlineKeyboardButton button = new InlineKeyboardButton();
+        button.setText(todayTitle);
+        button.setCallbackData(todayCallBack);
+        return button;
+    }
 }

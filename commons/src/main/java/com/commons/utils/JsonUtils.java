@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 @Slf4j
 public class JsonUtils {
@@ -47,6 +48,32 @@ public class JsonUtils {
         } catch (IOException e) {
             log.error("Error during paring inputStream");
             throw new RuntimeException("Error during parsing inputStream", e);
+        }
+    }
+
+    public static Map<String, Object> parseObjectToMap(Object object) {
+        try {
+            String sVal = MAPPER.writeValueAsString(object);
+            return MAPPER.readValue(sVal, new TypeReference<>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error during parsing object to map", e);
+        }
+    }
+
+    public static <T> T parseMapToObject(Map<String, Object> map, Class<T> tClass) {
+        try {
+            return MAPPER.readValue(convertObjectToString(map), tClass);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error during parsing map to object", e);
+        }
+    }
+
+    public static <T> T parseMapToObject(Map<String, Object> map) {
+        try {
+            return MAPPER.readValue(convertObjectToString(map), new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error during parsing map to object", e);
         }
     }
 

@@ -9,8 +9,20 @@
   "Home": "Главная",
   "Share your number": "Показать номер",
   "Select date": "Выбери дату",
+  "Select available date": "Выбери доступную дату",
+
   "APRIL": "Апрель",
   "MAY": "Май",
+  "JUNE": "Июнь",
+
   "Today": "Сегодня",
-  "Tomorrow": "Завтра"
+  "Tomorrow": "Завтра",
+
+  "Mon": "Пн",
+  "Tue": "Вт",
+  "Wed": "Ср",
+  "Thu": "Чт",
+  "Fri": "Пт",
+  "Sat": "Сб",
+  "Sun": "Вс"
 }
