@@ -6,7 +6,6 @@ import com.bot.model.MessageHolder;
 import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -18,6 +17,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import software.amazon.awssdk.utils.StringUtils;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -55,10 +55,6 @@ public class Localizer implements ILocalizer {
         Map<String, String> dictionary = getDictionary(language);
         for (MessageHolder holder : holders) {
             holder.setMessage(localize(holder.getMessage(), dictionary, holder.getPlaceholders()));
-//            List<Button> buttons = holder.getButtons();
-//            for (Button button : buttons) {
-//                button.setValue(localize(button.getValue(), dictionary, holder.getPlaceholders()));
-//            }
         }
     }
 

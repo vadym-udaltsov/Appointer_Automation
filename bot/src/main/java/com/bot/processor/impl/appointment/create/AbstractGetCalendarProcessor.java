@@ -3,9 +3,12 @@ package com.bot.processor.impl.appointment.create;
 import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
+import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.service.IAppointmentService;
+import com.bot.service.IContextService;
+import com.bot.util.Constants;
 import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.CustomerService;
@@ -13,8 +16,8 @@ import com.commons.model.Department;
 import com.commons.model.Specialist;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
+import software.amazon.awssdk.utils.Pair;
+import software.amazon.awssdk.utils.StringUtils;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -35,12 +38,12 @@ public class AbstractGetCalendarProcessor {
 
     private final IAppointmentService appointmentService;
 
-    public List<MessageHolder> buildResponse(Department department, boolean isNextMonth, String message) {
+    public List<MessageHolder> buildResponse(Department department, boolean isNextMonth, String message, Context context) {
         List<Specialist> specialists = department.getAvailableSpecialists();
         if (specialists.isEmpty()) {
             throw new RuntimeException("Specialists list can not be empty");
         }
-        List<String> specialistIds = specialists.stream().map(Specialist::getId).collect(Collectors.toList());
+        List<String> specialistNames = specialists.stream().map(Specialist::getName).collect(Collectors.toList());
 
         long startDate = DateUtils.now(department);
         LocalDateTime endDateTime = LocalDate.now()
@@ -57,7 +60,7 @@ public class AbstractGetCalendarProcessor {
             month = month.plus(1);
         }
 
-        List<Appointment> allAppointments = appointmentService.getAppointmentsBySpecialists(specialistIds, startDate, endDate);
+        List<Appointment> allAppointments = appointmentService.getAppointmentsBySpecialists(specialistNames, startDate, endDate);
 
         List<String> busyDayTitles = allAppointments.isEmpty() ? List.of() : defineBusyDayTitles(allAppointments,
                 department, month.getValue());
@@ -71,34 +74,51 @@ public class AbstractGetCalendarProcessor {
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(busyDayTitles), false))
-                .params(Map.of("department", department, "isNextMonth", isNextMonth))
+                .params(Map.of(
+                        Constants.DEPARTMENT, department,
+                        Constants.IS_NEXT_MONTH, isNextMonth,
+                        Constants.CONTEXT, context))
                 .build();
         MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER, datePickerRequest);
         return List.of(commonButtonsHolder, datePicker);
     }
 
     private List<String> defineBusyDayTitles(List<Appointment> allAppointments, Department department, int month) {
+
         List<Pair<String, List<Appointment>>> appointmentsBySpecialist = allAppointments.stream()
                 .collect(Collectors.groupingBy(Appointment::getSpecialist))
                 .entrySet().stream()
                 .map(e -> Pair.of(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
+        List<String> specialistsWithAppointments = appointmentsBySpecialist.stream()
+                .map(Pair::left)
+                .collect(Collectors.toList());
+
+        List<Specialist> specialists = department.getAvailableSpecialists();
+        for (Specialist specialist : specialists) {
+            if (!specialistsWithAppointments.contains(specialist.getName())) {
+                appointmentsBySpecialist.add(Pair.of(specialist.getName(), List.of()));
+            }
+        }
 
         Pair<String, List<Appointment>> firstPair = appointmentsBySpecialist.get(0);
-        List<Integer> busyDays = getBusyDays(firstPair.getValue(), department, month);
+        List<Integer> busyDays = getBusyDays(firstPair.right(), department, month);
         if (!busyDays.isEmpty() && appointmentsBySpecialist.size() > 1) {
             busyDays.removeIf(bd -> appointmentsBySpecialist.stream()
                     .skip(1)
-                    .allMatch(pair -> isDayBusyForSpecialist(bd, pair.getValue(), department, month)));
+                    .anyMatch(pair -> isDayAvailableForSpecialist(bd, pair.right(), department, month)));
         }
         return busyDays.stream().map(String::valueOf).collect(Collectors.toList());
     }
 
-    private boolean isDayBusyForSpecialist(int dayOfMonth, List<Appointment> appointments, Department department, int month) {
+    private boolean isDayAvailableForSpecialist(int dayOfMonth, List<Appointment> appointments, Department department, int month) {
+        if (appointments == null || appointments.size() == 0) {
+            return true;
+        }
         Map<Integer, List<Appointment>> appointmentsByDays = getAppointmentsByDays(appointments);
         List<Appointment> appointmentsForDay = appointmentsByDays.get(dayOfMonth);
         if (appointmentsForDay == null) {
-            return false;
+            return true;
         }
         return freeSlotsAvailable(appointmentsForDay, dayOfMonth, department, month);
     }

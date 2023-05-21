@@ -41,8 +41,8 @@ public class ProcessorProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CREATE_APP_1)
-    public IProcessor createAppFirst(IAppointmentService appointmentService, IContextService contextService) {
-        return new CreateAppointmentFirstStepProcessor(appointmentService, contextService);
+    public IProcessor createAppFirst(IAppointmentService appointmentService) {
+        return new CreateAppointmentFirstStepProcessor(appointmentService);
     }
 
     @Provides

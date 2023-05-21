@@ -14,10 +14,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+import software.amazon.awssdk.utils.StringUtils;
 
-import javax.print.attribute.standard.MediaSize;
-import javax.validation.constraints.Max;
 import java.util.List;
 import java.util.Map;
 

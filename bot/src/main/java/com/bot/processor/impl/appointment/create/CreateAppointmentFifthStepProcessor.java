@@ -1,7 +1,10 @@
 package com.bot.processor.impl.appointment.create;
 
 import com.bot.model.Appointment;
+import com.bot.model.BuildKeyboardRequest;
+import com.bot.model.ButtonsType;
 import com.bot.model.Context;
+import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
@@ -19,6 +22,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -38,6 +42,16 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         String month = ContextUtils.getStringParam(context, Constants.MONTH);
         String day = ContextUtils.getStringParam(context, Constants.SELECTED_DAY);
         String timeString = MessageUtils.getTextFromUpdate(update);
+        List<String> availableSlots = (List<String>) context.getParams().get(Constants.AVAILABLE_SLOTS);
+        if (!availableSlots.contains(timeString)) {
+            BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
+                    .type(KeyBoardType.FOUR_ROW)
+                    .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(availableSlots), true))
+                    .build();
+            MessageHolder holder = MessageUtils.holder("Select time from proposed", ButtonsType.KEYBOARD, holderRequest);
+            contextService.setPreviousStep(context);
+            return List.of(holder);
+        }
         int year = DateUtils.getNumberOfCurrentYear(department);
         String[] timeParts = timeString.split(":");
         int hour = Integer.parseInt(timeParts[0]);
@@ -52,6 +66,8 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
                 .build();
         appointmentService.save(appointment);
         contextService.resetLocationToDashboard(context);
-        return List.of(MessageUtils.buildDashboardHolder());
+        String date = localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm"));
+        String message = String.format("Created appointment\n%s\nservice - %s\nspecialist - %s\n", date, serviceName, specialist);
+        return List.of(MessageUtils.buildDashboardHolder(message));
     }
 }

@@ -28,6 +28,10 @@ public class DateUtils {
         return LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
     }
 
+    public static int getDayOfWeek(int year, int month, int day) {
+        return LocalDate.of(year, month, day).getDayOfWeek().getValue();
+    }
+
     public static int getNumberOfCurrentDay(Department department) {
         return LocalDateTime.now().plusHours(department.getZoneOffset()).getDayOfMonth();
     }

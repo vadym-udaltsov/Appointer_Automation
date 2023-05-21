@@ -36,11 +36,6 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public List<Appointment> getAppointmentsBySpecialist(String specialistId, long startDate, long finishDate) {
-        return appointmentDao.getAppointmentsBySpecialist(specialistId, startDate, finishDate);
-    }
-
-    @Override
     public Map<String, List<FreeSlot>> getFreeSlotsBySpecialists(List<String> specialistIds, Department department,
                                                                  int month, int dayNumber) {
         long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork());
@@ -88,7 +83,7 @@ public class AppointmentService implements IAppointmentService {
         List<Specialist> departmentSpecialists = department.getAvailableSpecialists();
 
         for (Specialist specialist : departmentSpecialists) {
-            String specId = specialist.getId();
+            String specId = specialist.getName();
             List<Appointment> specApp = appointmentsBySpecialists.get(specId);
             if (specApp == null || specApp.isEmpty()) {
                 if (dayNumber == todayDayNumber && now > startDate) {
@@ -102,7 +97,6 @@ public class AppointmentService implements IAppointmentService {
                         .build()));
             }
         }
-        log.info(" ----------------------- slots ------- " + JsonUtils.convertObjectToString(result));
         return result;
     }
 }

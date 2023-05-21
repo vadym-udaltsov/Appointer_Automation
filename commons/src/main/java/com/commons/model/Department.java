@@ -19,7 +19,6 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Jacksonized
@@ -64,6 +63,9 @@ public class Department extends DynamoDbEntity {
     @JsonProperty("ew")
     private int endWork;
 
+    @JsonProperty("nwd")
+    private List<Integer> nonWorkingDays;
+
     @JsonProperty("z")
     private int zoneOffset;
 
@@ -81,6 +83,7 @@ public class Department extends DynamoDbEntity {
                 .with("id", id)
                 .with("tp", type.name())
                 .withList("as", availableSpecialists)
+                .withList("nwd", nonWorkingDays)
                 .withList("s", services);
     }
 

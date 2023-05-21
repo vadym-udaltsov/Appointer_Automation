@@ -8,6 +8,7 @@ import com.bot.converter.MapObjectConverter;
 import com.bot.model.Context;
 import com.bot.model.FreeSlot;
 import com.bot.model.Strategy;
+import com.bot.util.ContextUtils;
 import com.bot.util.StrategyProvider;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.utils.JsonUtils;
@@ -24,10 +25,7 @@ class ContextDaoTest {
         DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
         ContextDao contextDao = new ContextDao(dynamoDbFactory);
         Context context = contextDao.getContext(538025182, "bbad4b51");
-//        Context context = new Context();
-//        context.setUserId(538025182);
-//        context.setDepartmentId("bbad4b51");
-//        contextDao.updateParams(context, Map.of());
+        List<FreeSlot> slots = ContextUtils.getSpecialistSlotsConverted(context, "9b91bc16");
         System.out.println();
     }
 

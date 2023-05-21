@@ -51,8 +51,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             Context context = contextService.getContext(update, department.getId());
             localizer.localizeRequest(update, context);
-            log.info("Context is null --------------- " + (context == null));
-            log.info("Context: ------------- " + JsonUtils.convertObjectToString(context));
             IProcessor processor = factory.getProcessor(update, context);
             ProcessRequest request = ProcessRequest.builder()
                     .update(update)
@@ -63,6 +61,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             localizer.localizeResponseMessage(result, context);
             for (MessageHolder holder : result) {
                 SendMessage method = MessageUtils.buildMessage(holder, userId);
+                contextService.updateContext(context);
                 localizer.localizeResponseButtons(method, context);
                 execute(method);
             }

@@ -1,14 +1,17 @@
 package com.bot.util;
 
 import com.bot.model.BuildKeyboardRequest;
+import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.commons.model.Department;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.bcel.Const;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,15 +39,17 @@ public class KeyBoardUtils {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
 
         Map<String, Object> params = request.getParams();
-        Department department = (Department) params.get("department");
-        boolean isNextMonth = (boolean) params.get("isNextMonth");
+        Department department = (Department) params.get(Constants.DEPARTMENT);
+        boolean isNextMonth = (boolean) params.get(Constants.IS_NEXT_MONTH);
+        Context context = (Context) params.get(Constants.CONTEXT);
+        List<Integer> nonWorkingDays = department.getNonWorkingDays();
 
         LocalDate currentDate = LocalDate.now();
         int currentMonth = currentDate.getMonthValue();
         int currentYear = currentDate.getYear();
-        int currentDay = currentDate.getDayOfMonth();
+        int today = currentDate.getDayOfMonth();
 
-        long endOfWorkingDay = DateUtils.getPointOfDay(currentMonth, currentDay, department.getEndWork());
+        long endOfWorkingDay = DateUtils.getPointOfDay(currentMonth, today, department.getEndWork());
         long now = DateUtils.now(department);
 
         boolean todayIsFinished = now > endOfWorkingDay;
@@ -52,12 +57,18 @@ public class KeyBoardUtils {
 
         if (isNextMonth) {
             currentMonth++;
-            currentDay = 1;
+            today = 1;
             todayIsFinished = false;
         } else {
+            int todayInWeek = DateUtils.getDayOfWeek(currentYear, currentMonth, today);
+            int tomorrowInWeek = DateUtils.getDayOfWeek(currentYear, currentMonth, today + 1);
             List<InlineKeyboardButton> firstRow = new ArrayList<>();
-            firstRow.add(buildButton(busyDays, currentDay, todayIsFinished ? Constants.UNAVAILABLE_DATE : Constants.TODAY));
-            firstRow.add(buildButton(busyDays, currentDay + 1, Constants.TOMORROW));
+            firstRow.add(buildButton(busyDays, today, todayIsFinished || nonWorkingDays.contains(todayInWeek)
+                    ? Constants.UNAVAILABLE_DATE
+                    : Constants.TODAY));
+            firstRow.add(buildButton(busyDays, today + 1, nonWorkingDays.contains(tomorrowInWeek)
+                    ? Constants.UNAVAILABLE_DATE
+                    : Constants.TOMORROW));
             keyboard.add(firstRow);
         }
 
@@ -74,16 +85,22 @@ public class KeyBoardUtils {
         Month month = Month.of(currentMonth);
         LocalDate date = LocalDate.of(currentYear, currentMonth, 1);
         int daysInMonth = month.length(currentDate.isLeapYear());
+        List<String> availableDates = new ArrayList<>();
         for (int i = 1; i <= daysInMonth; i++) {
             if (i == 1 || date.getDayOfWeek().getValue() == 1) {
                 List<InlineKeyboardButton> row = new ArrayList<>();
                 keyboard.add(row);
             }
             String buttonText;
-            if (i < currentDay || (i == currentDay && todayIsFinished) || busyDays.contains(String.valueOf(i))) {
+            int dayOfWeek = DateUtils.getDayOfWeek(currentYear, currentMonth, i);
+            if (i < today
+                    || (i == today && todayIsFinished)
+                    || busyDays.contains(String.valueOf(i))
+                    || nonWorkingDays.contains(dayOfWeek)) {
                 buttonText = Constants.UNAVAILABLE_DATE;
             } else {
                 buttonText = date.format(formatter);
+                availableDates.add(buttonText);
             }
             InlineKeyboardButton dateButton = new InlineKeyboardButton();
             dateButton.setText(buttonText);
@@ -115,6 +132,7 @@ public class KeyBoardUtils {
         keyboard.add(lastRow);
         keyboard.removeIf(r -> r.stream().allMatch(b -> Constants.UNAVAILABLE_DATE.equals(b.getText())));
         inlineKeyboardMarkup.setKeyboard(keyboard);
+        context.getParams().put(Constants.AVAILABLE_DATES, availableDates);
         return inlineKeyboardMarkup;
     }
 

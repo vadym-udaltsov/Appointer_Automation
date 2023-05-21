@@ -27,15 +27,12 @@ public class BotLambda implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream input, OutputStream output, Context context) throws IOException {
-        System.out.println("Bot lambda handler ------");
         Map<String, Object> mapInput = JsonUtils.parseInputStreamToObject(input, new TypeReference<>() {
         });
-        System.out.println(mapInput);
         Map<String, Object> pathParameters = (Map)mapInput.get("pathParameters");
         String departmentId = (String) pathParameters.get("id");
         String body = (String)mapInput.get("body");
         Update update = JsonUtils.parseStringToObject(body, Update.class);
-        System.out.println("Update: " + JsonUtils.convertObjectToString(update));
         botExecutor.processBotMessage(departmentId, update);
 
         ProxyResponse response = ProxyResponse.builder().body("OK").statusCode(200).build();

@@ -27,8 +27,10 @@ public class ContextService implements IContextService {
     }
 
     @Override
-    public void update(Context context) {
-        contextDao.updateContext(context);
+    public void updateContext(Context context) {
+        if (context != null) {
+            contextDao.updateContext(context);
+        }
     }
 
     @Override
@@ -46,7 +48,14 @@ public class ContextService implements IContextService {
     public void skipNextStep(Context context, String nextStepKey) {
         Strategy nextStep = StrategyProvider.getStrategyByLocationAndKey(context.getNavigation(), Constants.ANY);
         context.getNavigation().add(nextStep.getName());
-        update(context);
+        updateContext(context);
+    }
+
+    @Override
+    public void setPreviousStep(Context context) {
+        List<String> navigation = context.getNavigation();
+        navigation.remove(navigation.size() - 1);
+        updateContext(context);
     }
 
     @Override

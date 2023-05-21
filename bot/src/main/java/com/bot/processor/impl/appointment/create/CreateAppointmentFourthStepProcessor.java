@@ -1,6 +1,7 @@
 package com.bot.processor.impl.appointment.create;
 
 import com.bot.model.BuildKeyboardRequest;
+import com.bot.model.Button;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
 import com.bot.model.FreeSlot;
@@ -40,19 +41,26 @@ public class CreateAppointmentFourthStepProcessor implements IProcessor {
         Department department = request.getDepartment();
 
         String serviceName = MessageUtils.getTextFromUpdate(update);
+        List<String> availableServices = (List<String>) context.getParams().get(Constants.AVAILABLE_SERVICES);
+        if (!availableServices.contains(serviceName) && !Constants.BACK.equals(serviceName)) {
+            contextService.setPreviousStep(context);
+            BuildKeyboardRequest holderRequest = buildRequest(availableServices);
+            return List.of(MessageUtils.holder("Select service from proposed", ButtonsType.KEYBOARD, holderRequest));
+        }
+
+        if (Constants.BACK.equals(serviceName)) {
+            serviceName = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
+        }
+
         ContextUtils.setStringParameter(context, Constants.SELECTED_SERVICE, serviceName);
-        contextService.update(context);
+        String finalServiceName = serviceName;
         CustomerService service = department.getServices().stream()
-                .filter(s -> serviceName.equals(s.getName()))
+                .filter(s -> finalServiceName.equals(s.getName()))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException(String.format("Service %s not found.", serviceName)));
+                .orElseThrow(() -> new RuntimeException(String.format("Service %s not found.", finalServiceName)));
 
         String specialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
-        List<Map<String, Object>> slots = ContextUtils.getSpecialistSlots(context, specialist);
-        List<FreeSlot> convertedSlots = slots.stream()
-                .map(s -> JsonUtils.parseMapToObject(s, FreeSlot.class))
-                .sorted(Comparator.comparingLong(FreeSlot::getStartPoint))
-                .collect(Collectors.toList());
+        List<FreeSlot> convertedSlots = ContextUtils.getSpecialistSlotsConverted(context, specialist);
         List<String> slotTitles = new ArrayList<>();
         boolean wholeDayAvailable = DateUtils.isWholeDayAvailable(department, convertedSlots.get(0));
         if (wholeDayAvailable) {
@@ -62,12 +70,26 @@ public class CreateAppointmentFourthStepProcessor implements IProcessor {
                 slotTitles.addAll(DateUtils.getSlotTitles(slot, service.getDuration() * 60L, 15));
             }
         }
+        context.getParams().put(Constants.AVAILABLE_SLOTS, slotTitles);
         BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.FOUR_ROW)
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(slotTitles), true))
                 .build();
         MessageHolder holder = MessageUtils.holder("Select time", ButtonsType.KEYBOARD, holderRequest);
 
+        contextService.updateContext(context);
         return List.of(holder);
+    }
+
+    private BuildKeyboardRequest buildRequest(List<String> availableServices) {
+        List<Button> buttons = availableServices.stream()
+                .map(s -> Button.builder()
+                        .value(s)
+                        .build())
+                .collect(Collectors.toList());
+        return BuildKeyboardRequest.builder()
+                .type(KeyBoardType.VERTICAL)
+                .buttonsMap(MessageUtils.buildButtons(buttons, false))
+                .build();
     }
 }

@@ -11,6 +11,7 @@ import com.bot.util.MessageUtils;
 import com.bot.util.StrategyProvider;
 import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * @author Serhii_Udaltsov on 4/7/2021
  */
+@Slf4j
 public class ProcessorFactory implements IProcessorFactory {
 
     private final Map<CommandType, IProcessor> processorsMap;
@@ -36,18 +38,18 @@ public class ProcessorFactory implements IProcessorFactory {
             return processorsMap.get(CommandType.ASK_LANGUAGE);
         }
         String commandKey = MessageUtils.getTextFromUpdate(update);
-        System.out.println("Command key ---------------- " + commandKey);
+        log.info("Command key ---------------- " + commandKey);
         if (Constants.HOME.equalsIgnoreCase(commandKey)) {
             contextService.resetLocationToDashboard(context);
             return processorsMap.get(CommandType.SET_CONT_START_DASH);
         }
         List<String> location = context.getNavigation();
         if (Constants.BACK.equals(commandKey)) {
-            contextService.removeLastLocation(context);
             location.remove(location.size() - 1);
+            contextService.updateContext(context);
         }
         Strategy currentStrategy = StrategyProvider.getStrategyByLocationAndKey(location, commandKey);
-        System.out.println("Current Strategy name --------------------- " + currentStrategy.getName());
+        log.info("Current Strategy name --------------------- " + currentStrategy.getName());
         IProcessor processor = resolveProcessor(currentStrategy);
         if (processor == null) {
             throw new IllegalStateException("Processor not found for key " + commandKey);

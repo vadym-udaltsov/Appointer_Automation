@@ -11,23 +11,23 @@
           "key": "any",
           "nested": [
             {
-              "name": "startCreateApp",
+              "name": "createApp1",
               "key": "Create appointment",
               "nested": [
                 {
-                  "name": "setAppDateAskSpec",
+                  "name": "createApp2",
                   "key": "any",
                   "nested": [
                     {
-                      "name": "setSpecAskService",
+                      "name": "createApp3",
                       "key": "any",
                       "nested": [
                         {
-                          "name": "setServiceAskSlot",
+                          "name": "createApp4",
                           "key": "any",
                           "nested": [
                             {
-                              "name": "createAppointment",
+                              "name": "createApp5",
                               "key": "any",
                               "nested": []
                             }
@@ -42,7 +42,9 @@
             {
               "name": "startMyApps",
               "key": "My appointments",
-              "nested": []
+              "nested": [
+
+              ]
             }
           ]
         }

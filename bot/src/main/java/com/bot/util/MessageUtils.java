@@ -6,14 +6,13 @@ import com.bot.model.ButtonsType;
 import com.bot.model.KeyBoardType;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
-import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Contact;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
+import software.amazon.awssdk.utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,6 +53,10 @@ public class MessageUtils {
         if (callbackQuery != null) {
             return callbackQuery.getFrom().getId();
         }
+        Message editedMessage = update.getEditedMessage();
+        if (editedMessage != null) {
+            return editedMessage.getChat().getId();
+        }
         return update.getMessage().getFrom().getId();
     }
 
@@ -66,11 +69,19 @@ public class MessageUtils {
     }
 
     public static MessageHolder buildDashboardHolder() {
+        return buildDashboardHolder("");
+    }
+
+    public static MessageHolder buildDashboardHolder(String message) {
+        String result = "Select action";
+        if (!message.isBlank()) {
+            result = message + result;
+        }
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
                 .buttonsMap(buildButtons(commonButtons(DASHBOARD), false))
                 .build();
-        return holder("Select action", ButtonsType.KEYBOARD, request);
+        return holder(result, ButtonsType.KEYBOARD, request);
     }
 
     public static MessageHolder holder(String message, ButtonsType buttonsType,
@@ -132,5 +143,18 @@ public class MessageUtils {
         buttons.put("Back", "back");
         buttons.put("Home", "home");
         return buttons;
+    }
+
+    public static BuildKeyboardRequest getHolderRequest(List<String> availableSpecialists) {
+        List<Button> buttons = availableSpecialists.stream()
+                .map(s -> Button.builder()
+                        .value(s)
+                        .build())
+                .collect(Collectors.toList());
+        return BuildKeyboardRequest.builder()
+                .type(KeyBoardType.VERTICAL)
+                .buttonsMap(MessageUtils.buildButtons(buttons, true))
+                .build();
+
     }
 }

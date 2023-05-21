@@ -24,6 +24,15 @@ public class Constants {
     public static final String SELECTED_SPEC = "selectedSpec";
     public static final String SELECTED_DAY = "selectedDay";
 
+    public static final String DEPARTMENT = "department";
+    public static final String CONTEXT = "context";
+    public static final String IS_NEXT_MONTH = "isNextMonth";
+    public static final String AVAILABLE_DATES = "availableDates";
+    public static final String AVAILABLE_SPECIALISTS = "availableSpecialists";
+    public static final String AVAILABLE_SERVICES = "availableServices";
+    public static final String AVAILABLE_SLOTS = "availableSlots";
+
+
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
     public static class Processors {
@@ -33,11 +42,11 @@ public class Constants {
         public static final String SET_CONT_START_DASH = "setContactStartDash";
 
         //appointment
-        public static final String START_CREATE_APP = "startCreateApp";
-        public static final String SET_APP_DATE_ASK_SPEC = "setAppDateAskSpec";
-        public static final String SET_SPEC_ASK_SERVICE = "setSpecAskService";
-        public static final String SET_SERVICE_ASK_SLOT = "setServiceAskSlot";
-        public static final String CREATE_APPOINTMENT = "createAppointment";
+        public static final String START_CREATE_APP = "createApp1";
+        public static final String SET_APP_DATE_ASK_SPEC = "createApp2";
+        public static final String SET_SPEC_ASK_SERVICE = "createApp3";
+        public static final String SET_SERVICE_ASK_SLOT = "createApp4";
+        public static final String CREATE_APPOINTMENT = "createApp5";
         public static final String MY_APPS = "startMyApps";
     }
 
