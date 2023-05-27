@@ -5,23 +5,15 @@ import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.commons.model.Department;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.bcel.Const;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +26,78 @@ import java.util.stream.IntStream;
 @Slf4j
 public class KeyBoardUtils {
 
-    public static InlineKeyboardMarkup buildDatePicker(BuildKeyboardRequest request) {
+    public static InlineKeyboardMarkup buildDatePickerMyAppointments(BuildKeyboardRequest request) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        Map<String, Object> params = request.getParams();
+        Set<String> appointments = (Set<String>) params.get(Constants.USER_APPOINTMENTS);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd");
+        List<InlineKeyboardButton> dayTitlesRow = new ArrayList<>();
+        for (String dayTitle : Constants.DAY_TITLES) {
+            InlineKeyboardButton titleButton = new InlineKeyboardButton();
+            titleButton.setText(dayTitle);
+            titleButton.setCallbackData(Constants.IGNORE);
+            dayTitlesRow.add(titleButton);
+        }
+        keyboard.add(dayTitlesRow);
+
+        LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+        int currentYear = currentDate.getYear();
+        boolean isNextMonth = (boolean) params.get(Constants.IS_NEXT_MONTH);
+        if (isNextMonth) {
+            currentMonth++;
+        }
+        Month month = Month.of(currentMonth);
+        LocalDate date = LocalDate.of(currentYear, currentMonth, 1);
+        int daysInMonth = month.length(currentDate.isLeapYear());
+        Map<String, String> numbers = Constants.Numbers.SPEC_NUMBERS;
+        for (int i = 1; i <= daysInMonth; i++) {
+            if (i == 1 || date.getDayOfWeek().getValue() == 1) {
+                List<InlineKeyboardButton> row = new ArrayList<>();
+                keyboard.add(row);
+            }
+            String buttonText = date.format(formatter);
+            String buttonTitle = null;
+            if (appointments.contains(buttonText)) {
+                buttonTitle = numbers.get(buttonText);
+            }
+            InlineKeyboardButton dateButton = new InlineKeyboardButton();
+            dateButton.setText(buttonTitle == null ? buttonText : buttonTitle);
+            dateButton.setCallbackData(buttonText);
+            int previousMonthDays = date.getDayOfWeek().getValue() - i;
+            if (i == 1 && previousMonthDays != 0) {
+                InlineKeyboardButton emptyButton = new InlineKeyboardButton();
+                emptyButton.setText(Constants.EMPTY_DATE);
+                emptyButton.setCallbackData(Constants.IGNORE);
+                IntStream.range(0, previousMonthDays).forEach(n -> keyboard.get(keyboard.size() - 1).add(emptyButton));
+            }
+            keyboard.get(keyboard.size() - 1).add(dateButton);
+            date = date.plusDays(1);
+        }
+        List<InlineKeyboardButton> lastDaysRow = keyboard.get(keyboard.size() - 1);
+        int lastDaysRowSize = lastDaysRow.size();
+        if (lastDaysRowSize < Constants.DAYS_IN_WEEK) {
+            InlineKeyboardButton emptyButton = new InlineKeyboardButton();
+            emptyButton.setText(Constants.EMPTY_DATE);
+            emptyButton.setCallbackData(Constants.IGNORE);
+            IntStream.range(lastDaysRowSize, Constants.DAYS_IN_WEEK).forEach(n -> lastDaysRow.add(emptyButton));
+        }
+        Month nextMoth = month.plus(isNextMonth ? -1 : 1);
+        List<InlineKeyboardButton> lastRow = new ArrayList<>();
+        InlineKeyboardButton nextMonthButton = new InlineKeyboardButton();
+        nextMonthButton.setText(nextMoth.name());
+        nextMonthButton.setCallbackData(isNextMonth ? Constants.CURRENT_MONTH : Constants.NEXT_MONTH);
+        lastRow.add(nextMonthButton);
+        keyboard.add(lastRow);
+        keyboard.removeIf(r -> r.stream().allMatch(b -> Constants.UNAVAILABLE_DATE.equals(b.getText())));
+        inlineKeyboardMarkup.setKeyboard(keyboard);
+//        context.getParams().put(Constants.AVAILABLE_DATES, availableDates);
+        return inlineKeyboardMarkup;
+    }
+
+    public static InlineKeyboardMarkup buildDatePickerCreateAppointment(BuildKeyboardRequest request) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
 

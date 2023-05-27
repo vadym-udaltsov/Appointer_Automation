@@ -10,6 +10,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,28 @@ public class DateUtils {
 
     public static long now(Department department) {
         return LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+    }
+
+    public static String getDayTitle(long date) {
+        LocalDate localDate = LocalDate.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
+        return localDate.format(DateTimeFormatter.ofPattern("dd"));
+    }
+
+    public static long getStartOfMonthDate(Department department, boolean isNextMonth) {
+        LocalDateTime endDateTime = LocalDate.now()
+                .plusMonths(isNextMonth ? 1 : 0)
+                .atStartOfDay()
+                .with(TemporalAdjusters.firstDayOfMonth());
+        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+    }
+
+    public static long getEndOfMonthDate(Department department, boolean isNextMonth) {
+        LocalDateTime endDateTime = LocalDate.now()
+                .plusMonths(isNextMonth ? 1 : 0)
+                .atStartOfDay()
+                .with(TemporalAdjusters.lastDayOfMonth())
+                .plusDays(1);
+        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
     }
 
     public static int getDayOfWeek(int year, int month, int day) {

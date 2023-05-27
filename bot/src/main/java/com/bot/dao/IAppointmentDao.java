@@ -8,7 +8,7 @@ public interface IAppointmentDao {
 
     boolean createItem(Appointment appointment);
 
-    List<Appointment> getAppointmentsBySpecialist(String specialistId, long startDate, long finishDate);
+    List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
     List<Appointment> getAppointmentsBySpecialists(List<String> specialistIds, long startDate, long finishDate);
 

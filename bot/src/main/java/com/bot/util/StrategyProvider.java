@@ -1,5 +1,6 @@
 package com.bot.util;
 
+import com.bot.model.Context;
 import com.bot.model.Strategy;
 import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -49,7 +49,7 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
                     .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(availableSlots), true))
                     .build();
             MessageHolder holder = MessageUtils.holder("Select time from proposed", ButtonsType.KEYBOARD, holderRequest);
-            contextService.setPreviousStep(context);
+            ContextUtils.setPreviousStep(context);
             return List.of(holder);
         }
         int year = DateUtils.getNumberOfCurrentYear(department);

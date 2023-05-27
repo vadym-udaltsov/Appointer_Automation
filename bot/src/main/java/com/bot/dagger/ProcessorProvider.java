@@ -5,11 +5,12 @@ import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
 import com.bot.processor.impl.appointment.create.CreateAppointmentFifthStepProcessor;
-import com.bot.processor.impl.appointment.create.CreateAppointmentSecondStepProcessor;
 import com.bot.processor.impl.appointment.create.CreateAppointmentFirstStepProcessor;
 import com.bot.processor.impl.appointment.create.CreateAppointmentFourthStepProcessor;
+import com.bot.processor.impl.appointment.create.CreateAppointmentSecondStepProcessor;
 import com.bot.processor.impl.appointment.create.CreateAppointmentThirdStepProcessor;
-import com.bot.processor.impl.appointment.my.MyAppointmentsProcessor;
+import com.bot.processor.impl.appointment.my.MyAppointmentsFirstStepProcessor;
+import com.bot.processor.impl.appointment.my.MyAppointmentsSecondStepProcessor;
 import com.bot.processor.impl.start.AskLanguageProcessor;
 import com.bot.processor.impl.start.SetContactStartDashboard;
 import com.bot.processor.impl.start.SetLanguageAskContactsProcessor;
@@ -31,9 +32,17 @@ public class ProcessorProvider {
     @Provides
     @Singleton
     @IntoMap
-    @CommandKey(CommandType.MY_APPOINTMENTS)
-    public IProcessor myApps(IContextService contextService) {
-        return new MyAppointmentsProcessor();
+    @CommandKey(CommandType.MY_APP_1)
+    public IProcessor myApps(IAppointmentService appointmentService) {
+        return new MyAppointmentsFirstStepProcessor(appointmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.MY_APP_2)
+    public IProcessor myApps2(IAppointmentService appointmentService) {
+        return new MyAppointmentsSecondStepProcessor(appointmentService);
     }
 
     //             ----------------Create-----------------------
@@ -41,33 +50,32 @@ public class ProcessorProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CREATE_APP_1)
-    public IProcessor createAppFirst(IAppointmentService appointmentService) {
-        return new CreateAppointmentFirstStepProcessor(appointmentService);
+    public IProcessor createAppFirst(@Named("createAppSecond") IProcessor processor) {
+        return new CreateAppointmentFirstStepProcessor(processor);
     }
 
     @Provides
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CREATE_APP_2)
-    public IProcessor createAppSecond(IAppointmentService appointmentService, IContextService contextService,
-                                                      @Named("createAppThird") IProcessor processor) {
-        return new CreateAppointmentSecondStepProcessor(appointmentService, contextService, processor);
+    public IProcessor createAppSecond(IAppointmentService appointmentService) {
+        return new CreateAppointmentSecondStepProcessor(appointmentService);
     }
 
     @Provides
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CREATE_APP_3)
-    public IProcessor createAppThird(IContextService contextService, @Named("createAppFourth") IProcessor processor) {
-        return new CreateAppointmentThirdStepProcessor(contextService, processor);
+    public IProcessor createAppThird(IAppointmentService appointmentService, @Named("createAppFourth") IProcessor processor) {
+        return new CreateAppointmentThirdStepProcessor(appointmentService, processor);
     }
 
     @Provides
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CREATE_APP_4)
-    public IProcessor createAppFourth(IContextService contextService) {
-        return new CreateAppointmentFourthStepProcessor(contextService);
+    public IProcessor createAppFourth() {
+        return new CreateAppointmentFourthStepProcessor();
     }
 
     @Provides
@@ -82,16 +90,16 @@ public class ProcessorProvider {
 
     @Provides
     @Singleton
-    @Named("createAppThird")
-    public IProcessor crAppThird(IContextService contextService, @Named("createAppFourth") IProcessor processor) {
-        return new CreateAppointmentThirdStepProcessor(contextService, processor);
+    @Named("createAppSecond")
+    public IProcessor crAppSecond(IAppointmentService appointmentService) {
+        return new CreateAppointmentSecondStepProcessor(appointmentService);
     }
 
     @Provides
     @Singleton
     @Named("createAppFourth")
-    public IProcessor crAppFourth(IContextService contextService) {
-        return new CreateAppointmentFourthStepProcessor(contextService);
+    public IProcessor crAppFourth() {
+        return new CreateAppointmentFourthStepProcessor();
     }
 
     //----------------Start-----------------------

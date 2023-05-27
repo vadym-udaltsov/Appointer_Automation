@@ -2,8 +2,8 @@ package com.bot.util;
 
 import com.bot.model.Context;
 import com.bot.model.FreeSlot;
+import com.bot.model.Strategy;
 import com.commons.utils.JsonUtils;
-import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -46,5 +46,15 @@ public class ContextUtils {
 
             params.put(specId, freeSlots);
         }
+    }
+
+    public static void addNextStepToLocation(Context context, String nextStepKey) {
+        Strategy nextStep = StrategyProvider.getStrategyByLocationAndKey(context.getNavigation(), nextStepKey);
+        context.getNavigation().add(nextStep.getName());
+    }
+
+    public static void setPreviousStep(Context context) {
+        List<String> navigation = context.getNavigation();
+        navigation.remove(navigation.size() - 1);
     }
 }

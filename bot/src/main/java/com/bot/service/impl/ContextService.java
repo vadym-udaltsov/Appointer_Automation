@@ -45,7 +45,7 @@ public class ContextService implements IContextService {
     }
 
     @Override
-    public void skipNextStep(Context context, String nextStepKey) {
+    public void skipCurrentStep(Context context, String nextStepKey) {
         Strategy nextStep = StrategyProvider.getStrategyByLocationAndKey(context.getNavigation(), Constants.ANY);
         context.getNavigation().add(nextStep.getName());
         updateContext(context);

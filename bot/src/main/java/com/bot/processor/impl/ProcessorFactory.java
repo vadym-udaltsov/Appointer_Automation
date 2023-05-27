@@ -9,12 +9,9 @@ import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.MessageUtils;
 import com.bot.util.StrategyProvider;
-import com.commons.utils.JsonUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +49,8 @@ public class ProcessorFactory implements IProcessorFactory {
         log.info("Current Strategy name --------------------- " + currentStrategy.getName());
         IProcessor processor = resolveProcessor(currentStrategy);
         if (processor == null) {
-            throw new IllegalStateException("Processor not found for key " + commandKey);
+            contextService.resetLocationToDashboard(context);
+            return processorsMap.get(CommandType.SET_CONT_START_DASH);
         }
         if (Constants.BACK.equals(commandKey)) {
             return processor;

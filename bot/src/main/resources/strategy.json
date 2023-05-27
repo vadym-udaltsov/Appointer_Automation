@@ -40,10 +40,15 @@
               ]
             },
             {
-              "name": "startMyApps",
+              "name": "myApps1",
               "key": "My appointments",
               "nested": [
-
+                {
+                  "name": "myApps2",
+                  "key": "any",
+                  "nested": [
+                  ]
+                }
               ]
             }
           ]

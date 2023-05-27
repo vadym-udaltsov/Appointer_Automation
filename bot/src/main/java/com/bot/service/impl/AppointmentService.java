@@ -8,7 +8,6 @@ import com.bot.util.DateUtils;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
-import com.commons.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +32,11 @@ public class AppointmentService implements IAppointmentService {
     @Override
     public List<Appointment> getAppointmentsBySpecialists(List<String> specialistIds, long startDate, long finishDate) {
         return appointmentDao.getAppointmentsBySpecialists(specialistIds, startDate, finishDate);
+    }
+
+    @Override
+    public List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate) {
+        return appointmentDao.getAppointmentsByUserId(userId, startDate, finishDate);
     }
 
     @Override

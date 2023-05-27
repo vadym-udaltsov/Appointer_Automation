@@ -11,7 +11,6 @@ import com.bot.util.MessageUtils;
 import com.commons.model.Department;
 import com.commons.service.IDepartmentService;
 import com.commons.utils.JsonUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -65,6 +64,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 localizer.localizeResponseButtons(method, context);
                 execute(method);
             }
+            contextService.updateContext(context);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         } catch (Exception e) {

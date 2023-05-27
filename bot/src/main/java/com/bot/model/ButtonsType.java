@@ -4,8 +4,6 @@ import com.bot.util.KeyBoardUtils;
 import lombok.Getter;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
-import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -15,7 +13,8 @@ import java.util.function.Function;
 public enum ButtonsType {
     KEYBOARD(KeyBoardUtils::buildReplyKeyboard),
     CONTACTS(KeyBoardUtils::buildContactsKeyboard),
-    DATE_PICKER(KeyBoardUtils::buildDatePicker),
+    DATE_PICKER(KeyBoardUtils::buildDatePickerCreateAppointment),
+    DATE_PICKER_MY_APP(KeyBoardUtils::buildDatePickerMyAppointments),
     INLINE(KeyBoardUtils::buildInlineKeyboard);
 
     private final Function<BuildKeyboardRequest, ReplyKeyboard> buttonsFunction;

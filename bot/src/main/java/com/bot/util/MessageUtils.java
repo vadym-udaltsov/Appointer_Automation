@@ -145,7 +145,7 @@ public class MessageUtils {
         return buttons;
     }
 
-    public static BuildKeyboardRequest getHolderRequest(List<String> availableSpecialists) {
+    public static BuildKeyboardRequest buildVerticalHolderRequestWithCommon(List<String> availableSpecialists) {
         List<Button> buttons = availableSpecialists.stream()
                 .map(s -> Button.builder()
                         .value(s)

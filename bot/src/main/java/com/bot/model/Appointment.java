@@ -5,7 +5,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
-import com.commons.model.CustomerService;
 import com.commons.model.DynamoDbEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +21,6 @@ import lombok.NoArgsConstructor;
 public class Appointment extends DynamoDbEntity {
     private static final String HASH_KEY = "s";
     private static final String RANGE_KEY = "d";
-    public static final String INDEX_NAME = "s-d-index";
     public static final String TABLE_NAME = "appointment";
 
     @DynamoDBHashKey(attributeName = HASH_KEY)

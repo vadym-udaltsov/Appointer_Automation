@@ -21,7 +21,9 @@ public enum CommandType {
     CREATE_APP_3(Constants.Processors.SET_SPEC_ASK_SERVICE),
     CREATE_APP_4(Constants.Processors.SET_SERVICE_ASK_SLOT),
     CREATE_APP_5(Constants.Processors.CREATE_APPOINTMENT),
-    MY_APPOINTMENTS(Constants.Processors.MY_APPS);
+
+    MY_APP_1(Constants.Processors.MY_APP_1),
+    MY_APP_2(Constants.Processors.MY_APP_2);
 
     private final String value;
 

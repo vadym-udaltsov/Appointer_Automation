@@ -11,6 +11,8 @@ public interface IAppointmentService {
 
     void save(Appointment appointment);
 
+    List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
+
     List<Appointment> getAppointmentsBySpecialists(List<String> specialistIds, long startDate, long finishDate);
 
     Map<String, List<FreeSlot>> getFreeSlotsBySpecialists(List<String> specialistIds, Department department,

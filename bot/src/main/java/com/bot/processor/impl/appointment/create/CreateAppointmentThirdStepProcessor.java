@@ -1,91 +1,110 @@
 package com.bot.processor.impl.appointment.create;
 
 import com.bot.model.BuildKeyboardRequest;
-import com.bot.model.Button;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
 import com.bot.model.FreeSlot;
-import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.bot.service.IContextService;
+import com.bot.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
+import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
-import com.commons.utils.JsonUtils;
+import com.commons.model.Specialist;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class CreateAppointmentThirdStepProcessor implements IProcessor {
+public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProcessor implements IProcessor {
 
-    private final IContextService contextService;
+    private final IAppointmentService appointmentService;
     private final IProcessor nextStepProcessor;
 
-    public CreateAppointmentThirdStepProcessor(IContextService contextService, IProcessor nextStepProcessor) {
-        this.contextService = contextService;
+    public CreateAppointmentThirdStepProcessor(IAppointmentService appointmentService, IProcessor nextStepProcessor) {
+        super(appointmentService);
+        this.appointmentService = appointmentService;
         this.nextStepProcessor = nextStepProcessor;
     }
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
-        log.info("Received request: {}", JsonUtils.convertObjectToString(request));
         Department department = request.getDepartment();
         Update update = request.getUpdate();
-        String specId = MessageUtils.getTextFromUpdate(update);
         Context context = request.getContext();
 
-        List<String> availableSpecialists = (List<String>) context.getParams().get(Constants.AVAILABLE_SPECIALISTS);
-        if (!availableSpecialists.contains(specId) && !Constants.BACK.equals(specId)) {
-            contextService.setPreviousStep(context);
-            BuildKeyboardRequest holderRequest = MessageUtils.getHolderRequest(availableSpecialists);
-            return List.of(MessageUtils.holder("Select specialist from proposed", ButtonsType.INLINE, holderRequest));
+        String selectedDay = MessageUtils.getTextFromUpdate(update);
+        String selectedService = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
+        int monthNumber = Integer.parseInt(ContextUtils.getStringParam(context, Constants.MONTH));
+
+        if (Constants.NEXT_MONTH.equals(selectedDay)) {
+            updateContextData(context, department, true);
+            return buildResponse(department, true, "", context, selectedService);
         }
-        if (Constants.BACK.equals(specId)) {
-            specId = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
-        }
-        List<CustomerService> services = department.getServices();
-        List<FreeSlot> slots = ContextUtils.getSpecialistSlotsConverted(context, specId);
-        List<CustomerService> availableServices = services.stream()
-                .filter(serv -> slots.stream()
-                        .anyMatch(sl ->  sl.getDurationSec() >= serv.getDuration() * 60L))
-                .collect(Collectors.toList());
-        if (availableServices.size() == 0) {
-            throw new RuntimeException("Available services list can not be empty");
+        if (Constants.CURRENT_MONTH.equals(selectedDay)) {
+            updateContextData(context, department, false);
+            return buildResponse(department, false, "", context, selectedService);
         }
 
-        if (services.size() == 1) {
-            MessageUtils.setTextToUpdate(update, availableServices.get(0).getName());
-            contextService.skipNextStep(context, Constants.ANY);
+        List<String> availableDates = (List<String>) context.getParams().get(Constants.AVAILABLE_DATES);
+        if (!availableDates.contains(selectedDay) && !Constants.BACK.equals(selectedDay)) {
+            updateContextData(context, department, false);
+            return buildResponse(department, false, "Select available date", context, selectedService);
+        }
+
+        if (Constants.BACK.equals(selectedDay)) {
+            selectedDay = ContextUtils.getStringParam(context, Constants.SELECTED_DAY);
+        }
+
+        List<Specialist> availableSpecialists = department.getAvailableSpecialists();
+        List<String> specialistNames = availableSpecialists.stream()
+                .map(Specialist::getName)
+                .collect(Collectors.toList());
+
+        if (specialistNames.size() == 1) {
+            String specialistName = specialistNames.get(0);
+            MessageUtils.setTextToUpdate(update, specialistName);
+            ContextUtils.addNextStepToLocation(context, Constants.ANY);
             return nextStepProcessor.processRequest(request);
         }
 
-        List<String> availableServiceNames = availableServices.stream()
-                .map(CustomerService::getName)
+        int dayNumber = Integer.parseInt(selectedDay);
+
+        Map<String, List<FreeSlot>> slotsBySpecialists = appointmentService.getFreeSlotsBySpecialists(specialistNames,
+                department, monthNumber, dayNumber);
+        Integer serviceDurationMinutes = department.getServices().stream()
+                .filter(cs -> selectedService.equals(cs.getName()))
+                .findFirst()
+                .map(CustomerService::getDuration)
+                .orElseThrow(() -> new RuntimeException("Could not find service with name:" + selectedService));
+
+        List<String> filteredSpecialists = slotsBySpecialists.entrySet().stream()
+                .filter(e -> e.getValue().stream()
+                        .anyMatch(s -> s.getDurationSec() >= serviceDurationMinutes * 60L))
+                .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        context.getParams().put(Constants.AVAILABLE_SERVICES, availableServiceNames);
-        ContextUtils.setStringParameter(context, Constants.SELECTED_SPEC, specId);
-        contextService.updateContext(context);
-        List<Button> buttons = availableServices.stream()
-                .map(cs -> Button.builder()
-                        .value(cs.getName())
-                        .build())
-                .collect(Collectors.toList());
-        BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
-                .type(KeyBoardType.VERTICAL)
-                .buttonsMap(MessageUtils.buildButtons(buttons, false))
-                .build();
+        ContextUtils.setStringParameter(context, Constants.SELECTED_DAY, String.valueOf(dayNumber));
+        ContextUtils.putSlotsToContextParams(slotsBySpecialists, context);
+        context.getParams().put(Constants.AVAILABLE_SPECIALISTS, filteredSpecialists);
 
-        return List.of(MessageUtils.holder("Select service", ButtonsType.KEYBOARD, holderRequest));
+        BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(filteredSpecialists);
+        MessageHolder holder = MessageUtils.holder("Select specialist", ButtonsType.KEYBOARD, holderRequest);
+        return List.of(holder);
+    }
+
+    private void updateContextData(Context context, Department department, boolean nextMonth) {
+        int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
+        int monthToAdd = nextMonth ? 1 : 0;
+        ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(numberOfCurrentMonth + monthToAdd));
+        ContextUtils.setPreviousStep(context);
     }
 }

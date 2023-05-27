@@ -1,6 +1,8 @@
 package com.bot.util;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Constants {
 
@@ -32,6 +34,7 @@ public class Constants {
     public static final String AVAILABLE_SERVICES = "availableServices";
     public static final String AVAILABLE_SLOTS = "availableSlots";
 
+    public static final String USER_APPOINTMENTS = "userAppointments";
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
@@ -47,7 +50,46 @@ public class Constants {
         public static final String SET_SPEC_ASK_SERVICE = "createApp3";
         public static final String SET_SERVICE_ASK_SLOT = "createApp4";
         public static final String CREATE_APPOINTMENT = "createApp5";
-        public static final String MY_APPS = "startMyApps";
+        public static final String MY_APP_1 = "myApps1";
+        public static final String MY_APP_2 = "myApps2";
+    }
+
+    public static class Numbers {
+        public static final Map<String, String> SPEC_NUMBERS = new HashMap<>();
+
+        static {
+            SPEC_NUMBERS.put("01", "0️⃣1️⃣");
+            SPEC_NUMBERS.put("02", "0️⃣2️⃣");
+            SPEC_NUMBERS.put("03", "0️⃣3️⃣");
+            SPEC_NUMBERS.put("04", "0️⃣4️⃣");
+            SPEC_NUMBERS.put("05", "0️⃣5️⃣");
+            SPEC_NUMBERS.put("06", "0️⃣6️⃣");
+            SPEC_NUMBERS.put("07", "0️⃣7️⃣");
+            SPEC_NUMBERS.put("08", "0️⃣8️⃣");
+            SPEC_NUMBERS.put("09", "0️⃣9️⃣");
+            SPEC_NUMBERS.put("10", "1️⃣0️⃣");
+            SPEC_NUMBERS.put("11", "1️⃣1️⃣");
+            SPEC_NUMBERS.put("12", "1️⃣2️⃣");
+            SPEC_NUMBERS.put("13", "1️⃣3️⃣");
+            SPEC_NUMBERS.put("14", "1️⃣4️⃣");
+            SPEC_NUMBERS.put("15", "1️⃣5️⃣");
+            SPEC_NUMBERS.put("16", "1️⃣6️⃣");
+            SPEC_NUMBERS.put("17", "1️⃣7️⃣");
+            SPEC_NUMBERS.put("18", "1️⃣8️⃣");
+            SPEC_NUMBERS.put("19", "1️⃣9️⃣");
+            SPEC_NUMBERS.put("20", "2️⃣0️⃣");
+            SPEC_NUMBERS.put("21", "2️⃣1️⃣");
+            SPEC_NUMBERS.put("22", "2️⃣2️⃣");
+            SPEC_NUMBERS.put("23", "2️⃣3️⃣");
+            SPEC_NUMBERS.put("24", "2️⃣4️⃣");
+            SPEC_NUMBERS.put("25", "2️⃣5️⃣");
+            SPEC_NUMBERS.put("26", "2️⃣6️⃣");
+            SPEC_NUMBERS.put("27", "2️⃣7️⃣");
+            SPEC_NUMBERS.put("28", "2️⃣8️⃣");
+            SPEC_NUMBERS.put("29", "2️⃣9️⃣");
+            SPEC_NUMBERS.put("30", "3️⃣0️⃣");
+            SPEC_NUMBERS.put("31", "3️⃣1️⃣");
+        }
     }
 
     public static class Messages {

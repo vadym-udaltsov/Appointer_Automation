@@ -21,8 +21,19 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
     @Override
     public List<Appointment> getAppointmentsBySpecialists(List<String> specialistIds, long startDate, long finishDate) {
         String specialistsStr = specialistIds.stream().collect(Collectors.joining("', '", "'", "'"));
-        ExecuteStatementResult result = getItemsByQuery("SELECT * FROM appointment WHERE s IN [" + specialistsStr + "] AND d BETWEEN " + startDate + " AND " + finishDate);
-        List<Map<String, AttributeValue>> items = result.getItems();
+        ExecuteStatementResult result = getItemsByQuery("SELECT * FROM appointment WHERE s IN [" + specialistsStr
+                + "] AND d BETWEEN " + startDate + " AND " + finishDate);
+        return parseDbResponse(result.getItems());
+    }
+
+    @Override
+    public List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate) {
+        ExecuteStatementResult result = getItemsByQuery("SELECT * FROM appointment WHERE uid=" + userId
+                + " AND d BETWEEN " + startDate + " AND " + finishDate);
+        return parseDbResponse(result.getItems());
+    }
+
+    private List<Appointment> parseDbResponse(List<Map<String, AttributeValue>> items) {
         List<Appointment> appointments = new ArrayList<>();
         for (Map<String, AttributeValue> item : items) {
             Appointment appointment = new Appointment();
@@ -34,11 +45,4 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
         }
         return appointments;
     }
-
-    @Override
-    public List<Appointment> getAppointmentsBySpecialist(String specialistId, long startDate, long finishDate) {
-        return null;
-    }
-
-
 }
