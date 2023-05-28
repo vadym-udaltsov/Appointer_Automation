@@ -1,0 +1,15 @@
+1. Create verified email in AWS SES
+2. Add your accountId and verified email to JenkinsFile-infra
+3. Use it in Jenkins when deploying infra
+
+4. Create deployment bucket with name "appointer-deployment-${accountId}"
+5. Upload package.zip with python code to deployment bucket
+6. Start deploy pipeline for infra on Jenkins
+
+7. Go to https://my.telegram.org/auth?to=apps and fill you phone number
+8. Get api_id and api_hash
+9. Create parameters with String type in SSM 'telegram_api_id' and 'telegram_api_hash'
+10. Go to python project and generate session token using class 'generateSessionToken.py' insert api_id and api_hash in code
+11. Create parameter with String type in SSM 'session_token'
+
+12. Env is ready, login page is available on: https://appointer-ui-{accountId}.s3.eu-central-1.amazonaws.com/html/login.html

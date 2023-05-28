@@ -2,6 +2,11 @@
 
 source ${WORKSPACE}/deployment.config
 
+accountId="$1"
+verifiedEmail="$2"
+deploymentBucket="appointer-deployment-${accountId}"
+uiBucket="appointer-ui-${accountId}"
+
 #Uploading needed lambda artefacts
 for lambda_pair in $lambdas
 do
@@ -18,6 +23,9 @@ do
   echo "Uploading artefact ${lambda_artefact} to s3..."
   aws s3 cp ${lambda_artefact} s3://${deploymentBucket}
 done
+
+echo 'Uploading python lambdas artefact to s3...'
+aws s3 cp pythonLambdasPackage.zip s3://${deploymentBucket}
 
 echo 'Uploading lambda layer artefact to s3...'
 aws s3 cp ${layerArtefact} s3://${deploymentBucket}
@@ -43,9 +51,6 @@ if [[ "CREATE_COMPLETE" == "${creationStatus}" ]]; then
     echo "Stack created."
 else
     echo "Stack failed with status: ${creationStatus}";
-    #echo "Destroying stack and clean bucket...";
-    #sh ./destroy.sh
-    #echo "Stack destroyed, bucket is cleaned.";
     exit 1;
 fi
 

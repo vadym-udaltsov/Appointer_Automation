@@ -27,7 +27,7 @@ Resources:
       Code:
         S3Bucket:
           Ref: DeploymentBucket
-        S3Key: package.zip
+        S3Key: pythonLambdasPackage.zip
       FunctionName: !Ref RegisterBotLambdaName
       Handler: FunctionHandler.lambda_handler
       MemorySize: 512
@@ -42,7 +42,7 @@ Resources:
       Code:
         S3Bucket:
           Ref: DeploymentBucket
-        S3Key: package.zip
+        S3Key: pythonLambdasPackage.zip
       FunctionName: !Ref PostSignUpLambdaName
       Handler: PostSignUpHandler.lambda_handler
       MemorySize: 512
@@ -200,6 +200,14 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref UiBucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
       WebsiteConfiguration:
         IndexDocument: login.html
       CorsConfiguration:
@@ -237,9 +245,13 @@ Resources:
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: N
+        - AttributeName: did
+          AttributeType: S
       KeySchema:
         - AttributeName: id
           KeyType: HASH
+        - AttributeName: did
+          KeyType: RANGE
       BillingMode: PAY_PER_REQUEST
       TableName: context
   AppointmentTable:
@@ -248,9 +260,13 @@ Resources:
       AttributeDefinitions:
         - AttributeName: s
           AttributeType: S
+        - AttributeName: d
+          AttributeType: N
       KeySchema:
         - AttributeName: s
           KeyType: HASH
+        - AttributeName: d
+          KeyType: RANGE
       BillingMode: PAY_PER_REQUEST
       TableName: appointment
   DepartmentTable:
@@ -448,8 +464,7 @@ Resources:
       RestApiId: !Ref BotApi
       ResourceId: !Ref BotPostResource
       HttpMethod: POST
-      AuthorizationType: COGNITO_USER_POOLS
-      AuthorizerId: !Ref Authorizer
+      AuthorizationType: NONE
       MethodResponses:
         - StatusCode: 200
           ResponseParameters:

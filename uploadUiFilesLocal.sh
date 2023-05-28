@@ -1,6 +1,8 @@
 #!/bin/bash
 source deployment.config
 
+uiBucket="appointer-ui-${accountId}"
+
 cd admin/src/main/webapp
 
 for folder in *

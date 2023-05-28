@@ -2,6 +2,8 @@
 
 source deployment.config
 
+deploymentBucket="appointer-deployment-${accountId}"
+
 lambdasLocal="appointerBotLambda||bot||true"
 #lambdas="adminLambda||admin||true appointerBotLambda||bot||true"
 #lambdasLocal="postSignUpLambda||registration||false"

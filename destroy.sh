@@ -2,6 +2,9 @@
 
 source ${WORKSPACE}/deployment.config
 
+accountId="$1"
+uiBucket="appointer-ui-${accountId}"
+
 echo "Destroying the stack '${infraStack}'"
 
 echo "Cleaning ui bucket"
