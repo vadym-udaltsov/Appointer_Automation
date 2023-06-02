@@ -15,7 +15,22 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active" style="width: 100px">
-                <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#" style="padding: 10px 0;">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="department" style="width: 100px">
+                <a class="nav-link" id="department_link" href="#">Department</a>
+                <ul class="sub-menu">
+                    <li  class="sub-item">
+                        <button type="button" class="sub-button" data-toggle="modal" data-target="#createModal">
+                            Create
+                        </button>
+                    </li>
+                    <li class="sub-item">
+                        <button type="button" class="sub-button" data-toggle="modal" data-target="#updateModal">
+                            Update
+                        </button>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item dropdown">
                 <button type="submit" class="btn btn-primary" id="serviceRef">Service</button>
@@ -31,10 +46,106 @@
 </nav>
 
 <div class="main">
-    <div class="col-md-6 col-sm-12">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
-            Create
-        </button>
+    <div class="modal fade custom-modal" id="updateModal" tabindex="-1" aria-labelledby="updateModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="row" style="margin: 25px;">
+                    <div class="col-md-3">
+                        <p>Department</p>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="depNameSelect" size="1" style="width: 300px"></select>
+                    </div>
+                </div>
+                <div class="row" style="margin: 25px;">
+                    <div class="col-md-3">
+                        <p>Time zone</p>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="timeZoneSelect" size="1" style="width: 300px">
+                            <option value="Europe/London">(GMT +1:00) London</option>
+                            <option value="Europe/Berlin">(GMT +2:00) Stockholm, Berlin, Rome</option>
+                            <option value="Europe/Kiev">(GMT +3:00) Helsinki, Kiev, Cairo</option>
+                            <option value="Europe/Moscow">(GMT +3:00) Moscow, Istanbul</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="row" style="margin: 25px;">
+                    <div class="col-md-3">
+                        <p>Type</p>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="depTypeSelect" size="1" style="width: 300px"></select>
+                    </div>
+                </div>
+                <div class="row" style="margin: 25px;">
+                    <div class="col-md-3">
+                        <p>Name</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="depNameUpdate" style="width: 300px">
+                    </div>
+                </div>
+                <div class="row" style="margin: 25px;">
+                    <div class="col-md-3">
+                        <p>Start work hour</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" id="startWork" style="width: 300px">
+                    </div>
+                </div>
+                <div class="row" style="margin: 25px;">
+                    <div class="col-md-3">
+                        <p>Finish work hour</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" id="finishWork" style="width: 300px">
+                    </div>
+                </div>
+                <div class="row" style="width: 300px">
+                    <div class="col-md-9">
+                        <p>Out of work days</p>
+                    </div>
+                </div>
+
+                <ul class="days-list">
+                    <li>
+                        <input type="checkbox" name="Mon" value="1" id="mon">
+                        <label for="mon">Mon</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="Tue" value="2" id="tue">
+                        <label for="tue">Tue</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="Wed" value="3" id="wed">
+                        <label for="wed">Wed</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="Thu" value="4" id="thu">
+                        <label for="thu">Thu</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="Fri" value="5" id="fri">
+                        <label for="fri">Fri</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="Sat" value="6" id="sat">
+                        <label for="sat">Sat</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="Sun" value="7" id="sun">
+                        <label for="sun">Sun</label>
+                    </li>
+                </ul>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade custom-modal" id="createModal" tabindex="-1" aria-labelledby="createModal"

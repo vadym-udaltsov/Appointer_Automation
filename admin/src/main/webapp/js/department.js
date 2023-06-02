@@ -4,12 +4,27 @@ $(window).ready(function () {
     });
     var email = localStorage.getItem('customer');
 
-    var select = $("#typeSelect");
+    var typeSelect = $("#depTypeSelect");
+    var depNameSelect = $("#depNameSelect");
+    var timeZoneSelect = $("#timeZoneSelect");
+
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
-    loadTypes(url, select);
+    loadDepartmentData(url, typeSelect, depNameSelect);
 
     $("#serviceRef").click(function() {
         $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/service.html');
+        return false;
+    });
+
+    $("#create").click(function() {
+        var department = new Object();
+        department.departmentName = $("#depName").val() == "" ? "Default" : $("#depName").val();
+        department.type = $("#typeSelect").val();
+        department.timeZone = $("#timeZoneSelect").val();
+        department.startWork = $("#startWork").val();
+        department.finishWork = $("#finishWork").val();
+
+        executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
         return false;
     });
 
@@ -23,19 +38,22 @@ $(window).ready(function () {
      });
 });
 
-function loadTypes(url, select) {
+function loadDepartmentData(url, typeSelect, depNameSelect) {
     $.ajax({
         url: url,
         type: 'get',
         dataType: 'json',
-
         success: function (data) {
             console.log(data);
             $.each(data.availableTypes, function () {
-                console.log(this)
-                var opt = $("<option value='" + this + "'></option>").text(this);
-                select.append(opt);
+                var type = $("<option value='" + this + "'></option>").text(this);
+                typeSelect.append(type);
             });
+            $.each(data.customerDepartments, function () {
+                var name = $("<option value='" + this.id + "'></option>").text(this.id);
+                depNameSelect.append(name);
+            });
+            $("#depNameUpdate").defaultValue = "jijij";
         }
     });
 }
@@ -81,4 +99,13 @@ function executeGetRequest(url) {
             console.log(data)
         }
     });
+
+    $(".dropdown").hover(
+      function() {
+        $(this).find(".sub-menu").slideDown();
+      },
+      function() {
+        $(this).find(".sub-menu").slideUp();
+      }
+    );
 }

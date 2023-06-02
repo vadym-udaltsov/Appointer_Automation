@@ -129,16 +129,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - 'dynamodb:BatchGetItem'
-                  - 'dynamodb:BatchWriteItem'
-                  - 'dynamodb:TagResource'
-                  - 'dynamodb:UntagResource'
-                  - 'dynamodb:PutItem'
-                  - 'dynamodb:DeleteItem'
-                  - 'dynamodb:GetItem'
-                  - 'dynamodb:Scan'
-                  - 'dynamodb:Query'
-                  - 'dynamodb:UpdateItem'
+                  - 'dynamodb:*'
                   - 'ssm:*'
                   - 's3:*'
                   - 'sqs:*'

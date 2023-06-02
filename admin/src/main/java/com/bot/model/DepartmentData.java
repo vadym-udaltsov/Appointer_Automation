@@ -2,6 +2,7 @@ package com.bot.model;
 
 import com.commons.model.Department;
 import com.commons.model.DepartmentType;
+import com.commons.model.TimeZoneDto;
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 source deployment.config
 
-uiBucket="appointer-ui-${accountId}"
+uiBucket="appointer-ui-773974733061"
 
 cd admin/src/main/webapp
 

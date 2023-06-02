@@ -38,7 +38,6 @@ $(window).ready(function () {
 
 function loadDepartments(select, data) {
     $.each(data.customerDepartments, function () {
-        console.log(this.n)
         var opt = $("<option value='" + this.n + "'></option>").text(this.n);
         select.append(opt);
     });

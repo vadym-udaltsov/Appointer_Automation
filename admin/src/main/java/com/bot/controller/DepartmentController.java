@@ -4,6 +4,7 @@ import com.bot.model.DepartmentData;
 import com.commons.model.Department;
 import com.commons.model.DepartmentType;
 import com.commons.model.SimpleResponse;
+import com.commons.model.TimeZone;
 import com.commons.service.IDepartmentService;
 import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +30,22 @@ public class DepartmentController {
     private IDepartmentService departmentService;
 
     @GetMapping("data/{customer}")
-    public ResponseEntity<DepartmentData> getCustomer(@PathVariable("customer") String customer) {
+    public ResponseEntity<DepartmentData> getDepartmentData(@PathVariable("customer") String customer) {
         List<Department> customerDepartments = departmentService.getCustomerDepartments(customer);
         DepartmentData data = DepartmentData.builder()
                 .customerDepartments(customerDepartments)
+                .timeZones(TimeZone.buildDtos())
                 .availableTypes(List.of(DepartmentType.values()))
                 .build();
         return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<SimpleResponse> updateDepartment(@RequestBody Department department) {
+        log.info("Got request for department update");
+        departmentService.createDepartment(department);
+        log.info("Department updated successfully");
+        return new ResponseEntity<>(SimpleResponse.builder().body("Updated").build(), HttpStatus.OK);
     }
 
 //    @PostMapping()
