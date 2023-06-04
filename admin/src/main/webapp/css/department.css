@@ -1,20 +1,29 @@
 #department_link {
     color: white;
     padding: 10px 0;
+    text-align: center;
+    border-radius: 10%;
+}
+
+.btn-active {
+  background-color: #0b69cd;
+  color: white;
 }
 
 .department {
   position: relative;
 }
 
+
 .sub-menu {
   display: none;
   position: absolute;
   text-align: center;
-  left: -10px;
-  right: 0;
   padding-inline-start: 0;
   background-color: #007bff;
+  border-bottom-right-radius: 10%;
+  border-bottom-left-radius: 10%;
+  top: 42px;
 }
 
 .department:hover .sub-menu {
@@ -47,31 +56,43 @@
      background-color: #1273db;
 }
 
+#close_update, #close_create {
+    background-color: #e70e0e;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    margin-right: 20px;
+}
+
+
 
 /*Create Box CSS*/
 
-p {
-  margin-bottom: 5px;
-  font-weight: bold;
+.create_item {
+  margin: 7px 20px 0 0 !important;
+  width: 60px;
+}
+
+.create_item::after, .update__asterisks::after {
+    content: "*";
+    color: red;
+    font-size: 13px;
 }
 
 input[type="text"], select {
-  width: 100%;
+  width: 250px !important;
   padding: 8px;
   border: 1px solid rgb(101 92 92);
   border-radius: 4px;
 }
 
-/*Update Box CSS*/
-
-#startWork, #finishWork {
-    width: 100px !important;
-    border-color: black;
-    border-size: 1px;
-    border: 1px solid rgb(101 92 92);
-    border-radius: 4px;
+.btn.disabled {
+    background-color: grey !important;
+    cursor: not-allowed !important;
 }
 
+/*Update Box CSS*/
 select, #depNameUpdate {
     width: 250px !important;
 }
@@ -111,24 +132,54 @@ select, #depNameUpdate {
     max-width: 35%;
 }
 
+#startWork, #finishWork {
+    width: 100px !important;
+    border-color: black;
+    border-size: 1px;
+    border: 1px solid rgb(101 92 92);
+    border-radius: 4px;
+}
+
+/*Calendar container*/
+
+.calendar {
+    width: 100% !important;
+    margin: 0 auto;
+}
+
+.calendar_container {
+    margin: 0 15px 0 15px;
+}
+
+.out-of-work-days {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.out-of-work-days__text {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/*Checkboxes style*/
+
+.custom-checkbox {
+    display: none;
+}
+
 .days-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
 .days-list li {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.days-list input[type="checkbox"] {
-  margin-right: 10px;
-  opacity: 0;
-  position: absolute;
+  margin-bottom: 5px;
 }
 
 .days-list label {
@@ -142,7 +193,7 @@ select, #depNameUpdate {
   content: "";
   position: absolute;
   left: 0;
-  top: 0;
+  top: 2px;
   width: 20px;
   height: 20px;
   border-radius: 50%;

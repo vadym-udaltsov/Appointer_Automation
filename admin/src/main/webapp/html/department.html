@@ -7,9 +7,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/department.css">
+    <link rel="stylesheet" href="../css/global.css">
     <title>Department</title>
 </head>
 <body>
+
+<div id="spinner_loading">
+    <div class="spinner_item"></div>
+</div>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -18,10 +23,10 @@
                 <a class="nav-link" href="#" style="padding: 10px 0;">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="department" style="width: 100px">
-                <a class="nav-link" id="department_link" href="#">Department</a>
+                <a class="nav-link" id="department_link" href="#" onclick="activateButton()">Department</a>
                 <ul class="sub-menu">
                     <li  class="sub-item">
-                        <button type="button" class="sub-button" data-toggle="modal" data-target="#createModal">
+                        <button type="button" class="sub-button" data-toggle="modal" data-target="#createModal" id="createPopup">
                             Create
                         </button>
                     </li>
@@ -52,18 +57,22 @@
             <div class="modal-content">
                 <div class="row" style="margin: 25px;">
                     <div class="col-md-3">
-                        <p>Department</p>
+                        <p class="update__asterisks">Department</p>
                     </div>
                     <div class="col-md-3">
-                        <select id="depNameSelect" size="1" style="width: 300px"></select>
+                        <select id="depNameSelect" size="1" style="width: 300px">
+                            <option value="Choose Department">Choose Department</option>
+                            <option value="Test">Test</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row" style="margin: 25px;">
                     <div class="col-md-3">
-                        <p>Time zone</p>
+                        <p class="update__asterisks">Time zone</p>
                     </div>
                     <div class="col-md-3">
-                        <select id="timeZoneSelect" size="1" style="width: 300px">
+                        <select id="timeZoneSelect" size="1" style="width: 300px" >
+                            <option value="Choose Time Zone">Choose Time Zone</option>
                             <option value="Europe/London">(GMT +1:00) London</option>
                             <option value="Europe/Berlin">(GMT +2:00) Stockholm, Berlin, Rome</option>
                             <option value="Europe/Kiev">(GMT +3:00) Helsinki, Kiev, Cairo</option>
@@ -74,15 +83,18 @@
                 </div>
                 <div class="row" style="margin: 25px;">
                     <div class="col-md-3">
-                        <p>Type</p>
+                        <p class="update__asterisks">Type</p>
                     </div>
                     <div class="col-md-3">
-                        <select id="depTypeSelect" size="1" style="width: 300px"></select>
+                        <select id="depTypeSelect" size="1" style="width: 300px">
+                            <option value="Choose Type">Choose Type</option>
+                            <option value="Test">Test</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row" style="margin: 25px;">
                     <div class="col-md-3">
-                        <p>Name</p>
+                        <p class="update__asterisks">Name</p>
                     </div>
                     <div class="col-md-3">
                         <input type="text" id="depNameUpdate" style="width: 300px">
@@ -90,7 +102,7 @@
                 </div>
                 <div class="row" style="margin: 25px;">
                     <div class="col-md-3">
-                        <p>Start work hour</p>
+                        <p class="update__asterisks">Start work hour</p>
                     </div>
                     <div class="col-md-3">
                         <input type="number" id="startWork" style="width: 300px">
@@ -98,50 +110,53 @@
                 </div>
                 <div class="row" style="margin: 25px;">
                     <div class="col-md-3">
-                        <p>Finish work hour</p>
+                        <p class="update__asterisks">Finish work hour</p>
                     </div>
                     <div class="col-md-3">
                         <input type="number" id="finishWork" style="width: 300px">
                     </div>
                 </div>
-                <div class="row" style="width: 300px">
-                    <div class="col-md-9">
-                        <p>Out of work days</p>
+                <div class="calendar" style="width: 300px">
+                    <div class="calendar_container">
+                        <div class="out-of-work-days">
+                            <p class="out-of-work-days__text">Out of work days</p>
+                            <div class="calendar">
+                                <ul class="days-list">
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="1" id="mon">
+                                        <label for="mon">Mon</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="2" id="tue">
+                                        <label for="tue">Tue</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="3" id="wed">
+                                        <label for="wed">Wed</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="4" id="thu">
+                                        <label for="thu">Thu</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="5" id="fri">
+                                        <label for="fri">Fri</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="6" id="sat">
+                                        <label for="sat">Sat</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="7" id="sun">
+                                        <label for="sun">Sun</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <ul class="days-list">
-                    <li>
-                        <input type="checkbox" name="Mon" value="1" id="mon">
-                        <label for="mon">Mon</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="Tue" value="2" id="tue">
-                        <label for="tue">Tue</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="Wed" value="3" id="wed">
-                        <label for="wed">Wed</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="Thu" value="4" id="thu">
-                        <label for="thu">Thu</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="Fri" value="5" id="fri">
-                        <label for="fri">Fri</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="Sat" value="6" id="sat">
-                        <label for="sat">Sat</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="Sun" value="7" id="sun">
-                        <label for="sun">Sun</label>
-                    </li>
-                </ul>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_update">Close</button>
                     <button type="button" class="btn btn-primary" id="update">Save</button>
                 </div>
             </div>
@@ -152,27 +167,21 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-
                 <div id="spinner-container">
                 </div>
                 <div class="row" style="margin: 25px;">
-                    <div class="col-md-3">
-                        <p>Name</p>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="depName" style="width: 300px">
-                    </div>
+                    <p class="create_item">Name</p>
+                        <input type="text" id="depName" placeholder="Enter Name" style="width: 300px">
                 </div>
                 <div class="row" style="margin: 25px;">
-                    <div class="col-md-3">
-                        <p>Type</p>
-                    </div>
-                    <div class="col-md-3">
-                        <select id="typeSelect" size="1" style="width: 300px"></select>
-                    </div>
+                    <p class="create_item">Type</p>
+                        <select id="typeSelect" size="1"  style="width: 300px">
+                            <option value="Choose Type">Choose Type</option>
+                            <option value="Test">Test</option>
+                        </select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_create">Close</button>
                     <button type="button" class="btn btn-primary" id="create">Create</button>
                 </div>
             </div>
@@ -185,6 +194,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript" src="../js/department.js"></script>
+<script type="text/javascript" src="../js/disable.js"></script>
+<script type="text/javascript" src="../js/spinner.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>
 </body>
 </html>

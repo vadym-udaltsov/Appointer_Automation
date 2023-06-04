@@ -16,7 +16,11 @@ $(window).ready(function () {
         return false;
     });
 
-    $("#create").click(function() {
+    $("#update").click(function() {
+    const updateButton = document.getElementById('update');
+          if (updateButton.classList.contains('disabled')) {
+                  return false;
+              }
         var department = new Object();
         department.departmentName = $("#depName").val() == "" ? "Default" : $("#depName").val();
         department.type = $("#typeSelect").val();
@@ -29,6 +33,10 @@ $(window).ready(function () {
     });
 
      $("#create").click(function() {
+     const createButton = document.getElementById('create');
+      if (createButton.classList.contains('disabled')) {
+              return false;
+          }
         var department = new Object();
         department.departmentName = $("#depName").val();
         department.email = email;
@@ -99,13 +107,16 @@ function executeGetRequest(url) {
             console.log(data)
         }
     });
-
-    $(".dropdown").hover(
-      function() {
-        $(this).find(".sub-menu").slideDown();
-      },
-      function() {
-        $(this).find(".sub-menu").slideUp();
-      }
-    );
 }
+
+function activateButton() {
+  $('#department_link').addClass('btn-active');
+}
+
+
+
+
+
+
+
+
