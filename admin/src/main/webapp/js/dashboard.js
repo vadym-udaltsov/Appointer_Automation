@@ -7,16 +7,6 @@ $(window).ready(function () {
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
     loadCustomerData(url);
 
-    $("#serviceRef").click(function() {
-        $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/service.html');
-        return false;
-    });
-
-    $("#departmentRef").click(function() {
-        $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/department.html');
-        return false;
-    });
-
     $("#depCreateBtn").click(function() {
         var department = new Object();
         department.departmentName = $("#depName").val();
@@ -27,9 +17,9 @@ $(window).ready(function () {
 
     $("#servCreateBtn").click(function() {
         var service = new Object();
-        service.name = $("#servName").val();
-        service.duration = $("#servDuration").val();
-        service.price = $("#servPrice").val();
+        service.name = $("#specialist_servName").val();
+        service.duration = $("#specialist_servDuration").val();
+        service.price = $("#specialist_servPrice").val();
         executeGetRequest('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/company');
         return false;
     });

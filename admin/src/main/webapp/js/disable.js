@@ -1,5 +1,5 @@
-const depNameInput = document.getElementById('depName');
-const typeSelect = document.getElementById('typeSelect');
+const depNameInput = document.getElementById('depName_create');
+const typeSelect = document.getElementById('typeSelect_create');
 const createButton = document.getElementById('create');
 const cancelButton = document.getElementById('close_create');
 
@@ -8,7 +8,7 @@ function checkFields() {
     const type = typeSelect.value.trim();
 
 
-    if (depName !== '' && type !== 'Choose Type') {
+    if (depName !== '' && type !== '') {
             createButton.classList.remove('disabled');
     } else {
             createButton.classList.add('disabled');
@@ -58,7 +58,7 @@ cancelButton.addEventListener('click', function() {
 
      function updateButtonState() {
        var allInputsFilled = formInputs.every(function(input) {
-         return input.value.trim() !== "" && input.value !== "Choose Department" && input.value !== "Choose Time Zone" && input.value !== "Choose Type";
+         return input.value.trim() !== "" && input.value !== "" && input.value !== "" && input.value !== "";
        });
 
        if (allInputsFilled) {

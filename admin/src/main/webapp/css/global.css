@@ -1,3 +1,8 @@
+body {
+    background: url("../pictures/fon2.jpg") no-repeat !important;
+    background-size: cover;
+}
+
 #spinner_loading {
   display: flex;
   justify-content: center;
@@ -21,4 +26,30 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+button:focus {
+    outline: none;
+}
+
+/*Close button */
+.btn-secondary {
+  background-color: red;
+  color: white;
+  transition: 0.5s;
+  margin-right: 20px !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: #5a6268;
+}
+/* Save button */
+.btn-primary {
+    background-color: black !important;
+    border: none
+}
+
+.btn-primary:active {
+    border: none
 }

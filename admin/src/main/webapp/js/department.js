@@ -11,11 +11,6 @@ $(window).ready(function () {
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
     loadDepartmentData(url, typeSelect, depNameSelect);
 
-    $("#serviceRef").click(function() {
-        $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/service.html');
-        return false;
-    });
-
     $("#update").click(function() {
     const updateButton = document.getElementById('update');
           if (updateButton.classList.contains('disabled')) {
