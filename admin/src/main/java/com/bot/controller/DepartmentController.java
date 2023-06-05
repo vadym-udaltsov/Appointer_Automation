@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -35,6 +34,7 @@ public class DepartmentController {
         DepartmentData data = DepartmentData.builder()
                 .customerDepartments(customerDepartments)
                 .availableTypes(List.of(DepartmentType.values()))
+                .availableZones(TimeZone.buildDtos())
                 .build();
         return new ResponseEntity<>(data, HttpStatus.OK);
     }

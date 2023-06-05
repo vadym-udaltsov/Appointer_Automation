@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class TimeZoneDto {
-    private TimeZone zone;
+    private String id;
     private String title;
 }
