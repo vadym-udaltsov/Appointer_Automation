@@ -620,7 +620,7 @@ Resources:
         IntegrationResponses:
           - StatusCode: 200
         IntegrationHttpMethod: POST
-        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !GetAtt RegisterBotLambda.Arn, "/invocations" ] ]
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - DepartmentResource
   DepartmentDataGet:

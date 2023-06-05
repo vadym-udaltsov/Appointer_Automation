@@ -34,7 +34,6 @@ public class DepartmentController {
         List<Department> customerDepartments = departmentService.getCustomerDepartments(customer);
         DepartmentData data = DepartmentData.builder()
                 .customerDepartments(customerDepartments)
-                .timeZones(TimeZone.buildDtos())
                 .availableTypes(List.of(DepartmentType.values()))
                 .build();
         return new ResponseEntity<>(data, HttpStatus.OK);
@@ -42,8 +41,8 @@ public class DepartmentController {
 
     @PostMapping()
     public ResponseEntity<SimpleResponse> updateDepartment(@RequestBody Department department) {
-        log.info("Got request for department update");
-        departmentService.createDepartment(department);
+        log.info("Got request for department update. Department: {}", JsonUtils.convertObjectToString(department));
+        departmentService.updateDepartment(department);
         log.info("Department updated successfully");
         return new ResponseEntity<>(SimpleResponse.builder().body("Updated").build(), HttpStatus.OK);
     }

@@ -9,6 +9,8 @@ public interface IDepartmentService {
 
     boolean createDepartment(Department department);
 
+    boolean updateDepartment(Department department);
+
     List<Department> getCustomerDepartments(String customer);
 
     Department getDepartmentById(String departmentId);

@@ -10,6 +10,8 @@ public interface IDepartmentDao {
 
     boolean createItem(Department department);
 
+    boolean updateDepartment(Department department);
+
     Department getDepartmentById(String departmentId);
 
     List<Department> findAllByQuery(QuerySpec querySpec);

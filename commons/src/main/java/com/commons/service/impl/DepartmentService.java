@@ -15,6 +15,11 @@ public class DepartmentService implements IDepartmentService {
 
     private IDepartmentDao departmentDao;
 
+    @Override
+    public boolean updateDepartment(Department department) {
+        return departmentDao.updateDepartment(department);
+    }
+
     @Autowired
     public DepartmentService(IDepartmentDao departmentDao) {
         this.departmentDao = departmentDao;

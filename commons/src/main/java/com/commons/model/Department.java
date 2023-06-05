@@ -69,6 +69,9 @@ public class Department extends DynamoDbEntity {
     @JsonProperty("z")
     private int zoneOffset;
 
+    @JsonProperty("zone")
+    private String zone;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {

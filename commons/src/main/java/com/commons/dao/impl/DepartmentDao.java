@@ -3,7 +3,9 @@ package com.commons.dao.impl;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.commons.dao.AbstractDao;
 import com.commons.dao.IDepartmentDao;
@@ -12,7 +14,10 @@ import com.commons.model.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class DepartmentDao extends AbstractDao<Department> implements IDepartmentDao {
@@ -20,6 +25,34 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     @Autowired
     public DepartmentDao(DynamoDbFactory dynamoDbFactory) {
         super(dynamoDbFactory, Department.class, "department");
+    }
+
+    @Override
+    public boolean updateDepartment(Department department) {
+        Map<String, AttributeValueUpdate> updates = new HashMap<>();
+        AttributeValueUpdate startWork = new AttributeValueUpdate(
+                new AttributeValue().withN(String.valueOf(department.getStartWork())), AttributeAction.PUT);
+        updates.put("sw", startWork);
+        AttributeValueUpdate endWork = new AttributeValueUpdate(
+                new AttributeValue().withN(String.valueOf(18)), AttributeAction.PUT);
+        updates.put("ew", endWork);
+        List<AttributeValue> nonWorkingDays = department.getNonWorkingDays().stream()
+                .map(d -> new AttributeValue().withN(String.valueOf(d)))
+                .collect(Collectors.toList());
+        AttributeValueUpdate nonWorkingDaysUpdate = new AttributeValueUpdate(
+                new AttributeValue().withL(nonWorkingDays), AttributeAction.PUT);
+        updates.put("nwd", nonWorkingDaysUpdate);
+        AttributeValueUpdate zone = new AttributeValueUpdate(
+                new AttributeValue().withS(department.getZone()), AttributeAction.PUT);
+        updates.put("zone", zone);
+        UpdateItemRequest request = new UpdateItemRequest()
+                .withTableName(Department.TABLE_NAME)
+                .withKey(Map.of(
+                        "c", new AttributeValue(department.getCustomer()),
+                        "n", new AttributeValue(department.getName())))
+                .withAttributeUpdates(updates);
+        updateItem(request);
+        return true;
     }
 
     @Override
