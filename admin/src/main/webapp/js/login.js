@@ -81,3 +81,14 @@ function executePost(data, url) {
         }
     });
 }
+
+/*Alert*/
+
+document.addEventListener("DOMContentLoaded", function() {
+  var messageDiv = document.getElementById("messageDiv");
+
+    messageDiv.style.display = "block";
+    setTimeout(function() {
+      messageDiv.style.display = "none";
+    }, 4000);
+});
