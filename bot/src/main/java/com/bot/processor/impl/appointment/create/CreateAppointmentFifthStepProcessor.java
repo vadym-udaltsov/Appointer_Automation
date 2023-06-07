@@ -62,6 +62,7 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
                 .specialist(specialist)
                 .service(serviceName)
                 .userId(context.getUserId())
+                .departmentId(department.getId())
                 .date(appointmentDate)
                 .build();
         appointmentService.save(appointment);

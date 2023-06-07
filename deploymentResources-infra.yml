@@ -253,12 +253,23 @@ Resources:
           AttributeType: S
         - AttributeName: d
           AttributeType: N
+        - AttributeName: did
+          AttributeType: S
       KeySchema:
         - AttributeName: s
           KeyType: HASH
         - AttributeName: d
           KeyType: RANGE
       BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: did-d-index
+          KeySchema:
+            - AttributeName: did
+              KeyType: HASH
+            - AttributeName: d
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
       TableName: appointment
   DepartmentTable:
     Type: 'AWS::DynamoDB::Table'

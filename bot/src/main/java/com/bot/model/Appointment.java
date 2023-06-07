@@ -1,6 +1,8 @@
 package com.bot.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.document.Item;
@@ -22,17 +24,23 @@ public class Appointment extends DynamoDbEntity {
     private static final String HASH_KEY = "s";
     private static final String RANGE_KEY = "d";
     public static final String TABLE_NAME = "appointment";
+    public static final String INDEX_NAME = "did-d-index";
 
     @DynamoDBHashKey(attributeName = HASH_KEY)
     @JsonProperty("s")
     private String specialist;
 
     @DynamoDBRangeKey(attributeName = RANGE_KEY)
+    @DynamoDBIndexRangeKey(attributeName = RANGE_KEY)
     @JsonProperty("d")
     private long date;
 
     @JsonProperty("uid")
     private long userId;
+
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = INDEX_NAME)
+    @JsonProperty("did")
+    private String departmentId;
 
     @JsonProperty("serv")
     private String service;
@@ -49,6 +57,7 @@ public class Appointment extends DynamoDbEntity {
                 .with(HASH_KEY, specialist)
                 .withNumber(RANGE_KEY, date)
                 .withNumber("uid", userId)
+                .withString("did", departmentId)
                 .withString("serv", service);
     }
 

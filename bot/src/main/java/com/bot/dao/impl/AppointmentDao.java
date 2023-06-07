@@ -41,6 +41,7 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
             appointment.setDate(Integer.parseInt(item.get("d").getN()));
             appointment.setService(item.get("serv").getS());
             appointment.setUserId(Long.parseLong(item.get("uid").getN()));
+            appointment.setDepartmentId(item.get("did").getS());
             appointments.add(appointment);
         }
         return appointments;
