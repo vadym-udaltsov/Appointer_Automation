@@ -18,12 +18,12 @@ $(window).ready(function () {
         }
         var department = new Object();
         var id = $("#depNameSelect").val();
-        var name = $("#depNameSelect").text();
+        var name = $("#depNameSelect option:selected").text().trim();
 
         department.id = id;
         department.n = name;
         department.c = email;
-        department.tp = $("#typeSelect").val();
+        department.tp = $("#depTypeSelect").val();
         department.zone = $("#timeZoneSelect").val();
         department.sw = $("#startWork").val();
         department.ew = $("#finishWork").val();
@@ -47,7 +47,7 @@ $(window).ready(function () {
         var department = new Object();
         department.departmentName = $("#depName").val();
         department.email = email;
-        department.type = $("#typeSelect").val();
+        department.type = $("#depTypeSelect").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
         return false;
      });

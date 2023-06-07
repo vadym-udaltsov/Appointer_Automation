@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../css/modalBlock.css">
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/departmentModals.css">
-    <link rel="stylesheet" href="../css/specialistModal.css">
     <title>Dashboard</title>
 </head>
 <body>
@@ -21,19 +20,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active" style="width: 100px">
-                <button type="submit" class="nav-button" id="homeRef">Home</button>
-            </li>
-            <li class="nav-item dropdown">
-                <button type="submit" class="nav-button" id="departmentRef">Department</button>
-            </li>
-            <li class="nav-item dropdown">
-                <button type="submit" class="nav-button" id="serviceRef">Service</button>
-            </li>
-            <li class="nav-item dropdown">
-                <button type="submit" class="nav-button" id="specialistRef">Specialist</button>
-            </li>
-            <li class="nav-item dropdown">
-                <button type="submit" class="nav-button" id="adminRef">Admin</button>
+                <button type="submit" class="nav-button" id="reportsRef">Reports</button>
             </li>
         </ul>
         <div class="creator_container">
@@ -60,13 +47,14 @@
         </div>
 
         <div class="modal_items">
-            <div class="modal_title">Specialists page</div>
+            <div class="modal_title">Service</div>
             <div class="modal_block">
                 <button type="button" class="sub-button" data-toggle="modal" data-target="#specialistModal"
                         id="#specialist_create">
                     Create
                 </button>
             </div>
+            <div style="height: 38px;"></div>
         </div>
     </div>
 </div>
@@ -132,14 +120,6 @@
             </div>
             <div class="row" style="margin: 25px;">
                 <div class="col-md-3">
-                    <p class="update__asterisks">Name</p>
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="depNameUpdate" style="width: 300px">
-                </div>
-            </div>
-            <div class="row" style="margin: 25px;">
-                <div class="col-md-3">
                     <p class="update__asterisks">Start work hour</p>
                 </div>
                 <div class="col-md-3">
@@ -195,13 +175,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_update">Close</button>
-                <button type="button" class="btn btn-primary" id="update">Save</button>
+                <button type="button" class="btn btn-primary" id="update">Update</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade custom-modal" id="specialistModal" tabindex="-1" style="width: 800px" aria-labelledby="specialistModal"
+<div class="modal fade custom-modal" id="specialistModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -236,7 +216,7 @@
 <script type="text/javascript" src="../js/department.js"></script>
 <script type="text/javascript" src="../js/spinner.js"></script>
 <script type="text/javascript" src="../js/disable.js"></script>
-<script type="text/javascript" src="../js/specialist.js"></script>
+<script type="text/javascript" src="../js/service.js"></script>
 <script type="text/javascript" src="../js/commons.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>
 </body>

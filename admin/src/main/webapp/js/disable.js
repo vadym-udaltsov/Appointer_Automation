@@ -24,18 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
     createButton.classList.add('disabled');
 });
 
-cancelButton.addEventListener('click', function() {
-     depNameInput.value = '';
-     typeSelect.selectedIndex = 0;
-     createButton.classList.add('disabled');
-});
-
 /*Update Box */
     document.addEventListener("DOMContentLoaded", function() {
        var depNameSelect = document.getElementById("depNameSelect");
        var timeZoneSelect = document.getElementById("timeZoneSelect");
        var depTypeSelect = document.getElementById("depTypeSelect");
-       var depNameUpdate = document.getElementById("depNameUpdate");
        var startWork = document.getElementById("startWork");
        var finishWork = document.getElementById("finishWork");
        var closeButton = document.getElementById("close_update");
@@ -46,7 +39,6 @@ cancelButton.addEventListener('click', function() {
          depNameSelect,
          timeZoneSelect,
          depTypeSelect,
-         depNameUpdate,
          startWork,
          finishWork
        ];
@@ -67,15 +59,4 @@ cancelButton.addEventListener('click', function() {
          saveButton.classList.add('disabled');
        }
      }
-
-
-          closeButton.addEventListener("click", resetForm);
-          function resetForm() {
-            depNameSelect.value = "Choose Department";
-            timeZoneSelect.value = "Choose Time Zone";
-            depTypeSelect.value = "Choose Type";
-            depNameUpdate.value = "";
-            startWork.value = "";
-            finishWork.value = "";
-          }
-     });
+});

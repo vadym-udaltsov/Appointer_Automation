@@ -5,7 +5,7 @@ $(window).ready(function () {
     var email = localStorage.getItem('customer');
     var customerData = JSON.parse(window.localStorage.getItem('customerData'));
     var select = $("#specialist_depNameSelect");
-    //loadDepartments(select, customerData);
+    loadDepartments(select, customerData);
 
     $("#specialist_servCreateBtn").click(function() {
         var request = new Object();
@@ -21,10 +21,10 @@ $(window).ready(function () {
     });
 });
 
-/*function loadDepartments(select, data) {
+function loadDepartments(select, data) {
     $.each(data.customerDepartments, function () {
         var opt = $("<option value='" + this.n + "'></option>").text(this.n);
         select.append(opt);
     });
-}*/
+}
 

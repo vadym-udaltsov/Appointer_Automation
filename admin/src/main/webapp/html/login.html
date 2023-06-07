@@ -9,14 +9,12 @@
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/loginSpinner.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div id="spinner_loading">
-    <div class="spinner_item"></div>
-</div>
 <div class="sidenav">
     <div class="login-main-text">
         <h2>Appointer<br> Login Page</h2>
@@ -41,6 +39,9 @@
                 </button>
             </form>
         </div>
+    </div>
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
     </div>
 
     <div class="modal fade custom-modal" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel"
@@ -77,6 +78,5 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 <script type="text/javascript" src="../js/login.js"></script>
-<script type="text/javascript" src="../js/spinner.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>
 </html>

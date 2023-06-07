@@ -29,6 +29,13 @@ $(window).ready(function () {
 });
 
 function executeGet(url) {
+    $("#log").click(function() {
+        $("#loadingOverlay").show();
+
+        $(".sidenav").hide();
+        $(".main").hide();
+    });
+
     $.ajax({
         type: 'get',
         url: url,
