@@ -29,13 +29,6 @@ $(window).ready(function () {
 });
 
 function executeGet(url) {
-    $("#log").click(function() {
-        $("#loadingOverlay").show();
-
-        $(".sidenav").hide();
-        $(".main").hide();
-    });
-
     $.ajax({
         type: 'get',
         url: url,
@@ -56,6 +49,13 @@ function executeGet(url) {
 }
 
 function executePost(data, url) {
+    $("#log").click(function() {
+        $("#loadingOverlay").show();
+
+        $(".sidenav").hide();
+        $(".main").hide();
+    });
+
     $.ajax({
         type: 'post',
         url: url,
@@ -65,7 +65,7 @@ function executePost(data, url) {
         success: function (data) {
             console.log(data)
             var error = document.getElementById("error")
-            if (data.statusCode === 401) {
+            if (data.status === 401) {
                 error.textContent = "Login or password is wrong"
                 error.style.color = "red"
             } else {

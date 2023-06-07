@@ -12,7 +12,7 @@ $(window).ready(function () {
     loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
 
     $("#update").click(function() {
-    const updateButton = document.getElementById('update');
+    var updateButton = document.getElementById('update');
         if (updateButton.classList.contains('disabled')) {
             return false;
         }
@@ -36,6 +36,7 @@ $(window).ready(function () {
         }
         department.nwd = days;
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
+        $("#updateModal").modal("hide");
         return false;
     });
 
@@ -49,6 +50,7 @@ $(window).ready(function () {
         department.email = email;
         department.type = $("#depTypeSelect").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
+        $("#createModal").modal("hide");
         return false;
      });
 });
@@ -64,16 +66,17 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
                 var type = $("<option value='" + this + "'></option>").text(this);
                 typeSelect.append(type);
             });
+             $.each(data.availableZones, function () {
+                var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
+                timeZoneSelect.append(timeZone);
+            });
             $.each(data.customerDepartments, function () {
                 var name = $("<option value='" + this.id + "'></option>").text(this.n);
                 depNameSelect.append(name);
             });
-            var selectedZone = data.customerDepartments[0].zone;
-            if (selectedZone != "") {
-                var selectedZoneOption = $("<option value='" + selectedZone + "selected disabled hidden'></option>").text("Select zone");
-                timeZoneSelect.append()
-            }
-            document.getElementById("timeZoneSelect").value = data.customerDepartments[0].n;
+            document.getElementById("depNameSelect").value = data.customerDepartments[0].id;
+            document.getElementById("timeZoneSelect").value = data.customerDepartments[0].zone;
+            document.getElementById("depTypeSelect").value = data.customerDepartments[0].tp;
             document.getElementById("startWork").value = data.customerDepartments[0].sw;
             document.getElementById("finishWork").value = data.customerDepartments[0].ew;
         }
@@ -89,18 +92,20 @@ function executePost(data, url) {
         success: function (data) {
             console.log(data)
             var error = document.getElementById("error")
-            if (data.statusCode === 401) {
-                error.textContent = "Request is not authorized"
-                error.style.color = "red"
+            if (data.status === 401) {
+                error.textContent = "Request is not authorized";
+                error.style.color = "red";
+                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html';
             } else {
 //                $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
             }
         },
         error: function (data) {
-            $(location).attr('href', '');
+             console.log("Operation failed")
         },
         complete: function (data) {
             console.log(data);
+            console.log(data.status);
         }
     });
 }

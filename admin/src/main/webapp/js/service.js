@@ -17,6 +17,7 @@ $(window).ready(function () {
         request.department = $("#specialist_depNameSelect").val();
         request.service = service;
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
+        $("#specialistModal").modal("hide");
         return false;
     });
 });
