@@ -71,8 +71,8 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
 
         int dayNumber = Integer.parseInt(selectedDay);
 
-        Map<String, List<FreeSlot>> slotsBySpecialists = appointmentService.getFreeSlotsBySpecialists(specialistNames,
-                department, monthNumber, dayNumber);
+        Map<String, List<FreeSlot>> slotsBySpecialists = appointmentService.getFreeSlotsByDepartment(department,
+                monthNumber, dayNumber);
         Integer serviceDurationMinutes = department.getServices().stream()
                 .filter(cs -> selectedService.equals(cs.getName()))
                 .findFirst()

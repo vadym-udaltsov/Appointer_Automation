@@ -30,8 +30,8 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public List<Appointment> getAppointmentsBySpecialists(List<String> specialistIds, long startDate, long finishDate) {
-        return appointmentDao.getAppointmentsBySpecialists(specialistIds, startDate, finishDate);
+    public List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate) {
+        return appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate);
     }
 
     @Override
@@ -40,14 +40,13 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public Map<String, List<FreeSlot>> getFreeSlotsBySpecialists(List<String> specialistIds, Department department,
-                                                                 int month, int dayNumber) {
+    public Map<String, List<FreeSlot>> getFreeSlotsByDepartment(Department department, int month, int dayNumber) {
         long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork());
         long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork());
         long now = DateUtils.now(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
 
-        List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialists(specialistIds, startDate, finishDate);
+        List<Appointment> appointments = appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate);
         Map<String, List<Appointment>> appointmentsBySpecialists = appointments.stream()
                 .collect(Collectors.groupingBy(Appointment::getSpecialist));
 

@@ -43,7 +43,6 @@ public class AbstractGetCalendarProcessor {
         if (specialists.isEmpty()) {
             throw new RuntimeException("Specialists list can not be empty");
         }
-        List<String> specialistNames = specialists.stream().map(Specialist::getName).collect(Collectors.toList());
 
         long startDate = DateUtils.now(department);
         LocalDateTime endDateTime = LocalDate.now()
@@ -59,7 +58,7 @@ public class AbstractGetCalendarProcessor {
             month = month.plus(1);
         }
 
-        List<Appointment> allAppointments = appointmentService.getAppointmentsBySpecialists(specialistNames, startDate, endDate);
+        List<Appointment> allAppointments = appointmentService.getAppointmentsByDepartment(department, startDate, endDate);
 
         List<String> busyDayTitles = allAppointments.isEmpty() ? List.of() : defineBusyDayTitles(allAppointments,
                 department, month.getValue(), selectedService);

@@ -38,12 +38,6 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
         this.tableName = tableName;
     }
 
-    public void updateItem(PrimaryKey primaryKey, AttributeUpdate... attributeUpdates) {
-        log.info("Updating item with primary key: {}", JsonUtils.convertObjectToString(primaryKey));
-        getDynamoDb().getTable(tableName).updateItem(primaryKey, attributeUpdates);
-        log.info("Successfully updated item in the table: {}", tableName);
-    }
-
     public void updateItem(UpdateItemRequest request) {
         log.info("Updating item with primary key: {}", JsonUtils.convertObjectToString(request));
         dynamoDbFactory.getAmazonDynamoDB().updateItem(request);
@@ -96,6 +90,18 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
         }
         Item item = itemsFromQueryResult.get(0);
         return JsonUtils.parseStringToObject(item.toJSON(), tClass);
+    }
+
+    public List<T> getItemsByIndexQuery(QuerySpec querySpec, String indexName) {
+        Index index = dynamoDbFactory.getDynamoDB().getTable(tableName).getIndex(indexName);
+        ItemCollection<QueryOutcome> result = index.query(querySpec);
+        List<Item> itemsFromQueryResult = getItemsFromQueryResult(result);
+        if (itemsFromQueryResult.size() == 0) {
+            return List.of();
+        }
+        return itemsFromQueryResult.stream()
+                .map(i -> JsonUtils.parseStringToObject(i.toJSON(), tClass))
+                .collect(Collectors.toList());
     }
 
     public T getItemByHashKey(Object hashKey) {

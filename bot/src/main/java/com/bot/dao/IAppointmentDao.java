@@ -1,6 +1,7 @@
 package com.bot.dao;
 
 import com.bot.model.Appointment;
+import com.commons.model.Department;
 
 import java.util.List;
 
@@ -10,6 +11,6 @@ public interface IAppointmentDao {
 
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
-    List<Appointment> getAppointmentsBySpecialists(List<String> specialistIds, long startDate, long finishDate);
+    List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate);
 
 }
