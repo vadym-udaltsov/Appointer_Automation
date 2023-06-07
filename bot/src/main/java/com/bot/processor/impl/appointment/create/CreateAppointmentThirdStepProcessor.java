@@ -69,13 +69,6 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
                 .map(Specialist::getName)
                 .collect(Collectors.toList());
 
-        if (specialistNames.size() == 1) {
-            String specialistName = specialistNames.get(0);
-            MessageUtils.setTextToUpdate(update, specialistName);
-            ContextUtils.addNextStepToLocation(context, Constants.ANY);
-            return nextStepProcessor.processRequest(request);
-        }
-
         int dayNumber = Integer.parseInt(selectedDay);
 
         Map<String, List<FreeSlot>> slotsBySpecialists = appointmentService.getFreeSlotsBySpecialists(specialistNames,
@@ -95,6 +88,13 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
         ContextUtils.setStringParameter(context, Constants.SELECTED_DAY, String.valueOf(dayNumber));
         ContextUtils.putSlotsToContextParams(slotsBySpecialists, context);
         context.getParams().put(Constants.AVAILABLE_SPECIALISTS, filteredSpecialists);
+
+        if (specialistNames.size() == 1) {
+            String specialistName = specialistNames.get(0);
+            MessageUtils.setTextToUpdate(update, specialistName);
+            ContextUtils.addNextStepToLocation(context, Constants.ANY);
+            return nextStepProcessor.processRequest(request);
+        }
 
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(filteredSpecialists);
         MessageHolder holder = MessageUtils.holder("Select specialist", ButtonsType.KEYBOARD, holderRequest);

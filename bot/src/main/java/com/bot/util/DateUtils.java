@@ -12,7 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class DateUtils {
 
@@ -26,7 +28,7 @@ public class DateUtils {
     }
 
     public static long now(Department department) {
-        return LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+        return LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
     }
 
     public static String getDayTitle(long date) {
@@ -39,7 +41,7 @@ public class DateUtils {
                 .plusMonths(isNextMonth ? 1 : 0)
                 .atStartOfDay()
                 .with(TemporalAdjusters.firstDayOfMonth());
-        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
     }
 
     public static long getEndOfMonthDate(Department department, boolean isNextMonth) {
@@ -48,7 +50,7 @@ public class DateUtils {
                 .atStartOfDay()
                 .with(TemporalAdjusters.lastDayOfMonth())
                 .plusDays(1);
-        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
     }
 
     public static int getDayOfWeek(int year, int month, int day) {
@@ -56,15 +58,15 @@ public class DateUtils {
     }
 
     public static int getNumberOfCurrentDay(Department department) {
-        return LocalDateTime.now().plusHours(department.getZoneOffset()).getDayOfMonth();
+        return LocalDateTime.now().plusHours(getHourOffset(department)).getDayOfMonth();
     }
 
     public static int getNumberOfCurrentMonth(Department department) {
-        return LocalDateTime.now().plusHours(department.getZoneOffset()).getMonth().getValue();
+        return LocalDateTime.now().plusHours(getHourOffset(department)).getMonth().getValue();
     }
 
     public static int getNumberOfCurrentYear(Department department) {
-        return LocalDateTime.now().plusHours(department.getZoneOffset()).getYear();
+        return LocalDateTime.now().plusHours(getHourOffset(department)).getYear();
     }
 
     public static boolean isWholeDayAvailable(Department department, FreeSlot slot) {
@@ -84,8 +86,30 @@ public class DateUtils {
             LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(startPoint), ZoneId.systemDefault());
             String title = localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
             titles.add(title);
-            startPoint += intervalMin * 60L;
+            int currentMinute = localDateTime.getMinute();
+            if (currentMinute % intervalMin != 0) {
+                startPoint += (getNextMinute(intervalMin, currentMinute) - currentMinute) * 60L;
+            } else {
+                startPoint += intervalMin * 60L;
+            }
         }
         return titles;
+    }
+
+    private static int getNextMinute(int interval, int currentMinute) {
+        int startMinute = 0;
+        while (startMinute < 60) {
+            startMinute += interval;
+            if (currentMinute <= startMinute) {
+                return startMinute;
+            }
+        }
+        return startMinute;
+    }
+
+    public static int getHourOffset(Department department) {
+        String zoneId = department.getZone();
+        TimeZone timeZone = TimeZone.getTimeZone(zoneId);
+        return timeZone.getOffset(Calendar.ZONE_OFFSET) / 3600 / 1000;
     }
 }

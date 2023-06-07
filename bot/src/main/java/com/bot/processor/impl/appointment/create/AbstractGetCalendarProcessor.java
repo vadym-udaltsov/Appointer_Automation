@@ -50,12 +50,12 @@ public class AbstractGetCalendarProcessor {
                 .atStartOfDay()
                 .with(TemporalAdjusters.lastDayOfMonth())
                 .plusDays(1);
-        long endDate = endDateTime.toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+        long endDate = endDateTime.toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
 
         Month month = LocalDate.now().getMonth();
         if (isNextMonth) {
             startDate = endDate;
-            endDate = endDateTime.plusMonths(1).toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+            endDate = endDateTime.plusMonths(1).toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
             month = month.plus(1);
         }
 
@@ -160,7 +160,7 @@ public class AbstractGetCalendarProcessor {
 
     private List<Long> getFreeSlots(List<Appointment> appointments, Department department, int dayOfMonth, int month) {
         LocalDateTime now = LocalDateTime.now();
-        long nowLong = now.toEpochSecond(ZoneOffset.ofHours(-department.getZoneOffset()));
+        long nowLong = now.toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
         long finish = DateUtils.getPointOfDay(month, dayOfMonth, department.getEndWork());
         List<Long> result = new ArrayList<>();
         Map<String, Integer> durationsByServices = department.getServices().stream()
