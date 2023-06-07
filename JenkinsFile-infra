@@ -4,8 +4,8 @@ pipeline {
 
     parameters {
         choice(name: 'Action', choices: ['deploy', 'destroy', 'redeploy'])
-        choice(name: 'Account', choices: ['773974733061'])
-        choice(name: 'VerifiedEmail', choices: ['sergii.udaltsov@gmail.com'])
+        choice(name: 'Account', choices: ['993058472258', '773974733061'])
+        choice(name: 'VerifiedEmail', choices: ['tkatlantis@gmail.com', 'sergii.udaltsov@gmail.com'])
     }
 
     stages {
@@ -24,9 +24,10 @@ pipeline {
                         sh 'chmod +x ./destroy.sh'
                         sh './destroy.sh ' + params.Account
                     }
-                    if (params.Action == 'deploy' || params.Action == 'redeploy')
+                    if (params.Action == 'deploy' || params.Action == 'redeploy') {
                         sh 'chmod +x ./deploy.sh'
                         sh './deploy.sh ' + params.Account + ' ' + params.VerifiedEmail
+                    }
                 }
             }
         }

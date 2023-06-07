@@ -32,7 +32,7 @@ public class SetContactStartDashboard implements IProcessor {
             contextService.removeLastLocation(context);
             return List.of(MessageUtils.getContactsMessageHolder());
         }
-        contextService.setPhoneNumber(context, contact.getPhoneNumber());
+        context.setPhoneNumber(contact.getPhoneNumber());
         return List.of(MessageUtils.buildDashboardHolder());
     }
 }
