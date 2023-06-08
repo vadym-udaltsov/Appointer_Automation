@@ -1,12 +1,16 @@
 package com.commons.model;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
+import com.commons.converter.ListServicesConverter;
+import com.commons.converter.ListSpecialistsConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -46,25 +50,33 @@ public class Department extends DynamoDbEntity {
 
     @DynamoDBTypeConvertedEnum
     @JsonProperty("tp")
+    @DynamoDBAttribute(attributeName = "tp")
     private DepartmentType type;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY, value = "tn")
     private String token;
 
     @JsonProperty("as")
+    @DynamoDBAttribute(attributeName = "as")
+    @DynamoDBTypeConverted(converter = ListSpecialistsConverter.class)
     private List<Specialist> availableSpecialists = new ArrayList<>();
 
     @JsonProperty("s")
+    @DynamoDBAttribute(attributeName = "s")
+    @DynamoDBTypeConverted(converter = ListServicesConverter.class)
     private List<CustomerService> services = new ArrayList<>();
 
     @JsonProperty("sw")
+    @DynamoDBAttribute(attributeName = "sw")
     private int startWork;
 
     @JsonProperty("ew")
+    @DynamoDBAttribute(attributeName = "ew")
     private int endWork;
 
     @JsonProperty("nwd")
-    private List<Integer> nonWorkingDays;
+    @DynamoDBAttribute(attributeName = "nwd")
+    private List<Integer> nonWorkingDays = new ArrayList<>();
 
     @JsonProperty("z")
     private int zoneOffset;

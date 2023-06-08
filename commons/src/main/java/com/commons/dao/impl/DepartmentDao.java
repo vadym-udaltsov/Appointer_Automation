@@ -68,6 +68,19 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
 
     @Override
     public void addNewService(String email, String departmentName, CustomerService service) {
+        Department department = new Department();
+        department.setCustomer(email);
+        department.setName(departmentName);
+
+        Department departmentFromDb = getItem(department);
+        List<CustomerService> services = departmentFromDb.getServices();
+        CustomerService existingService = services.stream()
+                .filter(s -> service.getName().equals(s.getName()))
+                .findFirst()
+                .orElse(null);
+        if (existingService != null) {
+            throw new IllegalArgumentException(String.format("Service with name %s already exists", service.getName()));
+        }
         String listAttributeName = "s";
         AttributeValue newService = new AttributeValue().withM(Map.of(
                 "name", new AttributeValue(service.getName()),
@@ -79,12 +92,10 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
                 .withKey(Map.of(
                         "c", new AttributeValue(email),
                         "n", new AttributeValue(departmentName)))
-                .withConditionExpression("NOT contains(s, :newService)")
                 .withUpdateExpression("SET " + listAttributeName + " = list_append(if_not_exists(" + listAttributeName + ", :empty_list), :newServiceList)")
                 .withExpressionAttributeValues(Map.of(
                         ":newServiceList", new AttributeValue().withL(newService),
-                        ":empty_list", new AttributeValue().withL(),
-                        ":newService", newService));
+                        ":empty_list", new AttributeValue().withL()));
 
         updateItem(request);
     }

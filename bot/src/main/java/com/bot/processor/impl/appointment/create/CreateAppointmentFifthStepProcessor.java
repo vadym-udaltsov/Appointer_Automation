@@ -14,6 +14,7 @@ import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
+import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,12 +59,17 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         int minute = Integer.parseInt(timeParts[1]);
         LocalDateTime localDateTime = LocalDateTime.of(year, Integer.parseInt(month), Integer.parseInt(day), hour, minute);
         long appointmentDate = localDateTime.toEpochSecond(ZoneOffset.UTC);
+        CustomerService selectedService = department.getServices().stream()
+                .filter(s -> serviceName.equals(s.getName()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Could not find service with name " + serviceName));
         Appointment appointment = Appointment.builder()
                 .specialist(specialist)
                 .service(serviceName)
                 .userId(context.getUserId())
                 .departmentId(department.getId())
                 .date(appointmentDate)
+                .duration(selectedService.getDuration())
                 .build();
         appointmentService.save(appointment);
         contextService.resetLocationToDashboard(context);

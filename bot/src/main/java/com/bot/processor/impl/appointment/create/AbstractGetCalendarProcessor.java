@@ -162,15 +162,13 @@ public class AbstractGetCalendarProcessor {
         long nowLong = now.toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
         long finish = DateUtils.getPointOfDay(month, dayOfMonth, department.getEndWork());
         List<Long> result = new ArrayList<>();
-        Map<String, Integer> durationsByServices = department.getServices().stream()
-                .collect(Collectors.toMap(CustomerService::getName, CustomerService::getDuration));
         long currentPoint = DateUtils.getPointOfDay(month, dayOfMonth, department.getStartWork());
         for (Appointment appointment : appointments) {
             long freeSlot = appointment.getDate() - currentPoint;
             if (currentPoint > nowLong) {
                 result.add(freeSlot);
             }
-            currentPoint = appointment.getDate() + durationsByServices.get(appointment.getService()) * 60L;
+            currentPoint = appointment.getDate() + appointment.getDuration() * 60L;
         }
         result.add(finish - currentPoint);
         return result;

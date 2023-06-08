@@ -32,6 +32,9 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public void addCustomerService(String email, String departmentName, CustomerService service) {
+        if (service == null || "".equals(service.getName())) {
+            throw new IllegalArgumentException("Service name can not be null or empty");
+        }
         departmentDao.addNewService(email, departmentName, service);
     }
 

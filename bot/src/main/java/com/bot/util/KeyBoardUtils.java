@@ -93,7 +93,6 @@ public class KeyBoardUtils {
         keyboard.add(lastRow);
         keyboard.removeIf(r -> r.stream().allMatch(b -> Constants.UNAVAILABLE_DATE.equals(b.getText())));
         inlineKeyboardMarkup.setKeyboard(keyboard);
-//        context.getParams().put(Constants.AVAILABLE_DATES, availableDates);
         return inlineKeyboardMarkup;
     }
 
@@ -105,7 +104,7 @@ public class KeyBoardUtils {
         Department department = (Department) params.get(Constants.DEPARTMENT);
         boolean isNextMonth = (boolean) params.get(Constants.IS_NEXT_MONTH);
         Context context = (Context) params.get(Constants.CONTEXT);
-        List<Integer> nonWorkingDays = department.getNonWorkingDays();
+        List<Integer> nonWorkingDays = department.getNonWorkingDays() == null ? List.of() : department.getNonWorkingDays();
 
         LocalDate currentDate = LocalDate.now();
         int currentMonth = currentDate.getMonthValue();
