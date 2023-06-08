@@ -11,13 +11,15 @@ function executePost(data, url) {
             if (data.status === 401) {
                 error.textContent = "Request is not authorized";
                 error.style.color = "red";
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html';
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             } else {
 //                $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
             }
         },
         error: function (data) {
-            console.log("Operation failed")
+            if (data.status === 401) {
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+            }
         },
         complete: function (data) {
             console.log(data);

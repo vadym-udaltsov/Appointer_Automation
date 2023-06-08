@@ -25,6 +25,16 @@ body {
     min-width: 110.48px;
 }
 
+#logout_container {
+    border: 1px solid white;
+    border-top: none;
+    border-bottom: none;
+    position: absolute;
+    right: 320px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
 .nav-button {
     background-color: #555555;
     color: white;

@@ -83,12 +83,18 @@ function executePost(data, url) {
 }
 
 /*Alert*/
-
 document.addEventListener("DOMContentLoaded", function() {
   var messageDiv = document.getElementById("messageDiv");
-
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("buttonClicked")) {
+    urlParams.delete("buttonClicked");
+    const newUrl = window.location.pathname + (urlParams.toString() ? "?" + urlParams.toString() : "");
+    window.history.replaceState({}, "", newUrl);
     messageDiv.style.display = "block";
     setTimeout(function() {
       messageDiv.style.display = "none";
     }, 4000);
+  } else {
+    messageDiv.style.display = "none";
+  }
 });

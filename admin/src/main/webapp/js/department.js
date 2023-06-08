@@ -8,8 +8,16 @@ $(window).ready(function () {
     var depNameSelect = $("#depNameSelect");
     var timeZoneSelect = $("#timeZoneSelect");
 
+    depNameSelect.append('<option value="Loading...">Loading...</option>');
+    timeZoneSelect.append('<option value="Loading...">Loading...</option>');
+    typeSelect.append('<option value="Loading...">Loading...</option>');
+
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
     loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
+
+     $("#updatePopup").click(function() {
+            loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
+        });
 
     $("#update").click(function() {
     var updateButton = document.getElementById('update');
@@ -61,6 +69,10 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
         type: 'get',
         dataType: 'json',
         success: function (data) {
+
+        depNameSelect.empty();
+        timeZoneSelect.empty();
+        typeSelect.empty();
             console.log(data);
             $.each(data.availableTypes, function () {
                 var type = $("<option value='" + this + "'></option>").text(this);
@@ -79,6 +91,19 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
             document.getElementById("depTypeSelect").value = data.customerDepartments[0].tp;
             document.getElementById("startWork").value = data.customerDepartments[0].sw;
             document.getElementById("finishWork").value = data.customerDepartments[0].ew;
+
+            var checkedDateFromData = data.customerDepartments[0].nwd;
+                var daysCheckboxes = document.querySelectorAll('input[name="dayCheck"]');
+                daysCheckboxes.forEach(function(checkbox) {
+                    if (checkedDateFromData.includes(parseInt(checkbox.value))) {
+                        checkbox.checked = true;
+                    }
+                });
+        },
+        error: function (data) {
+            if (data.status === 401) {
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+            }
         }
     });
 }
@@ -92,8 +117,9 @@ function executeGetRequest(url) {
             return data;
         },
         error: function (data) {
-            alert('Auth not working')
-            console.log(data)
+            if (data.status === 401) {
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+            }
         },
         complete: function (data) {
             console.log(data)
@@ -105,6 +131,9 @@ function activateButton() {
   $('#department_link').addClass('btn-active');
 }
 
+function validateInput(input) {
+  input.value = input.value.replace(/\D/g, '');
+}
 
 
 

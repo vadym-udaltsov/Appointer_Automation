@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/modalBlock.css">
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/departmentModals.css">
+    <link rel="stylesheet" href="../css/windowModals.css">
     <title>Dashboard</title>
 </head>
 <body>
@@ -23,6 +23,9 @@
                 <button type="submit" class="nav-button" id="reportsRef">Reports</button>
             </li>
         </ul>
+        <div id="logout_container">
+            <button class="nav-button" id="logout_button">Log out</button>
+        </div>
         <div class="creator_container">
             <div class="creator_lines"></div>
             <p class="creator_item">Appointer - SUV</p>
@@ -40,7 +43,7 @@
                 </button>
             </div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#updateModal">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#updateModal" id="updatePopup">
                     Update
                 </button>
             </div>
@@ -61,18 +64,24 @@
 
 <!-- Modals HTML -->
 
-<div class="modal fade custom-modal" id="createModal" tabindex="-1" aria-labelledby="createModal"
-     aria-hidden="true">
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="row" style="margin: 25px;">
-                <p class="create_item">Name</p>
-                <input type="text" id="depName_create" placeholder="Enter Name" style="width: 300px">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Department</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="row" style="margin: 25px;">
-                <p class="create_item">Type</p>
-                <select id="typeSelect_create" size="1"  style="width: 300px">
-                </select>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="depName_create">Name</label>
+                    <input type="text" class="form-control" id="depName_create" placeholder="Enter Name">
+                </div>
+                <div class="form-group">
+                    <label for="typeSelect_create">Type</label>
+                    <select class="form-control" id="typeSelect_create" size="1"></select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_create">Cancel</button>
@@ -82,89 +91,92 @@
     </div>
 </div>
 
-<div class="modal fade custom-modal" id="updateModal" tabindex="-1" aria-labelledby="updateModal"
-     aria-hidden="true">
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="row" style="margin: 25px;">
-                <div class="col-md-3">
-                    <p class="update__asterisks">Department</p>
-                </div>
-                <div class="col-md-3">
-                    <select id="depNameSelect" size="1" style="width: 300px">
-                    </select>
-                </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Update Department</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="row" style="margin: 25px;">
-                <div class="col-md-3">
-                    <p class="update__asterisks">Time zone</p>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="update__asterisks">Department</p>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control" id="depNameSelect"></select>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <select id="timeZoneSelect" size="1" style="width: 300px" >
-                    </select>
-
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="update__asterisks">Time zone</p>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control" id="timeZoneSelect"></select>
+                    </div>
                 </div>
-            </div>
-            <div class="row" style="margin: 25px;">
-                <div class="col-md-3">
-                    <p class="update__asterisks">Type</p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="update__asterisks">Type</p>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-control" id="depTypeSelect"></select>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <select id="depTypeSelect" size="1" style="width: 300px">
-                    </select>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="update__asterisks">Start work hour</p>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" id="startWork" oninput="validateInput(this)">
+                    </div>
                 </div>
-            </div>
-            <div class="row" style="margin: 25px;">
-                <div class="col-md-3">
-                    <p class="update__asterisks">Start work hour</p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="update__asterisks">Finish work hour</p>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control" id="finishWork" oninput="validateInput(this)">
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <input type="number" id="startWork" style="width: 300px">
-                </div>
-            </div>
-            <div class="row" style="margin: 25px;">
-                <div class="col-md-3">
-                    <p class="update__asterisks">Finish work hour</p>
-                </div>
-                <div class="col-md-3">
-                    <input type="number" id="finishWork" style="width: 300px">
-                </div>
-            </div>
-            <div class="calendar" style="width: 300px">
-                <div class="calendar_container">
-                    <div class="out-of-work-days">
-                        <p class="out-of-work-days__text">Out of work days</p>
-                        <div class="calendar">
-                            <ul class="days-list">
-                                <li>
-                                    <input type="checkbox" class="custom-checkbox" name="dayCheck" value="1" id="mon">
-                                    <label for="mon">Mon</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" class="custom-checkbox" name="dayCheck" value="2" id="tue">
-                                    <label for="tue">Tue</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" class="custom-checkbox" name="dayCheck" value="3" id="wed">
-                                    <label for="wed">Wed</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" class="custom-checkbox" name="dayCheck" value="4" id="thu">
-                                    <label for="thu">Thu</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" class="custom-checkbox" name="dayCheck" value="5" id="fri">
-                                    <label for="fri">Fri</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" class="custom-checkbox" name="dayCheck" value="6" id="sat">
-                                    <label for="sat">Sat</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" class="custom-checkbox" name="dayCheck" value="7" id="sun">
-                                    <label for="sun">Sun</label>
-                                </li>
-                            </ul>
+                <div class="calendar mt-4">
+                    <div class="calendar_container">
+                        <div class="out-of-work-days">
+                            <p class="out-of-work-days__text">Out of work days</p>
+                            <div class="calendar">
+                                <ul class="days-list">
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="1" id="mon">
+                                        <label for="mon">Mon</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="2" id="tue">
+                                        <label for="tue">Tue</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="3" id="wed">
+                                        <label for="wed">Wed</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="4" id="thu">
+                                        <label for="thu">Thu</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="5" id="fri">
+                                        <label for="fri">Fri</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="6" id="sat">
+                                        <label for="sat">Sat</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="7" id="sun">
+                                        <label for="sun">Sun</label>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,28 +189,41 @@
     </div>
 </div>
 
-<div class="modal fade custom-modal" id="specialistModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal"
-     aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="specialistModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="row" style="margin: 25px;">
-                <p class="create_item">Name</p>
-                <input type="text" id="specialist_servName" placeholder="Enter Name" style="width: 300px">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="row" style="margin: 25px;">
-                <p class="create_item">Department</p>
-                <select id="specialist_depNameSelect" size="1"  style="width: 300px"></select>
-            </div>
-            <div class="row" style="margin: 25px;">
-                <p class="create_item">Duration</p>
-                <input type="text" id="specialist_servDuration" placeholder="Enter Duration" style="width: 300px">
-            </div>
-            <div class="row" style="margin: 25px;">
-                <p class="create_item">Price</p>
-                <input type="text" id="specialist_servPrice" placeholder="Enter Price" style="width: 300px">
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="specialist_servName" class="update__asterisks" id="service_nameField">Name</label>
+                        <input type="text" class="form-control" id="specialist_servName" placeholder="Enter Name">
+                        <small class="error-message" id="nameError" style="color: red; display: none;"></small>
+                        <small class="error-message" id="duplicateError" style="color: red; display: none;"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_depNameSelect">Department</label>
+                        <select class="form-control" id="specialist_depNameSelect"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_servDuration" class="update__asterisks" id="service_durationField">Duration</label>
+                        <input type="number" class="form-control" id="specialist_servDuration" placeholder="Enter Duration" oninput="validateInput(this)">
+                        <small class="error-message" id="durationError" style="color: red; display: none;">Field is required</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_servPrice" class="update__asterisks" id="service_priceField">Price</label>
+                        <input type="number" class="form-control" id="specialist_servPrice" placeholder="Enter Price" oninput="validateInput(this)">
+                        <small class="error-message" id="priceError" style="color: red; display: none;">Field is required</small>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="specialist_servCancelBtn">Cancel</button>
                 <button type="button" class="btn btn-primary" id="specialist_servCreateBtn">Create</button>
             </div>
         </div>
@@ -212,6 +237,8 @@
 <script type="text/javascript" src="../js/department.js"></script>
 <script type="text/javascript" src="../js/spinner.js"></script>
 <script type="text/javascript" src="../js/service.js"></script>
+<script type="text/javascript" src="../js/logout.js"></script>
+<script type="text/javascript" src="../js/disable.js"></script>
 <script type="text/javascript" src="../js/commons.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>
 </body>
