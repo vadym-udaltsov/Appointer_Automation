@@ -34,15 +34,19 @@ function loadDepartments(url, select, data) {
         url: url,
         type: 'get',
         dataType: 'json',
-        success: function (data) {
+        success: function (data, jqXHR) {
             select.empty();
+            if (jqXHR !== "success") {
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+            }
             $.each(data.customerDepartments, function () {
                     var opt = $("<option value='" + this.n + "'></option>").text(this.n);
                     select.append(opt);
             });
+            console.log(jqXHR);
         },
-        error: function (data) {
-            if (data.status === 0) {
+        error: function (data, jqXHR) {
+            if (jqXHR !== "success") {
                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }

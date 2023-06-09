@@ -5,28 +5,21 @@ function executePost(data, url) {
         contentType: "application/json",
         dataType: 'JSON',
         data: data,
-        success: function (data) {
-            console.log(data)
-            var error = document.getElementById("error")
-            if (data.status === 0) {
+        success: function (data, jqXHR) {
+            if (jqXHR !== "success") {
+                var error = document.getElementById("error")
                 error.textContent = "Request is not authorized";
                 error.style.color = "red";
                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             } else {
-//                $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
+                console.log(data);
+                console.log(jqXHR);
             }
         },
-        error: function (data) {
-            if (data.status === 0) {
+        error: function (data, jqXHR) {
+            if (jqXHR !== "success") {
                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
-        },
-        complete: function (data) {
-            if (data.status === 0) {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-            console.log(data);
-            console.log(data.status);
         }
     });
 }

@@ -68,8 +68,7 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
         url: url,
         type: 'get',
         dataType: 'json',
-        success: function (data) {
-
+        success: function (data, jqXHR) {
         depNameSelect.empty();
         timeZoneSelect.empty();
         typeSelect.empty();
@@ -99,9 +98,10 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
                         checkbox.checked = true;
                     }
                 });
+                console.log(jqXHR);
         },
-        error: function (data) {
-            if (data.status === 0) {
+        error: function (data, jqXHR) {
+            if (jqXHR !== "success") {
                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }
@@ -112,21 +112,16 @@ function executeGetRequest(url) {
     $.ajax({
         type: 'get',
         url: url,
-        success: function (data) {
-            console.log(data)
+        success: function (data, jqXHR) {
+            console.log(data);
+            console.log(jqXHR);
             return data;
         },
-        error: function (data) {
-            if (data.status === 0) {
+        error: function (data, jqXHR) {
+            if (jqXHR !== "success") {
                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         },
-        complete: function (data) {
-            if (data.status === 0) {
-                    window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-            console.log(data)
-        }
     });
 }
 
