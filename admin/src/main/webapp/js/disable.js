@@ -1,5 +1,5 @@
 const fields = [
-  { inputId: 'specialist_servName', errorId: 'nameError' },
+  { inputId: 'specialist_servName', errorId: 'nameError'},
   { inputId: 'specialist_servDuration', errorId: 'durationError' },
   { inputId: 'specialist_servPrice', errorId: 'priceError' }
 ];
@@ -12,7 +12,6 @@ var data = customerData.customerDepartments[0].s;
 
 function validateField(input, error) {
   if (input.value.trim() === '') {
-    error.innerText = "Field is required";
     error.style.display = 'block';
     return false;
   } else {
@@ -27,13 +26,21 @@ function checkUserExists(input, error) {
   for (var i = 0; i < data.length; i++) {
     if (data[i].name === value) {
       error.style.display = 'block';
-      error.innerText = 'User already exists';
       return true;
     }
   }
 
   error.style.display = 'none';
   return false;
+}
+
+function setError(error, message) {
+  error.textContent = message;
+  error.style.display = 'block';
+}
+
+function hideError(error) {
+  error.style.display = 'none';
 }
 
 function validateForm() {
@@ -44,11 +51,21 @@ function validateForm() {
     const error = document.getElementById(field.errorId);
 
     if (input.dataset.interacted === 'true') {
-      if (!validateField(input, error) || checkUserExists(input, error)) {
+      if (field.inputId === 'specialist_servName') {
+        if (input.value.trim() === '') {
+          setError(error, 'Field is required');
+          valid = false;
+        } else if (checkUserExists(input, error)) {
+          setError(error, 'User already exists');
+          valid = false;
+        } else {
+          hideError(error);
+        }
+      } else if (!validateField(input, error)) {
         valid = false;
       }
     } else {
-      error.style.display = 'none';
+      hideError(error);
       valid = false;
     }
   }

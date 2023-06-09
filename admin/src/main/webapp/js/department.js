@@ -15,9 +15,9 @@ $(window).ready(function () {
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
     loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
 
-     $("#updatePopup").click(function() {
-            loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
-        });
+    $("#updatePopup").click(function() {
+        loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
+    });
 
     $("#update").click(function() {
     var updateButton = document.getElementById('update');
@@ -101,7 +101,7 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
                 });
         },
         error: function (data) {
-            if (data.status === 401) {
+            if (data.status === 0) {
                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }
@@ -117,11 +117,14 @@ function executeGetRequest(url) {
             return data;
         },
         error: function (data) {
-            if (data.status === 401) {
+            if (data.status === 0) {
                 window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         },
         complete: function (data) {
+            if (data.status === 0) {
+                    window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+            }
             console.log(data)
         }
     });
