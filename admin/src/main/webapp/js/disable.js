@@ -83,6 +83,10 @@ function resetForm() {
 /* Action for Cancel button */
 cancelBtn.addEventListener('click', function () {
   resetForm();
+   for (const field of fields) {
+        const input = document.getElementById(field.inputId);
+        input.value = '';
+   }
 });
 
 /* Show Error */
