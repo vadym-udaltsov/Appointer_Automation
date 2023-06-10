@@ -19,4 +19,6 @@ public interface IDepartmentService {
     void addCustomerService(String email, String departmentName, CustomerService service);
 
     void updateCustomerService(UpdateServiceRequest request);
+
+    void deleteCustomerService(UpdateServiceRequest request);
 }

@@ -32,6 +32,11 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
+    public void deleteCustomerService(UpdateServiceRequest request) {
+        departmentDao.deleteCustomerService(request);
+    }
+
+    @Override
     public Department getDepartmentById(String departmentId) {
         return departmentDao.getDepartmentById(departmentId);
     }

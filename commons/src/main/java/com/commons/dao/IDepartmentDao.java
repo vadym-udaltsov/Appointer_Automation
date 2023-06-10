@@ -20,4 +20,6 @@ public interface IDepartmentDao {
     void addNewService(String email, String departmentName, CustomerService service);
 
     void updateService(UpdateServiceRequest request);
+
+    void deleteCustomerService(UpdateServiceRequest request);
 }

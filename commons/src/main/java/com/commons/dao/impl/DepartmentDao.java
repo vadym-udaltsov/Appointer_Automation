@@ -48,6 +48,15 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     }
 
     @Override
+    public void deleteCustomerService(UpdateServiceRequest request) {
+        String departmentId = request.getDepartmentId();
+        Department department = getDepartmentById(departmentId);
+        String serviceName = request.getServiceName();
+        department.getServices().removeIf(s -> serviceName.equals(s.getName()));
+        overwriteItem(department);
+    }
+
+    @Override
     public boolean updateDepartment(Department department) {
         Map<String, AttributeValueUpdate> updates = new HashMap<>();
         AttributeValueUpdate startWork = new AttributeValueUpdate(
