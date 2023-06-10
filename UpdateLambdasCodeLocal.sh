@@ -4,9 +4,9 @@ source deployment.config
 
 deploymentBucket="appointer-deployment-773974733061"
 
-lambdasLocal="appointerBotLambda||bot||true"
+#lambdasLocal="appointerBotLambda||bot||true"
 #lambdas="adminLambda||admin||true appointerBotLambda||bot||true"
-#lambdasLocal="adminLambda||admin||true"
+lambdasLocal="adminLambda||admin||true"
 #lambdasLocal="postSignUpLambda||registration||false"
 update_layer="y"
 

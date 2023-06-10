@@ -34,6 +34,14 @@ public class MessageUtils {
         return holder("Select language", ButtonsType.INLINE, request);
     }
 
+    public static MessageHolder getBotNotReadyMessageHolder() {
+        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.VERTICAL)
+                .buttonsMap(buildButtons(commonButtons(List.of("Try bot")), false))
+                .build();
+        return holder("Bot is not ready, try later", ButtonsType.KEYBOARD, request);
+    }
+
     public static List<String> getFlags() {
         return Arrays.stream(Language.values())
                 .map(Language::getValue)

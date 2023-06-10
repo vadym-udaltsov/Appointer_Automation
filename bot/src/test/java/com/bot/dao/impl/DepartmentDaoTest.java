@@ -6,29 +6,30 @@ import com.commons.dao.impl.DepartmentDao;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.request.UpdateServiceRequest;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 public class DepartmentDaoTest {
 
+    private static AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
+    private static DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
+    private static DepartmentDao departmentDao = new DepartmentDao(dynamoDbFactory);
+
     //    @Test
     public void shouldUpdateDepartment() {
-        AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
-        DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
         Department department = new Department();
         department.setId("fc871929");
         department.setCustomer("sergii.udaltsov@gmail.com");
         department.setName("Default");
         department.setStartWork(12);
         department.setNonWorkingDays(List.of(6, 7));
-        DepartmentDao departmentDao = new DepartmentDao(dynamoDbFactory);
         departmentDao.updateDepartment(department);
     }
 
     //    @Test
     public void shouldAddServiceToDepartment() {
-        AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
-        DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
         Department department = new Department();
         department.setId("fc871929");
         department.setCustomer("sergii.udaltsov@gmail.com");
@@ -37,7 +38,20 @@ public class DepartmentDaoTest {
         service.setName("testDao");
         service.setPrice(10);
         service.setDuration(100);
-        DepartmentDao departmentDao = new DepartmentDao(dynamoDbFactory);
         departmentDao.addNewService("sergii.udaltsov@gmail.com", "Default", service);
     }
+
+//    @Test
+    public void shouldUpdateDepartmentService() {
+        UpdateServiceRequest request = new UpdateServiceRequest();
+        request.setServiceName("Test");
+        request.setDepartmentId("fc871929");
+        CustomerService service = new CustomerService();
+        service.setDuration(100);
+        service.setName("new name");
+        service.setPrice(15);
+        request.setService(service);
+        departmentDao.updateService(request);
+    }
+
 }

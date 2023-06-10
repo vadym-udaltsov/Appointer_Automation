@@ -1,14 +1,13 @@
 package com.bot.model;
 
-import com.commons.model.CustomerService;
+import com.commons.request.ServiceRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CreateServiceRequest {
+public class CreateServiceRequest extends ServiceRequest {
 
     private String department;
     private String customer;
-    private CustomerService service;
 }

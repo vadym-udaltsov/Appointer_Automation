@@ -11,6 +11,7 @@ import com.commons.dao.AbstractDao;
 import com.commons.dao.IDepartmentDao;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.request.UpdateServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,25 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     @Autowired
     public DepartmentDao(DynamoDbFactory dynamoDbFactory) {
         super(dynamoDbFactory, Department.class, "department");
+    }
+
+    @Override
+    public void updateService(UpdateServiceRequest request) {
+        String departmentId = request.getDepartmentId();
+        Department department = getDepartmentById(departmentId);
+        String serviceName = request.getServiceName();
+        CustomerService newService = request.getService();
+        CustomerService oldService = department.getServices().stream()
+                .filter(s -> serviceName.equals(s.getName()))
+                .findFirst()
+                .orElse(null);
+        if (oldService == null) {
+            throw new IllegalArgumentException(String.format("Service with name %s not found in department", serviceName));
+        }
+        oldService.setName(newService.getName());
+        oldService.setPrice(newService.getPrice());
+        oldService.setDuration(newService.getDuration());
+        overwriteItem(department);
     }
 
     @Override

@@ -605,6 +605,36 @@ Resources:
     DependsOn:
       - ServiceResource
       - BotLambdaAlias
+  ServicePut:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref ServiceResource
+      HttpMethod: PUT
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref Authorizer
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - ServiceResource
+      - BotLambdaAlias
   DepartmentPost:
     Type: 'AWS::ApiGateway::Method'
     Properties:

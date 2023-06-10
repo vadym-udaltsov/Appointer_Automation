@@ -25,11 +25,23 @@ public class AskLanguageProcessor implements IProcessor {
         MessageHolder messageHolder = MessageUtils.getLanguageMessageHolder();
         Context context = request.getContext();
         Department department = request.getDepartment();
+        if (departmentNotReady(department)) {
+            return Collections.singletonList(MessageUtils.getBotNotReadyMessageHolder());
+        }
         if (context == null) {
             context = buildContext(userId, department.getId());
             contextService.create(context);
         }
         return Collections.singletonList(messageHolder);
+    }
+
+    private boolean departmentNotReady(Department department) {
+        return department.getServices() == null || department.getServices().size() == 0
+                || department.getZone() == null || "".equals(department.getZone())
+                || department.getAvailableSpecialists() == null || department.getAvailableSpecialists().size() == 0
+                || department.getStartWork() == 0
+                || department.getEndWork() == 0
+                || department.getStartWork() > department.getEndWork();
     }
 
     private Context buildContext(long userId, String departmentId) {

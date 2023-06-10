@@ -11,6 +11,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.commons.converter.ListServicesConverter;
 import com.commons.converter.ListSpecialistsConverter;
+import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,6 +24,7 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Jacksonized
@@ -97,9 +99,13 @@ public class Department extends DynamoDbEntity {
                 .with(RANGE_KEY, name)
                 .with("id", id)
                 .with("tp", type.name())
-                .withList("as", availableSpecialists)
+                .withString("tn", token)
+                .withNumber("sw", startWork)
+                .withNumber("ew", endWork)
+                .withString("zone", zone)
+                .withList("as", availableSpecialists.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
                 .withList("nwd", nonWorkingDays)
-                .withList("s", services);
+                .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()));
     }
 
     @Override

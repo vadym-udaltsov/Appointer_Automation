@@ -3,6 +3,7 @@ package com.commons.dao;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.request.UpdateServiceRequest;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface IDepartmentDao {
     List<Department> findAllByQuery(QuerySpec querySpec);
 
     void addNewService(String email, String departmentName, CustomerService service);
+
+    void updateService(UpdateServiceRequest request);
 }
