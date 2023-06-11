@@ -40,7 +40,7 @@ public class ServiceController {
     @DeleteMapping()
     public ResponseEntity<SimpleResponse> deleteService(@RequestBody UpdateServiceRequest request) {
         log.info("Got request for updating service");
-        departmentService.updateCustomerService(request);
+        departmentService.deleteCustomerService(request);
         return new ResponseEntity<>(SimpleResponse.builder().body("Deleted").build(), HttpStatus.OK);
     }
 
