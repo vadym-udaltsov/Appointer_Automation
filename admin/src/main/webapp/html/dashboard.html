@@ -53,11 +53,22 @@
             <div class="modal_title">Service</div>
             <div class="modal_block">
                 <button type="button" class="sub-button" data-toggle="modal" data-target="#specialistModal"
-                        id="specialist_create">
+                        id="service_create">
                     Create
                 </button>
             </div>
-            <div style="height: 38px;"></div>
+            <div class="modal_block">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#serviceUpdateModal"
+                        id="service_update">
+                    Update
+                </button>
+            </div>
+            <div class="modal_block">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#serviceDeleteModal"
+                        id="service_delete">
+                    Delete
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -189,6 +200,7 @@
     </div>
 </div>
 
+<!-- Service Create -->
 <div class="modal fade" id="specialistModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -201,13 +213,13 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
+                        <label for="specialist_depNameSelect">Department</label>
+                        <select class="form-control" id="specialist_depNameSelect"></select>
+                    </div>
+                    <div class="form-group">
                         <label for="specialist_servName" class="update__asterisks" id="service_nameField">Name</label>
                         <input type="text" class="form-control" id="specialist_servName" placeholder="Enter Name">
                         <small class="error-message" id="nameError" style="color: red; display: none;"></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="specialist_depNameSelect">Department</label>
-                        <select class="form-control" id="specialist_depNameSelect"></select>
                     </div>
                     <div class="form-group">
                         <label for="specialist_servDuration" class="update__asterisks" id="service_durationField">Duration</label>
@@ -222,8 +234,83 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="specialist_servCancelBtn">Cancel</button>
-                <button type="button" class="btn btn-primary" id="specialist_servCreateBtn">Create</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="service_CancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="service_CreateBtn">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Service Update -->
+<div class="modal fade" id="serviceUpdateModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="specialist_depNameSelect">Department</label>
+                        <select class="form-control" id="update_depNameSelect"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_servName" id="service_updateName">Service</label>
+                        <select class="form-control" id="service_updateName-dropdown"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_servDuration" class="update__asterisks" id="service_updateNewName">New Name</label>
+                        <input type="text" class="form-control" id="service_updateName-input" placeholder="Enter New Name">
+                        <small class="error-message" id="update_nameError" style="color: red; display: none;">Field is required</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_servDuration" class="update__asterisks" id="service_updateDuration">New Duration</label>
+                        <input type="number" class="form-control" id="service_updateDuration-input" placeholder="Enter Duration">
+                        <small class="error-message" id="update_durationError" style="color: red; display: none;">Field is required</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_servPrice" class="update__asterisks" id="service_updatePrice">New Price</label>
+                        <input type="number" class="form-control" id="service_updatePrice-input" placeholder="Enter Price">
+                        <small class="error-message" id="update_priceError" style="color: red; display: none;">Field is required</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update_servCancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="update_servCreateBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Service Delete -->
+<div class="modal fade" id="serviceDeleteModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="specialist_depNameSelect">Department</label>
+                        <select class="form-control" id="delete_depNameSelect"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialist_servName" id="delete_updateName">Service</label>
+                        <select class="form-control" id="delete_updateName-dropdown"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDelete_serviceBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="delete_serviceBtn">Delete</button>
             </div>
         </div>
     </div>

@@ -3,12 +3,17 @@ const fields = [
   { inputId: 'specialist_servDuration', errorId: 'durationError' },
   { inputId: 'specialist_servPrice', errorId: 'priceError' }
 ];
-const createBtn = document.getElementById('specialist_servCreateBtn');
-const cancelBtn = document.getElementById('specialist_servCancelBtn');
+const createBtn = document.getElementById('service_CreateBtn');
+const cancelBtn = document.getElementById('service_CancelBtn');
 const errorMessages = document.getElementsByClassName('error-message');
 
-var customerData = JSON.parse(window.localStorage.getItem('customerData'));
-var data = customerData.customerDepartments[0].s;
+var names = [];
+$('#service_create').click(function() {
+    document.querySelector('#service_updateName-dropdown').querySelectorAll('option').forEach(function(option) {
+    var name = option.textContent.trim();
+    names.push(name)
+    });
+});
 
 function validateField(input, error) {
   if (input.value.trim() === '') {
@@ -23,8 +28,8 @@ function validateField(input, error) {
 function checkUserExists(input, error) {
   var value = input.value;
 
-  for (var i = 0; i < data.length; i++) {
-    if (data[i].name === value) {
+  for (var i = 0; i < names.length; i++) {
+    if (names[i] === value) {
       error.style.display = 'block';
       return true;
     }

@@ -10,7 +10,7 @@ function executePost(data, url) {
                 var error = document.getElementById("error")
                 error.textContent = "Request is not authorized";
                 error.style.color = "red";
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+//                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             } else {
                 console.log(data);
                 console.log(jqXHR);
@@ -18,7 +18,7 @@ function executePost(data, url) {
         },
         error: function (data, jqXHR) {
             if (jqXHR !== "success") {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+ //               window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }
     });

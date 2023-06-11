@@ -5,7 +5,6 @@ $(window).ready(function () {
 
     var email = localStorage.getItem('customer');
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
-    loadCustomerData(url);
 
     $("#depCreateBtn").click(function() {
         var department = new Object();
@@ -24,22 +23,6 @@ $(window).ready(function () {
         return false;
     });
 });
-
-function loadCustomerData(url) {
-    $.ajax({
-        url: url,
-        type: 'get',
-        dataType: 'json',
-        success: function (data) {
-            localStorage.setItem('customerData', JSON.stringify(data));
-        },
-        error: function (data) {
-            if (data.status === 401) {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-        }
-    });
-}
 
 function executeGetRequest(url) {
     $.ajax({

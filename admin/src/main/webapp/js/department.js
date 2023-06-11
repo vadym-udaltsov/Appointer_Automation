@@ -13,7 +13,7 @@ $(window).ready(function () {
     typeSelect.append('<option value="Loading...">Loading...</option>');
 
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
-    loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
+//    loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
 
     $("#updatePopup").click(function() {
         loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
