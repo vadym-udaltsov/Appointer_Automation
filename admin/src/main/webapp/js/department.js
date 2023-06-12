@@ -4,35 +4,34 @@ $(window).ready(function () {
     });
     var email = localStorage.getItem('customer');
 
-    var typeSelect = $("#depTypeSelect");
-    var depNameSelect = $("#depNameSelect");
-    var timeZoneSelect = $("#timeZoneSelect");
+    var typeSelect = $("#update_depTypeSelect");
+    var update_depNameSelect = $("#update_depNameSelect");
+    var update_timeZoneSelect = $("#update_timeZoneSelect");
 
-    depNameSelect.append('<option value="Loading...">Loading...</option>');
-    timeZoneSelect.append('<option value="Loading...">Loading...</option>');
+    update_depNameSelect.append('<option value="Loading...">Loading...</option>');
+    update_timeZoneSelect.append('<option value="Loading...">Loading...</option>');
     typeSelect.append('<option value="Loading...">Loading...</option>');
 
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
-//    loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
 
-    $("#updatePopup").click(function() {
-        loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect);
+    $("#department_UpdatePopup").click(function() {
+        loadDepartmentData(url, typeSelect, update_depNameSelect, update_timeZoneSelect);
     });
 
-    $("#update").click(function() {
-    var updateButton = document.getElementById('update');
+    $("#update_DepBtn").click(function() {
+    var updateButton = document.getElementById('update_DepBtn');
         if (updateButton.classList.contains('disabled')) {
             return false;
         }
         var department = new Object();
-        var id = $("#depNameSelect").val();
-        var name = $("#depNameSelect option:selected").text().trim();
+        var id = $("#update_depNameSelect").val();
+        var name = $("#update_depNameSelect option:selected").text().trim();
 
         department.id = id;
         department.n = name;
         department.c = email;
-        department.tp = $("#depTypeSelect").val();
-        department.zone = $("#timeZoneSelect").val();
+        department.tp = $("#update_depTypeSelect").val();
+        department.zone = $("#update_timeZoneSelect").val();
         department.sw = $("#startWork").val();
         department.ew = $("#finishWork").val();
         var checkboxes = document.getElementsByName("dayCheck");
@@ -44,33 +43,33 @@ $(window).ready(function () {
         }
         department.nwd = days;
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
-        $("#updateModal").modal("hide");
+        $("#department_UpdateModal").modal("hide");
         return false;
     });
 
-     $("#create").click(function() {
-     const createButton = document.getElementById('create');
+     $("#create_depBtn").click(function() {
+     const createButton = document.getElementById('create_depBtn');
       if (createButton.classList.contains('disabled')) {
               return false;
           }
         var department = new Object();
         department.departmentName = $("#depName").val();
         department.email = email;
-        department.type = $("#depTypeSelect").val();
+        department.type = $("#update_depTypeSelect").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
-        $("#createModal").modal("hide");
+        $("#department_CreateModal").modal("hide");
         return false;
      });
 });
 
-function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
+function loadDepartmentData(url, typeSelect, update_depNameSelect, update_timeZoneSelect) {
     $.ajax({
         url: url,
         type: 'get',
         dataType: 'json',
         success: function (data, jqXHR) {
-        depNameSelect.empty();
-        timeZoneSelect.empty();
+        update_depNameSelect.empty();
+        update_timeZoneSelect.empty();
         typeSelect.empty();
             console.log(data);
             $.each(data.availableTypes, function () {
@@ -79,15 +78,15 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
             });
              $.each(data.availableZones, function () {
                 var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
-                timeZoneSelect.append(timeZone);
+                update_timeZoneSelect.append(timeZone);
             });
             $.each(data.customerDepartments, function () {
                 var name = $("<option value='" + this.id + "'></option>").text(this.n);
-                depNameSelect.append(name);
+                update_depNameSelect.append(name);
             });
-            document.getElementById("depNameSelect").value = data.customerDepartments[0].id;
-            document.getElementById("timeZoneSelect").value = data.customerDepartments[0].zone;
-            document.getElementById("depTypeSelect").value = data.customerDepartments[0].tp;
+            document.getElementById("update_depNameSelect").value = data.customerDepartments[0].id;
+            document.getElementById("update_timeZoneSelect").value = data.customerDepartments[0].zone;
+            document.getElementById("update_depTypeSelect").value = data.customerDepartments[0].tp;
             document.getElementById("startWork").value = data.customerDepartments[0].sw;
             document.getElementById("finishWork").value = data.customerDepartments[0].ew;
 
@@ -102,7 +101,7 @@ function loadDepartmentData(url, typeSelect, depNameSelect, timeZoneSelect) {
         },
         error: function (data, jqXHR) {
             if (jqXHR !== "success") {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+             //   window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }
     });
@@ -119,7 +118,7 @@ function executeGetRequest(url) {
         },
         error: function (data, jqXHR) {
             if (jqXHR !== "success") {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+               // window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         },
     });

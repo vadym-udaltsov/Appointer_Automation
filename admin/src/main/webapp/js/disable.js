@@ -1,15 +1,15 @@
 const fields = [
-  { inputId: 'specialist_servName', errorId: 'nameError'},
-  { inputId: 'specialist_servDuration', errorId: 'durationError' },
-  { inputId: 'specialist_servPrice', errorId: 'priceError' }
+  { inputId: 'service_Create-servNameInput', errorId: 'nameError'},
+  { inputId: 'service_Create-servDurationInput', errorId: 'durationError' },
+  { inputId: 'service_Create-servPriceInput', errorId: 'priceError' }
 ];
 const createBtn = document.getElementById('service_CreateBtn');
-const cancelBtn = document.getElementById('service_CancelBtn');
+const cancelBtn = document.getElementById('service_Create-CancelBtn');
 const errorMessages = document.getElementsByClassName('error-message');
 
 var names = [];
-$('#service_create').click(function() {
-    document.querySelector('#service_updateName-dropdown').querySelectorAll('option').forEach(function(option) {
+$('#service_createOpenBtn').click(function() {
+    document.querySelector('#update-service_servNameDropdown').querySelectorAll('option').forEach(function(option) {
     var name = option.textContent.trim();
     names.push(name)
     });
@@ -56,7 +56,7 @@ function validateForm() {
     const error = document.getElementById(field.errorId);
 
     if (input.dataset.interacted === 'true') {
-      if (field.inputId === 'specialist_servName') {
+      if (field.inputId === 'service_Create-servNameInput') {
         if (input.value.trim() === '') {
           setError(error, 'Field is required');
           valid = false;

@@ -18,6 +18,10 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="creator_container">
+            <div class="creator_lines"></div>
+            <p class="creator_item">Appointer - SUV</p>
+        </div>
         <ul class="navbar-nav">
             <li class="nav-item active" style="width: 100px">
                 <button type="submit" class="nav-button" id="reportsRef">Reports</button>
@@ -25,10 +29,6 @@
         </ul>
         <div id="logout_container">
             <button class="nav-button" id="logout_button">Log out</button>
-        </div>
-        <div class="creator_container">
-            <div class="creator_lines"></div>
-            <p class="creator_item">Appointer - SUV</p>
         </div>
     </div>
 </nav>
@@ -38,12 +38,12 @@
         <div class="modal_items">
             <div class="modal_title">Department</div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#createModal" id="createPopup">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#department_CreateModal">
                     Create
                 </button>
             </div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#updateModal" id="updatePopup">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#department_UpdateModal" id="department_UpdatePopup">
                     Update
                 </button>
             </div>
@@ -52,20 +52,20 @@
         <div class="modal_items">
             <div class="modal_title">Service</div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#specialistModal"
-                        id="service_create">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#service_CreateModal"
+                        id="service_createOpenBtn">
                     Create
                 </button>
             </div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#serviceUpdateModal"
-                        id="service_update">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#service_UpdateModal"
+                        id="service_updateOpenBtn">
                     Update
                 </button>
             </div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#serviceDeleteModal"
-                        id="service_delete">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#service_DeleteModal"
+                        id="service_deleteOpenBtn">
                     Delete
                 </button>
             </div>
@@ -75,7 +75,7 @@
 
 <!-- Modals HTML -->
 
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModal" aria-hidden="true">
+<div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -90,19 +90,19 @@
                     <input type="text" class="form-control" id="depName_create" placeholder="Enter Name">
                 </div>
                 <div class="form-group">
-                    <label for="typeSelect_create">Type</label>
-                    <select class="form-control" id="typeSelect_create" size="1"></select>
+                    <label for="depType_create">Type</label>
+                    <select class="form-control" id="depType_create" size="1"></select>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_create">Cancel</button>
-                <button type="button" class="btn btn-primary" id="create">Create</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="create_depBtn">Create</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModal" aria-hidden="true">
+<div class="modal fade" id="department_UpdateModal" tabindex="-1" aria-labelledby="department_UpdateModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -117,7 +117,7 @@
                         <p>Department</p>
                     </div>
                     <div class="col-md-9">
-                        <select class="form-control" id="depNameSelect"></select>
+                        <select class="form-control" id="update_depNameSelect"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -125,7 +125,7 @@
                         <p>Time zone</p>
                     </div>
                     <div class="col-md-9">
-                        <select class="form-control" id="timeZoneSelect"></select>
+                        <select class="form-control" id="update_timeZoneSelect"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -133,7 +133,7 @@
                         <p>Type</p>
                     </div>
                     <div class="col-md-9">
-                        <select class="form-control" id="depTypeSelect"></select>
+                        <select class="form-control" id="update_depTypeSelect"></select>
                     </div>
                 </div>
                 <div class="row">
@@ -193,15 +193,15 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_update">Cancel</button>
-                <button type="button" class="btn btn-primary" id="update">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_updateDepBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="update_DepBtn">Update</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Service Create -->
-<div class="modal fade" id="specialistModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal" aria-hidden="true">
+<div class="modal fade" id="service_CreateModal" tabindex="-1" style="width: 100%" aria-labelledby="service_CreateModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -213,28 +213,28 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="specialist_depNameSelect">Department</label>
-                        <select class="form-control" id="specialist_depNameSelect"></select>
+                        <label for="service_Create-depNameSelect">Department</label>
+                        <select class="form-control" id="service_Create-depNameSelect"></select>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servName" class="update__asterisks" id="service_nameField">Name</label>
-                        <input type="text" class="form-control" id="specialist_servName" placeholder="Enter Name">
+                        <label for="service_Create-servNameInput" class="update__asterisks" id="service_nameField">Name</label>
+                        <input type="text" class="form-control" id="service_Create-servNameInput" placeholder="Enter Name">
                         <small class="error-message" id="nameError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servDuration" class="update__asterisks" id="service_durationField">Duration</label>
-                        <input type="number" class="form-control" id="specialist_servDuration" placeholder="Enter Duration" oninput="validateInput(this)">
+                        <label for="service_Create-servDurationInput" class="update__asterisks" id="service_durationField">Duration</label>
+                        <input type="number" class="form-control" id="service_Create-servDurationInput" placeholder="Enter Duration" oninput="validateInput(this)">
                         <small class="error-message" id="durationError" style="color: red; display: none;">Field is required</small>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servPrice" class="update__asterisks" id="service_priceField">Price</label>
-                        <input type="number" class="form-control" id="specialist_servPrice" placeholder="Enter Price" oninput="validateInput(this)">
+                        <label for="service_Create-servPriceInput" class="update__asterisks" id="service_priceField">Price</label>
+                        <input type="number" class="form-control" id="service_Create-servPriceInput" placeholder="Enter Price" oninput="validateInput(this)">
                         <small class="error-message" id="priceError" style="color: red; display: none;">Field is required</small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="service_CancelBtn">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="service_Create-CancelBtn">Cancel</button>
                 <button type="button" class="btn btn-primary" id="service_CreateBtn">Create</button>
             </div>
         </div>
@@ -242,7 +242,7 @@
 </div>
 
 <!-- Service Update -->
-<div class="modal fade" id="serviceUpdateModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal" aria-hidden="true">
+<div class="modal fade" id="service_UpdateModal" tabindex="-1" style="width: 100%" aria-labelledby="service_UpdateModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -254,40 +254,40 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="specialist_depNameSelect">Department</label>
-                        <select class="form-control" id="update_depNameSelect"></select>
+                        <label for="update-service_depNameSelect">Department</label>
+                        <select class="form-control" id="update-service_depNameSelect"></select>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servName" id="service_updateName">Service</label>
-                        <select class="form-control" id="service_updateName-dropdown"></select>
+                        <label for="update-service_servNameDropdown" id="service_updateName">Service</label>
+                        <select class="form-control" id="update-service_servNameDropdown"></select>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servDuration" class="update__asterisks" id="service_updateNewName">New Name</label>
-                        <input type="text" class="form-control" id="service_updateName-input" placeholder="Enter New Name">
+                        <label for="update-service_newNameInput" class="update__asterisks" id="service_updateNewName">New Name</label>
+                        <input type="text" class="form-control" id="update-service_newNameInput" placeholder="Enter New Name">
                         <small class="error-message" id="update_nameError" style="color: red; display: none;">Field is required</small>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servDuration" class="update__asterisks" id="service_updateDuration">New Duration</label>
-                        <input type="number" class="form-control" id="service_updateDuration-input" placeholder="Enter Duration">
+                        <label for="update-service_newDurationInput" class="update__asterisks" id="service_updateDuration">New Duration</label>
+                        <input type="number" class="form-control" id="update-service_newDurationInput" placeholder="Enter Duration">
                         <small class="error-message" id="update_durationError" style="color: red; display: none;">Field is required</small>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servPrice" class="update__asterisks" id="service_updatePrice">New Price</label>
-                        <input type="number" class="form-control" id="service_updatePrice-input" placeholder="Enter Price">
+                        <label for="update-service_newPriceInput" class="update__asterisks" id="service_updatePrice">New Price</label>
+                        <input type="number" class="form-control" id="update-service_newPriceInput" placeholder="Enter Price">
                         <small class="error-message" id="update_priceError" style="color: red; display: none;">Field is required</small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update_servCancelBtn">Cancel</button>
-                <button type="button" class="btn btn-primary" id="update_servCreateBtn">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update-service_CancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="update-service_UpdateBtn">Update</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Service Delete -->
-<div class="modal fade" id="serviceDeleteModal" tabindex="-1" style="width: 100%" aria-labelledby="specialistModal" aria-hidden="true">
+<div class="modal fade" id="service_DeleteModal" tabindex="-1" style="width: 100%" aria-labelledby="service_DeleteModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -299,18 +299,18 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="specialist_depNameSelect">Department</label>
-                        <select class="form-control" id="delete_depNameSelect"></select>
+                        <label for="delete-service_depNameSelect">Department</label>
+                        <select class="form-control" id="delete-service_depNameSelect"></select>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_servName" id="delete_updateName">Service</label>
-                        <select class="form-control" id="delete_updateName-dropdown"></select>
+                        <label for="delete-service_NameSelect" id="delete_updateName">Service</label>
+                        <select class="form-control" id="delete-service_NameSelect"></select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDelete_serviceBtn">Cancel</button>
-                <button type="button" class="btn btn-primary" id="delete_serviceBtn">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="delete-service_CancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="delete-service_DeleteBtn">Delete</button>
             </div>
         </div>
     </div>

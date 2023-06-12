@@ -16,9 +16,9 @@ $(window).ready(function () {
 
     $("#servCreateBtn").click(function() {
         var service = new Object();
-        service.name = $("#specialist_servName").val();
-        service.duration = $("#specialist_servDuration").val();
-        service.price = $("#specialist_servPrice").val();
+        service.name = $("#service_Create-servNameInput").val();
+        service.duration = $("#service_Create-servDurationInput").val();
+        service.price = $("#service_Create-servPriceInput").val();
         executeGetRequest('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/company');
         return false;
     });

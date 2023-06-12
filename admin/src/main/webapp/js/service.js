@@ -4,11 +4,11 @@ $(window).ready(function () {
     });
     var email = localStorage.getItem('customer');
 
-    var select = $("#specialist_depNameSelect");
-    var updateNameSelect = $("#service_updateName-dropdown");
-    var deleteNameSelect = $("#delete_updateName-dropdown");
-    var updateDepSelect = $("#update_depNameSelect");
-    var deleteDepSelect = $("#delete_depNameSelect");
+    var select = $("#service_Create-depNameSelect");
+    var updateNameSelect = $("#update-service_servNameDropdown");
+    var deleteNameSelect = $("#delete-service_NameSelect");
+    var updateDepSelect = $("#update-service_depNameSelect");
+    var deleteDepSelect = $("#delete-service_depNameSelect");
 
     select.append('<option value="Loading...">Loading...</option>');
     updateNameSelect.append('<option value="Loading...">Loading...</option>');
@@ -19,110 +19,121 @@ $(window).ready(function () {
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
     var pastName = "";
 
-    $("#service_create").click(function() {
+    $("#service_createOpenBtn").click(function() {
         loadDepartments(url, select, updateNameSelect);
     });
 
-    $("#service_update").click(function() {
-        loadDepartments(url, updateDepSelect, updateNameSelect);
-        pastName =  $('option:checked', '#service_updateName-dropdown').text();
-        populateData(pastName);
+    $("#service_updateOpenBtn").click(function() {
+        loadDepartments(url, updateDepSelect, updateNameSelect)
+            .then(function() {
+                pastName = JSON.parse($('#update-service_servNameDropdown').val()).name;
+                populateData(pastName);
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
     });
 
-    $("#service_delete").click(function() {
+    $("#service_deleteOpenBtn").click(function() {
         loadDepartments(url, deleteDepSelect, deleteNameSelect);
     });
 
-    $('#service_updateName-dropdown').change(function() {
-      pastName =  $('option:checked', '#service_updateName-dropdown').text();
+    $('#update-service_servNameDropdown').change(function() {
+      pastName =  $('option:checked', '#update-service_servNameDropdown').text();
       populateData(pastName);
     });
 
     $("#service_CreateBtn").click(function() {
         var request = new Object();
         var service = new Object();
-        service.name = $("#specialist_servName").val();
-        service.duration = $("#specialist_servDuration").val();
-        service.price = $("#specialist_servPrice").val();
+        service.name = $("#service_Create-servNameInput").val();
+        service.duration = $("#service_Create-servDurationInput").val();
+        service.price = $("#service_Create-servPriceInput").val();
         request.customer = email;
-        request.department = $("#specialist_depNameSelect").text();
+        request.department = $("#service_Create-depNameSelect").text();
         request.service = service;
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
-        $("#specialistModal").modal("hide");
+        $("#service_CreateModal").modal("hide");
         return false;
     });
 
-    $("#update_servCreateBtn").click(function() {
+    $("#update-service_UpdateBtn").click(function() {
         var request = new Object();
         var service = new Object();
-        service.name = $("#service_updateName-input").val();
-        service.duration = $("#service_updateDuration-input").val();
-        service.price = $("#service_updatePrice-input").val();
-        request.departmentId = $("#update_depNameSelect").val();
+        service.name = $("#update-service_newNameInput").val();
+        service.duration = $("#update-service_newDurationInput").val();
+        service.price = $("#update-service_newPriceInput").val();
+        request.departmentId = $("#update-service_depNameSelect").val();
         request.serviceName = pastName;
         request.service = service;
         executePut(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
-        $("#serviceUpdateModal").modal("hide");
+        $("#service_UpdateModal").modal("hide");
         return false;
     });
 
-    $("#delete_serviceBtn").click(function() {
+    $("#delete-service_DeleteBtn").click(function() {
         var request = new Object();
-        request.departmentId = $("#delete_depNameSelect").val();
-        request.serviceName = $('option:checked', "#delete_updateName-dropdown").text();
+        request.departmentId = $("#delete-service_depNameSelect").val();
+        request.serviceName = $('option:checked', "#delete-service_NameSelect").text();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
-        $("#serviceDeleteModal").modal("hide");
+        $("#service_DeleteModal").modal("hide");
         return false;
     });
 });
 
  /*Loading Service Data for Update */
 function populateData(selectedName) {
-    var data = JSON.parse($('#service_updateName-dropdown').val());
+    var data = JSON.parse($('#update-service_servNameDropdown').val());
     var selectedObject = null;
     if (data.name === selectedName) {
         selectedObject = data;
     }
     if (selectedObject !== null) {
-        $("#service_updateName-input").val(selectedObject.name);
-        $('#service_updateDuration-input').val(selectedObject.duration);
-        $('#service_updatePrice-input').val(selectedObject.price);
+        $("#update-service_newNameInput").val(selectedObject.name);
+        $('#update-service_newDurationInput').val(selectedObject.duration);
+        $('#update-service_newPriceInput').val(selectedObject.price);
     }
 }
 
 function loadDepartments(url, select, updateNameSelect) {
-    $.ajax({
-        url: url,
-        type: 'get',
-        dataType: 'json',
-        success: function (data, jqXHR) {
-            select.empty();
-            updateNameSelect.empty();
-            if (jqXHR !== "success") {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-            $.each(data.customerDepartments, function () {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            success: function(data, jqXHR) {
+                select.empty();
+                updateNameSelect.empty();
+                if (jqXHR !== "success") {
+                    window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+                }
+                $.each(data.customerDepartments, function() {
                     var opt = $("<option value='" + this.id + "'></option>").text(this.n);
                     select.append(opt);
-            });
-           $.each(data.customerDepartments, function(i, department) {
-                $.each(department.s, function(j, item) {
-                    var name = $("<option>").val(JSON.stringify(item)).text(item.name);
-                    updateNameSelect.append(name);
-               });
-           });
-           var firstServiceOfFirstDepartment = data.customerDepartments[0].s[0];
-           document.getElementById("service_updateName-input").value = firstServiceOfFirstDepartment.name;
-           document.getElementById("service_updateDuration-input").value = firstServiceOfFirstDepartment.duration;
-           document.getElementById("service_updatePrice-input").value = firstServiceOfFirstDepartment.price;
-            console.log(data);
-            console.log(jqXHR);
-        },
-        error: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+                });
+                $.each(data.customerDepartments, function(i, department) {
+                    $.each(department.s, function(j, item) {
+                        var name = $("<option>").val(JSON.stringify(item)).text(item.name);
+                        updateNameSelect.append(name);
+                    });
+                });
+                var firstServiceOfFirstDepartment = data.customerDepartments[0].s[0];
+                document.getElementById("update-service_newNameInput").value = firstServiceOfFirstDepartment.name;
+                document.getElementById("update-service_newDurationInput").value = firstServiceOfFirstDepartment.duration;
+                document.getElementById("update-service_newPriceInput").value = firstServiceOfFirstDepartment.price;
+
+                console.log(data);
+                console.log(jqXHR);
+
+                resolve();
+            },
+            error: function(data, jqXHR) {
+                if (jqXHR !== "success") {
+                    window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+                }
+                reject("Ошибка при выполнении запроса");
             }
-        }
+        });
     });
 }
 
@@ -167,7 +178,7 @@ function executeDelete(data, url) {
 //                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             } else {
                 console.log(data);
-                console.log(jqXHR);
+                console.log(jqXHR.status);
             }
         },
         error: function (data, jqXHR) {
