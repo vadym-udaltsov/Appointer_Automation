@@ -1,0 +1,17 @@
+.modal_container {
+    width: 100%;
+    margin-top: 50px;
+}
+
+.modal_items {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.modal_title {
+    align-items: flex-end;
+    display: flex;
+    font-size: 25px;
+    font-weight: bold;
+}

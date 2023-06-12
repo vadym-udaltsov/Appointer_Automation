@@ -23,7 +23,7 @@ $(window).ready(function () {
         loadDepartments(url, select, updateNameSelect);
     });
 
-    $("#service_updateOpenBtn").click(function() {
+    $(".service_updateOpenBtn").click(function() {
         loadDepartments(url, updateDepSelect, updateNameSelect)
             .then(function() {
                 pastName = JSON.parse($('#update-service_servNameDropdown').val()).name;
@@ -34,7 +34,7 @@ $(window).ready(function () {
             });
     });
 
-    $("#service_deleteOpenBtn").click(function() {
+    $(".service_deleteOpenBtn").click(function() {
         loadDepartments(url, deleteDepSelect, deleteNameSelect);
     });
 

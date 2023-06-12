@@ -5,17 +5,18 @@ $(window).ready(function () {
     var email = localStorage.getItem('customer');
 
     var typeSelect = $("#update_depTypeSelect");
-    var update_depNameSelect = $("#update_depNameSelect");
+    var choose_depNameSelect = $("#department_NameSelect");
     var update_timeZoneSelect = $("#update_timeZoneSelect");
 
-    update_depNameSelect.append('<option value="Loading...">Loading...</option>');
+    choose_depNameSelect.append('<option value="Loading...">Loading...</option>');
     update_timeZoneSelect.append('<option value="Loading...">Loading...</option>');
     typeSelect.append('<option value="Loading...">Loading...</option>');
 
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
+    loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
 
     $("#department_UpdatePopup").click(function() {
-        loadDepartmentData(url, typeSelect, update_depNameSelect, update_timeZoneSelect);
+        loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
     });
 
     $("#update_DepBtn").click(function() {
@@ -24,8 +25,8 @@ $(window).ready(function () {
             return false;
         }
         var department = new Object();
-        var id = $("#update_depNameSelect").val();
-        var name = $("#update_depNameSelect option:selected").text().trim();
+        var id = $("#department_NameSelect").val();
+        var name = $("#department_NameSelect option:selected").text().trim();
 
         department.id = id;
         department.n = name;
@@ -62,13 +63,13 @@ $(window).ready(function () {
      });
 });
 
-function loadDepartmentData(url, typeSelect, update_depNameSelect, update_timeZoneSelect) {
+function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect) {
     $.ajax({
         url: url,
         type: 'get',
         dataType: 'json',
         success: function (data, jqXHR) {
-        update_depNameSelect.empty();
+        choose_depNameSelect.empty();
         update_timeZoneSelect.empty();
         typeSelect.empty();
             console.log(data);
@@ -82,9 +83,9 @@ function loadDepartmentData(url, typeSelect, update_depNameSelect, update_timeZo
             });
             $.each(data.customerDepartments, function () {
                 var name = $("<option value='" + this.id + "'></option>").text(this.n);
-                update_depNameSelect.append(name);
+                choose_depNameSelect.append(name);
             });
-            document.getElementById("update_depNameSelect").value = data.customerDepartments[0].id;
+            document.getElementById("department_NameSelect").value = data.customerDepartments[0].id;
             document.getElementById("update_timeZoneSelect").value = data.customerDepartments[0].zone;
             document.getElementById("update_depTypeSelect").value = data.customerDepartments[0].tp;
             document.getElementById("startWork").value = data.customerDepartments[0].sw;

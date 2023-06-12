@@ -1,0 +1,18 @@
+.department_container {
+    width: 450px;
+    margin-top: 25px;
+}
+
+.department_inner {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+#department_NameSelect {
+    width: 200px !important;
+}
+
+.department_update {
+    width: 200px;
+}

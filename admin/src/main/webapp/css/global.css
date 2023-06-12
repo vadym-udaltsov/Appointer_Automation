@@ -3,6 +3,11 @@ body {
     background-size: cover;
 }
 
+#global_container {
+    margin-right: 35px;
+    margin-left: 35px;
+}
+
 #spinner_loading {
   display: flex;
   justify-content: center;
