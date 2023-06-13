@@ -6,7 +6,9 @@ $(window).ready(function () {
 
     var typeSelect = $("#update_depTypeSelect");
     var choose_depNameSelect = $("#department_NameSelect");
+
     var update_timeZoneSelect = $("#update_timeZoneSelect");
+
 
     choose_depNameSelect.append('<option value="Loading...">Loading...</option>');
     update_timeZoneSelect.append('<option value="Loading...">Loading...</option>');
@@ -25,7 +27,7 @@ $(window).ready(function () {
             return false;
         }
         var department = new Object();
-        var id = $("#department_NameSelect").val();
+        var id = JSON.parse($("#department_NameSelect").val())[0].id;
         var name = $("#department_NameSelect option:selected").text().trim();
 
         department.id = id;
@@ -45,6 +47,7 @@ $(window).ready(function () {
         department.nwd = days;
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
         $("#department_UpdateModal").modal("hide");
+        location.reload();
         return false;
     });
 
@@ -69,10 +72,16 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         type: 'get',
         dataType: 'json',
         success: function (data, jqXHR) {
+
         choose_depNameSelect.empty();
         update_timeZoneSelect.empty();
         typeSelect.empty();
+
             console.log(data);
+            $.each(data.customerDepartments, function () {
+                var name = $("<option value='" + JSON.stringify(data.customerDepartments) + "'></option>").text(this.n);
+                choose_depNameSelect.append(name);
+            });
             $.each(data.availableTypes, function () {
                 var type = $("<option value='" + this + "'></option>").text(this);
                 typeSelect.append(type);
@@ -81,17 +90,15 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                 var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
                 update_timeZoneSelect.append(timeZone);
             });
-            $.each(data.customerDepartments, function () {
-                var name = $("<option value='" + this.id + "'></option>").text(this.n);
-                choose_depNameSelect.append(name);
-            });
-            document.getElementById("department_NameSelect").value = data.customerDepartments[0].id;
-            document.getElementById("update_timeZoneSelect").value = data.customerDepartments[0].zone;
-            document.getElementById("update_depTypeSelect").value = data.customerDepartments[0].tp;
-            document.getElementById("startWork").value = data.customerDepartments[0].sw;
-            document.getElementById("finishWork").value = data.customerDepartments[0].ew;
+            var selectedDepartmentData = JSON.parse($('option:checked','#department_NameSelect').val());
 
-            var checkedDateFromData = data.customerDepartments[0].nwd;
+            document.getElementById("update_selectedDepartment").value = selectedDepartmentData[0].n;
+            document.getElementById("update_timeZoneSelect").value = selectedDepartmentData[0].zone;
+            document.getElementById("update_depTypeSelect").value = selectedDepartmentData[0].tp;
+            document.getElementById("startWork").value = selectedDepartmentData[0].sw;
+            document.getElementById("finishWork").value = selectedDepartmentData[0].ew;
+
+            var checkedDateFromData = selectedDepartmentData[0].nwd;
                 var daysCheckboxes = document.querySelectorAll('input[name="dayCheck"]');
                 daysCheckboxes.forEach(function(checkbox) {
                     if (checkedDateFromData.includes(parseInt(checkbox.value))) {

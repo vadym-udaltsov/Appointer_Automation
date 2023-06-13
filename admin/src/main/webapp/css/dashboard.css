@@ -49,13 +49,13 @@ body {
 }
 
 .creator_container {
-  color: white;
-    font-size: 20px;
-    position: relative;
-    height: 40px;
-    min-width: 150px;
-    margin-left: 50px;
-    border-radius: 50%;
+     color: white;
+     font-size: 20px;
+     position: relative;
+     height: 40px;
+     min-width: 250px;
+     margin-left: 50px;
+     border-radius: 50%;
 }
 
 .creator_item {
@@ -76,14 +76,14 @@ body {
 }
 
 .creator_lines:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -25px;
-    height: 100%;
-    border: 1px solid white;
-    animation: moveLines 3s linear infinite;
-    width: 200px;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -13px;
+        height: 100%;
+        border: 1px solid white;
+        animation: moveLines 3s linear infinite;
+        width: 270px;
 }
 
 @keyframes moveLines {

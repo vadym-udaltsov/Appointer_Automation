@@ -34,15 +34,19 @@ $(window).ready(function () {
         actionsDiv.classList.add('cell', 'actions');
 
         var updateButton = document.createElement('button');
+        updateButton.setAttribute("type", "button");
         updateButton.className = "sub-button service_updateOpenBtn";
         updateButton.setAttribute("data-toggle", "modal");
         updateButton.setAttribute("data-target", "#service_UpdateModal");
+        updateButton.setAttribute("value", JSON.stringify(service));
         updateButton.textContent = 'Update';
 
         var deleteButton = document.createElement('button');
+        deleteButton.setAttribute("type", "button");
         deleteButton.className = "sub-button service_deleteOpenBtn";
         deleteButton.setAttribute("data-toggle", "modal");
         deleteButton.setAttribute("data-target", "#service_DeleteModal");
+        deleteButton.setAttribute("value", JSON.stringify(service));
         deleteButton.textContent = 'Delete';
 
         actionsDiv.appendChild(updateButton);
@@ -82,20 +86,6 @@ $(window).ready(function () {
     });
 });
 
-/*function loadServiceData(url) {
-    $.ajax({
-        url: url,
-        type: 'get',
-        dataType: 'json',
-        success: function (data, jqXHR) {
-            console.log(data);
-            console.log(jqXHR);
-        },
-        error: function (data, jqXHR) {
-        }
-    });
-}*/
-
 function loadServiceData(url) {
     return new Promise(function(resolve, reject) {
         $.ajax({
@@ -112,8 +102,12 @@ function loadServiceData(url) {
                         var priceCell = $("<div class='service_price cell'></div>").text(item.price);
                         var actionsCell = $("<div class='cell actions'></div>");
 
-                        var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn' data-toggle='modal' data-target='#service_UpdateModal'>").text("Update");
-                        var deleteButton = $("<button type='button' class='sub-button service_deleteOpenBtn' data-toggle='modal' data-target='#service_DeleteModal'>").text("Delete");
+                        var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn' data-toggle='modal' data-target='#service_UpdateModal'>")
+                        .text("Update")
+                        .val(JSON.stringify(item));
+                        var deleteButton = $("<button type='button' class='sub-button service_deleteOpenBtn' data-toggle='modal' data-target='#service_DeleteModal'>")
+                        .text("Delete")
+                        .val(JSON.stringify(item));
 
                         actionsCell.append(updateButton, deleteButton);
 
