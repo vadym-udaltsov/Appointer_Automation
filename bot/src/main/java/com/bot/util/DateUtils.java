@@ -27,6 +27,15 @@ public class DateUtils {
         return localDateTime.toEpochSecond(ZoneOffset.UTC);
     }
 
+    public static long getStartOrEndOfDay(int month, int dayOfMonth, boolean endOfDay) {
+        LocalDateTime localDateTime = LocalDate.now()
+                .atStartOfDay()
+                .withMonth(month)
+                .withDayOfMonth(dayOfMonth)
+                .plusDays(endOfDay ? 1 : 0);
+        return localDateTime.toEpochSecond(ZoneOffset.UTC);
+    }
+
     public static long now(Department department) {
         return LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
     }
@@ -34,6 +43,11 @@ public class DateUtils {
     public static String getDayTitle(long date) {
         LocalDate localDate = LocalDate.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
         return localDate.format(DateTimeFormatter.ofPattern("dd"));
+    }
+
+    public static String getDateTitle(long date) {
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
+        return dateTime.format(DateTimeFormatter.ofPattern("MM/dd, HH:mm"));
     }
 
     public static long getStartOfMonthDate(Department department, boolean isNextMonth) {

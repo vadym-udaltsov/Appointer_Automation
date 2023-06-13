@@ -24,21 +24,23 @@ public class Appointment extends DynamoDbEntity {
     private static final String HASH_KEY = "s";
     private static final String RANGE_KEY = "d";
     public static final String TABLE_NAME = "appointment";
-    public static final String INDEX_NAME = "did-d-index";
+    public static final String DEP_INDEX_NAME = "did-d-index";
+    public static final String USER_INDEX_NAME = "uid-d-index";
 
     @DynamoDBHashKey(attributeName = HASH_KEY)
     @JsonProperty("s")
     private String specialist;
 
     @DynamoDBRangeKey(attributeName = RANGE_KEY)
-    @DynamoDBIndexRangeKey(attributeName = RANGE_KEY)
+    @DynamoDBIndexRangeKey(attributeName = RANGE_KEY, globalSecondaryIndexNames = {DEP_INDEX_NAME, USER_INDEX_NAME})
     @JsonProperty("d")
     private long date;
 
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = USER_INDEX_NAME)
     @JsonProperty("uid")
     private long userId;
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = INDEX_NAME)
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = DEP_INDEX_NAME)
     @JsonProperty("did")
     private String departmentId;
 

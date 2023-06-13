@@ -52,7 +52,7 @@ public class KeyBoardUtils {
         Month month = Month.of(currentMonth);
         LocalDate date = LocalDate.of(currentYear, currentMonth, 1);
         int daysInMonth = month.length(currentDate.isLeapYear());
-        Map<String, String> numbers = Constants.Numbers.SPEC_NUMBERS;
+        Map<String, String> specificNumbers = Constants.Numbers.SPEC_NUMBERS;
         for (int i = 1; i <= daysInMonth; i++) {
             if (i == 1 || date.getDayOfWeek().getValue() == 1) {
                 List<InlineKeyboardButton> row = new ArrayList<>();
@@ -61,7 +61,7 @@ public class KeyBoardUtils {
             String buttonText = date.format(formatter);
             String buttonTitle = null;
             if (appointments.contains(buttonText)) {
-                buttonTitle = numbers.get(buttonText);
+                buttonTitle = specificNumbers.get(buttonText);
             }
             InlineKeyboardButton dateButton = new InlineKeyboardButton();
             dateButton.setText(buttonTitle == null ? buttonText : buttonTitle);

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class MessageUtils {
 
-    private static final List<String> DASHBOARD = Arrays.asList("Create appointment", "My appointments");
+    public static final List<String> DASHBOARD = Arrays.asList("Create appointment", "My appointments");
 
     public static MessageHolder getLanguageMessageHolder() {
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()

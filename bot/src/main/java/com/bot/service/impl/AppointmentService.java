@@ -71,7 +71,7 @@ public class AppointmentService implements IAppointmentService {
                             .durationSec(slotDuration)
                             .build());
                 }
-                currentPoint = appointment.getDate() + durationsByServices.get(appointment.getService()) * 60;
+                currentPoint = appointment.getDate() + appointment.getDuration() * 60L;
             }
             long restOfDay = finishDate - currentPoint;
             if (restOfDay > 0) {

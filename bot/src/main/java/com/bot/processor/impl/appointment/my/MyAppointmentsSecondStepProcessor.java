@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class MyAppointmentsSecondStepProcessor implements IProcessor {
+    private static final String LS = System.lineSeparator();
 
     private final IAppointmentService appointmentService;
 
@@ -41,7 +42,25 @@ public class MyAppointmentsSecondStepProcessor implements IProcessor {
         if (Constants.CURRENT_MONTH.equals(selectedDay)) {
             return buildResponse(context, department, false);
         }
-        return null;
+        String monthStr = ContextUtils.getStringParam(context, Constants.MONTH);
+        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), false);
+        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), true);
+
+        List<Appointment> appointments = appointmentService.getAppointmentsByUserId(context.getUserId(), startOfDay, endOfDay);
+        StringBuilder response = new StringBuilder("Your appointments:" + LS);
+        for (Appointment appointment : appointments) {
+            String specialist = appointment.getSpecialist();
+            String service = appointment.getService();
+            int duration = appointment.getDuration();
+            long date = appointment.getDate();
+            String dateTitle = DateUtils.getDateTitle(date);
+            response.append("Specialist: ").append(specialist).append(LS)
+                    .append("Service: ").append(service).append(LS)
+                    .append("Time: ").append(dateTitle).append(LS)
+                    .append("Duration: ").append(duration).append(" min").append(LS).append(LS);
+        }
+        ContextUtils.resetLocationToDashboard(context);
+        return List.of(MessageUtils.buildDashboardHolder(response.toString()));
     }
 
     private List<MessageHolder> buildResponse(Context context, Department department, boolean isNextMonth) {
