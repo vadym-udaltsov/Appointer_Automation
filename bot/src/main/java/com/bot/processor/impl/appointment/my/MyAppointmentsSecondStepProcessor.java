@@ -54,9 +54,14 @@ public class MyAppointmentsSecondStepProcessor implements IProcessor {
             int duration = appointment.getDuration();
             long date = appointment.getDate();
             String dateTitle = DateUtils.getDateTitle(date);
-            response.append("Specialist: ").append(specialist).append(LS)
-                    .append("Service: ").append(service).append(LS)
-                    .append("Time: ").append(dateTitle).append(LS)
+            StringBuilder base = response.append(LS)
+                    .append("Service: ").append(service).append(LS);
+            if (!"owner".equals(specialist)) {
+                base.append("Specialist: ").append(specialist).append(LS);
+            }
+            base
+                    .append("Date: ").append(dateTitle.split(",")[0]).append(LS)
+                    .append("Time: ").append(dateTitle.split(",")[1]).append(LS)
                     .append("Duration: ").append(duration).append(" min").append(LS).append(LS);
         }
         ContextUtils.resetLocationToDashboard(context);

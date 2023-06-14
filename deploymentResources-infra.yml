@@ -255,6 +255,8 @@ Resources:
           AttributeType: N
         - AttributeName: did
           AttributeType: S
+        - AttributeName: uid
+          AttributeType: N
       KeySchema:
         - AttributeName: s
           KeyType: HASH
@@ -265,6 +267,14 @@ Resources:
         - IndexName: did-d-index
           KeySchema:
             - AttributeName: did
+              KeyType: HASH
+            - AttributeName: d
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: uid-d-index
+          KeySchema:
+            - AttributeName: uid
               KeyType: HASH
             - AttributeName: d
               KeyType: RANGE
