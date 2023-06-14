@@ -5,14 +5,42 @@
 
 .department_inner {
     display: flex;
-    justify-content: space-between;
     width: 500px;
+}
+
+.department_dropdown {
+    margin-right: 45px;
 }
 
 #department_NameSelect {
     width: 200px !important;
+    background: #867A6C;
+    color: white;
+    appearance: none;
+    font-size: 18px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 0 !important;
+}
+
+.arrow-down {
+    position: relative;
+    top: -33px;
+    left: 180px;
 }
 
 .department_update {
     width: 200px;
+}
+
+#department_UpdatePopup {
+    background: #393330;
+    color: white;
+    appearance: none;
+    font-size: 18px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 0 !important;
+    height: 38px;
+    font-weight: normal;
 }

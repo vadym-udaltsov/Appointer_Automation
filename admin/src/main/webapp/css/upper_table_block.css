@@ -12,6 +12,19 @@
 .modal_title {
     align-items: flex-end;
     display: flex;
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 100;
+}
+
+#service_createOpenBtn {
+    background: #393330;
+    color: white;
+    appearance: none;
+    font-size: 18px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 0 !important;
+    height: 38px;
+    font-weight: normal;
+    width: 100px;
 }

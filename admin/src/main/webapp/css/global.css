@@ -1,6 +1,5 @@
 body {
-    background: url("../pictures/fon2.jpg") no-repeat !important;
-    background-size: cover;
+    background-color: #dddddd;
 }
 
 #global_container {
