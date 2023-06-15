@@ -85,7 +85,7 @@ function validateForm(fields, btn) {
           setError(error, 'Field is required');
           valid = false;
         } else if (checkUserExists(input, error)) {
-          setError(error, 'User already exists');
+          setError(error, 'Service already exists');
           valid = false;
         } else {
           hideError(error);

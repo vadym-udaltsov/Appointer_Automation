@@ -68,10 +68,10 @@
     <div class="table-container">
             <div class="table_inner" id="servicesTable">
                 <div class="columns_titles">
-                    <div class="column_name cell"><strong>Name</strong></div>
-                    <div class="column_duration cell"><strong>Duration</strong></div>
-                    <div class="column_price cell"><strong>Price</strong></div>
-                    <div class="column_actions cell"><strong>Actions</strong></div>
+                    <div class="column_name cell"><strong>Name</strong><span></span></div>
+                    <div class="column_duration cell"><strong>Duration</strong><span></span></div>
+                    <div class="column_price cell"><strong>Price</strong><span></span></div>
+                    <div class="column_actions cell"><strong>Actions</strong><span></span></div>
                 </div>
             </div>
     </div>
@@ -86,7 +86,6 @@
             <div class="modal-header">
                 <h5 class="modal-title">Create Department</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -113,7 +112,6 @@
             <div class="modal-header">
                 <h5 class="modal-title">Update Department</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -125,36 +123,28 @@
                         <input class="form-control" id="update_selectedDepartment" disabled>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <p>Time zone</p>
-                    </div>
-                    <div class="col-md-9">
+                <div class="popup-row">
+                        <p class="popup-field-title">Time zone</p>
                         <select class="form-control" id="update_timeZoneSelect"></select>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <p>Type</p>
-                    </div>
-                    <div class="col-md-9">
+                <div class="popup-row last-row">
+                        <p class="popup-field-title">Type</p>
                         <select class="form-control" id="update_depTypeSelect"></select>
-                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 start-hour">
                         <p>Start work hour</p>
                     </div>
-                    <div class="col-md-9">
-                        <input type="number" class="form-control" id="startWork" oninput="validateInput(this)">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 finish-hour">
                         <p>Finish work hour</p>
                     </div>
-                    <div class="col-md-9">
-                        <input type="number" class="form-control" id="finishWork" oninput="validateInput(this)">
+                    <div class="hour_input-container">
+                        <div class="col-md-9 start-hour-input">
+                            <input type="number" class="form-control" id="startWork" oninput="validateInput(this)">
+                        </div>
+                        <div class="col-md-9 finish-hour-input">
+                            <input type="number" class="form-control" id="finishWork" oninput="validateInput(this)">
+                        </div>
                     </div>
                 </div>
                 <div class="calendar mt-4">
@@ -212,7 +202,6 @@
             <div class="modal-header">
                 <h5 class="modal-title">Create Service</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -249,7 +238,6 @@
             <div class="modal-header">
                 <h5 class="modal-title">Update Service</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -290,7 +278,6 @@
             <div class="modal-header">
                 <h5 class="modal-title">Delete Service</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">

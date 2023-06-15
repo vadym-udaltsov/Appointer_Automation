@@ -45,17 +45,17 @@ input[type="text"], input[type="number"], select {
 .modal-content {
     background-color: #f8f9fa;
     border: none;
-    border-radius: 10px;
+    border-radius: 21px !important;
   }
 
 .modal-header {
-    background-color: #343a40;
+    background-color: #393330;
     color: #fff;
     border-radius: 10px 10px 0 0;
 }
 
 .modal-footer {
-    background-color: #f8f9fa;
+    background-color: #393330;
     border-radius: 0 0 10px 10px;
 }
 
@@ -78,8 +78,19 @@ select, #depNameUpdate {
   cursor: pointer;
 }
 
-.row {
-    margin: 25px;
+.popup-row {
+   display: flex;
+   margin-top: 30px;
+   align-items: center;
+}
+
+.last-row{
+    margin-bottom: 30px !important;
+}
+
+.popup-field-title {
+    width: 100px;
+    margin-right: 15px;
 }
 
 .col-md-3 {
@@ -95,6 +106,30 @@ select, #depNameUpdate {
     border-size: 1px;
     border: 1px solid rgb(101 92 92);
     border-radius: 4px;
+}
+/* Work hours */
+.hour_input-container {
+    display: flex;
+}
+
+.start-hour {
+    position: relative;
+    left: 28px;
+}
+
+.start-hour-input {
+    position: relative;
+    left: 33px;
+}
+
+.finish-hour {
+    position: relative;
+    right: -127px;
+}
+
+.finish-hour-input {
+    position: relative;
+    right: -138px;
 }
 
 /*Calendar container*/

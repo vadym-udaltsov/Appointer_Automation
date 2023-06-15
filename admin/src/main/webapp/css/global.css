@@ -2,6 +2,15 @@ body {
     background-color: #dddddd;
 }
 
+p {
+    margin-top: initial !important;
+    margin-bottom: initial !important;
+}
+
+button:focus {
+    outline: none !important;
+}
+
 #global_container {
     margin-right: 35px;
     margin-left: 35px;
@@ -38,10 +47,11 @@ button:focus {
 
 /*Close button */
 .btn-secondary {
-  background-color: red;
-  color: white;
-  transition: 0.5s;
+  background-color: red !important;
+  color: white !important;
+  transition: 0.5s !important;
   margin-right: 20px !important;
+  border: none !important;
 }
 
 .btn-secondary:hover,
@@ -50,8 +60,8 @@ button:focus {
 }
 /* Save button */
 .btn-primary {
-    background-color: black !important;
-    border: none
+    background-color: #867A6C !important;
+    border: none !important;
 }
 
 .btn-primary:active {

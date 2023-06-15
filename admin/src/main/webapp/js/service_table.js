@@ -5,8 +5,6 @@ $(window).ready(function () {
 
     var email = localStorage.getItem('customer');
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
-    loadServiceData(url);
-
 
     document.querySelector('#service_CreateBtn').addEventListener('click', function() {
         var service = new Object();
@@ -84,6 +82,26 @@ $(window).ready(function () {
             service.remove();
         }
     });
+
+    async function applyStyleAfterDataLoad() {
+        try {
+            await loadServiceData(url);
+            var tableElements = document.querySelectorAll('.service');
+            var elementCount = tableElements.length;
+            if (elementCount <= 4) {
+                tableElements.forEach(function(element) {
+                    element.style.borderBottom = '1px solid black';
+                });
+            } else {
+                for (var i = 0; i < elementCount - 1; i++) {
+                    tableElements[i].style.borderBottom = '1px solid black';
+                }
+           }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    applyStyleAfterDataLoad();
 });
 
 function loadServiceData(url) {
