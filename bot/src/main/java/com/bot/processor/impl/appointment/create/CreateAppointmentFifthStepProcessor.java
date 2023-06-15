@@ -5,6 +5,7 @@ import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
+import com.bot.model.LString;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
@@ -24,7 +25,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -73,8 +76,10 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
                 .build();
         appointmentService.save(appointment);
         contextService.resetLocationToDashboard(context);
-        String date = localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy, HH:mm"));
-        String message = String.format("Created appointment\n%s\nservice - %s\nspecialist - %s\n", date, serviceName, specialist);
-        return List.of(MessageUtils.buildDashboardHolder(message));
+        List<LString> messagesToLocalize = new ArrayList<>();
+        messagesToLocalize.add(LString.builder().title("Created appointment:").build());
+        messagesToLocalize.add(LString.empty());
+        MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment);
+        return List.of(MessageUtils.buildDashboardHolder(messagesToLocalize));
     }
 }

@@ -19,6 +19,7 @@ import java.util.Map;
 public class MessageHolder {
     private List<Button> buttons;
     private String message;
+    private List<LString> messagesToLocalize;
     private KeyBoardType keyBoardType;
     private ButtonsType buttonsType;
     private boolean withCommonButtons;

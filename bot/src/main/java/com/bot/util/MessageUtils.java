@@ -1,9 +1,11 @@
 package com.bot.util;
 
+import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.Button;
 import com.bot.model.ButtonsType;
 import com.bot.model.KeyBoardType;
+import com.bot.model.LString;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -77,10 +79,18 @@ public class MessageUtils {
     }
 
     public static MessageHolder buildDashboardHolder() {
-        return buildDashboardHolder("");
+        return buildDashboardHolder("", List.of());
+    }
+
+    public static MessageHolder buildDashboardHolder(List<LString> messageLines) {
+        return buildDashboardHolder("", messageLines);
     }
 
     public static MessageHolder buildDashboardHolder(String message) {
+        return buildDashboardHolder(message, List.of());
+    }
+
+    public static MessageHolder buildDashboardHolder(String message, List<LString> messageLines) {
         String result = "Select action";
         if (!message.isBlank()) {
             result = message + result;
@@ -89,7 +99,7 @@ public class MessageUtils {
                 .type(KeyBoardType.TWO_ROW)
                 .buttonsMap(buildButtons(commonButtons(DASHBOARD), false))
                 .build();
-        return holder(result, ButtonsType.KEYBOARD, request);
+        return holder(result, ButtonsType.KEYBOARD, request, messageLines);
     }
 
     public static MessageHolder holder(String message, ButtonsType buttonsType,
@@ -97,6 +107,16 @@ public class MessageUtils {
         return MessageHolder.builder()
                 .message(message)
                 .buttonsType(buttonsType)
+                .keyboardRequest(request)
+                .build();
+    }
+
+    public static MessageHolder holder(String message, ButtonsType buttonsType, BuildKeyboardRequest request,
+                                       List<LString> messageLines) {
+        return MessageHolder.builder()
+                .message(message)
+                .buttonsType(buttonsType)
+                .messagesToLocalize(messageLines)
                 .keyboardRequest(request)
                 .build();
     }
@@ -164,5 +184,20 @@ public class MessageUtils {
                 .buttonsMap(MessageUtils.buildButtons(buttons, true))
                 .build();
 
+    }
+
+    public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment) {
+        String specialist = appointment.getSpecialist();
+        String service = appointment.getService();
+        int duration = appointment.getDuration();
+        long date = appointment.getDate();
+        String dateTitle = DateUtils.getDateTitle(date);
+        messagesToLocalize.add(LString.builder().title("Service: ${service}").placeholders(Map.of("service", service)).build());
+        if (!"owner".equals(specialist)) {
+            messagesToLocalize.add(LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
+        }
+        messagesToLocalize.add(LString.builder().title("Date: ${date}").placeholders(Map.of("date", dateTitle.split(",")[0])).build());
+        messagesToLocalize.add(LString.builder().title("Time: ${time}").placeholders(Map.of("time", dateTitle.split(",")[1])).build());
+        messagesToLocalize.add(LString.builder().title("Duration: ${duration} min").placeholders(Map.of("duration", String.valueOf(duration))).build());
     }
 }

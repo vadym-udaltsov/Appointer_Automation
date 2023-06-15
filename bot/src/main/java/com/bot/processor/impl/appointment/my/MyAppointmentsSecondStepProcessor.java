@@ -4,6 +4,7 @@ import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
+import com.bot.model.LString;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
@@ -19,6 +20,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,25 +50,15 @@ public class MyAppointmentsSecondStepProcessor implements IProcessor {
         long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), true);
 
         List<Appointment> appointments = appointmentService.getAppointmentsByUserId(context.getUserId(), startOfDay, endOfDay);
-        StringBuilder response = new StringBuilder("Your appointments:" + LS);
+        List<LString> messagesToLocalize = new ArrayList<>();
+        messagesToLocalize.add(LString.builder().title("Your appointments:").build());
+        messagesToLocalize.add(LString.empty());
         for (Appointment appointment : appointments) {
-            String specialist = appointment.getSpecialist();
-            String service = appointment.getService();
-            int duration = appointment.getDuration();
-            long date = appointment.getDate();
-            String dateTitle = DateUtils.getDateTitle(date);
-            StringBuilder base = response.append(LS)
-                    .append("Service: ").append(service).append(LS);
-            if (!"owner".equals(specialist)) {
-                base.append("Specialist: ").append(specialist).append(LS);
-            }
-            base
-                    .append("Date: ").append(dateTitle.split(",")[0]).append(LS)
-                    .append("Time: ").append(dateTitle.split(",")[1]).append(LS)
-                    .append("Duration: ").append(duration).append(" min").append(LS).append(LS);
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment);
+            messagesToLocalize.add(LString.empty());
         }
         ContextUtils.resetLocationToDashboard(context);
-        return List.of(MessageUtils.buildDashboardHolder(response.toString()));
+        return List.of(MessageUtils.buildDashboardHolder(messagesToLocalize));
     }
 
     private List<MessageHolder> buildResponse(Context context, Department department, boolean isNextMonth) {

@@ -1,6 +1,7 @@
 package com.bot.localization;
 
 import com.bot.model.Context;
+import com.bot.model.LString;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
 import com.commons.utils.JsonUtils;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public class Localizer implements ILocalizer {
+    private static final String LS = System.lineSeparator();
 
     private final Map<Language, Map<String, String>> dictionaries = new HashMap<>();
     private final Map<Language, Map<String, String>> keysDictionaries = new HashMap<>();
@@ -54,6 +56,15 @@ public class Localizer implements ILocalizer {
 
         Map<String, String> dictionary = getDictionary(language);
         for (MessageHolder holder : holders) {
+            List<LString> messages = holder.getMessagesToLocalize();
+            if (messages != null && messages.size() > 0) {
+                StringBuilder result = new StringBuilder();
+                for (LString message : messages) {
+                    result.append(localize(message.getTitle(), dictionary, message.getPlaceholders())).append(LS);
+                }
+                holder.setMessage(result.toString());
+                continue;
+            }
             holder.setMessage(localize(holder.getMessage(), dictionary, holder.getPlaceholders()));
         }
     }
@@ -126,9 +137,9 @@ public class Localizer implements ILocalizer {
     }
 
     private String localize(String text, Map<String, String> dictionary, Map<String, String> placeholders) {
-        localizePlaceholders(dictionary, placeholders);
+        Map<String, String> localizedPlaceholders = localizePlaceholders(dictionary, placeholders);
         String localizedText = localizeString(text, dictionary);
-        return substitutePlaceholders(localizedText, placeholders);
+        return substitutePlaceholders(localizedText, localizedPlaceholders);
     }
 
     private String substitutePlaceholders(String text, Map<String, String> placeholders) {
@@ -140,13 +151,16 @@ public class Localizer implements ILocalizer {
         return sub.replace(text);
     }
 
-    private void localizePlaceholders(Map<String, String> dictionary, Map<String, String> placeholders) {
+    private Map<String, String> localizePlaceholders(Map<String, String> dictionary, Map<String, String> placeholders) {
         if (placeholders == null) {
-            return;
+            return null;
         }
+        Map<String, String> localizedPlaceholders = new HashMap<>();
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-            entry.setValue(localizeString(entry.getValue(), dictionary));
+            localizedPlaceholders.put(entry.getKey(), localizeString(entry.getValue(), dictionary));
+//            entry.setValue(localizeString(entry.getValue(), dictionary));
         }
+        return localizedPlaceholders;
     }
 
     private String localizeString(String key, Map<String, String> dictionary) {

@@ -49,7 +49,7 @@ public class ServiceProvider {
 
     @Provides
     @Singleton
-    ILocalizer localizer(IContextService contextService) {
+    ILocalizer localizer() {
         return new Localizer();
     }
 
