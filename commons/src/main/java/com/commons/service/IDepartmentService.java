@@ -2,7 +2,10 @@ package com.commons.service;
 
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
-import com.commons.request.UpdateServiceRequest;
+import com.commons.request.service.UpdateServiceRequest;
+import com.commons.request.specialist.CreateSpecialistRequest;
+import com.commons.request.specialist.DeleteSpecialistRequest;
+import com.commons.request.specialist.UpdateSpecialistRequest;
 
 import java.util.List;
 
@@ -15,6 +18,12 @@ public interface IDepartmentService {
     List<Department> getCustomerDepartments(String customer);
 
     Department getDepartmentById(String departmentId);
+
+    void addSpecialist(CreateSpecialistRequest request);
+
+    void updateSpecialist(UpdateSpecialistRequest request);
+
+    void deleteSpecialist(DeleteSpecialistRequest request);
 
     void addCustomerService(String email, String departmentName, CustomerService service);
 

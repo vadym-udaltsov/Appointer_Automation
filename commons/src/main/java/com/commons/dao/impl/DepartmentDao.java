@@ -11,7 +11,11 @@ import com.commons.dao.AbstractDao;
 import com.commons.dao.IDepartmentDao;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
-import com.commons.request.UpdateServiceRequest;
+import com.commons.model.Specialist;
+import com.commons.request.service.UpdateServiceRequest;
+import com.commons.request.specialist.CreateSpecialistRequest;
+import com.commons.request.specialist.DeleteSpecialistRequest;
+import com.commons.request.specialist.UpdateSpecialistRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +30,46 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     @Autowired
     public DepartmentDao(DynamoDbFactory dynamoDbFactory) {
         super(dynamoDbFactory, Department.class, "department");
+    }
+
+    @Override
+    public void addSpecialist(CreateSpecialistRequest request) {
+        Specialist specialist = request.getSpecialist();
+        String departmentId = request.getDepartmentId();
+        Department department = getDepartmentById(departmentId);
+        List<Specialist> specialists = department.getAvailableSpecialists();
+        boolean specExists = specialists.stream().anyMatch(s -> specialist.getName().equals(s.getName()));
+        if (specExists) {
+            throw new IllegalArgumentException(String.format("Specialist with name %s already exists", specialist.getName()));
+        }
+        specialists.add(specialist);
+        overwriteItem(department);
+    }
+
+    @Override
+    public void updateSpecialist(UpdateSpecialistRequest request) {
+        Specialist specialist = request.getSpecialist();
+        String departmentId = request.getDepartmentId();
+        Department department = getDepartmentById(departmentId);
+        List<Specialist> specialists = department.getAvailableSpecialists();
+        boolean deleted = specialists.removeIf(s -> specialist.getName().equals(s.getName()));
+        if (!deleted) {
+            throw new IllegalArgumentException(String.format("Specialist with name %s not found in department", specialist.getName()));
+        }
+        specialists.add(specialist);
+        overwriteItem(department);
+    }
+
+    @Override
+    public void deleteSpecialist(DeleteSpecialistRequest request) {
+        String departmentId = request.getDepartmentId();
+        Department department = getDepartmentById(departmentId);
+        String specialistName = request.getName();
+        boolean deleted = department.getAvailableSpecialists().removeIf(s -> specialistName.equals(s.getName()));
+        if (!deleted) {
+            throw new IllegalArgumentException(String.format("Specialist with name %s not found in department", specialistName));
+        }
+        overwriteItem(department);
     }
 
     @Override
@@ -52,7 +96,10 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         String departmentId = request.getDepartmentId();
         Department department = getDepartmentById(departmentId);
         String serviceName = request.getServiceName();
-        department.getServices().removeIf(s -> serviceName.equals(s.getName()));
+        boolean deleted = department.getServices().removeIf(s -> serviceName.equals(s.getName()));
+        if (!deleted) {
+            throw new IllegalArgumentException(String.format("Service with name %s not found in department", serviceName));
+        }
         overwriteItem(department);
     }
 

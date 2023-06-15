@@ -1,8 +1,9 @@
 package com.bot.controller;
 
-import com.bot.request.service.CreateServiceRequest;
-import com.commons.request.service.UpdateServiceRequest;
 import com.commons.model.SimpleResponse;
+import com.commons.request.specialist.CreateSpecialistRequest;
+import com.commons.request.specialist.DeleteSpecialistRequest;
+import com.commons.request.specialist.UpdateSpecialistRequest;
 import com.commons.service.IDepartmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,31 +17,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("admin/service")
+@RequestMapping("admin/specialist")
 @Slf4j
-public class ServiceController {
+public class SpecialistController {
 
     @Autowired
     private IDepartmentService departmentService;
 
     @PostMapping()
-    public ResponseEntity<SimpleResponse> createService(@RequestBody CreateServiceRequest request) {
-        log.info("Got request for creation new service");
-        departmentService.addCustomerService(request.getCustomer(), request.getDepartment(), request.getService());
+    public ResponseEntity<SimpleResponse> createSpecialist(@RequestBody CreateSpecialistRequest request) {
+        log.info("Got request for creation new specialist");
+        departmentService.addSpecialist(request);
         return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
     }
 
     @PutMapping()
-    public ResponseEntity<SimpleResponse> updateService(@RequestBody UpdateServiceRequest request) {
-        log.info("Got request for updating service");
-        departmentService.updateCustomerService(request);
+    public ResponseEntity<SimpleResponse> updateSpecialist(@RequestBody UpdateSpecialistRequest request) {
+        log.info("Got request for updating specialist");
+        departmentService.updateSpecialist(request);
         return new ResponseEntity<>(SimpleResponse.builder().body("Updated").build(), HttpStatus.OK);
     }
 
     @DeleteMapping()
-    public ResponseEntity<SimpleResponse> deleteService(@RequestBody UpdateServiceRequest request) {
-        log.info("Got request for deleting service");
-        departmentService.deleteCustomerService(request);
+    public ResponseEntity<SimpleResponse> deleteSpecialist(@RequestBody DeleteSpecialistRequest request) {
+        log.info("Got request for deleting specialist");
+        departmentService.deleteSpecialist(request);
         return new ResponseEntity<>(SimpleResponse.builder().body("Deleted").build(), HttpStatus.OK);
     }
 }

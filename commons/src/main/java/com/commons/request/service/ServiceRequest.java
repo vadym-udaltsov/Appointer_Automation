@@ -1,4 +1,4 @@
-package com.commons.request;
+package com.commons.request.service;
 
 import com.commons.model.CustomerService;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.commons.request;
+package com.commons.request.service;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

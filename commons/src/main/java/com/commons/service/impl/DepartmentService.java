@@ -4,7 +4,10 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.commons.dao.IDepartmentDao;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
-import com.commons.request.UpdateServiceRequest;
+import com.commons.request.service.UpdateServiceRequest;
+import com.commons.request.specialist.CreateSpecialistRequest;
+import com.commons.request.specialist.DeleteSpecialistRequest;
+import com.commons.request.specialist.UpdateSpecialistRequest;
 import com.commons.service.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,21 @@ public class DepartmentService implements IDepartmentService {
     @Autowired
     public DepartmentService(IDepartmentDao departmentDao) {
         this.departmentDao = departmentDao;
+    }
+
+    @Override
+    public void updateSpecialist(UpdateSpecialistRequest request) {
+        departmentDao.updateSpecialist(request);
+    }
+
+    @Override
+    public void deleteSpecialist(DeleteSpecialistRequest request) {
+        departmentDao.deleteSpecialist(request);
+    }
+
+    @Override
+    public void addSpecialist(CreateSpecialistRequest request) {
+        departmentDao.addSpecialist(request);
     }
 
     @Override

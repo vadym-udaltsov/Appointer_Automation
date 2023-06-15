@@ -6,8 +6,7 @@ import com.commons.dao.impl.DepartmentDao;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
-import com.commons.request.UpdateServiceRequest;
-import org.junit.jupiter.api.Test;
+import com.commons.request.service.UpdateServiceRequest;
 
 import java.util.List;
 

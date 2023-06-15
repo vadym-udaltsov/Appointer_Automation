@@ -1,6 +1,6 @@
-package com.bot.model;
+package com.bot.request.service;
 
-import com.commons.request.ServiceRequest;
+import com.commons.request.service.ServiceRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
