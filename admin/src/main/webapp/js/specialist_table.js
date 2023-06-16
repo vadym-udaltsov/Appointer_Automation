@@ -6,45 +6,40 @@ $(window).ready(function () {
     var email = localStorage.getItem('customer');
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
 
-    document.querySelector('#service_CreateBtn').addEventListener('click', function() {
-        var service = new Object();
-        service.name = $("#service_Create-servNameInput").val();
-        service.duration = $("#service_Create-servDurationInput").val();
-        service.price = $("#service_Create-servPriceInput").val();
+    document.querySelector('#specialist_CreateBtn').addEventListener('click', function() {
+        var specialist = new Object();
+        specialist.name = $("#specialist_CreateNameInput").val();
+        specialist.pn = $("#specialist_CreatePhoneInput").val();
 
         var newServiceBlock = document.createElement('div');
-        newServiceBlock.classList.add('service');
-        newServiceBlock.setAttribute('value', service);
+        newServiceBlock.classList.add('specialist');
+        newServiceBlock.setAttribute('value', specialist);
 
         var nameDiv = document.createElement('div');
-        nameDiv.classList.add('cell');
-        nameDiv.textContent = service.name;
+        nameDiv.classList.add('specCol');
+        nameDiv.textContent = specialist.name;
 
         var durationDiv = document.createElement('div');
-        durationDiv.classList.add('cell');
-        durationDiv.textContent = service.duration
-
-        var priceDiv = document.createElement('div');
-        priceDiv.classList.add('cell');
-        priceDiv.textContent = service.price
+        durationDiv.classList.add('specCol');
+        durationDiv.textContent = specialist.phone
 
         var actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('cell', 'actions');
+        actionsDiv.classList.add('specCol', 'actions');
 
         var updateButton = document.createElement('button');
         updateButton.setAttribute("type", "button");
-        updateButton.className = "sub-button service_updateOpenBtn";
+        updateButton.className = "sub-button specialist_updateOpenBtn";
         updateButton.setAttribute("data-toggle", "modal");
-        updateButton.setAttribute("data-target", "#service_UpdateModal");
-        updateButton.setAttribute("value", JSON.stringify(service));
+        updateButton.setAttribute("data-target", "#specialist_UpdateModal");
+        updateButton.setAttribute("value", JSON.stringify(specialist));
         updateButton.textContent = 'Update';
 
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute("type", "button");
-        deleteButton.className = "sub-button service_deleteOpenBtn";
+        deleteButton.className = "sub-button specialist_deleteOpenBtn";
         deleteButton.setAttribute("data-toggle", "modal");
-        deleteButton.setAttribute("data-target", "#service_DeleteModal");
-        deleteButton.setAttribute("value", JSON.stringify(service));
+        deleteButton.setAttribute("data-target", "#specialist_DeleteModal");
+        deleteButton.setAttribute("value", JSON.stringify(specialist));
         deleteButton.textContent = 'Delete';
 
         actionsDiv.appendChild(updateButton);
@@ -55,8 +50,8 @@ $(window).ready(function () {
         newServiceBlock.appendChild(priceDiv);
         newServiceBlock.appendChild(actionsDiv);
 
-        var column = document.querySelector('.columns_titles');
-        var lastService = column.parentElement.querySelector('.service:last-of-type');
+        var column = document.querySelector('.columns_titles_specialist');
+        var lastService = column.parentElement.querySelector('.specialist:last-of-type');
         if (lastService) {
           lastService.insertAdjacentElement('afterend', newServiceBlock);
         } else {
@@ -69,16 +64,16 @@ $(window).ready(function () {
 
     deleteButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            var column = this.closest('.service');
+            var column = this.closest('.specialist');
             column.remove();
         });
     });
 
-    var column = document.querySelector('.columns_titles');
+    var column = document.querySelector('.columns_titles_specialist');
 
     column.addEventListener('click', function(event) {
         if (event.target.classList.contains('delete')) {
-            var service = event.target.closest('.service');
+            var service = event.target.closest('.specialist');
             service.remove();
         }
     });
@@ -86,8 +81,8 @@ $(window).ready(function () {
     async function applyStyleAfterDataLoad() {
         while (window.dataLoaded !== true) {
             await new Promise(resolve => setTimeout(resolve, 200)); // Ждем 100 миллисекунд перед следующей проверкой
-         }
-            var tableElements = document.querySelectorAll('.service');
+        }
+            var tableElements = document.querySelectorAll('.specialist');
             var elementCount = tableElements.length;
             if (elementCount <= 4) {
                 tableElements.forEach(function(element) {

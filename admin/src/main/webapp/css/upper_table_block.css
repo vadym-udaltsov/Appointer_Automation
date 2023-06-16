@@ -16,7 +16,7 @@
     font-weight: 100;
 }
 
-#service_createOpenBtn {
+#service_createOpenBtn, #specialist_createOpenBtn {
     background: #393330;
     color: white;
     appearance: none;

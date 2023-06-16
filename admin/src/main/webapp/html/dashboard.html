@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="../css/popups.css">
     <link rel="stylesheet" href="../css/departmentContainer.css">
     <link rel="stylesheet" href="../css/upper_table_block.css">
-    <link rel="stylesheet" href="../css/service_table.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/tables.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Dashboard</title>
 </head>
 <body>
@@ -44,7 +45,8 @@
                 <img src="../pictures/arrow-down.png" alt="Arrow down" class="arrow-down">
             </div>
             <div class="department_update">
-                <button type="button" class="sub-button update-dep" data-toggle="modal" data-target="#department_UpdateModal" id="department_UpdatePopup">
+                <button type="button" class="sub-button update-dep" data-toggle="modal"
+                        data-target="#department_UpdateModal" id="department_UpdatePopup">
                     Update Department
                 </button>
             </div>
@@ -64,29 +66,52 @@
         </div>
     </div>
 
-<!-- Table -->
+    <!-- Service Table -->
     <div class="table-container">
-            <div class="table_inner" id="servicesTable">
-                <div class="columns_titles">
-                    <div class="column_name cell"><strong>Name</strong><span></span></div>
-                    <div class="column_duration cell"><strong>Duration</strong><span></span></div>
-                    <div class="column_price cell"><strong>Price</strong><span></span></div>
-                    <div class="column_actions cell"><strong>Actions</strong><span></span></div>
-                </div>
+        <div class="table_inner" id="servicesTable">
+            <div class="columns_titles">
+                <div class="column_name cell"><strong>Name</strong><span></span></div>
+                <div class="column_duration cell"><strong>Duration</strong><span></span></div>
+                <div class="column_price cell"><strong>Price</strong><span></span></div>
+                <div class="column_actions cell"><strong>Actions</strong><span></span></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Specialist Container -->
+    <div class="modal_container">
+        <div class="modal_items">
+            <div class="modal_title">Specialist</div>
+            <div class="modal_block">
+                <button type="button" class="sub-button" data-toggle="modal" data-target="#specialist_CreateModal"
+                        id="specialist_createOpenBtn">
+                    Add New
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Specialist Table -->
+    <div class="table-container_specialist">
+        <div class="table_inner_specialist" id="specialistTable">
+            <div class="columns_titles_specialist">
+                <div class="column_name specCol"><strong>Name</strong><span></span></div>
+                <div class="column_phone specCol"><strong>Phone Number</strong><span></span></div>
+                <div class="column_actions specCol"><strong>Actions</strong><span></span></div>
+            </div>
+        </div>
     </div>
 
 </div>
 
 <!-- Modals HTML -->
 
-<div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal" aria-hidden="true">
+<div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create Department</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -99,23 +124,23 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_depModalBtn">Cancel
+                </button>
                 <button type="button" class="btn btn-primary" id="create_depBtn">Create</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="department_UpdateModal" tabindex="-1" aria-labelledby="department_UpdateModal" aria-hidden="true">
+<div class="modal fade" id="department_UpdateModal" tabindex="-1" aria-labelledby="department_UpdateModal"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Update Department</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="popup-row-dep">
                     <div class="col-md-3">
                         <p>Department</p>
                     </div>
@@ -124,12 +149,12 @@
                     </div>
                 </div>
                 <div class="popup-row">
-                        <p class="popup-field-title">Time zone</p>
-                        <select class="form-control" id="update_timeZoneSelect"></select>
+                    <p class="popup-field-title">Time zone</p>
+                    <select class="form-control" id="update_timeZoneSelect"></select>
                 </div>
                 <div class="popup-row last-row">
-                        <p class="popup-field-title">Type</p>
-                        <select class="form-control" id="update_depTypeSelect"></select>
+                    <p class="popup-field-title">Type</p>
+                    <select class="form-control" id="update_depTypeSelect"></select>
                 </div>
                 <div class="row">
                     <div class="col-md-3 start-hour">
@@ -154,31 +179,38 @@
                             <div class="calendar">
                                 <ul class="days-list">
                                     <li>
-                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="1" id="mon">
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="1"
+                                               id="mon">
                                         <label for="mon">Mon</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="2" id="tue">
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="2"
+                                               id="tue">
                                         <label for="tue">Tue</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="3" id="wed">
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="3"
+                                               id="wed">
                                         <label for="wed">Wed</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="4" id="thu">
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="4"
+                                               id="thu">
                                         <label for="thu">Thu</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="5" id="fri">
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="5"
+                                               id="fri">
                                         <label for="fri">Fri</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="6" id="sat">
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="6"
+                                               id="sat">
                                         <label for="sat">Sat</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="7" id="sun">
+                                        <input type="checkbox" class="custom-checkbox" name="dayCheck" value="7"
+                                               id="sun">
                                         <label for="sun">Sun</label>
                                     </li>
                                 </ul>
@@ -188,7 +220,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_updateDepBtn">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_updateDepBtn">Cancel
+                </button>
                 <button type="button" class="btn btn-primary" id="update_DepBtn">Update</button>
             </div>
         </div>
@@ -196,35 +229,43 @@
 </div>
 
 <!-- Service Create -->
-<div class="modal fade" id="service_CreateModal" tabindex="-1" style="width: 100%" aria-labelledby="service_CreateModal" aria-hidden="true">
+<div class="modal fade" id="service_CreateModal" tabindex="-1" style="width: 100%" aria-labelledby="service_CreateModal"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create Service</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="service_Create-servNameInput" class="update__asterisks" id="service_nameField">Name</label>
-                        <input type="text" class="form-control" id="service_Create-servNameInput" placeholder="Enter Name">
+                        <label for="service_Create-servNameInput" class="update__asterisks"
+                               id="service_nameField">Name</label>
+                        <input type="text" class="form-control" id="service_Create-servNameInput"
+                               placeholder="Enter Name">
                         <small class="error-message" id="nameError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="service_Create-servDurationInput" class="update__asterisks" id="service_durationField">Duration</label>
-                        <input type="number" class="form-control" id="service_Create-servDurationInput" placeholder="Enter Duration" oninput="validateInput(this)">
-                        <small class="error-message" id="durationError" style="color: red; display: none;">Field is required</small>
+                        <label for="service_Create-servDurationInput" class="update__asterisks"
+                               id="service_durationField">Duration</label>
+                        <input type="number" class="form-control" id="service_Create-servDurationInput"
+                               placeholder="Enter Duration" oninput="validateInput(this)">
+                        <small class="error-message" id="durationError" style="color: red; display: none;">Field is
+                            required</small>
                     </div>
                     <div class="form-group">
                         <label for="service_Create-servPriceInput" class="update__asterisks" id="service_priceField">Price</label>
-                        <input type="number" class="form-control" id="service_Create-servPriceInput" placeholder="Enter Price" oninput="validateInput(this)">
-                        <small class="error-message" id="priceError" style="color: red; display: none;">Field is required</small>
+                        <input type="number" class="form-control" id="service_Create-servPriceInput"
+                               placeholder="Enter Price" oninput="validateInput(this)">
+                        <small class="error-message" id="priceError" style="color: red; display: none;">Field is
+                            required</small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="service_Create-CancelBtn">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="service_Create-CancelBtn">
+                    Cancel
+                </button>
                 <button type="button" class="btn btn-primary" id="service_CreateBtn">Create</button>
             </div>
         </div>
@@ -232,13 +273,12 @@
 </div>
 
 <!-- Service Update -->
-<div class="modal fade" id="service_UpdateModal" tabindex="-1" style="width: 100%" aria-labelledby="service_UpdateModal" aria-hidden="true">
+<div class="modal fade" id="service_UpdateModal" tabindex="-1" style="width: 100%" aria-labelledby="service_UpdateModal"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Update Service</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
             </div>
             <div class="modal-body">
                 <form>
@@ -247,24 +287,35 @@
                         <input class="form-control" id="update-service_servNameInput" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newNameInput" class="update__asterisks" id="service_updateNewName">New Name</label>
-                        <input type="text" class="form-control" id="update-service_newNameInput" placeholder="Enter New Name">
-                        <small class="update_error-message" id="update_nameError" style="color: red; display: none;">Field is required</small>
+                        <label for="update-service_newNameInput" class="update__asterisks" id="service_updateNewName">New
+                            Name</label>
+                        <input type="text" class="form-control" id="update-service_newNameInput"
+                               placeholder="Enter New Name">
+                        <small class="update_error-message" id="update_nameError" style="color: red; display: none;">Field
+                            is required</small>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newDurationInput" class="update__asterisks" id="service_updateDuration">New Duration</label>
-                        <input type="number" class="form-control" id="update-service_newDurationInput" placeholder="Enter Duration">
-                        <small class="update_error-message" id="update_durationError" style="color: red; display: none;">Field is required</small>
+                        <label for="update-service_newDurationInput" class="update__asterisks"
+                               id="service_updateDuration">New Duration</label>
+                        <input type="number" class="form-control" id="update-service_newDurationInput"
+                               placeholder="Enter Duration">
+                        <small class="update_error-message" id="update_durationError"
+                               style="color: red; display: none;">Field is required</small>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newPriceInput" class="update__asterisks" id="service_updatePrice">New Price</label>
-                        <input type="number" class="form-control" id="update-service_newPriceInput" placeholder="Enter Price">
-                        <small class="update_error-message" id="update_priceError" style="color: red; display: none;">Field is required</small>
+                        <label for="update-service_newPriceInput" class="update__asterisks" id="service_updatePrice">New
+                            Price</label>
+                        <input type="number" class="form-control" id="update-service_newPriceInput"
+                               placeholder="Enter Price">
+                        <small class="update_error-message" id="update_priceError" style="color: red; display: none;">Field
+                            is required</small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update-service_CancelBtn">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update-service_CancelBtn">
+                    Cancel
+                </button>
                 <button type="button" class="btn btn-primary" id="update-service_UpdateBtn">Update</button>
             </div>
         </div>
@@ -272,13 +323,12 @@
 </div>
 
 <!-- Service Delete -->
-<div class="modal fade" id="service_DeleteModal" tabindex="-1" style="width: 100%" aria-labelledby="service_DeleteModal" aria-hidden="true">
+<div class="modal fade" id="service_DeleteModal" tabindex="-1" style="width: 100%" aria-labelledby="service_DeleteModal"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Delete Service</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
             </div>
             <div class="modal-body">
                 <form>
@@ -289,21 +339,137 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="delete-service_CancelBtn">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="delete-service_CancelBtn">
+                    Cancel
+                </button>
                 <button type="button" class="btn btn-primary" id="delete-service_DeleteBtn">Delete</button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- Specialist Create -->
+<div class="modal fade" id="specialist_CreateModal" tabindex="-1" style="width: 100%"
+     aria-labelledby="specialist_CreateModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Specialist</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="service_Create-servNameInput" class="update__asterisks" id="specialist_nameField">Name</label>
+                        <input type="text" class="form-control" id="specialist_CreateNameInput"
+                               placeholder="Enter Name">
+                        <small class="error-message" id="specialist_nameError"
+                               style="color: red; display: none;"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="service_Create-servDurationInput" class="update__asterisks"
+                               id="specialist_phoneField">Phone Number</label>
+                        <input type="text" pattern="[0-9+]*" class="form-control" id="specialist_CreatePhoneInput"
+                               placeholder="Enter Phone Number">
+                        <small class="error-message" id="specialist_phoneError" style="color: red; display: none;">Field
+                            is required</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="specialist_Create-CancelBtn">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="specialist_CreateBtn">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Specialist Update -->
+<div class="modal fade" id="specialist_UpdateModal" tabindex="-1" style="width: 100%"
+     aria-labelledby="specialist_UpdateModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Specialist</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="update-service_servNameInput" id="specialist_updateName">Specialist</label>
+                        <input class="form-control" id="update-specialist_servNameInput" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-service_newNameInput" class="update__asterisks"
+                               id="specialist_updateNewName">New Name</label>
+                        <input type="text" class="form-control" id="update-specialist_newNameInput"
+                               placeholder="Enter New Name">
+                        <small class="update_error-message" id="specialist_update_nameError"
+                               style="color: red; display: none;">Field is required</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-service_newDurationInput" class="update__asterisks"
+                               id="specialist_updateDuration">New Phone Number</label>
+                        <input type="text" pattern="[0-9+]*" class="form-control" id="update-specialist_newPhoneInput"
+                               placeholder="Enter New Phone Number">
+                        <small class="update_error-message" id="specialist_update_phoneError"
+                               style="color: red; display: none;">Field is required</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update-specialist_CancelBtn">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="update-specialist_UpdateBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Specialist Delete -->
+<div class="modal fade" id="specialist_DeleteModal" tabindex="-1" style="width: 100%"
+     aria-labelledby="specialist_DeleteModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Specialist</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="delete-service_NameInput" id="delete_specialistName">Specialist</label>
+                        <input class="form-control" id="delete-specialist_NameInput">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="delete-specialist_CancelBtn">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="delete-specialist_DeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script type="text/javascript" src="../js/dashboard.js"></script>
 <script type="text/javascript" src="../js/department.js"></script>
 <script type="text/javascript" src="../js/spinner.js"></script>
 <script type="text/javascript" src="../js/service.js"></script>
 <script type="text/javascript" src="../js/service_table.js"></script>
+<script type="text/javascript" src="../js/specialist.js"></script>
+<script type="text/javascript" src="../js/specialist_table.js"></script>
 <script type="text/javascript" src="../js/logout.js"></script>
 <script type="text/javascript" src="../js/disable.js"></script>
 <script type="text/javascript" src="../js/commons.js"></script>

@@ -15,6 +15,7 @@ $(window).ready(function () {
     typeSelect.append('<option value="Loading...">Loading...</option>');
 
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
+    window.dataLoaded;
     loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
 
     $("#department_UpdatePopup").click(function() {
@@ -66,7 +67,7 @@ $(window).ready(function () {
      });
 });
 
-function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect) {
+function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect, dataLoaded) {
     $.ajax({
         url: url,
         type: 'get',
@@ -106,6 +107,52 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                     }
                 });
                 console.log(jqXHR);
+                var serviceTable = $("#servicesTable");
+                $.each(data.customerDepartments, function(i, department) {
+                    $.each(department.s, function(j, item) {
+                        var row = $("<div class='service'></div>");
+                        var nameCell = $("<div class='service_name cell'></div>").text(item.name);
+                        var durationCell = $("<div class='service_duration cell'></div>").text(item.duration);
+                        var priceCell = $("<div class='service_price cell'></div>").text(item.price);
+                        var actionsCell = $("<div class='cell actions'></div>");
+
+                        var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn' data-toggle='modal' data-target='#service_UpdateModal'>")
+                        .text("Update")
+                        .val(JSON.stringify(item));
+                        var deleteButton = $("<button type='button' class='sub-button service_deleteOpenBtn' data-toggle='modal' data-target='#service_DeleteModal'>")
+                        .text("Delete")
+                        .val(JSON.stringify(item));
+
+                        actionsCell.append(updateButton, deleteButton);
+
+                        row.append(nameCell, durationCell, priceCell, actionsCell);
+
+                        serviceTable.append(row);
+                    });
+                });
+                var specialistTable = $("#specialistTable");
+                $.each(data.customerDepartments, function(i, department) {
+                    $.each(department.as, function(j, item) {
+                        var row = $("<div class='specialist'></div>");
+                        var nameCell = $("<div class='specialist_name specCol'></div>").text(item.name);
+                        var durationCell = $("<div class='specialist_phone specCol'></div>").text(item.pn);
+                        var actionsCell = $("<div class='specCol actions'></div>");
+
+                        var updateButton = $("<button type='button' class='sub-button specialist_updateOpenBtn' data-toggle='modal' data-target='#specialist_UpdateModal'>")
+                        .text("Update")
+                        .val(JSON.stringify(item));
+                        var deleteButton = $("<button type='button' class='sub-button specialist_deleteOpenBtn' data-toggle='modal' data-target='#specialist_DeleteModal'>")
+                        .text("Delete")
+                        .val(JSON.stringify(item));
+
+                        actionsCell.append(updateButton, deleteButton);
+
+                        row.append(nameCell, durationCell, actionsCell);
+
+                        specialistTable.append(row);
+                    });
+                });
+            window.dataLoaded = true;
         },
         error: function (data, jqXHR) {
             if (jqXHR !== "success") {
