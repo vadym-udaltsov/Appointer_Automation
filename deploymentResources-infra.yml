@@ -1073,7 +1073,7 @@ Resources:
     Properties:
       AuthorizationType: NONE
       RestApiId: !Ref BotApi
-      ResourceId: !Ref SpecialistResource
+      ResourceId: !Ref AdminsResource
       HttpMethod: OPTIONS
       Integration:
         IntegrationResponses:
