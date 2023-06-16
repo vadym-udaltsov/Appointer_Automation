@@ -4,11 +4,7 @@ $(window).ready(function () {
     });
     var email = localStorage.getItem('customer');
 
-    var updateNameInput = $("#update-specialist_servNameInput");
-    var deleteNameInput = $("#delete-specialist_NameInput");
-
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
-    var pastName = "";
 
     var tableContainer = document.getElementById('specialistTable');
     tableContainer.addEventListener('click', (event) => {

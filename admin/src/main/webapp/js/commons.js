@@ -23,3 +23,7 @@ function executePost(data, url) {
         }
     });
 }
+
+function validatePhoneNumber(input) {
+  input.value = input.value.replace(/[^0-9+]/g, '');
+}

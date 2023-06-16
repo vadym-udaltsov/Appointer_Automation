@@ -1,20 +1,20 @@
-.table-container, .table-container_specialist {
+.table-container, .table-container_specialist, .table-container_admin {
     margin-top: 30px;
 }
 
-.table_inner, .table_inner_specialist {
+.table_inner, .table_inner_specialist, .table_inner_admin {
     border: 1px solid black;
     height: 341px;
     overflow-y: auto;
 }
 
-.columns_titles, .columns_titles_specialist {
+.columns_titles, .columns_titles_specialist, .columns_titles_admin {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid black;
 }
 
-.service, .specialist {
+.service, .specialist, .admin {
     display: flex;
     justify-content: space-between;
 }
@@ -25,6 +25,18 @@
     position: relative;
 }
 
+.admCol {
+    width: 50%;
+    padding: 10px;
+    position: relative;
+}
+
+.admCol.center {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
 .cell:nth-child(-n+3) span::before {
     content: "";
     position: absolute;
@@ -34,6 +46,7 @@
     width: 1px;
     background-color: black;
     transform: translateX(-50%);
+    z-index: 100;
 }
 
 .specCol:nth-child(-n+2) span::before {
@@ -47,15 +60,29 @@
     transform: translateX(-50%);
 }
 
+.admCol:nth-child(-n+1) span::before {
+    content: "";
+    position: absolute;
+    left: 915px;
+    top: 10px;
+    height: 50%;
+    width: 1px;
+    background-color: black;
+    transform: translateX(-50%);
+}
+
 .actions {
     display: flex;
 }
 
-button[data-target="#service_UpdateModal"], button[data-target="#specialist_UpdateModal"] {
+button[data-target="#service_UpdateModal"],
+button[data-target="#specialist_UpdateModal"]
     margin-right: 30px;
 }
 
-.service_updateOpenBtn, .service_deleteOpenBtn, .specialist_updateOpenBtn, .specialist_deleteOpenBtn {
+.service_updateOpenBtn, .service_deleteOpenBtn,
+.specialist_updateOpenBtn, .specialist_deleteOpenBtn,
+.admin_deleteOpenBtn {
     background: #393330;
     color: white;
     appearance: none;
@@ -67,6 +94,6 @@ button[data-target="#service_UpdateModal"], button[data-target="#specialist_Upda
     font-weight: normal;
 }
 
-.service_deleteOpenBtn, .specialist_deleteOpenBtn {
+.service_deleteOpenBtn, .specialist_deleteOpenBtn, admin_deleteOpenBtn {
     background: #867A6C;
 }

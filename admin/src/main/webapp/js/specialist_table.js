@@ -11,7 +11,7 @@ $(window).ready(function () {
         specialist.name = $("#specialist_CreateNameInput").val();
         specialist.pn = $("#specialist_CreatePhoneInput").val();
 
-        var newServiceBlock = document.createElement('div');
+        var newSpecialistBlock = document.createElement('div');
         newServiceBlock.classList.add('specialist');
         newServiceBlock.setAttribute('value', specialist);
 
@@ -45,17 +45,16 @@ $(window).ready(function () {
         actionsDiv.appendChild(updateButton);
         actionsDiv.appendChild(deleteButton);
 
-        newServiceBlock.appendChild(nameDiv);
-        newServiceBlock.appendChild(durationDiv);
-        newServiceBlock.appendChild(priceDiv);
-        newServiceBlock.appendChild(actionsDiv);
+        newSpecialistBlock.appendChild(nameDiv);
+        newSpecialistBlock.appendChild(durationDiv);
+        newSpecialistBlock.appendChild(actionsDiv);
 
         var column = document.querySelector('.columns_titles_specialist');
         var lastService = column.parentElement.querySelector('.specialist:last-of-type');
         if (lastService) {
-          lastService.insertAdjacentElement('afterend', newServiceBlock);
+          lastService.insertAdjacentElement('afterend', newSpecialistBlock);
         } else {
-          column.insertAdjacentElement('afterend', newServiceBlock);
+          column.insertAdjacentElement('afterend', newSpecialistBlock);
         }
 
     });
