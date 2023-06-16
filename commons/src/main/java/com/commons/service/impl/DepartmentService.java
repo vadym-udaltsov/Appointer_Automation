@@ -9,6 +9,7 @@ import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
 import com.commons.service.IDepartmentService;
+import com.commons.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +37,18 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public void deleteSpecialist(DeleteSpecialistRequest request) {
+        if (Constants.OWNER.equalsIgnoreCase(request.getSpecialistName())) {
+            throw new IllegalArgumentException("Owner can not be deleted");
+        }
         departmentDao.deleteSpecialist(request);
     }
 
     @Override
     public void addSpecialist(CreateSpecialistRequest request) {
+        String name = request.getSpecialist().getName();
+        if ("".equals(name)) {
+            throw new IllegalArgumentException("Specialist name should not be empty");
+        }
         departmentDao.addSpecialist(request);
     }
 

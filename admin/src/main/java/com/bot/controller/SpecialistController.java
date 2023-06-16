@@ -5,6 +5,7 @@ import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
 import com.commons.service.IDepartmentService;
+import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,22 +27,37 @@ public class SpecialistController {
 
     @PostMapping()
     public ResponseEntity<SimpleResponse> createSpecialist(@RequestBody CreateSpecialistRequest request) {
-        log.info("Got request for creation new specialist");
-        departmentService.addSpecialist(request);
+        log.info("Got request for creation new specialist: {}", JsonUtils.convertObjectToString(request));
+        try {
+            departmentService.addSpecialist(request);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
     }
 
     @PutMapping()
     public ResponseEntity<SimpleResponse> updateSpecialist(@RequestBody UpdateSpecialistRequest request) {
-        log.info("Got request for updating specialist");
-        departmentService.updateSpecialist(request);
+        log.info("Got request for updating specialist: {}", JsonUtils.convertObjectToString(request));
+        try {
+            departmentService.updateSpecialist(request);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(SimpleResponse.builder().body("Updated").build(), HttpStatus.OK);
     }
 
     @DeleteMapping()
     public ResponseEntity<SimpleResponse> deleteSpecialist(@RequestBody DeleteSpecialistRequest request) {
-        log.info("Got request for deleting specialist");
-        departmentService.deleteSpecialist(request);
+        log.info("Got request for deleting specialist: {}", JsonUtils.convertObjectToString(request));
+        try {
+            departmentService.deleteSpecialist(request);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(SimpleResponse.builder().body("Deleted").build(), HttpStatus.OK);
     }
 }

@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class DeleteSpecialistRequest extends DepartmentRequest {
-    private String name;
+    private String specialistName;
 }

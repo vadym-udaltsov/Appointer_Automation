@@ -46,17 +46,4 @@ public class DepartmentController {
         log.info("Department updated successfully");
         return new ResponseEntity<>(SimpleResponse.builder().body("Updated").build(), HttpStatus.OK);
     }
-
-//    @PostMapping()
-//    public ResponseEntity<SimpleResponse> createDepartment(@RequestBody Department department) {//should be checked if needed
-//        log.info("Got request for creation new department------");
-//        if (departmentService.createDepartment(department)) {
-//
-//        }
-//        log.info("Name: {}", department.getName());
-//        log.info("Customer: {}", department.getCustomer());
-//        log.info("Type: {}", department.getType());
-//        return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
-//    }
-
 }

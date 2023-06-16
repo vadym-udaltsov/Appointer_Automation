@@ -6,5 +6,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UpdateSpecialistRequest extends SpecialistRequest {
-    private String oldSpecialistName;
+    private String specialistName;
 }

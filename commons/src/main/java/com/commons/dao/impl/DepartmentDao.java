@@ -16,6 +16,7 @@ import com.commons.request.service.UpdateServiceRequest;
 import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Repository
 public class DepartmentDao extends AbstractDao<Department> implements IDepartmentDao {
 
@@ -48,12 +50,14 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
 
     @Override
     public void updateSpecialist(UpdateSpecialistRequest request) {
+        String oldName = request.getSpecialistName();
         Specialist specialist = request.getSpecialist();
         String departmentId = request.getDepartmentId();
         Department department = getDepartmentById(departmentId);
         List<Specialist> specialists = department.getAvailableSpecialists();
-        boolean deleted = specialists.removeIf(s -> specialist.getName().equals(s.getName()));
+        boolean deleted = specialists.removeIf(s -> oldName.equals(s.getName()));
         if (!deleted) {
+            log.error("Specialist {} was not found in department {}", oldName, departmentId);
             throw new IllegalArgumentException(String.format("Specialist with name %s not found in department", specialist.getName()));
         }
         specialists.add(specialist);
@@ -64,8 +68,12 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     public void deleteSpecialist(DeleteSpecialistRequest request) {
         String departmentId = request.getDepartmentId();
         Department department = getDepartmentById(departmentId);
-        String specialistName = request.getName();
-        boolean deleted = department.getAvailableSpecialists().removeIf(s -> specialistName.equals(s.getName()));
+        String specialistName = request.getSpecialistName();
+        List<Specialist> specialists = department.getAvailableSpecialists();
+        if (specialists.size() < 2) {
+            throw new IllegalArgumentException("Last specialist can not be removed from department");
+        }
+        boolean deleted = specialists.removeIf(s -> specialistName.equals(s.getName()));
         if (!deleted) {
             throw new IllegalArgumentException(String.format("Specialist with name %s not found in department", specialistName));
         }
