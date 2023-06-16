@@ -1,5 +1,6 @@
 package com.bot.controller;
 
+import com.commons.DbItemUpdateException;
 import com.commons.model.SimpleResponse;
 import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
@@ -30,7 +31,7 @@ public class SpecialistController {
         log.info("Got request for creation new specialist: {}", JsonUtils.convertObjectToString(request));
         try {
             departmentService.addSpecialist(request);
-        } catch (IllegalArgumentException e) {
+        } catch (DbItemUpdateException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
         }
@@ -42,7 +43,7 @@ public class SpecialistController {
         log.info("Got request for updating specialist: {}", JsonUtils.convertObjectToString(request));
         try {
             departmentService.updateSpecialist(request);
-        } catch (IllegalArgumentException e) {
+        } catch (DbItemUpdateException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
         }
@@ -54,7 +55,7 @@ public class SpecialistController {
         log.info("Got request for deleting specialist: {}", JsonUtils.convertObjectToString(request));
         try {
             departmentService.deleteSpecialist(request);
-        } catch (IllegalArgumentException e) {
+        } catch (DbItemUpdateException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
         }

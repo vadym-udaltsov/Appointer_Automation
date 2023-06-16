@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.commons.dao.IDepartmentDao;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.request.admin.AdminRequest;
 import com.commons.request.service.UpdateServiceRequest;
 import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
@@ -20,14 +21,14 @@ public class DepartmentService implements IDepartmentService {
 
     private IDepartmentDao departmentDao;
 
-    @Override
-    public boolean updateDepartment(Department department) {
-        return departmentDao.updateDepartment(department);
-    }
-
     @Autowired
     public DepartmentService(IDepartmentDao departmentDao) {
         this.departmentDao = departmentDao;
+    }
+
+    @Override
+    public boolean updateDepartment(Department department) {
+        return departmentDao.updateDepartment(department);
     }
 
     @Override
@@ -65,6 +66,16 @@ public class DepartmentService implements IDepartmentService {
     @Override
     public Department getDepartmentById(String departmentId) {
         return departmentDao.getDepartmentById(departmentId);
+    }
+
+    @Override
+    public void addAdmin(AdminRequest request) {
+        departmentDao.addAdmin(request);
+    }
+
+    @Override
+    public void deleteAdmin(AdminRequest request) {
+        departmentDao.deleteAdmin(request);
     }
 
     @Override

@@ -6,7 +6,9 @@ import com.commons.dao.impl.DepartmentDao;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.request.admin.AdminRequest;
 import com.commons.request.service.UpdateServiceRequest;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -16,6 +18,24 @@ public class DepartmentDaoTest {
     private static DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
     private static DepartmentDao departmentDao = new DepartmentDao(dynamoDbFactory);
 
+
+//    @Test
+    public void shouldDeleteAdmin() {
+        AdminRequest request = new AdminRequest();
+        request.setDepartmentName("Default");
+        request.setCustomerName("sergii.udaltsov@gmail.com");
+        request.setPhoneNumber("test");
+        departmentDao.deleteAdmin(request);
+    }
+
+//    @Test
+    public void shouldAddNewAdmin() {
+        AdminRequest request = new AdminRequest();
+        request.setDepartmentName("Default");
+        request.setCustomerName("sergii.udaltsov@gmail.com");
+        request.setPhoneNumber("test2");
+        departmentDao.addAdmin(request);
+    }
     //    @Test
     public void shouldUpdateDepartment() {
         Department department = new Department();

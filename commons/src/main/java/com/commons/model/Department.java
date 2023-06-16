@@ -80,11 +80,12 @@ public class Department extends DynamoDbEntity {
     @DynamoDBAttribute(attributeName = "nwd")
     private List<Integer> nonWorkingDays = new ArrayList<>();
 
-    @JsonProperty("z")
-    private int zoneOffset;
-
     @JsonProperty("zone")
     private String zone;
+
+    @JsonProperty("adm")
+    @DynamoDBAttribute(attributeName = "adm")
+    private List<String> admins;
 
     @Override
     @JsonIgnore
@@ -105,6 +106,7 @@ public class Department extends DynamoDbEntity {
                 .withString("zone", zone)
                 .withList("as", availableSpecialists.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
                 .withList("nwd", nonWorkingDays)
+                .withList("adm", admins == null ? new ArrayList<>() : admins)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()));
     }
 

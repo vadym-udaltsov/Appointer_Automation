@@ -2,6 +2,7 @@ package com.commons.service;
 
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.request.admin.AdminRequest;
 import com.commons.request.service.UpdateServiceRequest;
 import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
@@ -18,6 +19,10 @@ public interface IDepartmentService {
     List<Department> getCustomerDepartments(String customer);
 
     Department getDepartmentById(String departmentId);
+
+    void addAdmin(AdminRequest request);
+
+    void deleteAdmin(AdminRequest request);
 
     void addSpecialist(CreateSpecialistRequest request);
 

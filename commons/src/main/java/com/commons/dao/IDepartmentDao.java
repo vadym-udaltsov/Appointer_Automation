@@ -3,6 +3,7 @@ package com.commons.dao;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.request.admin.AdminRequest;
 import com.commons.request.service.UpdateServiceRequest;
 import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
@@ -19,6 +20,10 @@ public interface IDepartmentDao {
     Department getDepartmentById(String departmentId);
 
     List<Department> findAllByQuery(QuerySpec querySpec);
+
+    void addAdmin(AdminRequest request);
+
+    void deleteAdmin(AdminRequest request);
 
     void addSpecialist(CreateSpecialistRequest request);
 

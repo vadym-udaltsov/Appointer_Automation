@@ -401,6 +401,14 @@ Resources:
       PathPart: service
     DependsOn:
       - AdminResource
+  AdminsResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref BotApi
+      ParentId: !Ref AdminResource
+      PathPart: admins
+    DependsOn:
+      - AdminResource
   SpecialistResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -773,6 +781,66 @@ Resources:
     DependsOn:
       - SpecialistResource
       - BotLambdaAlias
+  AdminsPost:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref AdminsResource
+      HttpMethod: POST
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref Authorizer
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - AdminsResource
+      - BotLambdaAlias
+  AdminsDelete:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref AdminsResource
+      HttpMethod: DELETE
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref Authorizer
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - AdminsResource
+      - BotLambdaAlias
   DepartmentPost:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -985,6 +1053,34 @@ Resources:
             ResponseParameters:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
               method.response.header.Access-Control-Allow-Methods: "'POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        Type: MOCK
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: 'Empty'
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: false
+            method.response.header.Access-Control-Allow-Methods: false
+            method.response.header.Access-Control-Allow-Origin: false
+  AdminsOptions:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref SpecialistResource
+      HttpMethod: OPTIONS
+      Integration:
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,DELETE,OPTIONS'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
             ResponseTemplates:
               application/json: ''

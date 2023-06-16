@@ -1,6 +1,7 @@
 package com.bot.controller;
 
 import com.bot.request.service.CreateServiceRequest;
+import com.commons.DbItemUpdateException;
 import com.commons.request.service.UpdateServiceRequest;
 import com.commons.model.SimpleResponse;
 import com.commons.service.IDepartmentService;
@@ -26,21 +27,36 @@ public class ServiceController {
     @PostMapping()
     public ResponseEntity<SimpleResponse> createService(@RequestBody CreateServiceRequest request) {
         log.info("Got request for creation new service");
-        departmentService.addCustomerService(request.getCustomer(), request.getDepartment(), request.getService());
+        try {
+            departmentService.addCustomerService(request.getCustomer(), request.getDepartment(), request.getService());
+        } catch (DbItemUpdateException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
     }
 
     @PutMapping()
     public ResponseEntity<SimpleResponse> updateService(@RequestBody UpdateServiceRequest request) {
         log.info("Got request for updating service");
-        departmentService.updateCustomerService(request);
+        try {
+            departmentService.updateCustomerService(request);
+        } catch (DbItemUpdateException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(SimpleResponse.builder().body("Updated").build(), HttpStatus.OK);
     }
 
     @DeleteMapping()
     public ResponseEntity<SimpleResponse> deleteService(@RequestBody UpdateServiceRequest request) {
         log.info("Got request for deleting service");
-        departmentService.deleteCustomerService(request);
+        try {
+            departmentService.deleteCustomerService(request);
+        } catch (DbItemUpdateException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(SimpleResponse.builder().body("Deleted").build(), HttpStatus.OK);
     }
 }

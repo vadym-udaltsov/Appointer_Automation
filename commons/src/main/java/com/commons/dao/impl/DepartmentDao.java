@@ -6,17 +6,19 @@ import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeAction;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
+import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
+import com.commons.DbItemUpdateException;
 import com.commons.dao.AbstractDao;
 import com.commons.dao.IDepartmentDao;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
+import com.commons.request.admin.AdminRequest;
 import com.commons.request.service.UpdateServiceRequest;
 import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,13 +27,66 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Repository
 public class DepartmentDao extends AbstractDao<Department> implements IDepartmentDao {
 
     @Autowired
     public DepartmentDao(DynamoDbFactory dynamoDbFactory) {
         super(dynamoDbFactory, Department.class, "department");
+    }
+
+    @Override
+    public void addAdmin(AdminRequest request) {
+        String departmentName = request.getDepartmentName();
+        String customerName = request.getCustomerName();
+        String phoneNumber = request.getPhoneNumber();
+        String listAttributeName = "adm";
+        UpdateItemRequest updateItemRequest = new UpdateItemRequest()
+                .withTableName(Department.TABLE_NAME)
+                .withKey(Map.of(
+                        "c", new AttributeValue(customerName),
+                        "n", new AttributeValue(departmentName)))
+                .withUpdateExpression("SET " + listAttributeName + " = list_append(if_not_exists(" + listAttributeName + ", :empty_list), :value)")
+                .withConditionExpression("NOT contains(#adm, :duplicateValue)")
+                .withExpressionAttributeNames(Map.of("#adm", "adm"))
+                .withExpressionAttributeValues(Map.of(
+                        ":value", new AttributeValue().withL(new AttributeValue(phoneNumber)),
+                        ":duplicateValue", new AttributeValue(phoneNumber),
+                        ":empty_list", new AttributeValue().withL()));
+        try {
+            updateItem(updateItemRequest);
+        } catch (ConditionalCheckFailedException e) {
+            throw new DbItemUpdateException(String.format("Admin with number: %s already exists in department: %s of " +
+                    "customer: %s", phoneNumber, departmentName, customerName));
+        }
+    }
+
+    @Override
+    public void deleteAdmin(AdminRequest request) {
+        Department item = Department.builder()
+                .customer(request.getCustomerName())
+                .name(request.getDepartmentName()).build();
+        Department department = getItem(item);
+        String phoneNumber = request.getPhoneNumber();
+        List<String> admins = department.getAdmins();
+        if (admins.size() < 2) {
+            throw new DbItemUpdateException("Last admin can not be deleted from department");
+        }
+        boolean deleted = admins.removeIf(phoneNumber::equals);
+        if (!deleted) {
+            throw new DbItemUpdateException(String.format("Admin with phone number %s not found in department", phoneNumber));
+        }
+        Map<String, AttributeValueUpdate> updates = new HashMap<>();
+        AttributeValueUpdate adminsUpdate = new AttributeValueUpdate(
+                new AttributeValue().withL(admins.stream().map(AttributeValue::new).collect(Collectors.toList())), AttributeAction.PUT);
+        updates.put("adm", adminsUpdate);
+        UpdateItemRequest updateRequest = new UpdateItemRequest()
+                .withTableName(Department.TABLE_NAME)
+                .withKey(Map.of(
+                        "c", new AttributeValue(department.getCustomer()),
+                        "n", new AttributeValue(department.getName())))
+                .withAttributeUpdates(updates);
+        updateItem(updateRequest);
     }
 
     @Override
@@ -42,7 +97,7 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         List<Specialist> specialists = department.getAvailableSpecialists();
         boolean specExists = specialists.stream().anyMatch(s -> specialist.getName().equals(s.getName()));
         if (specExists) {
-            throw new IllegalArgumentException(String.format("Specialist with name %s already exists", specialist.getName()));
+            throw new DbItemUpdateException(String.format("Specialist with name %s already exists", specialist.getName()));
         }
         specialists.add(specialist);
         overwriteItem(department);
@@ -57,8 +112,7 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         List<Specialist> specialists = department.getAvailableSpecialists();
         boolean deleted = specialists.removeIf(s -> oldName.equals(s.getName()));
         if (!deleted) {
-            log.error("Specialist {} was not found in department {}", oldName, departmentId);
-            throw new IllegalArgumentException(String.format("Specialist with name %s not found in department", specialist.getName()));
+            throw new DbItemUpdateException(String.format("Specialist with name %s not found in department", specialist.getName()));
         }
         specialists.add(specialist);
         overwriteItem(department);
@@ -71,11 +125,11 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         String specialistName = request.getSpecialistName();
         List<Specialist> specialists = department.getAvailableSpecialists();
         if (specialists.size() < 2) {
-            throw new IllegalArgumentException("Last specialist can not be removed from department");
+            throw new DbItemUpdateException("Last specialist can not be removed from department");
         }
         boolean deleted = specialists.removeIf(s -> specialistName.equals(s.getName()));
         if (!deleted) {
-            throw new IllegalArgumentException(String.format("Specialist with name %s not found in department", specialistName));
+            throw new DbItemUpdateException(String.format("Specialist with name %s not found in department", specialistName));
         }
         overwriteItem(department);
     }
@@ -91,7 +145,7 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
                 .findFirst()
                 .orElse(null);
         if (oldService == null) {
-            throw new IllegalArgumentException(String.format("Service with name %s not found in department", serviceName));
+            throw new DbItemUpdateException(String.format("Service with name %s not found in department", serviceName));
         }
         oldService.setName(newService.getName());
         oldService.setPrice(newService.getPrice());
@@ -106,7 +160,7 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         String serviceName = request.getServiceName();
         boolean deleted = department.getServices().removeIf(s -> serviceName.equals(s.getName()));
         if (!deleted) {
-            throw new IllegalArgumentException(String.format("Service with name %s not found in department", serviceName));
+            throw new DbItemUpdateException(String.format("Service with name %s not found in department", serviceName));
         }
         overwriteItem(department);
     }
@@ -163,7 +217,7 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
                 .findFirst()
                 .orElse(null);
         if (existingService != null) {
-            throw new IllegalArgumentException(String.format("Service with name %s already exists", service.getName()));
+            throw new DbItemUpdateException(String.format("Service with name %s already exists", service.getName()));
         }
         String listAttributeName = "s";
         AttributeValue newService = new AttributeValue().withM(Map.of(
