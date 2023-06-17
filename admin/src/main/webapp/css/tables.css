@@ -1,5 +1,7 @@
 .table-container, .table-container_specialist, .table-container_admin {
     margin-top: 30px;
+    position: relative;
+    background-color: white;
 }
 
 .table_inner, .table_inner_specialist, .table_inner_admin {
@@ -12,11 +14,14 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid black;
+  background-color: #ebebeb;
 }
 
 .service, .specialist, .admin {
     display: flex;
     justify-content: space-between;
+    background-color: white;
+    background-color: white
 }
 
 .cell, .specCol {
@@ -31,12 +36,6 @@
     position: relative;
 }
 
-.admCol.center {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-
 .cell:nth-child(-n+3) span::before {
     content: "";
     position: absolute;
@@ -46,13 +45,12 @@
     width: 1px;
     background-color: black;
     transform: translateX(-50%);
-    z-index: 100;
 }
 
 .specCol:nth-child(-n+2) span::before {
     content: "";
     position: absolute;
-    left: 300px;
+    left: 450px;
     top: 10px;
     height: 50%;
     width: 1px;
@@ -75,14 +73,18 @@
     display: flex;
 }
 
+.centerPos {
+    display: flex;
+    justify-content: center;
+}
+
+
 button[data-target="#service_UpdateModal"],
-button[data-target="#specialist_UpdateModal"]
+button[data-target="#specialist_UpdateModal"] {
     margin-right: 30px;
 }
 
-.service_updateOpenBtn, .service_deleteOpenBtn,
-.specialist_updateOpenBtn, .specialist_deleteOpenBtn,
-.admin_deleteOpenBtn {
+.service_updateOpenBtn, .service_deleteOpenBtn, .specialist_updateOpenBtn, .specialist_deleteOpenBtn, .admin_deleteOpenBtn {
     background: #393330;
     color: white;
     appearance: none;
@@ -94,6 +96,6 @@ button[data-target="#specialist_UpdateModal"]
     font-weight: normal;
 }
 
-.service_deleteOpenBtn, .specialist_deleteOpenBtn, admin_deleteOpenBtn {
+.service_deleteOpenBtn, .specialist_deleteOpenBtn, .admin_deleteOpenBtn {
     background: #867A6C;
 }

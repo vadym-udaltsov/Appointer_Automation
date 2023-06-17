@@ -19,7 +19,7 @@ $(window).ready(function () {
     loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
 
     $("#department_UpdatePopup").click(function() {
-        loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
+        loadDepUpdateData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
     });
 
     $("#update_DepBtn").click(function() {
@@ -152,6 +152,75 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                         specialistTable.append(row);
                     });
                 });
+
+                var adminTable = $("#adminTable");
+                                $.each(data.customerDepartments, function(i, department) {
+                                    $.each(department.adm, function(j, item) {
+                                        var row = $("<div class='admin'></div>");
+                                        var phoneCell = $("<div class='admin_phone admCol centerPos'></div>").text(item);
+                                        var actionsCell = $("<div class='admCol actions  centerPos'></div>");
+
+                                        var deleteButton = $("<button type='button' class='sub-button admin_deleteOpenBtn' data-toggle='modal' data-target='#admin_DeleteModal'>")
+                                        .text("Delete")
+                                        .val(JSON.stringify(item));
+
+                                        actionsCell.append(deleteButton);
+
+                                        row.append(phoneCell, actionsCell);
+
+                                        adminTable.append(row);
+                                    });
+                                });
+            window.dataLoaded = true;
+        },
+        error: function (data, jqXHR) {
+            if (jqXHR !== "success") {
+             //   window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+            }
+        }
+    });
+}
+
+function loadDepUpdateData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect, dataLoaded) {
+    $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        success: function (data, jqXHR) {
+
+        choose_depNameSelect.empty();
+        update_timeZoneSelect.empty();
+        typeSelect.empty();
+
+            console.log(data);
+            $.each(data.customerDepartments, function () {
+                var name = $("<option value='" + JSON.stringify(data.customerDepartments) + "'></option>").text(this.n);
+                choose_depNameSelect.append(name);
+            });
+            $.each(data.availableTypes, function () {
+                var type = $("<option value='" + this + "'></option>").text(this);
+                typeSelect.append(type);
+            });
+             $.each(data.availableZones, function () {
+                var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
+                update_timeZoneSelect.append(timeZone);
+            });
+            var selectedDepartmentData = JSON.parse($('option:checked','#department_NameSelect').val());
+
+            document.getElementById("update_selectedDepartment").value = selectedDepartmentData[0].n;
+            document.getElementById("update_timeZoneSelect").value = selectedDepartmentData[0].zone;
+            document.getElementById("update_depTypeSelect").value = selectedDepartmentData[0].tp;
+            document.getElementById("startWork").value = selectedDepartmentData[0].sw;
+            document.getElementById("finishWork").value = selectedDepartmentData[0].ew;
+
+            var checkedDateFromData = selectedDepartmentData[0].nwd;
+                var daysCheckboxes = document.querySelectorAll('input[name="dayCheck"]');
+                daysCheckboxes.forEach(function(checkbox) {
+                    if (checkedDateFromData.includes(parseInt(checkbox.value))) {
+                        checkbox.checked = true;
+                    }
+                });
+                console.log(jqXHR);
             window.dataLoaded = true;
         },
         error: function (data, jqXHR) {

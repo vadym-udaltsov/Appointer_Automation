@@ -10,14 +10,14 @@ $(window).ready(function () {
     tableContainer.addEventListener('click', (event) => {
         if (event.target.matches('.sub-button.specialist_updateOpenBtn')) {
             const buttonValue = event.target.value;
-            loadDepartments(url, JSON.parse(buttonValue), document.getElementById("update-specialist_servNameInput"))
+            loadSpecialistData(url, JSON.parse(buttonValue), document.getElementById("update-specialist_servNameInput"))
         }
     });
 
     tableContainer.addEventListener('click', (event) => {
         if (event.target.matches('.sub-button.specialist_deleteOpenBtn')) {
             const buttonValue = event.target.value;
-            loadDepartments(url, JSON.parse(buttonValue), document.getElementById("delete-specialist_NameInput"))
+            loadSpecialistData(url, JSON.parse(buttonValue), document.getElementById("delete-specialist_NameInput"))
         }
     });
 
@@ -65,7 +65,7 @@ $(window).ready(function () {
     });
 });
 
-function loadDepartments(url, value, nameSelect) {
+function loadSpecialistData(url, value, nameSelect) {
     return new Promise(function(resolve, reject) {
         $.ajax({
             url: url,

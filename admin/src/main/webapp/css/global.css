@@ -1,5 +1,5 @@
 body {
-    background-color: #dddddd;
+    background-color: #D9D9D9 !important;
 }
 
 p {
@@ -66,4 +66,63 @@ button:focus {
 
 .btn-primary:active {
     border: none
+}
+
+
+/* Svg */
+
+.circle_1, .circle_2, .circle_3, .circle_4 {
+    position: absolute;
+    left: 740px;
+    top: -100px;
+    opacity: 0.5;
+}
+
+.circle_2 {
+    left: 1030px;
+    width: 110px;
+    top: -20px;
+}
+
+.circle_3 {
+    left: 960px;
+    width: 80px;
+    top: 110px;
+}
+
+.circle_4 {
+    left: 1190px;
+    width: 95px;
+    top: 140px;
+}
+
+.sea_1, .sea_2 {
+    position: absolute;
+    left: -80px;
+    top: 310px;
+    opacity: 0.2;
+    rotate: 120deg;
+}
+
+.sea_2 {
+    left: 770px;
+    top: 710px;
+    rotate: -130deg;
+    width: 700px;
+}
+
+
+.group_1, .group_2 {
+    position: absolute;
+    left: 1560px;
+    top: 30px;
+    opacity: 0.3;
+    width: 300px;
+}
+
+.group_2 {
+    left: 1430px;
+    top: 440px;
+    opacity: 0.3;
+    rotate: 90deg;
 }

@@ -11,15 +11,15 @@ $(window).ready(function () {
         admin.pn = $("#admin_CreatePhoneInput").val();
 
         var newAdminBlock = document.createElement('div');
-        newServiceBlock.classList.add('admin');
-        newServiceBlock.setAttribute('value', specialist);
+        newAdminBlock.classList.add('admin');
+        newAdminBlock.setAttribute('value', specialist);
 
         var phoneDiv = document.createElement('div');
-        durationDiv.classList.add('admCol');
-        durationDiv.textContent = admin.pn;
+        phoneDiv.classList.add('admCol centerPos');
+        phoneDiv.textContent = admin.pn;
 
         var actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('admCol', 'actions');
+        actionsDiv.classList.add('admCol centerPos', 'actions');
 
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute("type", "button");

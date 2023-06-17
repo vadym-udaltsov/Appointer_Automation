@@ -11,14 +11,14 @@ $(window).ready(function () {
     tableContainer.addEventListener('click', (event) => {
         if (event.target.matches('.sub-button.admin_deleteOpenBtn')) {
             const buttonValue = event.target.value;
-            loadDepartments(url, JSON.parse(buttonValue), document.getElementById("delete-admin_PhoneInput"))
+            loadAdminData(url, JSON.parse(buttonValue), document.getElementById("delete-admin_PhoneInput"))
         }
     });
 
     $("#admin_CreateBtn").click(function() {
         var request = new Object();
         request.dn = $('option:checked','#department_NameSelect').text();
-        request.cn = JSON.parse($('option:checked','#department_NameSelect').val())[0].cn
+        request.cn = JSON.parse($('option:checked','#department_NameSelect').val())[0].c;
         request.pn = $("#admin_CreatePhoneInput").val();
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/admins');
         setTimeout(function() {
@@ -28,8 +28,10 @@ $(window).ready(function () {
         return false;
     });
 
-    $("#delete-specialist_DeleteBtn").click(function() {
+    $("#delete-admin_DeleteBtn").click(function() {
         var request = new Object();
+        request.dn = $('option:checked','#department_NameSelect').text();
+        request.cn = JSON.parse($('option:checked','#department_NameSelect').val())[0].c;
         request.pn = $("#delete-admin_PhoneInput").val();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/admins');
         setTimeout(function() {
@@ -40,7 +42,7 @@ $(window).ready(function () {
     });
 });
 
-function loadDepartments(url, value, nameSelect) {
+function loadAdminData(url, value, nameSelect) {
     return new Promise(function(resolve, reject) {
         $.ajax({
             url: url,
@@ -51,9 +53,7 @@ function loadDepartments(url, value, nameSelect) {
                     window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
                 }
 
-                nameSelect.value = value.name;
-                document.getElementById("update-specialist_newNameInput").value = value.name;
-                document.getElementById("update-specialist_newPhoneInput").value = value.pn;
+                nameSelect.value = value;
 
                 console.log(data);
                 console.log(jqXHR);
@@ -67,32 +67,6 @@ function loadDepartments(url, value, nameSelect) {
                 reject("Ошибка при выполнении запроса");
             }
         });
-    });
-}
-
-function executePut(data, url) {
-    $.ajax({
-        type: 'put',
-        url: url,
-        contentType: "application/json",
-        dataType: 'JSON',
-        data: data,
-        success: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-                var error = document.getElementById("error")
-                error.textContent = "Request is not authorized";
-                error.style.color = "red";
-//                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            } else {
-                console.log(data);
-                console.log(jqXHR);
-            }
-        },
-        error: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-//               window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-        }
     });
 }
 
