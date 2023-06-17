@@ -19,7 +19,7 @@ import java.util.Map;
 
 class ContextDaoTest {
 
-//    @Test
+    //    @Test
     void getContext() {
         AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
         DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
@@ -29,7 +29,7 @@ class ContextDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     public void mapperTest() {
         MapObjectConverter mapper = new MapObjectConverter();
         Map<String, Object> test = Map.of("test", List.of("first", "second"));
@@ -37,18 +37,19 @@ class ContextDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     public void testStrategy() {
         List<String> nav = List.of("askLang",
                 "setLangAskContact",
                 "setContactStartDash",
                 "startCreateApp",
                 "setAppDateAskSpec");
-        Strategy any = StrategyProvider.getStrategyByLocationAndKey(nav, "any");
+        String strategyKey = "GENERAL::USER";
+        Strategy any = StrategyProvider.getStrategyByLocationAndKey(nav, "any", strategyKey);
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     public void testContext() {
         AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
         DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);

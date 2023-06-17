@@ -36,7 +36,7 @@ public class CreateAppointmentFirstStepProcessor implements IProcessor {
         }
         if (services.size() == 1) {
             MessageUtils.setTextToUpdate(update, services.get(0).getName());
-            ContextUtils.addNextStepToLocation(context, Constants.ANY);
+            ContextUtils.addNextStepToLocation(context, Constants.ANY, department);
             return nextStepProcessor.processRequest(request);
         }
         List<String> serviceNames = services.stream().map(CustomerService::getName).collect(Collectors.toList());

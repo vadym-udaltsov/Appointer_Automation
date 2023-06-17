@@ -1,25 +1,26 @@
 package com.bot.util;
 
-import com.bot.model.Context;
 import com.bot.model.Strategy;
 import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StrategyProvider {
 
-    private final static Strategy strategy;
+    private final static Map<String, Strategy> strategyMap;
 
     static {
-        InputStream resourceAsStream = StrategyProvider.class.getClassLoader().getResourceAsStream("strategy.json");
-        strategy = JsonUtils.parseInputStreamToObject(resourceAsStream, new TypeReference<>() {
-        });
+        strategyMap = new HashMap<>();
+        strategyMap.put("GENERAL::USER", getStrategyFile("strategy/general_user.json"));
+        strategyMap.put("GENERAL::ADMIN", getStrategyFile("strategy/general_admin.json"));
     }
 
-    public static Strategy getStrategyByLocationAndKey(List<String> location, String key) {
-        Strategy current = strategy;
+    public static Strategy getStrategyByLocationAndKey(List<String> location, String key, String strategyKey) {
+        Strategy current = strategyMap.get(strategyKey);
         for (String locationName : location) {
             current = getCurrentStrategy(current, locationName);
         }
@@ -46,5 +47,11 @@ public class StrategyProvider {
                 .filter(s -> location.equals(s.getName()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Failed to find strategy with name: " + location));
+    }
+
+    private static Strategy getStrategyFile(String filePath) {
+        InputStream resourceAsStream = StrategyProvider.class.getClassLoader().getResourceAsStream(filePath);
+        return JsonUtils.parseInputStreamToObject(resourceAsStream, new TypeReference<>() {
+        });
     }
 }

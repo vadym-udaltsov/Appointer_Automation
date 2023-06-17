@@ -92,7 +92,7 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
         if (specialistNames.size() == 1) {
             String specialistName = specialistNames.get(0);
             MessageUtils.setTextToUpdate(update, specialistName);
-            ContextUtils.addNextStepToLocation(context, Constants.ANY);
+            ContextUtils.addNextStepToLocation(context, Constants.ANY, department);
             return nextStepProcessor.processRequest(request);
         }
 

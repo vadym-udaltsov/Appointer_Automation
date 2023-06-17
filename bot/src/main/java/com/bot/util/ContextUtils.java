@@ -2,7 +2,10 @@ package com.bot.util;
 
 import com.bot.model.Context;
 import com.bot.model.FreeSlot;
+import com.bot.model.Role;
 import com.bot.model.Strategy;
+import com.commons.model.Department;
+import com.commons.model.DepartmentType;
 import com.commons.utils.JsonUtils;
 
 import java.util.Comparator;
@@ -48,8 +51,9 @@ public class ContextUtils {
         }
     }
 
-    public static void addNextStepToLocation(Context context, String nextStepKey) {
-        Strategy nextStep = StrategyProvider.getStrategyByLocationAndKey(context.getNavigation(), nextStepKey);
+    public static void addNextStepToLocation(Context context, String nextStepKey, Department department) {
+        String strategyKey = ContextUtils.getStrategyKey(context, department);
+        Strategy nextStep = StrategyProvider.getStrategyByLocationAndKey(context.getNavigation(), nextStepKey, strategyKey);
         context.getNavigation().add(nextStep.getName());
     }
 
@@ -63,4 +67,20 @@ public class ContextUtils {
         context.setNavigation(List.of(Constants.Processors.ASK_LANG, Constants.Processors.SET_LANG_ASK_CONT,
                 Constants.Processors.SET_CONT_START_DASH));
     }
+
+    public static String getStrategyKey(Context context, Department department) {
+        DepartmentType departmentType = department.getType();
+        Role role = getRole(context, department);
+        return String.format("%s::%s", departmentType.name(), role.name());
+    }
+
+    public static Role getRole(Context context, Department department) {
+        String phoneNumber = context.getPhoneNumber();
+        List<String> adminsList = department.getAdmins();
+        if (phoneNumber != null && !"n/a".equalsIgnoreCase(phoneNumber) && adminsList != null) {
+            return adminsList.contains(phoneNumber) ? Role.ADMIN : Role.USER;
+        }
+        return Role.USER;
+    }
+
 }

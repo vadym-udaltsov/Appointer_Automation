@@ -38,6 +38,11 @@ public class Constants {
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
+    public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
+            "GENERAL::ADMIN", List.of("Appointments list", "Specialists list"),
+            "GENERAL::USER", List.of("Create appointment", "My appointments")
+    );
+
     public static class Processors {
         //start
         public static final String ASK_LANG = "askLang";

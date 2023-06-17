@@ -50,7 +50,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             Context context = contextService.getContext(update, department.getId());
             localizer.localizeRequest(update, context);
-            IProcessor processor = factory.getProcessor(update, context);
+            IProcessor processor = factory.getProcessor(update, context, department);
             ProcessRequest request = ProcessRequest.builder()
                     .update(update)
                     .context(context)

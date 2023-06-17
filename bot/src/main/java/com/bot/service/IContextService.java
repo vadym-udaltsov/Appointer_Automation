@@ -14,8 +14,6 @@ public interface IContextService {
 
     void updateLocale(long id, String departmentId, Language language);
 
-    void skipCurrentStep(Context context, String nextStepKey);
-
     void removeLastLocation(Context context);
 
     void setPreviousStep(Context context);

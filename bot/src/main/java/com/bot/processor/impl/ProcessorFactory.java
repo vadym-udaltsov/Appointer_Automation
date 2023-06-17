@@ -7,8 +7,10 @@ import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
+import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.bot.util.StrategyProvider;
+import com.commons.model.Department;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -30,7 +32,7 @@ public class ProcessorFactory implements IProcessorFactory {
     }
 
     @Override
-    public IProcessor getProcessor(Update update, Context context) {
+    public IProcessor getProcessor(Update update, Context context, Department department) {
         if (context == null) {
             return processorsMap.get(CommandType.ASK_LANGUAGE);
         }
@@ -45,7 +47,8 @@ public class ProcessorFactory implements IProcessorFactory {
             location.remove(location.size() - 1);
             contextService.updateContext(context);
         }
-        Strategy currentStrategy = StrategyProvider.getStrategyByLocationAndKey(location, commandKey);
+        String strategyKey = ContextUtils.getStrategyKey(context, department);
+        Strategy currentStrategy = StrategyProvider.getStrategyByLocationAndKey(location, commandKey, strategyKey);
         log.info("Current Strategy name --------------------- " + currentStrategy.getName());
         IProcessor processor = resolveProcessor(currentStrategy);
         if (processor == null) {

@@ -86,6 +86,14 @@ public class MessageUtils {
         return buildDashboardHolder("", messageLines);
     }
 
+    public static MessageHolder buildDashboardHolderByKey(String strategyKey) {
+        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.TWO_ROW)
+                .buttonsMap(buildButtons(commonButtons(Constants.DASHBOARD_BUTTONS.get(strategyKey)), false))
+                .build();
+        return holder("Select action", ButtonsType.KEYBOARD, request);
+    }
+
     public static MessageHolder buildDashboardHolder(String message) {
         return buildDashboardHolder(message, List.of());
     }
