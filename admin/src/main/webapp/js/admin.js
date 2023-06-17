@@ -18,7 +18,7 @@ $(window).ready(function () {
     $("#admin_CreateBtn").click(function() {
         var request = new Object();
         request.dn = $('option:checked','#department_NameSelect').text();
-        request.cn = JSON.parse($('option:checked','#department_NameSelect').val())[0].c;
+        request.cn = JSON.parse($('option:checked','#department_NameSelect').val()).c;
         request.pn = $("#admin_CreatePhoneInput").val();
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/admins');
         setTimeout(function() {
@@ -31,7 +31,7 @@ $(window).ready(function () {
     $("#delete-admin_DeleteBtn").click(function() {
         var request = new Object();
         request.dn = $('option:checked','#department_NameSelect').text();
-        request.cn = JSON.parse($('option:checked','#department_NameSelect').val())[0].c;
+        request.cn = JSON.parse($('option:checked','#department_NameSelect').val()).c;
         request.pn = $("#delete-admin_PhoneInput").val();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/admins');
         setTimeout(function() {

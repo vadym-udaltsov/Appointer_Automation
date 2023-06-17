@@ -21,23 +21,23 @@ const update_errorMessages = document.getElementsByClassName('update_error-messa
 var names = [];
 
 $('#service_createOpenBtn').click(function() {
-    if (create_fields.some(field => document.getElementById(field.inputId).value.trim() === '')) {
-        createBtn.disabled = true;
-    }
-    names = [];
-    JSON.parse($('option:checked','#department_NameSelect').val())[0].s.forEach(function(option) {
-        names.push(option.name)
-    });
+  names = [];
+  JSON.parse($('option:checked','#department_NameSelect').val()).s.forEach(function(option) {
+    names.push(option.name)
+  });
+  resetCreateForm();
+  createBtn.disabled = true;
 });
 
 var tableContainer = document.getElementById('servicesTable');
 tableContainer.addEventListener('click', (event) => {
-    if (event.target.matches('.sub-button.service_updateOpenBtn')) {
-        names = [];
-        JSON.parse($('option:checked','#department_NameSelect').val())[0].s.forEach(function(option) {
-            names.push(option.name)
-        });
-    }
+  if (event.target.matches('.sub-button.service_updateOpenBtn')) {
+    names = [];
+    JSON.parse($('option:checked','#department_NameSelect').val()).s.forEach(function(option) {
+      names.push(option.name)
+    });
+    resetUpdateForm();
+  }
 });
 
 function validateField(input, error) {
@@ -50,7 +50,7 @@ function validateField(input, error) {
   }
 }
 
-function checkUserExists(input, error) {
+function checkServiceExists(input, error) {
   var value = input.value;
 
   for (var i = 0; i < names.length; i++) {
@@ -73,51 +73,87 @@ function hideError(error) {
   error.style.display = 'none';
 }
 
-function validateForm(fields, btn) {
+function validateCreateForm() {
   let valid = true;
+  let errorExists = false;
 
-  for (const field of fields) {
+  for (const field of create_fields) {
     const input = document.getElementById(field.inputId);
     const error = document.getElementById(field.errorId);
 
     if (input.dataset.interacted === 'true') {
-        if (input.value.trim() === '') {
-          setError(error, 'Field is required');
-          valid = false;
-        } else if (checkUserExists(input, error)) {
-          setError(error, 'Service already exists');
-          valid = false;
-        } else {
-          hideError(error);
-        }
+      if (input.value.trim() === '') {
+        setError(error, 'Field is required');
+        valid = false;
+        errorExists = true;
+      } else {
+        hideError(error);
+      }
     } else {
       hideError(error);
-      valid = false;
     }
   }
 
-  btn.disabled = !valid;
+  if (!valid || errorExists) {
+    createBtn.disabled = true;
+  } else {
+    createBtn.disabled = false;
+  }
 }
 
-function resetForm(fields, errorMessages) {
-  for (const field of fields) {
+function validateUpdateForm() {
+  let valid = true;
+  let errorExists = false;
+
+  for (const field of update_fields) {
+    const input = document.getElementById(field.inputId);
+    const error = document.getElementById(field.errorId);
+
+    if (input.dataset.interacted === 'true') {
+      if (input.value.trim() === '') {
+        setError(error, 'Field is required');
+        valid = false;
+        errorExists = true;
+      } else {
+        hideError(error);
+      }
+    } else {
+      hideError(error);
+    }
+  }
+
+  if (!valid || errorExists) {
+    updateBtn.disabled = true;
+  } else {
+    updateBtn.disabled = false;
+  }
+}
+
+function resetCreateForm() {
+  for (const field of create_fields) {
     const input = document.getElementById(field.inputId);
     input.value = '';
+    input.dataset.interacted = 'false';
   }
 
   for (const error of errorMessages) {
     error.style.display = 'none';
   }
+  createBtn.disabled = false;
 }
 
-/* Action for Cancel button */
-create_cancelBtn.addEventListener('click', function () {
-  resetForm(create_fields, errorMessages);
-});
+function resetUpdateForm() {
+  for (const field of update_fields) {
+    const input = document.getElementById(field.inputId);
+    input.value = '';
+    input.dataset.interacted = 'false';
+  }
 
-update_cancelBtn.addEventListener('click', function () {
-  resetForm(update_fields, update_errorMessages);
-});
+  for (const error of update_errorMessages) {
+    error.style.display = 'none';
+  }
+  updateBtn.disabled = false;
+}
 
 /* Show Error */
 for (const field of create_fields) {
@@ -127,8 +163,8 @@ for (const field of create_fields) {
   input.addEventListener('input', function () {
     input.dataset.interacted = 'true';
     validateField(input, error);
-    checkUserExists(input, error);
-    validateForm(create_fields, createBtn);
+    checkServiceExists(input, error);
+    validateCreateForm();
   });
 }
 
@@ -139,10 +175,18 @@ for (const field of update_fields) {
   input.addEventListener('input', function () {
     input.dataset.interacted = 'true';
     validateField(input, error);
-    checkUserExists(input, error);
-    validateForm(update_fields, updateBtn);
+    checkServiceExists(input, error);
+    validateUpdateForm();
   });
 }
 
-resetForm(create_fields, errorMessages);
-resetForm(update_fields, update_errorMessages);
+create_cancelBtn.addEventListener('click', function() {
+  resetCreateForm();
+});
+
+update_cancelBtn.addEventListener('click', function() {
+  resetUpdateForm();
+});
+
+resetCreateForm();
+resetUpdateForm();

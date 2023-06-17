@@ -48,7 +48,7 @@ $(window).ready(function () {
         service.name = $("#update-service_newNameInput").val();
         service.duration = $("#update-service_newDurationInput").val();
         service.price = $("#update-service_newPriceInput").val();
-        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val())[0].id;
+        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.serviceName = document.getElementById("update-service_servNameInput").value;
         request.service = service;
         executePut(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
@@ -61,7 +61,7 @@ $(window).ready(function () {
 
     $("#delete-service_DeleteBtn").click(function() {
         var request = new Object();
-        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val())[0].id;
+        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.serviceName = $("#delete-service_NameInput").val();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
         setTimeout(function() {

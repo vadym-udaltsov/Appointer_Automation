@@ -26,7 +26,7 @@ $(window).ready(function () {
         var specialist = new Object();
         specialist.name = $("#specialist_CreateNameInput").val();
         specialist.pn = $("#specialist_CreatePhoneInput").val();
-        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val())[0].id;
+        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.specialist = specialist;
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/specialist');
         setTimeout(function() {
@@ -41,7 +41,7 @@ $(window).ready(function () {
         var specialist = new Object();
         specialist.name = $("#update-specialist_newNameInput").val();
         specialist.pn = $("#update-specialist_newPhoneInput").val();
-        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val())[0].id;
+        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.specialistName = document.getElementById("update-specialist_servNameInput").value;
         request.specialist = specialist;
         executePut(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/specialist');
@@ -54,7 +54,7 @@ $(window).ready(function () {
 
     $("#delete-specialist_DeleteBtn").click(function() {
         var request = new Object();
-        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val())[0].id;
+        request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.specialistName = $("#delete-specialist_NameInput").val();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/specialist');
         setTimeout(function() {
