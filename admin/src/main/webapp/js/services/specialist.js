@@ -71,25 +71,19 @@ function loadSpecialistData(url, value, nameSelect) {
             url: url,
             type: 'get',
             dataType: 'json',
-            success: function(data, jqXHR) {
-                if (jqXHR !== "success") {
-                    window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-                }
-
+            success: function(data) {
                 nameSelect.value = value.name;
                 document.getElementById("update-specialist_newNameInput").value = value.name;
                 document.getElementById("update-specialist_newPhoneInput").value = value.pn;
 
-                console.log(data);
-                console.log(jqXHR);
-
+                console.log("Load Specialist Data" + data);
                 resolve();
             },
-            error: function(data, jqXHR) {
-                if (jqXHR !== "success") {
+            error: function(data) {
+                if (data.status === 0) {
                     window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
                 }
-                reject("Ошибка при выполнении запроса");
+            reject("Ошибка при выполнении запроса");
             }
         });
     });
@@ -102,20 +96,12 @@ function executePut(data, url) {
         contentType: "application/json",
         dataType: 'JSON',
         data: data,
-        success: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-                var error = document.getElementById("error")
-                error.textContent = "Request is not authorized";
-                error.style.color = "red";
-//                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            } else {
-                console.log(data);
-                console.log(jqXHR);
-            }
+        success: function (data) {
+            console.log(data);
         },
-        error: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-//               window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+        error: function (data) {
+            if (data.status === 0) {
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }
     });
@@ -128,20 +114,12 @@ function executeDelete(data, url) {
         contentType: "application/json",
         dataType: 'JSON',
         data: data,
-        success: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-                var error = document.getElementById("error")
-                error.textContent = "Request is not authorized";
-                error.style.color = "red";
-//                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            } else {
-                console.log(data);
-                console.log(jqXHR.status);
-            }
+        success: function (data) {
+            console.log(data);
         },
-        error: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-//               window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+        error: function (data) {
+            if (data.status === 0) {
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }
     });

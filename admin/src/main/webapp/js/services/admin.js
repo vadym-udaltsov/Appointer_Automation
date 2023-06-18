@@ -18,7 +18,7 @@ $(window).ready(function () {
     $("#admin_CreateBtn").click(function() {
         var request = new Object();
         request.dn = $('option:checked','#department_NameSelect').text();
-        request.cn = JSON.parse($('option:checked','#department_NameSelect').val()).c;
+        request.cn = JSON.parse(localStorage.getItem('selectedOption')).c;
         request.pn = $("#admin_CreatePhoneInput").val();
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/admins');
         setTimeout(function() {
@@ -61,7 +61,7 @@ function loadAdminData(url, value, nameSelect) {
                 resolve();
             },
             error: function(data, jqXHR) {
-                if (jqXHR !== "success") {
+                if (data.status === 0) {
                     window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
                 }
                 reject("Ошибка при выполнении запроса");
@@ -89,9 +89,9 @@ function executeDelete(data, url) {
             }
         },
         error: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-//               window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
+           if (data.status === 0) {
+         window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+      }
         }
     });
 }

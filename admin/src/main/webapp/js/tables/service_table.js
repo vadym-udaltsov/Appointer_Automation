@@ -57,11 +57,11 @@ $(window).ready(function () {
 
         var column = document.querySelector('.columns_titles');
         var lastService = column.parentElement.querySelector('.service:last-of-type');
-        if (lastService) {
-          lastService.insertAdjacentElement('afterend', newServiceBlock);
-        } else {
-          column.insertAdjacentElement('afterend', newServiceBlock);
-        }
+            if (lastService) {
+                lastService.insertAdjacentElement('afterend', newServiceBlock);
+            } else {
+                column.insertAdjacentElement('afterend', newServiceBlock);
+            }
 
     });
 
@@ -85,7 +85,7 @@ $(window).ready(function () {
 
     async function applyStyleAfterDataLoad() {
         while (window.dataLoaded !== true) {
-            await new Promise(resolve => setTimeout(resolve, 200)); // Ждем 100 миллисекунд перед следующей проверкой
+            await new Promise(resolve => setTimeout(resolve, 200));
          }
             var tableElements = document.querySelectorAll('.service');
             var elementCount = tableElements.length;
@@ -100,4 +100,16 @@ $(window).ready(function () {
            }
     }
     applyStyleAfterDataLoad();
+
+    document.getElementById('department_NameSelect').addEventListener('change', function() {
+        setTimeout(function() {
+            applyStyleAfterDataLoad();
+        }, 150);
+    });
+
+    $("#department_UpdatePopup").click(function() {
+        setTimeout(function() {
+            applyStyleAfterDataLoad();
+        }, 150);
+    });
 });

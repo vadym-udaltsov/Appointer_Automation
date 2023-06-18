@@ -94,4 +94,16 @@ $(window).ready(function () {
            }
     }
     applyStyleAfterDataLoad();
+
+    document.getElementById('department_NameSelect').addEventListener('change', function() {
+        setTimeout(function() {
+            applyStyleAfterDataLoad();
+        }, 150);
+    });
+
+    $("#department_UpdatePopup").click(function() {
+        setTimeout(function() {
+            applyStyleAfterDataLoad();
+        }, 150);
+    });
 });

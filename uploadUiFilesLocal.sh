@@ -5,16 +5,16 @@ uiBucket="appointer-ui-773974733061"
 
 cd admin/src/main/webapp
 
-for folder in *
+for folder in css html js
 do
-  cd $folder
+  cd "$folder"
 
-  for file in *
+  for file in $(find . -type f)
   do
-    if [ $file != 'vars.js' ]
+    if [ "$file" != './vars.js' ]
     then
-       echo $file
-       aws s3 cp "$file" s3://${uiBucket}/$folder/
+       echo "$file"
+       aws s3 cp "$file" "s3://${uiBucket}/${folder}/${file#./}"
     fi
   done
   cd ../

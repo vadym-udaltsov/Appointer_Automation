@@ -6,7 +6,7 @@
 
 .table_inner, .table_inner_specialist, .table_inner_admin {
     border: 1px solid black;
-    height: 341px;
+    min-height: 106px;
     overflow-y: auto;
 }
 
@@ -21,7 +21,6 @@
     display: flex;
     justify-content: space-between;
     background-color: white;
-    background-color: white
 }
 
 .cell, .specCol {
@@ -36,37 +35,19 @@
     position: relative;
 }
 
-.cell:nth-child(-n+3) span::before {
-    content: "";
-    position: absolute;
-    left: 300px;
-    top: 10px;
-    height: 50%;
-    width: 1px;
-    background-color: black;
-    transform: translateX(-50%);
+.columns_titles .cell:nth-child(-n+3) {
+    border-right-width: 2px;
+    border-right-style: outset;
 }
 
-.specCol:nth-child(-n+2) span::before {
-    content: "";
-    position: absolute;
-    left: 450px;
-    top: 10px;
-    height: 50%;
-    width: 1px;
-    background-color: black;
-    transform: translateX(-50%);
+.columns_titles_specialist .specCol:nth-child(-n+2) {
+    border-right-width: 2px;
+    border-right-style: outset;
 }
 
-.admCol:nth-child(-n+1) span::before {
-    content: "";
-    position: absolute;
-    left: 915px;
-    top: 10px;
-    height: 50%;
-    width: 1px;
-    background-color: black;
-    transform: translateX(-50%);
+.columns_titles_admin .admCol:nth-child(-n+1) {
+    border-right-width: 2px;
+    border-right-style: outset;
 }
 
 .actions {

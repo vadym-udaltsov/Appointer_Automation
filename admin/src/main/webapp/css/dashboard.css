@@ -56,6 +56,20 @@ body {
     color: black;
 }
 
+#logout_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.language-container {
+    margin-right: 70px;
+}
+
+.change-lang {
+    width: 70px !important;
+}
+
 #logout_button {
     background: #867A6C;
     text-transform: uppercase;

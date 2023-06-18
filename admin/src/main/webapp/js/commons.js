@@ -5,20 +5,13 @@ function executePost(data, url) {
         contentType: "application/json",
         dataType: 'JSON',
         data: data,
-        success: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-                var error = document.getElementById("error")
-                error.textContent = "Request is not authorized";
-                error.style.color = "red";
-//                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            } else {
-                console.log(data);
-                console.log(jqXHR);
-            }
+        success: function (data) {
+            console.log(data);
+            console.log(jqXHR);
         },
-        error: function (data, jqXHR) {
-            if (jqXHR !== "success") {
- //               window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+        error: function (data) {
+            if (data.status === 0) {
+                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
             }
         }
     });
@@ -26,4 +19,9 @@ function executePost(data, url) {
 
 function validatePhoneNumber(input) {
   input.value = input.value.replace(/[^0-9+]/g, '');
+  const inputValue = input.value.trim();
+
+  if (inputValue.length === 0 || inputValue.charAt(0) !== '+') {
+     input.value = '+' + inputValue;
+  }
 }

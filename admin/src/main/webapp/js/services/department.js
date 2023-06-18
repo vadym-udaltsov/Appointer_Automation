@@ -1,4 +1,4 @@
-$(window).ready(function () {
+$(window).on('load', function() {
     $.ajaxSetup({
         headers: { 'token': localStorage.getItem('token')}
     });
@@ -19,10 +19,11 @@ $(window).ready(function () {
 
     const selectElement = document.getElementById('department_NameSelect');
 
-      document.getElementById('department_NameSelect').addEventListener('change', function() {
-        var checkedSelect = $('option:checked','#department_NameSelect');
+    document.getElementById('department_NameSelect').addEventListener('change', function() {
+        var checkedSelect = this.value;
+        localStorage.setItem('lastSelectedOption', checkedSelect);
         loadDataFromSelectedDep(url, typeSelect, checkedSelect, update_timeZoneSelect);
-      });
+    });
 
     $("#department_UpdatePopup").click(function() {
         loadDepUpdateData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
@@ -84,7 +85,9 @@ function loadCommonData(selectedDepartmentData) {
   var daysCheckboxes = document.querySelectorAll('input[name="dayCheck"]');
   daysCheckboxes.forEach(function (checkbox) {
     if (checkedDateFromData.includes(parseInt(checkbox.value))) {
-      checkbox.checked = true;
+        checkbox.checked = true;
+    } else {
+        checkbox.checked = false;
     }
   });
 
@@ -159,14 +162,21 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
     url: url,
     type: 'get',
     dataType: 'json',
-    success: function (data, jqXHR) {
+    success: function (data) {
       choose_depNameSelect.empty();
       update_timeZoneSelect.empty();
       typeSelect.empty();
 
       console.log(data);
+      var lastSelectedOption = JSON.parse(localStorage.getItem('lastSelectedOption'));
+
       $.each(data.customerDepartments, function (i, department) {
         var name = $("<option value='" + JSON.stringify(department) + "'></option>").text(this.n);
+
+        if (lastSelectedOption && this.n === lastSelectedOption.n) {
+          name.prop("selected", true);
+        }
+
         choose_depNameSelect.append(name);
       });
 
@@ -183,9 +193,9 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
       var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
       loadCommonData(selectedDepartmentData);
     },
-    error: function (data, jqXHR) {
-      if (jqXHR !== "success") {
-        // window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+    error: function (data) {
+      if (data.status === 0) {
+         window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
       }
     }
   });
@@ -196,14 +206,14 @@ function loadDepUpdateData(url, typeSelect, choose_depNameSelect, update_timeZon
     url: url,
     type: 'get',
     dataType: 'json',
-    success: function (data, jqXHR) {
+    success: function (data) {
       var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
       loadCommonData(selectedDepartmentData);
     },
-    error: function (data, jqXHR) {
-      if (jqXHR !== "success") {
-        // window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-      }
+    error: function (data) {
+        if (data.status === 0) {
+            window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+        }
     }
   });
 }
@@ -213,41 +223,51 @@ function loadDataFromSelectedDep(url, typeSelect, choose_depNameSelect, update_t
     url: url,
     type: 'get',
     dataType: 'json',
-    success: function (data, jqXHR) {
+    success: function (data) {
       var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
       loadCommonData(selectedDepartmentData);
     },
-    error: function (data, jqXHR) {
-      if (jqXHR !== "success") {
-        // window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-      }
+    error: function (data) {
+        if (data.status === 0) {
+            window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
+        }
     }
   });
-}
-
-function executeGetRequest(url) {
-    $.ajax({
-        type: 'get',
-        url: url,
-        success: function (data, jqXHR) {
-            console.log(data);
-            console.log(jqXHR);
-            return data;
-        },
-        error: function (data, jqXHR) {
-            if (jqXHR !== "success") {
-               // window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-        },
-    });
 }
 
 function activateButton() {
   $('#department_link').addClass('btn-active');
 }
 
+document.getElementById('close_updateDepBtn').addEventListener('click', function () {
+    var updateDepBtn = document.getElementById('update_DepBtn');
+    updateDepBtn.disabled = false;
+});
+
 function validateInput(input) {
   input.value = input.value.replace(/\D/g, '');
+}
+
+function validateUpdateDepInput(input, inputType) {
+  var value = parseInt(input.value, 10);
+
+  if (value < 1) {
+    input.value = 1;
+  } else if (value > 24) {
+    input.value = 24;
+  }
+
+  var startWork = parseInt(document.getElementById('startWork').value, 10);
+  var finishWork = parseInt(document.getElementById('finishWork').value, 10);
+  var updateDepBtn = document.getElementById('update_DepBtn');
+
+  if (isNaN(startWork) || isNaN(finishWork) || startWork > finishWork) {
+    updateDepBtn.disabled = true;
+  } else if(startWork == '' || finishWork == '') {
+    updateDepBtn.disabled = true;
+  } else {
+    updateDepBtn.disabled = false;
+  }
 }
 
 
