@@ -100,10 +100,10 @@ function loadCommonData(selectedDepartmentData) {
     var priceCell = $("<div class='service_price cell'></div>").text(item.price);
     var actionsCell = $("<div class='cell actions'></div>");
 
-    var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn' data-toggle='modal' data-target='#service_UpdateModal'>")
+    var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn lng-updateBtn' data-toggle='modal' data-target='#service_UpdateModal'>")
       .text("Update")
       .val(JSON.stringify(item));
-    var deleteButton = $("<button type='button' class='sub-button service_deleteOpenBtn' data-toggle='modal' data-target='#service_DeleteModal'>")
+    var deleteButton = $("<button type='button' class='sub-button service_deleteOpenBtn lng-deleteBtn' data-toggle='modal' data-target='#service_DeleteModal'>")
       .text("Delete")
       .val(JSON.stringify(item));
 
@@ -122,10 +122,10 @@ function loadCommonData(selectedDepartmentData) {
     var durationCell = $("<div class='specialist_phone specCol'></div>").text(item.pn);
     var actionsCell = $("<div class='specCol actions'></div>");
 
-    var updateButton = $("<button type='button' class='sub-button specialist_updateOpenBtn' data-toggle='modal' data-target='#specialist_UpdateModal'>")
+    var updateButton = $("<button type='button' class='sub-button specialist_updateOpenBtn lng-updateBtn' data-toggle='modal' data-target='#specialist_UpdateModal'>")
       .text("Update")
       .val(JSON.stringify(item));
-    var deleteButton = $("<button type='button' class='sub-button specialist_deleteOpenBtn' data-toggle='modal' data-target='#specialist_DeleteModal'>")
+    var deleteButton = $("<button type='button' class='sub-button specialist_deleteOpenBtn lng-deleteBtn' data-toggle='modal' data-target='#specialist_DeleteModal'>")
       .text("Delete")
       .val(JSON.stringify(item));
 
@@ -143,7 +143,7 @@ function loadCommonData(selectedDepartmentData) {
     var phoneCell = $("<div class='admin_phone admCol centerPos'></div>").text(item);
     var actionsCell = $("<div class='admCol actions  centerPos'></div>");
 
-    var deleteButton = $("<button type='button' class='sub-button admin_deleteOpenBtn' data-toggle='modal' data-target='#admin_DeleteModal'>")
+    var deleteButton = $("<button type='button' class='sub-button admin_deleteOpenBtn lng-deleteBtn' data-toggle='modal' data-target='#admin_DeleteModal'>")
       .text("Delete")
       .val(JSON.stringify(item));
 

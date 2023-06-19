@@ -23,7 +23,7 @@ $(window).ready(function () {
 
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute("type", "button");
-        deleteButton.className = "sub-button admin_deleteOpenBtn";
+        deleteButton.className = "sub-button admin_deleteOpenBtn lng-deleteBtn";
         deleteButton.setAttribute("data-toggle", "modal");
         deleteButton.setAttribute("data-target", "#admin_DeleteModal");
         deleteButton.setAttribute("value", JSON.stringify(admin));

@@ -1,6 +1,86 @@
 const langArr = {
     "reports": {
-        "ru": "Статистика",
         "en": "Reports",
+        "ua": "Статистика",
+        "pl": "Statystyka",
+        "ru": "Статистика",
+    },
+    "logout": {
+        "en": "Log out",
+        "ua": "Вихід",
+        "pl": "Wyjście",
+        "ru": "Выход",
+    },
+    "updateDepartment": {
+        "en": "Update Department",
+        "ua": "Оновити Департамент",
+        "pl": "Zaktualizuj deportację",
+        "ru": "Обновить Департамент",
+    },
+    "create": {
+        "en": "Add New",
+        "ua": "Додати",
+        "pl": "Dodać",
+        "ru": "Добавить",
+    },
+    "serviceTitle": {
+        "en": "Service",
+        "ua": "Сервіс",
+        "pl": "Praca",
+        "ru": "Сервис",
+    },
+    "Name": {
+        "en": "Name",
+        "ua": "Ім'я",
+        "pl": "Nazwa",
+        "ru": "Имя",
+    },
+    "serviceDuration": {
+        "en": "Duration",
+        "ua": "Тривалість",
+        "pl": "Czas trwania",
+        "ru": "Продолжительность",
+    },
+    "servicePrice": {
+        "en": "Price",
+        "ua": "Ціна",
+        "pl": "Cena",
+        "ru": "Цена",
+    },
+    "actions": {
+        "en": "Actions",
+        "ua": "Дії",
+        "pl": "Działania",
+        "ru": "Действия",
+    },
+    "specialistTitle": {
+        "en": "Specialist",
+        "ua": "Спеціаліст",
+        "pl": "Specjalista",
+        "ru": "Специалист",
+    },
+    "phone": {
+        "en": "Phone Number",
+        "ua": "Номер телефону",
+        "pl": "Numer telefonu",
+        "ru": "Номер телефона",
+    },
+    "adminTitle": {
+        "en": "Admin",
+        "ua": "Адміністратор",
+        "pl": "Administrator",
+        "ru": "Администратор",
+    },
+    "updateBtn": {
+        "en": "Update",
+        "ua": "Оновити",
+        "pl": "Aktualizować",
+        "ru": "Обновить",
+    },
+    "deleteBtn": {
+        "en": "Delete",
+        "ua": "Видалити",
+        "pl": "Usuń",
+        "ru": "Удалить",
     },
 }

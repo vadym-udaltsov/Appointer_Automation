@@ -8,6 +8,7 @@
     border: 1px solid black;
     min-height: 106px;
     overflow-y: auto;
+    max-height: 341px !important;
 }
 
 .columns_titles, .columns_titles_specialist, .columns_titles_admin {

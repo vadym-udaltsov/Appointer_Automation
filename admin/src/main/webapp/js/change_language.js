@@ -1,5 +1,5 @@
 var selectLanguage = document.getElementsByClassName('change-lang')[0];
-var allLang = ['ru', 'en'];
+var allLang = ['en', 'ua', 'pl', 'ru'];
 
 selectLanguage.addEventListener('change', changeUrlLanguage);
 
@@ -18,11 +18,19 @@ function changeLanguage() {
     }
     selectLanguage.value = hash;
     for (var key in langArr) {
-        var elem = document.querySelector('.lng-' + key);
+        var elem = document.querySelectorAll('.lng-' + key);
         if(elem) {
-            elem.innerHTML = langArr[key][hash];
+            for(var element of elem) {
+                element.innerHTML = langArr[key][hash];
+            }
         }
     }
 }
 
-changeLanguage();
+async function waitOnButtonsLoad() {
+    while (window.dataLoaded !== true) {
+        await new Promise(resolve => setTimeout(resolve, 200));
+    }
+    changeLanguage();
+}
+waitOnButtonsLoad();

@@ -42,8 +42,10 @@
         <div id="logout_container">
             <div class="language-container">
                 <select class="change-lang">
-                    <option value="ru">RU</option>
                     <option value="en" selected>EN</option>
+                    <option value="ua">UA</option>
+                    <option value="pl">PL</option>
+                    <option value="ru">RU</option>
                 </select>
             </div>
             <button class="nav-button lng-logout" id="logout_button">Log out</button>
@@ -72,9 +74,9 @@
     <!-- Service Container -->
     <div class="modal_container">
         <div class="modal_items">
-            <div class="modal_title">Service</div>
+            <div class="modal_title lng-serviceTitle">Service</div>
             <div class="modal_block">
-                <button type="button" class="sub-button lng-createService" data-toggle="modal" data-target="#service_CreateModal"
+                <button type="button" class="sub-button lng-create" data-toggle="modal" data-target="#service_CreateModal"
                         id="service_createOpenBtn">
                     Add New
                 </button>
@@ -86,10 +88,10 @@
     <div class="table-container">
         <div class="table_inner" id="servicesTable">
             <div class="columns_titles">
-                <div class="column_name cell"><strong>Name</strong><span></span></div>
-                <div class="column_duration cell"><strong>Duration</strong><span></span></div>
-                <div class="column_price cell"><strong>Price</strong><span></span></div>
-                <div class="column_actions cell"><strong>Actions</strong><span></span></div>
+                <div class="column_name cell lng-Name"><strong>Name</strong><span></span></div>
+                <div class="column_duration cell lng-serviceDuration"><strong>Duration</strong><span></span></div>
+                <div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>
+                <div class="column_actions cell lng-actions"><strong>Actions</strong><span></span></div>
             </div>
         </div>
     </div>
@@ -97,9 +99,9 @@
     <!-- Specialist Container -->
     <div class="modal_container">
         <div class="modal_items">
-            <div class="modal_title">Specialist</div>
+            <div class="modal_title lng-specialistTitle">Specialist</div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#specialist_CreateModal"
+                <button type="button" class="sub-button lng-create" data-toggle="modal" data-target="#specialist_CreateModal"
                         id="specialist_createOpenBtn">
                     Add New
                 </button>
@@ -111,9 +113,9 @@
     <div class="table-container_specialist">
         <div class="table_inner_specialist" id="specialistTable">
             <div class="columns_titles_specialist">
-                <div class="column_name specCol"><strong>Name</strong><span></span></div>
-                <div class="column_phone specCol"><strong>Phone Number</strong><span></span></div>
-                <div class="column_actions specCol"><strong>Actions</strong><span></span></div>
+                <div class="column_name specCol lng-Name"><strong>Name</strong><span></span></div>
+                <div class="column_phone specCol lng-phone"><strong>Phone Number</strong><span></span></div>
+                <div class="column_actions specCol lng-actions"><strong>Actions</strong><span></span></div>
             </div>
         </div>
     </div>
@@ -121,9 +123,9 @@
     <!-- Admin Container -->
     <div class="modal_container">
         <div class="modal_items">
-            <div class="modal_title">Admin</div>
+            <div class="modal_title lng-adminTitle">Admin</div>
             <div class="modal_block">
-                <button type="button" class="sub-button" data-toggle="modal" data-target="#admin_CreateModal"
+                <button type="button" class="sub-button lng-create" data-toggle="modal" data-target="#admin_CreateModal"
                         id="admin_createOpenBtn">
                     Add New
                 </button>
@@ -135,8 +137,8 @@
     <div class="table-container_admin">
         <div class="table_inner_admin" id="adminTable">
             <div class="columns_titles_admin">
-                <div class="column_phone admCol centerPos"><strong>Phone Number</strong><span></span></div>
-                <div class="column_actions admCol centerPos"><strong>Action</strong><span></span></div>
+                <div class="column_phone admCol centerPos lng-phone"><strong>Phone Number</strong><span></span></div>
+                <div class="column_actions admCol centerPos lng-actions"><strong>Actions</strong><span></span></div>
             </div>
         </div>
     </div>

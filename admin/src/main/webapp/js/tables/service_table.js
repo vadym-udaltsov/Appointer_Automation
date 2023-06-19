@@ -33,7 +33,7 @@ $(window).ready(function () {
 
         var updateButton = document.createElement('button');
         updateButton.setAttribute("type", "button");
-        updateButton.className = "sub-button service_updateOpenBtn";
+        updateButton.className = "sub-button service_updateOpenBtn lng-updateBtn";
         updateButton.setAttribute("data-toggle", "modal");
         updateButton.setAttribute("data-target", "#service_UpdateModal");
         updateButton.setAttribute("value", JSON.stringify(service));
@@ -41,7 +41,7 @@ $(window).ready(function () {
 
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute("type", "button");
-        deleteButton.className = "sub-button service_deleteOpenBtn";
+        deleteButton.className = "sub-button service_deleteOpenBtn lng-deleteBtn";
         deleteButton.setAttribute("data-toggle", "modal");
         deleteButton.setAttribute("data-target", "#service_DeleteModal");
         deleteButton.setAttribute("value", JSON.stringify(service));

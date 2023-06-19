@@ -28,7 +28,7 @@ $(window).ready(function () {
 
         var updateButton = document.createElement('button');
         updateButton.setAttribute("type", "button");
-        updateButton.className = "sub-button specialist_updateOpenBtn";
+        updateButton.className = "sub-button specialist_updateOpenBtn lng-updateBtn";
         updateButton.setAttribute("data-toggle", "modal");
         updateButton.setAttribute("data-target", "#specialist_UpdateModal");
         updateButton.setAttribute("value", JSON.stringify(specialist));
@@ -36,7 +36,7 @@ $(window).ready(function () {
 
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute("type", "button");
-        deleteButton.className = "sub-button specialist_deleteOpenBtn";
+        deleteButton.className = "sub-button specialist_deleteOpenBtn lng-deleteBtn";
         deleteButton.setAttribute("data-toggle", "modal");
         deleteButton.setAttribute("data-target", "#specialist_DeleteModal");
         deleteButton.setAttribute("value", JSON.stringify(specialist));
