@@ -14,7 +14,7 @@ const langArr = {
     "updateDepartment": {
         "en": "Update Department",
         "ua": "Оновити Департамент",
-        "pl": "Zaktualizuj deportację",
+        "pl": "Zaktualizuj Dział",
         "ru": "Обновить Департамент",
     },
     "create": {
@@ -26,7 +26,7 @@ const langArr = {
     "serviceTitle": {
         "en": "Service",
         "ua": "Сервіс",
-        "pl": "Praca",
+        "pl": "Usługa",
         "ru": "Сервис",
     },
     "Name": {
@@ -82,5 +82,197 @@ const langArr = {
         "ua": "Видалити",
         "pl": "Usuń",
         "ru": "Удалить",
+    },
+    "disabledDep": {
+        "en": "Department",
+        "ua": "Департамент",
+        "pl": "Dział",
+        "ru": "Департамент",
+    },
+    "timeZone": {
+        "en": "Time Zone",
+        "ua": "Часовий пояс",
+        "pl": "Strefa czasowa",
+        "ru": "Часовой пояс",
+    },
+    "depType": {
+        "en": "Type",
+        "ua": "Тип",
+        "pl": "Typ",
+        "ru": "Тип",
+    },
+    "startWorkHour": {
+        "en": "Start work hour",
+        "ua": "Початок роботи",
+        "pl": "Początek pracy",
+        "ru": "Начало работы",
+    },
+    "finishWorkHour": {
+        "en": "Finish work hour",
+        "ua": "Кінець роботи",
+        "pl": "Koniec pracy",
+        "ru": "Конец работы",
+    },
+    "outWorkDays": {
+        "en": "Out of work days",
+        "ua": "Неробочі дні",
+        "pl": "Dni wolne od pracy",
+        "ru": "Нерабочие дни",
+    },
+    "monDay": {
+        "en": "Mon",
+        "ua": "Пнд",
+        "pl": "Pnd",
+        "ru": "Пнд",
+    },
+    "tueDay": {
+        "en": "Tue",
+        "ua": "Втр",
+        "pl": "Wtr",
+        "ru": "Втр",
+    },
+    "wedDay": {
+        "en": "Wed",
+        "ua": "Срд",
+        "pl": "Śrd",
+        "ru": "Срд",
+    },
+    "thuDay": {
+        "en": "Thu",
+        "ua": "Чтв",
+        "pl": "Czw",
+        "ru": "Чтв",
+    },
+    "friDay": {
+        "en": "Fri",
+        "ua": "Птн",
+        "pl": "Pią",
+        "ru": "Птн",
+    },
+    "satDay": {
+        "en": "Sat",
+        "ua": "Сбт",
+        "pl": "Sbt",
+        "ru": "Суб",
+    },
+    "sunDay": {
+        "en": "Sun",
+        "ua": "Ндл",
+        "pl": "Ndz",
+        "ru": "Вср",
+    },
+    "cancelBtn": {
+        "en": "Cancel",
+        "ua": "Скасувати",
+        "pl": "Anulować",
+        "ru": "Отмена",
+    },
+    "createBtn": {
+        "en": "Create",
+        "ua": "Створити",
+        "pl": "Utworzyć",
+        "ru": "Создать",
+    },
+    "createService": {
+        "en": "Create Service",
+        "ua": "Створити Сервіс",
+        "pl": "Utworzyć Usługe",
+        "ru": "Создать Сервис",
+    },
+    "requiredField": {
+        "en": "Field is required",
+        "ua": "Поле обов'язкове",
+        "pl": "Pole jest wymagane",
+        "ru": "Обязательное поле",
+    },
+    "duplicateServiceName": {
+        "en": "Service already exists",
+        "ua": "Сервіс вже існує",
+        "pl": "Usługa już istnieje",
+        "ru": "Сервис уже существует",
+    },
+    "duplicateSpecialistName": {
+        "en": "Specialist already exists",
+        "ua": "Спеціаліст вже є",
+        "pl": "Specjalista już istnieje",
+        "ru": "Специалист уже существует",
+    },
+    "duplicateAdminName": {
+        "en": "Admin already exists",
+        "ua": "Адміністратор вже є",
+        "pl": "Administrator już istnieje",
+        "ru": "Администратор уже существует",
+    },
+    "notValidPhoneError": {
+        "en": "Number is not valid. Minimum length must be 10 number",
+        "ua": "Номер недійсний. Мінімальна довжина повинна бути 10 цифр",
+        "pl": "Numer jest nieprawidłowy. Minimalna długość musi wynosić 10 cyfr",
+        "ru": "Номер недействителен. Минимальная длина должна быть 10 цифр",
+    },
+    "updateService": {
+        "en": "Update Service",
+        "ua": "Оновити Сервіс",
+        "pl": "Aktualizować Usługe",
+        "ru": "Обновить Сервис",
+    },
+    "newName": {
+        "en": "New Name",
+        "ua": "Нова Назва",
+        "pl": "Nowe Imie",
+        "ru": "Новое имя"
+    },
+    "newDuration": {
+        "en": "New Duration",
+        "ua": "Нова Тривалість",
+        "pl": "Nowy czas trwania",
+        "ru": "Новая Продолжительность"
+    },
+    "newPrice": {
+        "en": "New Price",
+        "ua": "Нова Ціна",
+        "pl": "Nowa Cena",
+        "ru": "Новая Цена"
+    },
+    "deleteService": {
+        "en": "Delete Service",
+        "ua": "Видалити Сервіс",
+        "pl": "Usuń Usługe",
+        "ru": "Удалить Сервис"
+    },
+    "createSpecialist": {
+        "en": "Create Specialist",
+        "ua": "Створити Спеціаліста",
+        "pl": "Utworzyć Specjalistę",
+        "ru": "Создать Специалиста"
+    },
+    "updateSpecialist": {
+        "en": "Update Specialist",
+        "ua": "Оновити Спеціаліста",
+        "pl": "Zaktualizuj Specjalistę",
+        "ru": "Обновить Специалиста"
+    },
+    "newPhone": {
+        "en": "New Phone Number",
+        "ua": "Новый номер телефону",
+        "pl": "Nowy numer telefonu",
+        "ru": "Новый номер телефона"
+    },
+    "deleteSpecialist": {
+        "en": "Delete Specialist",
+        "ua": "Видалити Спеціаліста",
+        "pl": "Usuń Specialistę",
+        "ru": "Удалить Специалиста"
+    },
+    "createAdminTitle": {
+        "en": "Create Admin",
+        "ua": "Створити Адміністратора",
+        "pl": "Dodać Administratora",
+        "ru": "Создать Администратора"
+    },
+    "deleteAdminTitle": {
+        "en": "Delete Admin",
+        "ua": "Видалити Адмінстратора",
+        "pl": "Usuń Administratora",
+        "ru": "Удалить Администратора"
     },
 }

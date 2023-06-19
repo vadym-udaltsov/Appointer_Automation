@@ -22,14 +22,13 @@ function adminHideError(error) {
   error.style.display = 'none';
 }
 
-function adminSetError(error, message) {
-  error.textContent = message;
+function adminSetError(error) {
   error.style.display = 'block';
 }
 
 function validateAdminCreateField(input, error) {
   if (input.value.trim() === '') {
-    adminSetError(error, 'Field is required');
+    adminSetError(error);
     return false;
   } else {
     adminHideError(error);
@@ -41,14 +40,10 @@ function checkCreateAdminExists(input, error) {
   var value = input.value.trim();
   for (var i = 0; i < admin_createNames.length; i++) {
     if (admin_createNames[i] === value) {
-      adminSetError(error, 'Phone Number already exists');
+      adminSetError(document.getElementById('duplicateAdminError'));
       return true;
     }
   }
-    if (value.length < 11) {
-        adminSetError(error, 'Number is not valid. Minimum length must be 8 number');
-        return true;
-    }
   adminHideError(error);
   return false;
 }
@@ -69,6 +64,15 @@ function validateAdminCreateForm() {
         valid = false;
       }
     }
+
+    if (input.value.length < 11) {
+        adminSetError(document.getElementById('admin_validPhoneError'));
+        admin_createBtn.disabled = true;
+        return true;
+    } else {
+        adminHideError(document.getElementById('admin_validPhoneError'));
+    }
+
   }
 
   admin_createBtn.disabled = !valid;
@@ -80,6 +84,8 @@ function resetAdminCreateForm() {
     input.value = '';
     const error = document.getElementById(field.errorId);
     adminHideError(error);
+    adminHideError(document.getElementById('duplicateAdminError'));
+    adminHideError(document.getElementById('admin_validPhoneError'));
   }
 }
 

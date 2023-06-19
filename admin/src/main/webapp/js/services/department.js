@@ -26,7 +26,7 @@ $(window).on('load', function() {
     });
 
     $("#department_UpdatePopup").click(function() {
-        loadDepUpdateData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
+        loadDepUpdateData(url);
     });
 
     $("#update_DepBtn").click(function() {
@@ -75,22 +75,6 @@ $(window).on('load', function() {
 });
 
 function loadCommonData(selectedDepartmentData) {
-  document.getElementById("update_selectedDepartment").value = selectedDepartmentData.n;
-  document.getElementById("update_timeZoneSelect").value = selectedDepartmentData.zone;
-  document.getElementById("update_depTypeSelect").value = selectedDepartmentData.tp;
-  document.getElementById("startWork").value = selectedDepartmentData.sw;
-  document.getElementById("finishWork").value = selectedDepartmentData.ew;
-
-  var checkedDateFromData = selectedDepartmentData.nwd;
-  var daysCheckboxes = document.querySelectorAll('input[name="dayCheck"]');
-  daysCheckboxes.forEach(function (checkbox) {
-    if (checkedDateFromData.includes(parseInt(checkbox.value))) {
-        checkbox.checked = true;
-    } else {
-        checkbox.checked = false;
-    }
-  });
-
   var serviceTable = $("#servicesTable");
   serviceTable.find('.service').remove();
   $.each(selectedDepartmentData.s, function (j, item) {
@@ -201,14 +185,28 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
   });
 }
 
-function loadDepUpdateData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect, dataLoaded) {
+function loadDepUpdateData(url) {
   $.ajax({
     url: url,
     type: 'get',
     dataType: 'json',
     success: function (data) {
-      var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
-      loadCommonData(selectedDepartmentData);
+        var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
+        document.getElementById("update_selectedDepartment").value = selectedDepartmentData.n;
+        document.getElementById("update_timeZoneSelect").value = selectedDepartmentData.zone;
+        document.getElementById("update_depTypeSelect").value = selectedDepartmentData.tp;
+        document.getElementById("startWork").value = selectedDepartmentData.sw;
+        document.getElementById("finishWork").value = selectedDepartmentData.ew;
+
+        var checkedDateFromData = selectedDepartmentData.nwd;
+        var daysCheckboxes = document.querySelectorAll('input[name="dayCheck"]');
+        daysCheckboxes.forEach(function (checkbox) {
+          if (checkedDateFromData.includes(parseInt(checkbox.value))) {
+              checkbox.checked = true;
+          } else {
+              checkbox.checked = false;
+          }
+        });
     },
     error: function (data) {
         if (data.status === 0) {

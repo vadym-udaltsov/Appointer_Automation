@@ -147,6 +147,7 @@
 
 <!-- Modals HTML -->
 
+<!--
 <div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -172,37 +173,38 @@
         </div>
     </div>
 </div>
+-->
 
 <div class="modal fade" id="department_UpdateModal" tabindex="-1" aria-labelledby="department_UpdateModal"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Update Department</h5>
+                <h5 class="modal-title lng-updateDepartment">Update Department</h5>
             </div>
             <div class="modal-body">
                 <div class="popup-row-dep">
                     <div class="col-md-3">
-                        <p>Department</p>
+                        <p class="lng-disabledDep">Department</p>
                     </div>
                     <div class="col-md-9">
                         <input class="form-control" id="update_selectedDepartment" disabled>
                     </div>
                 </div>
                 <div class="popup-row">
-                    <p class="popup-field-title">Time zone</p>
+                    <p class="popup-field-title lng-timeZone">Time zone</p>
                     <select class="form-control" id="update_timeZoneSelect"></select>
                 </div>
                 <div class="popup-row last-row">
-                    <p class="popup-field-title">Type</p>
+                    <p class="popup-field-title lng-depType">Type</p>
                     <select class="form-control" id="update_depTypeSelect"></select>
                 </div>
                 <div class="row">
                     <div class="col-md-3 start-hour">
-                        <p>Start work hour</p>
+                        <p class="lng-startWorkHour">Start work hour</p>
                     </div>
                     <div class="col-md-3 finish-hour">
-                        <p>Finish work hour</p>
+                        <p class="lng-finishWorkHour">Finish work hour</p>
                     </div>
                     <div class="hour_input-container">
                         <div class="col-md-9 start-hour-input">
@@ -216,43 +218,43 @@
                 <div class="calendar mt-4">
                     <div class="calendar_container">
                         <div class="out-of-work-days">
-                            <p class="out-of-work-days__text">Out of work days</p>
+                            <p class="out-of-work-days__text lng-outWorkDays">Out of work days</p>
                             <div class="calendar">
                                 <ul class="days-list">
                                     <li>
                                         <input type="checkbox" class="custom-checkbox" name="dayCheck" value="1"
                                                id="mon">
-                                        <label for="mon">Mon</label>
+                                        <label class="lng-monDay" for="mon">Mon</label>
                                     </li>
                                     <li>
                                         <input type="checkbox" class="custom-checkbox" name="dayCheck" value="2"
                                                id="tue">
-                                        <label for="tue">Tue</label>
+                                        <label class="lng-tueDay" for="tue">Tue</label>
                                     </li>
                                     <li>
                                         <input type="checkbox" class="custom-checkbox" name="dayCheck" value="3"
                                                id="wed">
-                                        <label for="wed">Wed</label>
+                                        <label class="lng-wedDay" for="wed">Wed</label>
                                     </li>
                                     <li>
                                         <input type="checkbox" class="custom-checkbox" name="dayCheck" value="4"
                                                id="thu">
-                                        <label for="thu">Thu</label>
+                                        <label class="lng-thuDay" for="thu">Thu</label>
                                     </li>
                                     <li>
                                         <input type="checkbox" class="custom-checkbox" name="dayCheck" value="5"
                                                id="fri">
-                                        <label for="fri">Fri</label>
+                                        <label class="lng-friDay" for="fri">Fri</label>
                                     </li>
                                     <li>
                                         <input type="checkbox" class="custom-checkbox" name="dayCheck" value="6"
                                                id="sat">
-                                        <label for="sat">Sat</label>
+                                        <label class="lng-satDay" for="sat">Sat</label>
                                     </li>
                                     <li>
                                         <input type="checkbox" class="custom-checkbox" name="dayCheck" value="7"
                                                id="sun">
-                                        <label for="sun">Sun</label>
+                                        <label class="lng-sunDay" for="sun">Sun</label>
                                     </li>
                                 </ul>
                             </div>
@@ -261,9 +263,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_updateDepBtn">Cancel
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="close_updateDepBtn">Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="update_DepBtn">Update</button>
+                <button type="button" class="btn btn-primary lng-updateBtn" id="update_DepBtn">Update</button>
             </div>
         </div>
     </div>
@@ -275,39 +277,38 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create Service</h5>
+                <h5 class="modal-title lng-createService">Create Service</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="service_Create-servNameInput" class="update__asterisks"
+                        <label for="service_Create-servNameInput" class="update__asterisks lng-Name"
                                id="service_nameField">Name</label>
                         <input type="text" class="form-control" id="service_Create-servNameInput"
                                placeholder="Enter Name">
-                        <small class="error-message" id="nameError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="nameError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateServiceName" id="duplicateServiceError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="service_Create-servDurationInput" class="update__asterisks"
+                        <label for="service_Create-servDurationInput" class="update__asterisks lng-serviceDuration"
                                id="service_durationField">Duration</label>
                         <input type="number" class="form-control" id="service_Create-servDurationInput"
                                placeholder="Enter Duration" oninput="validateInput(this)">
-                        <small class="error-message" id="durationError" style="color: red; display: none;">Field is
-                            required</small>
+                        <small class="error-message lng-requiredField" id="durationError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="service_Create-servPriceInput" class="update__asterisks" id="service_priceField">Price</label>
+                        <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice" id="service_priceField">Price</label>
                         <input type="number" class="form-control" id="service_Create-servPriceInput"
                                placeholder="Enter Price" oninput="validateInput(this)">
-                        <small class="error-message" id="priceError" style="color: red; display: none;">Field is
-                            required</small>
+                        <small class="error-message lng-requiredField" id="priceError" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="service_Create-CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="service_Create-CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="service_CreateBtn">Create</button>
+                <button type="button" class="btn btn-primary lng-createBtn" id="service_CreateBtn">Create</button>
             </div>
         </div>
     </div>
@@ -319,45 +320,43 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Update Service</h5>
+                <h5 class="modal-title lng-updateService">Update Service</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="update-service_servNameInput" id="service_updateName">Service</label>
+                        <label class="lng-serviceTitle" for="update-service_servNameInput" id="service_updateName">Service</label>
                         <input class="form-control" id="update-service_servNameInput" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newNameInput" class="update__asterisks" id="service_updateNewName">New
+                        <label for="update-service_newNameInput" class="update__asterisks lng-newName" id="service_updateNewName">New
                             Name</label>
                         <input type="text" class="form-control" id="update-service_newNameInput"
                                placeholder="Enter New Name">
-                        <small class="update_error-message" id="update_nameError" style="color: red; display: none;">Field
-                            is required</small>
+                        <small class="update_error-message lng-requiredField" id="update_nameError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateServiceName" id="duplicateServiceUpdateError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newDurationInput" class="update__asterisks"
+                        <label for="update-service_newDurationInput" class="update__asterisks lng-newDuration"
                                id="service_updateDuration">New Duration</label>
                         <input type="number" class="form-control" id="update-service_newDurationInput"
                                placeholder="Enter Duration">
-                        <small class="update_error-message" id="update_durationError"
-                               style="color: red; display: none;">Field is required</small>
+                        <small class="update_error-message lng-requiredField" id="update_durationError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newPriceInput" class="update__asterisks" id="service_updatePrice">New
+                        <label for="update-service_newPriceInput" class="update__asterisks lng-newPrice" id="service_updatePrice">New
                             Price</label>
                         <input type="number" class="form-control" id="update-service_newPriceInput"
                                placeholder="Enter Price">
-                        <small class="update_error-message" id="update_priceError" style="color: red; display: none;">Field
-                            is required</small>
+                        <small class="update_error-message lng-requiredField" id="update_priceError" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update-service_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="update-service_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="update-service_UpdateBtn">Update</button>
+                <button type="button" class="btn btn-primary lng-updateBtn" id="update-service_UpdateBtn">Update</button>
             </div>
         </div>
     </div>
@@ -369,21 +368,21 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete Service</h5>
+                <h5 class="modal-title lng-deleteService">Delete Service</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="delete-service_NameInput" id="delete_updateName">Service</label>
+                        <label class="lng-serviceTitle" for="delete-service_NameInput" id="delete_updateName">Service</label>
                         <input class="form-control" id="delete-service_NameInput" disabled>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="delete-service_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="delete-service_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="delete-service_DeleteBtn">Delete</button>
+                <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-service_DeleteBtn">Delete</button>
             </div>
         </div>
     </div>
@@ -395,32 +394,32 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create Specialist</h5>
+                <h5 class="modal-title lng-createSpecialist">Create Specialist</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="specialist_CreateNameInput" class="update__asterisks" id="specialist_nameField">Name</label>
+                        <label for="specialist_CreateNameInput" class="update__asterisks lng-Name" id="specialist_nameField">Name</label>
                         <input type="text" class="form-control" id="specialist_CreateNameInput"
                                placeholder="Enter Name">
-                        <small class="error-message" id="specialist_nameError"
-                               style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="specialist_nameError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="specialist_CreatePhoneInput" class="update__asterisks"
+                        <label for="specialist_CreatePhoneInput" class="update__asterisks lng-phone"
                                id="specialist_phoneField">Phone Number</label>
                         <input type="text" class="form-control" id="specialist_CreatePhoneInput"
                                placeholder="Enter Phone Number" oninput="validatePhoneNumber(this)">
-                        <small class="error-message" id="specialist_phoneError" style="color: red; display: none;">Field
-                            is required</small>
+                        <small class="error-message lng-requiredField" id="specialist_phoneError" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-notValidPhoneError" id="specialist_create_validPhoneError" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="specialist_Create-CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="specialist_Create-CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="specialist_CreateBtn">Create</button>
+                <button type="button" class="btn btn-primary lng-createBtn" id="specialist_CreateBtn">Create</button>
             </div>
         </div>
     </div>
@@ -432,37 +431,37 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Update Specialist</h5>
+                <h5 class="modal-title lng-updateSpecialist">Update Specialist</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="update-specialist_servNameInput" id="specialist_updateName">Specialist</label>
+                        <label class="lng-specialistTitle" for="update-specialist_servNameInput" id="specialist_updateName">Specialist</label>
                         <input class="form-control" id="update-specialist_servNameInput" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="update-specialist_newNameInput" class="update__asterisks"
+                        <label for="update-specialist_newNameInput" class="update__asterisks lng-newName"
                                id="specialist_updateNewName">New Name</label>
                         <input type="text" class="form-control" id="update-specialist_newNameInput"
                                placeholder="Enter New Name">
-                        <small class="update_error-message" id="specialist_update_nameError"
-                               style="color: red; display: none;">Field is required</small>
+                        <small class="update_error-message lng-requiredField" id="specialist_update_nameError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistUpdateError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="update-specialist_newPhoneInput" class="update__asterisks"
+                        <label for="update-specialist_newPhoneInput" class="update__asterisks lng-newPhone"
                                id="specialist_updateDuration">New Phone Number</label>
                         <input type="text" class="form-control" id="update-specialist_newPhoneInput"
                                placeholder="Enter New Phone Number" oninput="validatePhoneNumber(this)">
-                        <small class="update_error-message" id="specialist_update_phoneError"
-                               style="color: red; display: none;">Field is required</small>
+                        <small class="update_error-message lng-requiredField" id="specialist_update_phoneError" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-notValidPhoneError" id="specialist_update_validPhoneError" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="update-specialist_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="update-specialist_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="update-specialist_UpdateBtn">Update</button>
+                <button type="button" class="btn btn-primary lng-updateBtn" id="update-specialist_UpdateBtn">Update</button>
             </div>
         </div>
     </div>
@@ -475,21 +474,21 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete Specialist</h5>
+                <h5 class="modal-title lng-deleteSpecialist">Delete Specialist</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="delete-specialist_NameInput" id="delete_specialistName">Specialist</label>
+                        <label class="lng-specialistTitle" for="delete-specialist_NameInput" id="delete_specialistName">Specialist</label>
                         <input class="form-control" id="delete-specialist_NameInput" disabled>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="delete-specialist_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="delete-specialist_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="delete-specialist_DeleteBtn">Delete</button>
+                <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-specialist_DeleteBtn">Delete</button>
             </div>
         </div>
     </div>
@@ -501,25 +500,26 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Create Admin</h5>
+                <h5 class="modal-title lng-createAdminTitle">Create Admin</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="service_Create-servDurationInput" class="update__asterisks"
+                        <label for="service_Create-servDurationInput" class="update__asterisks lng-phone"
                                id="admin_phoneField">Phone Number</label>
                         <input type="text" class="form-control" id="admin_CreatePhoneInput"
                                placeholder="Enter Phone Number" oninput="validatePhoneNumber(this)">
-                        <small class="error-message" id="admin_phoneError" style="color: red; display: none;">Field
-                            is required</small>
+                        <small class="error-message lng-requiredField" id="admin_phoneError" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-notValidPhoneError" id="admin_validPhoneError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateAdminName" id="duplicateAdminError" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="admin_Create-CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="admin_Create-CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="admin_CreateBtn">Create</button>
+                <button type="button" class="btn btn-primary lng-createBtn" id="admin_CreateBtn">Create</button>
             </div>
         </div>
     </div>
@@ -532,21 +532,21 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete Admin</h5>
+                <h5 class="modal-title lng-createAdminTitle">Delete Admin</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="delete-admin_PhoneInput" id="delete_adminPhone">Admin Phone Number</label>
+                        <label class="lng-phone" for="delete-admin_PhoneInput" id="delete_adminPhone">Phone Number</label>
                         <input class="form-control" id="delete-admin_PhoneInput" disabled>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="delete-admin_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="delete-admin_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary" id="delete-admin_DeleteBtn">Delete</button>
+                <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-admin_DeleteBtn">Delete</button>
             </div>
         </div>
     </div>

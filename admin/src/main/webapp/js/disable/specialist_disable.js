@@ -23,14 +23,13 @@ function specialistHideError(error) {
   error.style.display = 'none';
 }
 
-function specialistSetError(error, message) {
-  error.textContent = message;
+function specialistSetError(error) {
   error.style.display = 'block';
 }
 
 function validateSpecialistCreateField(input, error) {
   if (input.value.trim() === '') {
-    specialistSetError(error, 'Field is required');
+    specialistSetError(error);
     return false;
   } else {
     specialistHideError(error);
@@ -42,7 +41,7 @@ function checkCreateSpecialistExists(input, error) {
   var value = input.value.trim();
   for (var i = 0; i < specialist_createNames.length; i++) {
     if (specialist_createNames[i] === value) {
-      specialistSetError(error, 'Specialist already exists');
+      specialistSetError(error);
       return true;
     }
   }
@@ -61,15 +60,18 @@ function validateSpecialistCreateForm() {
       valid = false;
     }
 
-    if (input.value.trim() !== '') {
-      if (checkCreateSpecialistExists(input, error)) {
+    if (input.value.trim() !== '' && field.inputId === "specialist_CreateNameInput") {
+      if (checkCreateSpecialistExists(input, document.getElementById('duplicateSpecialistError'))) {
         valid = false;
       }
     }
     if(input.id == "specialist_CreatePhoneInput") {
         if (input.value.length < 11) {
-            specialistSetError(error, 'Number is not valid. Minimum length must be 8 number');
+            specialistSetError(document.getElementById('specialist_create_validPhoneError'));
+            specialist_createBtn.disabled = true;
             return true;
+        } else {
+         specialistHideError(document.getElementById('specialist_create_validPhoneError'));
         }
     }
 
@@ -84,6 +86,8 @@ function resetSpecialistCreateForm() {
     input.value = '';
     const error = document.getElementById(field.errorId);
     specialistHideError(error);
+    specialistHideError(document.getElementById('duplicateSpecialistError'));
+    specialistHideError(document.getElementById('specialist_create_validPhoneError'));
   }
 }
 
@@ -140,7 +144,7 @@ var specialist_tableContainer = document.getElementById('specialistTable');
 
 function validateSpecialistUpdateField(input, error) {
   if (input.value.trim() === '') {
-    specialistSetError(error, 'Field is required');
+    specialistSetError(error);
     return false;
   } else {
     specialistHideError(error);
@@ -152,15 +156,10 @@ function checkUpdateSpecialistExists(input, error) {
   var value = input.value.trim();
     for (var i = 0; i < specialist_updateNames.length; i++) {
         if (specialist_updateNames[i] === value) {
-        specialistSetError(error, 'Specialist already exists');
+        specialistSetError(error);
         return true;
         }
     }
-    if(value === '') {
-        specialistSetError(error, 'Field is required');
-        return true;
-    }
-
   specialistHideError(error);
   return false;
 }
@@ -177,15 +176,18 @@ function validateSpecialistUpdateForm() {
     }
 
     if (field.inputId === "update-specialist_newNameInput" && input.value.trim() !== $('#update-specialist_servNameInput').val()) {
-      if (checkUpdateSpecialistExists(input, error)) {
+      if (checkUpdateSpecialistExists(input, document.getElementById('duplicateSpecialistUpdateError'))) {
         valid = false;
       }
     }
 
     if(input.id == "update-specialist_newPhoneInput") {
         if (input.value.length < 11) {
-            specialistSetError(error, 'Number is not valid.Minimum length must be 8 number');
+            specialistSetError(document.getElementById('specialist_update_validPhoneError'));
+            specialist_updateBtn.disabled = true;
             return true;
+        } else {
+            specialistHideError(document.getElementById('specialist_update_validPhoneError'));
         }
     }
   }
@@ -199,6 +201,8 @@ function resetSpecialistUpdateForm() {
     input.value = '';
     const error = document.getElementById(field.errorId);
     specialistHideError(error);
+    specialistHideError(document.getElementById('duplicateSpecialistUpdateError'));
+    specialistHideError(document.getElementById('specialist_update_validPhoneError'));
   }
 }
 

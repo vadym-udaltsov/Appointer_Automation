@@ -106,10 +106,4 @@ $(window).ready(function () {
             applyStyleAfterDataLoad();
         }, 150);
     });
-
-    $("#department_UpdatePopup").click(function() {
-        setTimeout(function() {
-            applyStyleAfterDataLoad();
-        }, 150);
-    });
 });

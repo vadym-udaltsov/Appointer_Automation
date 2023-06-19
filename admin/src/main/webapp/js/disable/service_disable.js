@@ -24,14 +24,13 @@ function hideError(error) {
   error.style.display = 'none';
 }
 
-function setError(error, message) {
-  error.textContent = message;
+function setError(error) {
   error.style.display = 'block';
 }
 
 function validateCreateField(input, error) {
   if (input.value.trim() === '') {
-    setError(error, 'Field is required');
+    setError(error);
     return false;
   } else {
     hideError(error);
@@ -43,7 +42,7 @@ function checkCreateServiceExists(input, error) {
   var value = input.value.trim();
   for (var i = 0; i < createNames.length; i++) {
     if (createNames[i] === value) {
-      setError(error, 'Service already exists');
+      setError(error);
       return true;
     }
   }
@@ -62,8 +61,8 @@ function validateCreateForm() {
       valid = false;
     }
 
-    if (input.value.trim() !== '') {
-      if (checkCreateServiceExists(input, error)) {
+    if (input.value.trim() !== '' && field.inputId === "service_Create-servNameInput") {
+      if (checkCreateServiceExists(input, document.getElementById('duplicateServiceError'))) {
         valid = false;
       }
     }
@@ -78,6 +77,7 @@ function resetCreateForm() {
     input.value = '';
     const error = document.getElementById(field.errorId);
     hideError(error);
+    hideError(document.getElementById('duplicateServiceError'));
   }
 }
 
@@ -135,7 +135,7 @@ var tableContainer = document.getElementById('servicesTable');
 
 function validateUpdateField(input, error) {
   if (input.value.trim() === '') {
-    setError(error, 'Field is required');
+    setError(error);
     return false;
   } else {
     hideError(error);
@@ -147,15 +147,10 @@ function checkUpdateServiceExists(input, error) {
   var value = input.value.trim();
     for (var i = 0; i < updateNames.length; i++) {
         if (updateNames[i] === value) {
-        setError(error, 'Service already exists');
+        setError(error);
         return true;
         }
     }
-    if(value === '') {
-        setError(error, 'Field is required');
-        return true;
-    }
-
   hideError(error);
   return false;
 }
@@ -172,7 +167,7 @@ function validateUpdateForm() {
     }
 
     if (field.inputId === "update-service_newNameInput" && input.value.trim() !== $('#update-service_servNameInput').val()) {
-      if (checkUpdateServiceExists(input, error)) {
+      if (checkUpdateServiceExists(input, document.getElementById('duplicateServiceUpdateError'))) {
         valid = false;
       }
     }
@@ -187,6 +182,7 @@ function resetUpdateForm() {
     input.value = '';
     const error = document.getElementById(field.errorId);
     hideError(error);
+    hideError(document.getElementById('duplicateServiceUpdateError'));
   }
 }
 
