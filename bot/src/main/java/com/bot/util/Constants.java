@@ -11,6 +11,7 @@ public class Constants {
     public static final String HOME = "Home";
 
     public static final String UNAVAILABLE_DATE = "❌";
+    public static final String STAR_SIGN = "⭐⭐⭐⭐⭐";
     public static final String EMPTY_DATE = "--";
     public static final String IGNORE = "ignore";
 

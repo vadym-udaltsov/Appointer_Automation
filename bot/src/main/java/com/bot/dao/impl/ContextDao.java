@@ -1,5 +1,8 @@
 package com.bot.dao.impl;
 
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
@@ -27,6 +30,16 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
     @Override
     public void updateContext(Context context) {
         overwriteItem(context);
+    }
+
+    @Override
+    public Context getAdminContext(String phoneNumber, String departmentId) {
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("pn = :pn AND did = :did")
+                .withValueMap(new ValueMap()
+                        .withString(":pn", phoneNumber)
+                        .withString(":did", departmentId));
+        return getItemByIndexQuery(spec, Context.INDEX_NAME);
     }
 
     @Override

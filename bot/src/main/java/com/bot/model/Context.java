@@ -2,6 +2,8 @@ package com.bot.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
@@ -12,6 +14,7 @@ import com.bot.converter.MapObjectConverter;
 import com.commons.model.DynamoDbEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import software.amazon.awssdk.utils.StringUtils;
@@ -34,13 +37,17 @@ public class Context extends DynamoDbEntity {
     public static final String LOCALE_FIELD = "l";
     public static final String NAVIGATION_FIELD = "n";
     public static final String PHONE_FIELD = "pn";
+    public static final String INDEX_NAME = "pn-did-index";
 
     @DynamoDBHashKey(attributeName = HASH_KEY)
+    @JsonProperty(HASH_KEY)
     private long userId;
 
     @DynamoDBRangeKey(attributeName = RANGE_KEY)
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = INDEX_NAME)
     private String departmentId;
 
+    @JsonProperty(LOCALE_FIELD)
     @DynamoDBAttribute(attributeName = LOCALE_FIELD)
     @DynamoDBTypeConvertedEnum
     private Language language;
@@ -49,11 +56,15 @@ public class Context extends DynamoDbEntity {
     private List<String> navigation;
 
     @DynamoDBAttribute(attributeName = PHONE_FIELD)
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = INDEX_NAME)
     private String phoneNumber;
 
     @DynamoDBAttribute(attributeName = PARAMS_FIELD)
     @DynamoDBTypeConverted(converter = MapObjectConverter.class)
     private Map<String, Object> params;
+
+    @DynamoDBAttribute(attributeName = "name")
+    private String name;
 
     @Override
     @JsonIgnore
@@ -71,6 +82,7 @@ public class Context extends DynamoDbEntity {
                 .with(LOCALE_FIELD, language == null ? Language.US.name() : language.name())
                 .withString(PHONE_FIELD, StringUtils.isBlank(phoneNumber) ? "n/a" : phoneNumber)
                 .withMap(PARAMS_FIELD, params)
+                .withString("name", name == null ? "n/a" : name)
                 .withList("n", navigation == null ? List.of() : navigation);
     }
 

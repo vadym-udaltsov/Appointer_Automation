@@ -23,6 +23,9 @@
   "Duration: ${duration} min": "Продолжительность: ${duration} мин",
   "Your appointments:": "Твои записи:",
   "Created appointment:": "Создана запись:",
+  "Client: ${client}": "Клиент: ${client}",
+  "Phone Number: ${phone}": "Телефон: ${phone}",
+  "Department: ${department}": "Салон: ${department}",
 
   "APRIL": "Апрель",
   "MAY": "Май",

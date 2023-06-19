@@ -172,7 +172,7 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
                 new AttributeValue().withN(String.valueOf(department.getStartWork())), AttributeAction.PUT);
         updates.put("sw", startWork);
         AttributeValueUpdate endWork = new AttributeValueUpdate(
-                new AttributeValue().withN(String.valueOf(18)), AttributeAction.PUT);
+                new AttributeValue().withN(String.valueOf(department.getEndWork())), AttributeAction.PUT);
         updates.put("ew", endWork);
         List<AttributeValue> nonWorkingDays = department.getNonWorkingDays().stream()
                 .map(d -> new AttributeValue().withN(String.valueOf(d)))

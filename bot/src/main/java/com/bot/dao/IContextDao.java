@@ -3,8 +3,6 @@ package com.bot.dao;
 import com.bot.model.Context;
 import com.bot.model.Language;
 
-import java.util.Map;
-
 public interface IContextDao {
 
     void saveContext(Context context);
@@ -14,6 +12,8 @@ public interface IContextDao {
     Context getContext(long userId, String departmentId);
 
     void updateLocale(long id, String departmentId, Language language);
+
+    Context getAdminContext(String phoneNumber, String departmentId);
 
     void resetLocationToDashboard(Context context);
 

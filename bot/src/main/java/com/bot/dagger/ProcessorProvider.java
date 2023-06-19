@@ -16,6 +16,7 @@ import com.bot.processor.impl.start.SetContactStartDashboard;
 import com.bot.processor.impl.start.SetLanguageAskContactsProcessor;
 import com.bot.service.IAppointmentService;
 import com.bot.service.IContextService;
+import com.bot.service.ISendMessageService;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
@@ -82,8 +83,9 @@ public class ProcessorProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CREATE_APP_5)
-    public IProcessor createAppFifth(IContextService contextService, IAppointmentService appointmentService) {
-        return new CreateAppointmentFifthStepProcessor(contextService, appointmentService);
+    public IProcessor createAppFifth(IContextService contextService, IAppointmentService appointmentService,
+                                     ISendMessageService sendMessageService) {
+        return new CreateAppointmentFifthStepProcessor(contextService, appointmentService, sendMessageService);
     }
 
     //next step processor beans

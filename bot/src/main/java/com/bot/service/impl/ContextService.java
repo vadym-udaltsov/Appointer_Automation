@@ -3,11 +3,9 @@ package com.bot.service.impl;
 import com.bot.dao.IContextDao;
 import com.bot.model.Context;
 import com.bot.model.Language;
-import com.bot.model.Strategy;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.MessageUtils;
-import com.bot.util.StrategyProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -31,6 +29,11 @@ public class ContextService implements IContextService {
         if (context != null) {
             contextDao.updateContext(context);
         }
+    }
+
+    @Override
+    public Context getAdminContext(String phoneNumber, String departmentId) {
+        return contextDao.getAdminContext(phoneNumber, departmentId);
     }
 
     @Override

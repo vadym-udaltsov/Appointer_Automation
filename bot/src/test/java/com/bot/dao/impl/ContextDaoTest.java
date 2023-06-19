@@ -2,7 +2,6 @@ package com.bot.dao.impl;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.bot.converter.MapObjectConverter;
 import com.bot.model.Context;
@@ -19,13 +18,20 @@ import java.util.Map;
 
 class ContextDaoTest {
 
+    private AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
+    private DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
+    private ContextDao contextDao = new ContextDao(dynamoDbFactory);
+
     //    @Test
     void getContext() {
-        AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
-        DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
-        ContextDao contextDao = new ContextDao(dynamoDbFactory);
         Context context = contextDao.getContext(538025182, "bbad4b51");
         List<FreeSlot> slots = ContextUtils.getSpecialistSlotsConverted(context, "9b91bc16");
+        System.out.println();
+    }
+
+//    @Test
+    public void shouldGetItemByIndex() {
+        Context context = contextDao.getAdminContext("+380505746182", "52c59292");
         System.out.println();
     }
 
@@ -51,9 +57,6 @@ class ContextDaoTest {
 
     //    @Test
     public void testContext() {
-        AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
-        DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
-        ContextDao contextDao = new ContextDao(dynamoDbFactory);
         Context context = new Context();
         context.setUserId(538025182);
         context.setDepartmentId("bbad4b51");

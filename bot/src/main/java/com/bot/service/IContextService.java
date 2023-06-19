@@ -16,6 +16,8 @@ public interface IContextService {
 
     void removeLastLocation(Context context);
 
+    Context getAdminContext(String phoneNumber, String departmentId);
+
     void setPreviousStep(Context context);
 
     void resetLocationToDashboard(Context context);

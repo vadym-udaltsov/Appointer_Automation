@@ -33,6 +33,16 @@ public class Localizer implements ILocalizer {
     private final Map<Language, Map<String, String>> keysDictionaries = new HashMap<>();
 
     @Override
+    public String localizeMessage(List<LString> messages, Context context) {
+        Map<String, String> dictionary = getDictionary(context.getLanguage());
+        StringBuilder result = new StringBuilder();
+        for (LString message : messages) {
+            result.append(localize(message.getTitle(), dictionary, message.getPlaceholders())).append(LS);
+        }
+        return result.toString();
+    }
+
+    @Override
     public void localizeRequest(Update update, Context context) {
         if (context == null) {
             return;
