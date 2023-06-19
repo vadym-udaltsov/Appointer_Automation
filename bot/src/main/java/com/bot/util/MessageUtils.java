@@ -94,10 +94,6 @@ public class MessageUtils {
         return holder("Select action", ButtonsType.KEYBOARD, request);
     }
 
-    public static MessageHolder buildDashboardHolder(String message) {
-        return buildDashboardHolder(message, List.of());
-    }
-
     public static MessageHolder buildDashboardHolder(String message, List<LString> messageLines) {
         String result = "Select action";
         if (!message.isBlank()) {
@@ -181,8 +177,8 @@ public class MessageUtils {
         return buttons;
     }
 
-    public static BuildKeyboardRequest buildVerticalHolderRequestWithCommon(List<String> availableSpecialists) {
-        List<Button> buttons = availableSpecialists.stream()
+    public static BuildKeyboardRequest buildVerticalHolderRequestWithCommon(List<String> titles) {
+        List<Button> buttons = titles.stream()
                 .map(s -> Button.builder()
                         .value(s)
                         .build())

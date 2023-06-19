@@ -1,13 +1,11 @@
-package com.bot.processor.impl.appointment.my;
+package com.bot.processor.impl.general.user.appointment;
 
 import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
-import com.bot.model.LString;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
-import com.bot.processor.IProcessor;
 import com.bot.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
@@ -16,25 +14,21 @@ import com.bot.util.MessageUtils;
 import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class MyAppointmentsSecondStepProcessor implements IProcessor {
-    private static final String LS = System.lineSeparator();
+public abstract class AppointmentsSecondStepProcessor {
 
     private final IAppointmentService appointmentService;
 
-    @Override
-    public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
+    protected List<MessageHolder> buildResponse(ProcessRequest request) {
         Update update = request.getUpdate();
         Department department = request.getDepartment();
         Context context = request.getContext();
@@ -49,17 +43,17 @@ public class MyAppointmentsSecondStepProcessor implements IProcessor {
         long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), false);
         long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), true);
 
-        List<Appointment> appointments = appointmentService.getAppointmentsByUserId(context.getUserId(), startOfDay, endOfDay);
-        List<LString> messagesToLocalize = new ArrayList<>();
-        messagesToLocalize.add(LString.builder().title("Your appointments:").build());
-        messagesToLocalize.add(LString.empty());
-        for (Appointment appointment : appointments) {
-            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment);
-            messagesToLocalize.add(LString.empty());
-        }
         ContextUtils.resetLocationToDashboard(context);
-        return List.of(MessageUtils.buildDashboardHolder(messagesToLocalize));
+        List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
+        return getHolders(appointments);
     }
+
+    protected Supplier<List<Appointment>> getAppointmentSupplier(ProcessRequest request, long start, long finish) {
+        long userId = request.getContext().getUserId();
+        return () -> appointmentService.getAppointmentsByUserId(userId, start, finish);
+    }
+
+    protected abstract List<MessageHolder> getHolders(List<Appointment> appointments);
 
     private List<MessageHolder> buildResponse(Context context, Department department, boolean isNextMonth) {
         long startDate = DateUtils.getStartOfMonthDate(department, isNextMonth);

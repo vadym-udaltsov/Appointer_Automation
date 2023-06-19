@@ -41,7 +41,7 @@ public class Constants {
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
             "GENERAL::ADMIN", List.of("Appointments list", "Specialists list"),
-            "GENERAL::USER", List.of("Create appointment", "My appointments")
+            "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment")
     );
 
     public static class Processors {
@@ -56,8 +56,12 @@ public class Constants {
         public static final String SET_SPEC_ASK_SERVICE = "createApp3";
         public static final String SET_SERVICE_ASK_SLOT = "createApp4";
         public static final String CREATE_APPOINTMENT = "createApp5";
+
         public static final String MY_APP_1 = "myApps1";
         public static final String MY_APP_2 = "myApps2";
+
+        public static final String CANCEL_APP1 = "cancelApp1";
+        public static final String CANCEL_APP2 = "cancelApp2";
     }
 
     public static class Numbers {

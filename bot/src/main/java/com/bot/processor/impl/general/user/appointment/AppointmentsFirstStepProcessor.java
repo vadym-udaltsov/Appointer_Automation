@@ -1,4 +1,4 @@
-package com.bot.processor.impl.appointment.my;
+package com.bot.processor.impl.general.user.appointment;
 
 import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
@@ -7,7 +7,6 @@ import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
-import com.bot.processor.IProcessor;
 import com.bot.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
@@ -15,29 +14,27 @@ import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class MyAppointmentsFirstStepProcessor implements IProcessor {
+public class AppointmentsFirstStepProcessor {
 
     private final IAppointmentService appointmentService;
 
-    @Override
-    public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
+    public List<MessageHolder> getAppointmentsFirstStepResponse(ProcessRequest request) {
         Context context = request.getContext();
-        long userId = context.getUserId();
         Department department = request.getDepartment();
         long startDate = DateUtils.getStartOfMonthDate(department, false);
         long currentMothEndDate = DateUtils.getEndOfMonthDate(department, false);
         long nextMonthEndDate = DateUtils.getEndOfMonthDate(department, true);
-        List<Appointment> appointments = appointmentService.getAppointmentsByUserId(userId, startDate, nextMonthEndDate);
+        List<Appointment> appointments = getAppointmentsSupplier(request, startDate, nextMonthEndDate).get();
         if (appointments.size() == 0) {
             ContextUtils.resetLocationToDashboard(context);
             BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
@@ -66,5 +63,10 @@ public class MyAppointmentsFirstStepProcessor implements IProcessor {
                 .build();
         MessageHolder commonButtonsHolder = MessageUtils.holder("Select day", ButtonsType.KEYBOARD, commonsRequest);
         return List.of(commonButtonsHolder, datePicker);
+    }
+
+    protected Supplier<List<Appointment>> getAppointmentsSupplier(ProcessRequest request, long startDate, long finishDate) {
+        long userId = request.getContext().getUserId();
+        return () -> appointmentService.getAppointmentsByUserId(userId, startDate, finishDate);
     }
 }

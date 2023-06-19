@@ -50,6 +50,18 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": "cancelApp1",
+              "key": "Cancel appointment",
+              "nested": [
+                {
+                  "name": "cancelApp2",
+                  "key": "any",
+                  "nested": [
+                  ]
+                }
+              ]
             }
           ]
         }

@@ -15,8 +15,8 @@ public class StrategyProvider {
 
     static {
         strategyMap = new HashMap<>();
-        strategyMap.put("GENERAL::USER", getStrategyFile("strategy/general_user.json"));
-        strategyMap.put("GENERAL::ADMIN", getStrategyFile("strategy/general_admin.json"));
+        strategyMap.put("GENERAL::USER", getStrategyFile("strategy/general/user.json"));
+        strategyMap.put("GENERAL::ADMIN", getStrategyFile("strategy/general/admin.json"));
     }
 
     public static Strategy getStrategyByLocationAndKey(List<String> location, String key, String strategyKey) {

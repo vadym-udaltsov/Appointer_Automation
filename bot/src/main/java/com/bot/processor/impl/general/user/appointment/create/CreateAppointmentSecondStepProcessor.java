@@ -1,4 +1,4 @@
-package com.bot.processor.impl.appointment.create;
+package com.bot.processor.impl.general.user.appointment.create;
 
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;

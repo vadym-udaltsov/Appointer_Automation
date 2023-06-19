@@ -4,13 +4,15 @@ import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
-import com.bot.processor.impl.appointment.create.CreateAppointmentFifthStepProcessor;
-import com.bot.processor.impl.appointment.create.CreateAppointmentFirstStepProcessor;
-import com.bot.processor.impl.appointment.create.CreateAppointmentFourthStepProcessor;
-import com.bot.processor.impl.appointment.create.CreateAppointmentSecondStepProcessor;
-import com.bot.processor.impl.appointment.create.CreateAppointmentThirdStepProcessor;
-import com.bot.processor.impl.appointment.my.MyAppointmentsFirstStepProcessor;
-import com.bot.processor.impl.appointment.my.MyAppointmentsSecondStepProcessor;
+import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFirstStepProcessor;
+import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentSecondStepProcessor;
+import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFifthStepProcessor;
+import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFirstStepProcessor;
+import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFourthStepProcessor;
+import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentSecondStepProcessor;
+import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentThirdStepProcessor;
+import com.bot.processor.impl.general.user.appointment.my.MyAppointmentsFirstStepProcessor;
+import com.bot.processor.impl.general.user.appointment.my.MyAppointmentsSecondStepProcessor;
 import com.bot.processor.impl.start.AskLanguageProcessor;
 import com.bot.processor.impl.start.SetContactStartDashboard;
 import com.bot.processor.impl.start.SetLanguageAskContactsProcessor;
@@ -29,6 +31,24 @@ import java.util.Map;
 public class ProcessorProvider {
 
     //----------------Appointment-----------------------
+    //             ----------------Cancel-------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_APP1)
+    public IProcessor cancelApp1(IAppointmentService appointmentService) {
+        return new CancelAppointmentFirstStepProcessor(appointmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_APP2)
+    public IProcessor cancelApp2(IAppointmentService appointmentService) {
+        return new CancelAppointmentSecondStepProcessor(appointmentService);
+    }
+
     //             ----------------My-----------------------
     @Provides
     @Singleton
