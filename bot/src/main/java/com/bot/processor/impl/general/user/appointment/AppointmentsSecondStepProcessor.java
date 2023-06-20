@@ -43,8 +43,9 @@ public abstract class AppointmentsSecondStepProcessor {
         long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), false);
         long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), true);
 
-        ContextUtils.resetLocationToDashboard(context);
+        resetLocationToDashboard(context);
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
+        fillContextParams(appointments, context);
         return getHolders(appointments);
     }
 
@@ -78,5 +79,11 @@ public abstract class AppointmentsSecondStepProcessor {
         int monthToAdd = nextMonth ? 1 : 0;
         ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(numberOfCurrentMonth + monthToAdd));
         ContextUtils.setPreviousStep(context);
+    }
+
+    protected void fillContextParams(List<Appointment> appointments, Context context) {
+    }
+
+    protected void resetLocationToDashboard(Context context) {
     }
 }

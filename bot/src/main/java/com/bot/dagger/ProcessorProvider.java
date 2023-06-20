@@ -5,7 +5,9 @@ import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFirstStepProcessor;
+import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFourthStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentSecondStepProcessor;
+import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentThirdStepProcessor;
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFifthStepProcessor;
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFourthStepProcessor;
@@ -47,6 +49,22 @@ public class ProcessorProvider {
     @CommandKey(CommandType.CANCEL_APP2)
     public IProcessor cancelApp2(IAppointmentService appointmentService) {
         return new CancelAppointmentSecondStepProcessor(appointmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_APP3)
+    public IProcessor cancelApp3() {
+        return new CancelAppointmentThirdStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_APP4)
+    public IProcessor cancelApp4(IAppointmentService appointmentService) {
+        return new CancelAppointmentFourthStepProcessor();
     }
 
     //             ----------------My-----------------------

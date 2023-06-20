@@ -59,6 +59,18 @@
                   "name": "cancelApp2",
                   "key": "any",
                   "nested": [
+                    {
+                      "name": "cancelApp3",
+                      "key": "any",
+                      "nested": [
+                        {
+                          "name": "cancelApp4",
+                          "key": "any",
+                          "nested": [
+                          ]
+                        }
+                      ]
+                    }
                   ]
                 }
               ]

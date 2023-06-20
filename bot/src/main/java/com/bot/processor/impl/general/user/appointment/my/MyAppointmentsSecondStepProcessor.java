@@ -1,12 +1,14 @@
 package com.bot.processor.impl.general.user.appointment.my;
 
 import com.bot.model.Appointment;
+import com.bot.model.Context;
 import com.bot.model.LString;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
 import com.bot.service.IAppointmentService;
+import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -34,5 +36,10 @@ public class MyAppointmentsSecondStepProcessor extends AppointmentsSecondStepPro
             messagesToLocalize.add(LString.empty());
         }
         return List.of(MessageUtils.buildDashboardHolder(messagesToLocalize));
+    }
+
+    @Override
+    protected void resetLocationToDashboard(Context context) {
+        ContextUtils.resetLocationToDashboard(context);
     }
 }

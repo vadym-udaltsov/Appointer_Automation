@@ -62,6 +62,8 @@ public class Constants {
 
         public static final String CANCEL_APP1 = "cancelApp1";
         public static final String CANCEL_APP2 = "cancelApp2";
+        public static final String CANCEL_APP3 = "cancelApp3";
+        public static final String CANCEL_APP4 = "cancelApp4";
     }
 
     public static class Numbers {

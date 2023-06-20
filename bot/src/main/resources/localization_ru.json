@@ -16,6 +16,9 @@
   "Select available date": "Выбери доступную дату",
   "Select service from proposed": "Выбери услугу из доступных",
   "Select time from proposed": "Выбери доступное время",
+  "Select appointment": "Выбери запись",
+  "Submit": "Подтверждаю",
+  "Submit appointment deletion": "Подтверди удаление записи",
 
   "Service: ${service}": "Услуга: ${service}",
   "Specialist: ${specialist}": "Специалист: ${specialist}",

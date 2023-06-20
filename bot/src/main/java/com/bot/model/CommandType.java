@@ -26,7 +26,9 @@ public enum CommandType {
     MY_APP_2(Constants.Processors.MY_APP_2),
 
     CANCEL_APP1(Constants.Processors.CANCEL_APP1),
-    CANCEL_APP2(Constants.Processors.CANCEL_APP2);
+    CANCEL_APP2(Constants.Processors.CANCEL_APP2),
+    CANCEL_APP3(Constants.Processors.CANCEL_APP3),
+    CANCEL_APP4(Constants.Processors.CANCEL_APP4);
 
     private final String value;
 
