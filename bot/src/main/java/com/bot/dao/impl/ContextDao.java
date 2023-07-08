@@ -1,7 +1,6 @@
 package com.bot.dao.impl;
 
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
-import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
@@ -61,7 +60,7 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
                         new AttributeValue().withL(
                                 List.of(new AttributeValue(Constants.Processors.ASK_LANG),
                                         new AttributeValue(Constants.Processors.SET_LANG_ASK_CONT),
-                                        new AttributeValue(Constants.Processors.SET_CONT_START_DASH)))));
+                                        new AttributeValue(Constants.Processors.START_DASH)))));
         updateItem(request);
     }
 

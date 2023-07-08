@@ -65,7 +65,7 @@ public class ContextUtils {
     public static void resetLocationToDashboard(Context context) {
         context.setParams(Map.of());
         context.setNavigation(List.of(Constants.Processors.ASK_LANG, Constants.Processors.SET_LANG_ASK_CONT,
-                Constants.Processors.SET_CONT_START_DASH));
+                Constants.Processors.SET_CONTACT, Constants.Processors.START_DASH));
     }
 
     public static String getStrategyKey(Context context, Department department) {

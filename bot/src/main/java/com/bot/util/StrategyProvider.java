@@ -27,15 +27,17 @@ public class StrategyProvider {
         if ("Back".equals(key)) {
             return current;
         }
-
         List<Strategy> nested = current.getNested();
         if (nested.size() == 1) {
             return nested.get(0);
         }
+        if (key == null) {
+            return current;
+        }
         return nested.stream()
                 .filter(s -> key.equals(s.getKey()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Failed to find strategy with key: " + key));
+                .orElse(current);
     }
 
     private static Strategy getCurrentStrategy(Strategy strategy, String location) {

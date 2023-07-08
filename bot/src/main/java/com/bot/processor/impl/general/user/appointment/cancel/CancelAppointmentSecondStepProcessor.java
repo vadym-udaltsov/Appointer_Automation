@@ -37,7 +37,7 @@ public class CancelAppointmentSecondStepProcessor extends AppointmentsSecondStep
     }
 
     @Override
-    protected List<MessageHolder> getHolders(List<Appointment> appointments) {
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
         List<String> buttons = appointments.stream().map(this::getAppointmentButtonTitle).collect(Collectors.toList());
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(buttons);
         return List.of(MessageUtils.holder("Select appointment", ButtonsType.KEYBOARD, holderRequest));

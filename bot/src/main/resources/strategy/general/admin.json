@@ -7,9 +7,31 @@
       "key": "any",
       "nested": [
         {
-          "name": "setContactStartDash",
+          "name": "setContact",
           "key": "any",
           "nested": [
+            {
+              "name": "startDash",
+              "key": "any",
+              "nested": [
+                {
+                  "name": "getAllAppointments",
+                  "key": "Appointments",
+                  "nested": [
+                    {
+                      "name": "getAllAppointmentsByDate",
+                      "key": "any",
+                      "nested": []
+                    }
+                  ]
+                },
+                {
+                  "name": "getAllSpecialists",
+                  "key": "Specialists",
+                  "nested": []
+                }
+              ]
+            }
           ]
         }
       ]

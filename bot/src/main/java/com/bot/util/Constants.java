@@ -40,7 +40,7 @@ public class Constants {
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments list", "Specialists list"),
+            "GENERAL::ADMIN", List.of("Appointments", "Specialists"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment")
     );
 
@@ -48,7 +48,8 @@ public class Constants {
         //start
         public static final String ASK_LANG = "askLang";
         public static final String SET_LANG_ASK_CONT = "setLangAskContact";
-        public static final String SET_CONT_START_DASH = "setContactStartDash";
+        public static final String SET_CONTACT = "setContact";
+        public static final String START_DASH = "startDash";
 
         //appointment
         public static final String START_CREATE_APP = "createApp1";
@@ -64,6 +65,10 @@ public class Constants {
         public static final String CANCEL_APP2 = "cancelApp2";
         public static final String CANCEL_APP3 = "cancelApp3";
         public static final String CANCEL_APP4 = "cancelApp4";
+
+        //admin
+        public static final String GET_ALL_APPOINTMENTS_1 = "getAllAppointments";
+        public static final String GET_ALL_APPOINTMENTS_2 = "getAllAppointmentsByDate";
     }
 
     public static class Numbers {
@@ -106,6 +111,8 @@ public class Constants {
 
     public static class Messages {
         public static final String SHARE_CONTACT = "Please share your phone number";
-
+        public static final String SELECT_ACTION = "Select action";
+        public static final String INCORRECT_ACTION = "You entered incorrect value, select again";
+        public static final String INCORRECT_DATE = "You entered incorrect date, select again";
     }
 }

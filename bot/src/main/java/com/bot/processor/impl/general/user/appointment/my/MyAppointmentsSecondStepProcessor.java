@@ -27,7 +27,7 @@ public class MyAppointmentsSecondStepProcessor extends AppointmentsSecondStepPro
     }
 
     @Override
-    protected List<MessageHolder> getHolders(List<Appointment> appointments) {
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
         List<LString> messagesToLocalize = new ArrayList<>();
         messagesToLocalize.add(LString.builder().title("Your appointments:").build());
         messagesToLocalize.add(LString.empty());
@@ -35,7 +35,7 @@ public class MyAppointmentsSecondStepProcessor extends AppointmentsSecondStepPro
             MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment);
             messagesToLocalize.add(LString.empty());
         }
-        return List.of(MessageUtils.buildDashboardHolder(messagesToLocalize));
+        return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));
     }
 
     @Override

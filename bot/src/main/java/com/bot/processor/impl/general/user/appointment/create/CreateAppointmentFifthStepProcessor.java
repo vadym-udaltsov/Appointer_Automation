@@ -70,7 +70,8 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment);
         List<LString> adminMessages = createAdminMessage(messagesToLocalize, context, department);
         sendMessageService.sendNotificationToAdmins(adminMessages, department);
-        return List.of(MessageUtils.buildDashboardHolder(messagesToLocalize));
+        String strategyKey = ContextUtils.getStrategyKey(context, department);
+        return List.of(MessageUtils.buildDashboardHolder("", messagesToLocalize, strategyKey));
     }
 
     private List<LString> createAdminMessage(List<LString> messagesToLocalize, Context context, Department department) {

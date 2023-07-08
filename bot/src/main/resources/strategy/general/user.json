@@ -7,66 +7,72 @@
       "key": "any",
       "nested": [
         {
-          "name": "setContactStartDash",
+          "name": "setContact",
           "key": "any",
           "nested": [
             {
-              "name": "createApp1",
-              "key": "Create appointment",
+              "name": "startDash",
+              "key": "any",
               "nested": [
                 {
-                  "name": "createApp2",
-                  "key": "any",
+                  "name": "createApp1",
+                  "key": "Create appointment",
                   "nested": [
                     {
-                      "name": "createApp3",
+                      "name": "createApp2",
                       "key": "any",
                       "nested": [
                         {
-                          "name": "createApp4",
+                          "name": "createApp3",
                           "key": "any",
                           "nested": [
                             {
-                              "name": "createApp5",
+                              "name": "createApp4",
                               "key": "any",
-                              "nested": []
+                              "nested": [
+                                {
+                                  "name": "createApp5",
+                                  "key": "any",
+                                  "nested": []
+                                }
+                              ]
                             }
                           ]
                         }
                       ]
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "name": "myApps1",
-              "key": "My appointments",
-              "nested": [
+                },
                 {
-                  "name": "myApps2",
-                  "key": "any",
-                  "nested": [
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "cancelApp1",
-              "key": "Cancel appointment",
-              "nested": [
-                {
-                  "name": "cancelApp2",
-                  "key": "any",
+                  "name": "myApps1",
+                  "key": "My appointments",
                   "nested": [
                     {
-                      "name": "cancelApp3",
+                      "name": "myApps2",
+                      "key": "any",
+                      "nested": [
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "cancelApp1",
+                  "key": "Cancel appointment",
+                  "nested": [
+                    {
+                      "name": "cancelApp2",
                       "key": "any",
                       "nested": [
                         {
-                          "name": "cancelApp4",
+                          "name": "cancelApp3",
                           "key": "any",
                           "nested": [
+                            {
+                              "name": "cancelApp4",
+                              "key": "any",
+                              "nested": [
+                              ]
+                            }
                           ]
                         }
                       ]

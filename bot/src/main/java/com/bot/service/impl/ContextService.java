@@ -65,7 +65,7 @@ public class ContextService implements IContextService {
         log.info("Resetting location to dashboard");
         context.setParams(Map.of());
         context.setNavigation(List.of(Constants.Processors.ASK_LANG, Constants.Processors.SET_LANG_ASK_CONT,
-                Constants.Processors.SET_CONT_START_DASH));
+                Constants.Processors.SET_CONTACT, Constants.Processors.START_DASH));
         contextDao.updateContext(context);
     }
 

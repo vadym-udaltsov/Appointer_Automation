@@ -4,6 +4,8 @@ import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
+import com.bot.processor.impl.general.admin.appointments.AllAppointmentsFirstStepProcessor;
+import com.bot.processor.impl.general.admin.appointments.AllAppointmentsSecondStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFourthStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentSecondStepProcessor;
@@ -16,8 +18,9 @@ import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentT
 import com.bot.processor.impl.general.user.appointment.my.MyAppointmentsFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.my.MyAppointmentsSecondStepProcessor;
 import com.bot.processor.impl.start.AskLanguageProcessor;
-import com.bot.processor.impl.start.SetContactStartDashboard;
+import com.bot.processor.impl.start.SetContactProcessor;
 import com.bot.processor.impl.start.SetLanguageAskContactsProcessor;
+import com.bot.processor.impl.start.StartDashProcessor;
 import com.bot.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.service.ISendMessageService;
@@ -146,9 +149,17 @@ public class ProcessorProvider {
     @Provides
     @Singleton
     @IntoMap
-    @CommandKey(CommandType.SET_CONT_START_DASH)
-    public IProcessor setContStartDash(IContextService contextService) {
-        return new SetContactStartDashboard(contextService);
+    @CommandKey(CommandType.SET_CONT)
+    public IProcessor setCont(IContextService contextService) {
+        return new SetContactProcessor(contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.START_DASH)
+    public IProcessor startDash(IContextService contextService) {
+        return new StartDashProcessor();
     }
 
     @Provides
@@ -165,6 +176,23 @@ public class ProcessorProvider {
     @CommandKey(CommandType.ASK_LANGUAGE)
     public IProcessor askLanguage(IContextService contextService) {
         return new AskLanguageProcessor(contextService);
+    }
+
+    // ------------------- admin --------------------------
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.GET_ALL_APPOINTMENTS_1)
+    public IProcessor getAllAppointmentsFirst(IAppointmentService appointmentService) {
+        return new AllAppointmentsFirstStepProcessor(appointmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.GET_ALL_APPOINTMENTS_2)
+    public IProcessor getAllAppointmentsSecond(IAppointmentService appointmentService) {
+        return new AllAppointmentsSecondStepProcessor(appointmentService);
     }
 
     @Provides

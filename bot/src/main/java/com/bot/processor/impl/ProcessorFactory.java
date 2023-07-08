@@ -40,7 +40,7 @@ public class ProcessorFactory implements IProcessorFactory {
         log.info("Command key ---------------- " + commandKey);
         if (Constants.HOME.equalsIgnoreCase(commandKey)) {
             contextService.resetLocationToDashboard(context);
-            return processorsMap.get(CommandType.SET_CONT_START_DASH);
+            return processorsMap.get(CommandType.START_DASH);
         }
         List<String> location = context.getNavigation();
         if (Constants.BACK.equals(commandKey)) {
@@ -51,11 +51,7 @@ public class ProcessorFactory implements IProcessorFactory {
         Strategy currentStrategy = StrategyProvider.getStrategyByLocationAndKey(location, commandKey, strategyKey);
         log.info("Current Strategy name --------------------- " + currentStrategy.getName());
         IProcessor processor = resolveProcessor(currentStrategy);
-        if (processor == null) {
-            contextService.resetLocationToDashboard(context);
-            return processorsMap.get(CommandType.SET_CONT_START_DASH);
-        }
-        if (Constants.BACK.equals(commandKey)) {
+        if (currentStrategy.getName().equals(location.get(location.size() - 1)) || Constants.BACK.equals(commandKey)) {
             return processor;
         }
         contextService.updateLocation(context, currentStrategy.getName());

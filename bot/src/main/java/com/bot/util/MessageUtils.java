@@ -16,17 +16,18 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import software.amazon.awssdk.utils.StringUtils;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MessageUtils {
-
-    public static final List<String> DASHBOARD = Arrays.asList("Create appointment", "My appointments");
 
     public static MessageHolder getLanguageMessageHolder() {
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()
@@ -78,32 +79,28 @@ public class MessageUtils {
         return message.getContact();
     }
 
-    public static MessageHolder buildDashboardHolder() {
-        return buildDashboardHolder("", List.of());
+    public static List<MessageHolder> buildDatePicker(Set<String> stringSet, String message, boolean isNextMonth) {
+        BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
+                .params(Map.of(
+                        Constants.IS_NEXT_MONTH, isNextMonth,
+                        Constants.USER_APPOINTMENTS, stringSet))
+                .build();
+        Month month = LocalDate.now().getMonth();
+        MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER_MY_APP, datePickerRequest);
+        BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.TWO_ROW)
+                .buttonsMap(MessageUtils.buildButtons(List.of(), true))
+                .build();
+        MessageHolder commonButtonsHolder = MessageUtils.holder(message, ButtonsType.KEYBOARD, commonsRequest);
+        return List.of(commonButtonsHolder, datePicker);
     }
 
-    public static MessageHolder buildDashboardHolder(List<LString> messageLines) {
-        return buildDashboardHolder("", messageLines);
-    }
-
-    public static MessageHolder buildDashboardHolderByKey(String strategyKey) {
+    public static MessageHolder buildDashboardHolder(String message, List<LString> messageLines, String strategyKey) {
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
                 .buttonsMap(buildButtons(commonButtons(Constants.DASHBOARD_BUTTONS.get(strategyKey)), false))
                 .build();
-        return holder("Select action", ButtonsType.KEYBOARD, request);
-    }
-
-    public static MessageHolder buildDashboardHolder(String message, List<LString> messageLines) {
-        String result = "Select action";
-        if (!message.isBlank()) {
-            result = message + result;
-        }
-        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
-                .type(KeyBoardType.TWO_ROW)
-                .buttonsMap(buildButtons(commonButtons(DASHBOARD), false))
-                .build();
-        return holder(result, ButtonsType.KEYBOARD, request, messageLines);
+        return holder(message, ButtonsType.KEYBOARD, request, messageLines);
     }
 
     public static MessageHolder holder(String message, ButtonsType buttonsType,
@@ -112,6 +109,12 @@ public class MessageUtils {
                 .message(message)
                 .buttonsType(buttonsType)
                 .keyboardRequest(request)
+                .build();
+    }
+
+    public static MessageHolder holder(String message) {
+        return MessageHolder.builder()
+                .message(message)
                 .build();
     }
 

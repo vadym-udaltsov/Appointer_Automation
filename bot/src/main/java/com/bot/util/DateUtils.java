@@ -49,7 +49,6 @@ public class DateUtils {
         LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
         return dateTime.format(DateTimeFormatter.ofPattern("MM/dd,HH:mm"));
     }
-
     public static long getStartOfMonthDate(Department department, boolean isNextMonth) {
         LocalDateTime endDateTime = LocalDate.now()
                 .plusMonths(isNextMonth ? 1 : 0)

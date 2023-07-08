@@ -13,7 +13,8 @@ public enum CommandType {
     //start
     ASK_LANGUAGE(Constants.Processors.ASK_LANG),
     SET_LANG_ASK_CONT(Constants.Processors.SET_LANG_ASK_CONT),
-    SET_CONT_START_DASH(Constants.Processors.SET_CONT_START_DASH),
+    SET_CONT(Constants.Processors.SET_CONTACT),
+    START_DASH(Constants.Processors.START_DASH),
 
     //appointment
     CREATE_APP_1(Constants.Processors.START_CREATE_APP),
@@ -28,7 +29,12 @@ public enum CommandType {
     CANCEL_APP1(Constants.Processors.CANCEL_APP1),
     CANCEL_APP2(Constants.Processors.CANCEL_APP2),
     CANCEL_APP3(Constants.Processors.CANCEL_APP3),
-    CANCEL_APP4(Constants.Processors.CANCEL_APP4);
+    CANCEL_APP4(Constants.Processors.CANCEL_APP4),
+
+    //admin
+    GET_ALL_APPOINTMENTS_1(Constants.Processors.GET_ALL_APPOINTMENTS_1),
+    GET_ALL_APPOINTMENTS_2(Constants.Processors.GET_ALL_APPOINTMENTS_2);
+
 
     private final String value;
 

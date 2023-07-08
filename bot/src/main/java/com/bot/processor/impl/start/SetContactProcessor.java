@@ -9,7 +9,6 @@ import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
-import com.commons.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Contact;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
-public class SetContactStartDashboard implements IProcessor {
+public class SetContactProcessor implements IProcessor {
 
     private final IContextService contextService;
 
@@ -29,11 +28,6 @@ public class SetContactStartDashboard implements IProcessor {
         Update update = request.getUpdate();
         Context context = request.getContext();
         Department department = request.getDepartment();
-        String text = MessageUtils.getTextFromUpdate(update);
-        if (Constants.BACK.equals(text) || Constants.HOME.equals(text)) {
-            String strategyKey = ContextUtils.getStrategyKey(context, department);
-            return List.of(MessageUtils.buildDashboardHolderByKey(strategyKey));
-        }
         Contact contact = MessageUtils.getPhoneNumberFromUpdate(update);
         if (contact == null) {
             contextService.removeLastLocation(context);
@@ -41,6 +35,9 @@ public class SetContactStartDashboard implements IProcessor {
         }
         context.setPhoneNumber("+" + contact.getPhoneNumber());
         context.setName(contact.getFirstName() + " " + contact.getLastName());
-        return List.of(MessageUtils.buildDashboardHolderByKey(ContextUtils.getStrategyKey(context, department)));
+        String strategyKey = ContextUtils.getStrategyKey(context, department);
+        ContextUtils.addNextStepToLocation(context, "startDash", department);
+        contextService.updateContext(context);
+        return List.of(MessageUtils.buildDashboardHolder(Constants.Messages.SELECT_ACTION, List.of(), strategyKey));
     }
 }

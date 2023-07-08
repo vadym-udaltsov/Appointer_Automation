@@ -34,10 +34,10 @@ public abstract class AppointmentsSecondStepProcessor {
         Context context = request.getContext();
         String selectedDay = MessageUtils.getTextFromUpdate(update);
         if (Constants.NEXT_MONTH.equals(selectedDay)) {
-            return buildResponse(context, department, true);
+            return buildResponse(request, true);
         }
         if (Constants.CURRENT_MONTH.equals(selectedDay)) {
-            return buildResponse(context, department, false);
+            return buildResponse(request, false);
         }
         String monthStr = ContextUtils.getStringParam(context, Constants.MONTH);
         long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), false);
@@ -46,7 +46,8 @@ public abstract class AppointmentsSecondStepProcessor {
         resetLocationToDashboard(context);
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
         fillContextParams(appointments, context);
-        return getHolders(appointments);
+        String strategyKey = ContextUtils.getStrategyKey(context, department);
+        return getHolders(appointments, strategyKey);
     }
 
     protected Supplier<List<Appointment>> getAppointmentSupplier(ProcessRequest request, long start, long finish) {
@@ -54,12 +55,14 @@ public abstract class AppointmentsSecondStepProcessor {
         return () -> appointmentService.getAppointmentsByUserId(userId, start, finish);
     }
 
-    protected abstract List<MessageHolder> getHolders(List<Appointment> appointments);
+    protected abstract List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey);
 
-    private List<MessageHolder> buildResponse(Context context, Department department, boolean isNextMonth) {
+    private List<MessageHolder> buildResponse(ProcessRequest request, boolean isNextMonth) {
+        Department department = request.getDepartment();
+        Context context = request.getContext();
         long startDate = DateUtils.getStartOfMonthDate(department, isNextMonth);
         long endDate = DateUtils.getEndOfMonthDate(department, isNextMonth);
-        List<Appointment> appointments = appointmentService.getAppointmentsByUserId(context.getUserId(), startDate, endDate);
+        List<Appointment> appointments = getAppointmentSupplier(request, startDate, endDate).get();
         Set<String> appointmentDays = appointments.stream()
                 .map(a -> DateUtils.getDayTitle(a.getDate()))
                 .collect(Collectors.toSet());
