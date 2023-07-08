@@ -21,8 +21,8 @@ $(window).on('load', function() {
 
     document.getElementById('department_NameSelect').addEventListener('change', function() {
         var checkedSelect = this.value;
+        relocateToPage(JSON.parse(checkedSelect).tp);
         localStorage.setItem('lastSelectedOption', checkedSelect);
-        loadDataFromSelectedDep(url, typeSelect, checkedSelect, update_timeZoneSelect);
     });
 
     $("#department_UpdatePopup").click(function() {
@@ -73,6 +73,24 @@ $(window).on('load', function() {
         return false;
      });
 });
+
+function relocateToPage(depType) {
+   switch(depType)
+   {
+    case 'MASSAGE':
+        if(!window.location.href.includes("massage")) {
+            window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/massage.html';
+        }
+        break;
+    case 'HAIR_DRESS':
+        if(!window.location.href.includes("hair")) {
+            window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/hair.html';
+        }
+        break;
+    default:
+        console.log('404 - Page is not found.');
+   }
+}
 
 function loadCommonData(selectedDepartmentData) {
   var serviceTable = $("#servicesTable");
