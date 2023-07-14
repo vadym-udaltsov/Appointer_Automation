@@ -26,9 +26,9 @@
   "Submit": "Подтверждаю",
   "Submit appointment deletion": "Подтверди удаление записи",
 
-  "Service: ${service}": "Услуга: ${service}",
-  "Specialist: ${specialist}": "Специалист: ${specialist}",
-  "Date: ${date}": "Дата: ${date}",
+  "Service: ${service}": "\uD83D\uDC49 Услуга: ${service}",
+  "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
+  "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",
   "Time: ${time}": "Время: ${time}",
   "Duration: ${duration} min": "Продолжительность: ${duration} мин",
   "Your appointments:": "Твои записи:",

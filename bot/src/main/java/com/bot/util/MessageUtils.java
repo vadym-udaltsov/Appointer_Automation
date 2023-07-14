@@ -8,6 +8,7 @@ import com.bot.model.KeyBoardType;
 import com.bot.model.LString;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
+import com.bot.model.MessageTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Contact;
@@ -16,8 +17,14 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import software.amazon.awssdk.utils.StringUtils;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -190,21 +197,25 @@ public class MessageUtils {
                 .type(KeyBoardType.VERTICAL)
                 .buttonsMap(MessageUtils.buildButtons(buttons, true))
                 .build();
-
     }
 
-    public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment) {
+    public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment, MessageTemplate template) {
         String specialist = appointment.getSpecialist();
         String service = appointment.getService();
         int duration = appointment.getDuration();
         long date = appointment.getDate();
         String dateTitle = DateUtils.getDateTitle(date);
-        messagesToLocalize.add(LString.builder().title("Service: ${service}").placeholders(Map.of("service", service)).build());
+        LocalDateTime startDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
+        LocalDateTime endDate = startDate.plus(duration, ChronoUnit.MINUTES);
+        String startTime = startDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+        String endTime = endDate.format(DateTimeFormatter.ofPattern("HH:mm"));
+        Map<String, LString> messagesMap = new HashMap<>();
+        messagesMap.put("date", LString.builder().title("Date: ${date}").placeholders(Map.of("date", dateTitle.split(",")[0])).build());
+        messagesMap.put("time", LString.builder().title("Time from ${timeFrom} to ${timeTo}").placeholders(Map.of("timeFrom", startTime, "timeTo", endTime)).build());
+        messagesMap.put("service", LString.builder().title("Service: ${service}").placeholders(Map.of("service", service)).build());
         if (!"owner".equals(specialist)) {
-            messagesToLocalize.add(LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
+            messagesMap.put("specialist", LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
         }
-        messagesToLocalize.add(LString.builder().title("Date: ${date}").placeholders(Map.of("date", dateTitle.split(",")[0])).build());
-        messagesToLocalize.add(LString.builder().title("Time: ${time}").placeholders(Map.of("time", dateTitle.split(",")[1])).build());
-        messagesToLocalize.add(LString.builder().title("Duration: ${duration} min").placeholders(Map.of("duration", String.valueOf(duration))).build());
+        template.buildMessages(messagesToLocalize, messagesMap);
     }
 }

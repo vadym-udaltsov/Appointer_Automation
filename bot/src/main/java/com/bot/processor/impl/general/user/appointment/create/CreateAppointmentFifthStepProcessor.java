@@ -7,6 +7,7 @@ import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.bot.model.LString;
 import com.bot.model.MessageHolder;
+import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.service.IAppointmentService;
@@ -67,7 +68,7 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         List<LString> messagesToLocalize = new ArrayList<>();
         messagesToLocalize.add(LString.builder().title("Created appointment:").build());
         messagesToLocalize.add(LString.empty());
-        MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment);
+        MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_ALL_FIELDS);
         List<LString> adminMessages = createAdminMessage(messagesToLocalize, context, department);
         sendMessageService.sendNotificationToAdmins(adminMessages, department);
         String strategyKey = ContextUtils.getStrategyKey(context, department);

@@ -16,7 +16,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +64,7 @@ public class AllAppointmentsSecondStepProcessor extends AppointmentsSecondStepPr
         messagesToLocalize.add(LString.empty());
 
         for (Appointment appointment : appointments) {
-            fillMessagesToLocalize(messagesToLocalize, appointment);
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_WITHOUT_DATE_FIELD);
             messagesToLocalize.add(LString.empty());
         }
         messagesToLocalize.add(LString.builder().title("Select action").build());
@@ -81,19 +80,5 @@ public class AllAppointmentsSecondStepProcessor extends AppointmentsSecondStepPr
     protected Supplier<List<Appointment>> getAppointmentSupplier(ProcessRequest request, long start, long finish) {
         Department department = request.getDepartment();
         return () -> appointmentService.getAppointmentsByDepartment(department, start, finish);
-    }
-
-    private void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment) {
-        String specialist = appointment.getSpecialist();
-        String service = appointment.getService();
-        int duration = appointment.getDuration();
-        long date = appointment.getDate();
-        LocalDateTime startDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
-        LocalDateTime endDate = startDate.plus(duration, ChronoUnit.MINUTES);
-        String startTime = startDate.format(DateTimeFormatter.ofPattern("HH:mm"));
-        String endTime = endDate.format(DateTimeFormatter.ofPattern("HH:mm"));
-        messagesToLocalize.add(LString.builder().title("Time from ${timeFrom} to ${timeTo}").placeholders(Map.of("timeFrom", startTime, "timeTo", endTime)).build());
-        messagesToLocalize.add(LString.builder().title("Service: ${service}").placeholders(Map.of("service", service)).build());
-        messagesToLocalize.add(LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
     }
 }

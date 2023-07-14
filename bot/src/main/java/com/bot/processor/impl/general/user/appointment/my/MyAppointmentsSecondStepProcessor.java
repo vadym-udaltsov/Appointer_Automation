@@ -4,6 +4,7 @@ import com.bot.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.LString;
 import com.bot.model.MessageHolder;
+import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
@@ -32,7 +33,7 @@ public class MyAppointmentsSecondStepProcessor extends AppointmentsSecondStepPro
         messagesToLocalize.add(LString.builder().title("Your appointments:").build());
         messagesToLocalize.add(LString.empty());
         for (Appointment appointment : appointments) {
-            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment);
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_ALL_FIELDS);
             messagesToLocalize.add(LString.empty());
         }
         return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));
