@@ -12,6 +12,7 @@ import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
+import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
 import com.amazonaws.services.dynamodbv2.model.ExecuteStatementRequest;
 import com.amazonaws.services.dynamodbv2.model.ExecuteStatementResult;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
@@ -116,6 +117,12 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
         T result = getMapper().load(item);
         log.info("Successfully got item from table: {}", tableName);
         return result;
+    }
+
+    public void deleteItem(T item) {
+        log.info("Deleting object from table: {}", tableName);
+        getMapper().delete(item);
+        log.info("Successfully deleted item from table: {}", tableName);
     }
 
     private List<Item> getItemsFromQueryResult(ItemCollection<QueryOutcome> queryOutcome) {

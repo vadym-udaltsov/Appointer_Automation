@@ -66,7 +66,6 @@ public class CreateAppointmentFourthStepProcessor implements IProcessor {
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(slotTitles), true))
                 .build();
         MessageHolder holder = MessageUtils.holder("Select time", ButtonsType.KEYBOARD, holderRequest);
-
         return List.of(holder);
     }
 }

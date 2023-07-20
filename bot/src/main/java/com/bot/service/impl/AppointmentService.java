@@ -30,6 +30,11 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
+    public void delete(Appointment appointment) {
+        appointmentDao.deleteItem(appointment);
+    }
+
+    @Override
     public List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate) {
         return appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate);
     }
@@ -45,13 +50,16 @@ public class AppointmentService implements IAppointmentService {
         long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork());
         long now = DateUtils.now(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
+        List<Specialist> departmentSpecialists = department.getAvailableSpecialists();
+        List<String> specialistNames = departmentSpecialists.stream().map(Specialist::getName).collect(Collectors.toList());
 
-        List<Appointment> appointments = appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate);
+        List<Appointment> appointments = appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate)
+                .stream()
+                .filter(a -> specialistNames.contains(a.getSpecialist()))
+                .collect(Collectors.toList());
         Map<String, List<Appointment>> appointmentsBySpecialists = appointments.stream()
                 .collect(Collectors.groupingBy(Appointment::getSpecialist));
 
-        Map<String, Integer> durationsByServices = department.getServices().stream()
-                .collect(Collectors.toMap(CustomerService::getName, CustomerService::getDuration));
         Map<String, List<FreeSlot>> result = new HashMap<>();
         for (Map.Entry<String, List<Appointment>> entry : appointmentsBySpecialists.entrySet()) {
             String specialist = entry.getKey();
@@ -83,7 +91,6 @@ public class AppointmentService implements IAppointmentService {
             }
             result.put(specialist, slots);
         }
-        List<Specialist> departmentSpecialists = department.getAvailableSpecialists();
 
         for (Specialist specialist : departmentSpecialists) {
             String specId = specialist.getName();

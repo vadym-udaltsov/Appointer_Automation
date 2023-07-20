@@ -66,22 +66,12 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         appointmentService.save(appointment);
         contextService.resetLocationToDashboard(context);
         List<LString> messagesToLocalize = new ArrayList<>();
-        messagesToLocalize.add(LString.builder().title("Created appointment:").build());
+        messagesToLocalize.add(LString.builder().title("Appointment CREATED:").build());
         messagesToLocalize.add(LString.empty());
         MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_ALL_FIELDS);
-        List<LString> adminMessages = createAdminMessage(messagesToLocalize, context, department);
+        List<LString> adminMessages = MessageUtils.buildNotificationForAdmins(messagesToLocalize, context, department);
         sendMessageService.sendNotificationToAdmins(adminMessages, department);
         String strategyKey = ContextUtils.getStrategyKey(context, department);
         return List.of(MessageUtils.buildDashboardHolder("", messagesToLocalize, strategyKey));
-    }
-
-    private List<LString> createAdminMessage(List<LString> messagesToLocalize, Context context, Department department) {
-        List<LString> adminMessages = new ArrayList<>();
-        adminMessages.add(LString.builder().title(Constants.STAR_SIGN).build());
-        adminMessages.addAll(messagesToLocalize);
-        adminMessages.add(LString.builder().title("Client: ${client}").placeholders(Map.of("client", context.getName())).build());
-        adminMessages.add(LString.builder().title("Phone Number: ${phone}").placeholders(Map.of("phone", context.getPhoneNumber())).build());
-        adminMessages.add(LString.builder().title("Department: ${department}").placeholders(Map.of("department", department.getName())).build());
-        return adminMessages;
     }
 }

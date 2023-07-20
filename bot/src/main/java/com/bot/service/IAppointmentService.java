@@ -11,6 +11,8 @@ public interface IAppointmentService {
 
     void save(Appointment appointment);
 
+    void delete(Appointment appointment);
+
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
     List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate);

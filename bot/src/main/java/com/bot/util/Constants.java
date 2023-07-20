@@ -14,6 +14,7 @@ public class Constants {
     public static final String STAR_SIGN = "⭐⭐⭐⭐⭐";
     public static final String EMPTY_DATE = "--";
     public static final String IGNORE = "ignore";
+    public static final String SUBMIT = "Submit";
 
     public static final String TODAY = "Today";
     public static final String TOMORROW = "Tomorrow";
@@ -26,6 +27,7 @@ public class Constants {
     public static final String SELECTED_SERVICE = "selectedService";
     public static final String SELECTED_SPEC = "selectedSpec";
     public static final String SELECTED_DAY = "selectedDay";
+    public static final String SELECTED_APPOINTMENT = "selectedAppointment";
 
     public static final String DEPARTMENT = "department";
     public static final String CONTEXT = "context";
@@ -34,6 +36,7 @@ public class Constants {
     public static final String AVAILABLE_SPECIALISTS = "availableSpecialists";
     public static final String AVAILABLE_SERVICES = "availableServices";
     public static final String AVAILABLE_SLOTS = "availableSlots";
+    public static final String AVAILABLE_APPOINTMENTS = "availableAppointments";
 
     public static final String USER_APPOINTMENTS = "userAppointments";
 

@@ -49,6 +49,7 @@ public class AppointmentsFirstStepProcessor {
         Set<String> appointmentDays = appointments.stream()
                 .map(a -> DateUtils.getDayTitle(a.getDate()))
                 .collect(Collectors.toSet());
+        context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
         Month month = LocalDate.now().getMonth();
         ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(month.getValue()));
         return MessageUtils.buildDatePicker(appointmentDays, "Select available date", false);

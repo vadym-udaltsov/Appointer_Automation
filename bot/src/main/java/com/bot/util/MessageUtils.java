@@ -4,11 +4,13 @@ import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.Button;
 import com.bot.model.ButtonsType;
+import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.bot.model.LString;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
+import com.commons.model.Department;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Contact;
@@ -217,5 +219,16 @@ public class MessageUtils {
             messagesMap.put("specialist", LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
         }
         template.buildMessages(messagesToLocalize, messagesMap);
+    }
+
+    public static List<LString> buildNotificationForAdmins(List<LString> messagesToLocalize, Context context,
+                                                           Department department) {
+        List<LString> adminMessages = new ArrayList<>();
+        adminMessages.add(LString.builder().title(Constants.STAR_SIGN).build());
+        adminMessages.addAll(messagesToLocalize);
+        adminMessages.add(LString.builder().title("Client: ${client}").placeholders(Map.of("client", context.getName())).build());
+        adminMessages.add(LString.builder().title("Phone Number: ${phone}").placeholders(Map.of("phone", context.getPhoneNumber())).build());
+        adminMessages.add(LString.builder().title("Department: ${department}").placeholders(Map.of("department", department.getName())).build());
+        return adminMessages;
     }
 }

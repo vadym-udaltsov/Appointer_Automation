@@ -28,11 +28,14 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
 
     private final IAppointmentService appointmentService;
     private final IProcessor nextStepProcessor;
+    private final IProcessor previousProcessor;
 
-    public CreateAppointmentThirdStepProcessor(IAppointmentService appointmentService, IProcessor nextStepProcessor) {
+    public CreateAppointmentThirdStepProcessor(IAppointmentService appointmentService, IProcessor nextStepProcessor,
+                                               IProcessor previousProcessor) {
         super(appointmentService);
         this.appointmentService = appointmentService;
         this.nextStepProcessor = nextStepProcessor;
+        this.previousProcessor = previousProcessor;
     }
 
     @Override
@@ -60,14 +63,18 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
             return buildResponse(department, false, "Select available date", context, selectedService);
         }
 
-        if (Constants.BACK.equals(selectedDay)) {
-            selectedDay = ContextUtils.getStringParam(context, Constants.SELECTED_DAY);
-        }
-
         List<Specialist> availableSpecialists = department.getAvailableSpecialists();
         List<String> specialistNames = availableSpecialists.stream()
                 .map(Specialist::getName)
                 .collect(Collectors.toList());
+
+        if (Constants.BACK.equals(selectedDay)) {
+            if (availableSpecialists.size() == 1) {
+                ContextUtils.setPreviousStep(context);
+                return previousProcessor.processRequest(request);
+            }
+            selectedDay = ContextUtils.getStringParam(context, Constants.SELECTED_DAY);
+        }
 
         int dayNumber = Integer.parseInt(selectedDay);
 

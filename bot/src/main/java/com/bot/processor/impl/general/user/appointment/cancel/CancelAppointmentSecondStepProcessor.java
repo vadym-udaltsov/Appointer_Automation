@@ -9,10 +9,13 @@ import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
 import com.bot.service.IAppointmentService;
+import com.bot.util.Constants;
 import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
+import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,9 +34,13 @@ public class CancelAppointmentSecondStepProcessor extends AppointmentsSecondStep
     @Override
     protected void fillContextParams(List<Appointment> appointments, Context context) {
         Map<String, Object> params = context.getParams();
+        List<String> availableTitles = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            params.put(getAppointmentButtonTitle(appointment), appointment.getDate());
+            String title = getAppointmentButtonTitle(appointment);
+            params.put(title, JsonUtils.convertObjectToString(appointment));
+            availableTitles.add(title);
         }
+        params.put(Constants.AVAILABLE_APPOINTMENTS, availableTitles);
     }
 
     @Override

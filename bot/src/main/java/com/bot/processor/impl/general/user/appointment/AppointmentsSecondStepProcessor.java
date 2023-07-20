@@ -33,6 +33,11 @@ public abstract class AppointmentsSecondStepProcessor {
         Department department = request.getDepartment();
         Context context = request.getContext();
         String selectedDay = MessageUtils.getTextFromUpdate(update);
+        if (Constants.BACK.equals(selectedDay)) {
+            List<String> availableAppointments = (List<String>) context.getParams().get(Constants.AVAILABLE_APPOINTMENTS);
+            BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(availableAppointments);
+            return List.of(MessageUtils.holder("Select appointment", ButtonsType.KEYBOARD, holderRequest));
+        }
         if (Constants.NEXT_MONTH.equals(selectedDay)) {
             return buildResponse(request, true);
         }

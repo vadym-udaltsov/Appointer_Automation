@@ -66,8 +66,8 @@ public class ProcessorProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CANCEL_APP4)
-    public IProcessor cancelApp4(IAppointmentService appointmentService) {
-        return new CancelAppointmentFourthStepProcessor();
+    public IProcessor cancelApp4(IAppointmentService appointmentService, ISendMessageService sendMessageService) {
+        return new CancelAppointmentFourthStepProcessor(appointmentService, sendMessageService);
     }
 
     //             ----------------My-----------------------
@@ -108,8 +108,9 @@ public class ProcessorProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CREATE_APP_3)
-    public IProcessor createAppThird(IAppointmentService appointmentService, @Named("createAppFourth") IProcessor processor) {
-        return new CreateAppointmentThirdStepProcessor(appointmentService, processor);
+    public IProcessor createAppThird(IAppointmentService appointmentService, @Named("createAppFourth") IProcessor processor,
+                                     @Named("createAppSecond") IProcessor prevProcessor) {
+        return new CreateAppointmentThirdStepProcessor(appointmentService, processor, prevProcessor);
     }
 
     @Provides

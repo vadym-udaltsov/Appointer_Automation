@@ -9,6 +9,8 @@ public interface IAppointmentDao {
 
     boolean createItem(Appointment appointment);
 
+    void deleteItem(Appointment appointment);
+
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
     List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate);
