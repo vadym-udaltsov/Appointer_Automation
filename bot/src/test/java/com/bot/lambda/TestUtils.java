@@ -48,14 +48,23 @@ public class TestUtils {
     public static List<String> CR_APP_2_NAV = new ArrayList<>(List.of(
             "askLang",
             "setLangAskContact",
-            "setContactStartDash",
-            "startCreateApp"));
+            "setContact",
+            "startDash",
+            "createApp1"));
     public static List<String> CR_APP_3_NAV = new ArrayList<>(List.of(
             "askLang",
             "setLangAskContact",
             "setContactStartDash",
             "startCreateApp",
             "setAppDateAskSpec"));
+
+    public static List<String> CR_DAY_OFF_2_NAV = new ArrayList<>(List.of(
+            "askLang",
+            "setLangAskContact",
+            "setContact",
+            "startDash",
+            "dayOffStart",
+            "dayOffCreate1"));
 
     public static BotLambda getBotLambda(IContextService mockedContextService) {
         BotLambda botLambda = new BotLambda();
@@ -77,16 +86,16 @@ public class TestUtils {
         Context context = new Context();
         context.setUserId(538025182);
         context.setLanguage(Language.RU);
-        context.setPhoneNumber("380505746182");
+        context.setPhoneNumber("+380505746182");
         context.setNavigation(navigation);
-        context.setDepartmentId("bbad4b51");
+        context.setDepartmentId("52c59292");
         context.setParams(params);
         return context;
     }
 
     public static Map<String, Object> getParams(String update) {
         Map<String, Object> params = new HashMap<>();
-        Map<String, Object> pathParameters = Map.of("id", "bbad4b51");
+        Map<String, Object> pathParameters = Map.of("id", "52c59292");
         params.put("pathParameters", pathParameters);
         params.put("body", update);
         return params;

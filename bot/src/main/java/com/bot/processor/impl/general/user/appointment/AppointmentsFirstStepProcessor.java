@@ -49,6 +49,7 @@ public class AppointmentsFirstStepProcessor {
         Set<String> appointmentDays = appointments.stream()
                 .map(a -> DateUtils.getDayTitle(a.getDate()))
                 .collect(Collectors.toSet());
+        appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.CURRENT_MONTH));
         context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
         Month month = LocalDate.now().getMonth();
         ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(month.getValue()));

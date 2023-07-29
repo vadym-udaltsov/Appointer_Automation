@@ -8,9 +8,11 @@ import com.bot.service.IMessageSender;
 import com.bot.service.ISendMessageService;
 import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 public class SendMessageService implements ISendMessageService {
 
@@ -25,7 +27,8 @@ public class SendMessageService implements ISendMessageService {
         admins.parallelStream().forEach(a -> {
             Context adminContext = contextService.getAdminContext(a, departmentId);
             if (adminContext == null) {
-                throw new RuntimeException("Context not found for admin number: " + a);
+                log.error("Context not found for admin number: " + a);
+                return;
             }
             String message = localizer.localizeMessage(localizedMessages, adminContext);
             messageSender.sendMessage(department, message, String.valueOf(adminContext.getUserId()));

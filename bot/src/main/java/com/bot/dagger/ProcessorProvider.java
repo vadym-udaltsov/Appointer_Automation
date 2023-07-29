@@ -6,6 +6,12 @@ import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
 import com.bot.processor.impl.general.admin.appointments.AllAppointmentsFirstStepProcessor;
 import com.bot.processor.impl.general.admin.appointments.AllAppointmentsSecondStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffFifthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffFirstStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffFourthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffSecondStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffThirdStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFourthStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentSecondStepProcessor;
@@ -194,6 +200,66 @@ public class ProcessorProvider {
     @CommandKey(CommandType.GET_ALL_APPOINTMENTS_2)
     public IProcessor getAllAppointmentsSecond(IAppointmentService appointmentService) {
         return new AllAppointmentsSecondStepProcessor(appointmentService);
+    }
+
+    // --------------------Day off -----------------------
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DAY_OFF_START)
+    public IProcessor dayOffStartStep() {
+        return new DayOffStartProcessor();
+    }
+
+    // --------------------Day off Create ------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DAY_OFF_CREATE1)
+    public IProcessor dayOffCreateFirstStep(@Named("createDayOffSecond") IProcessor nextStepProcessor) {
+        return new CreateDayOffFirstStepProcessor(nextStepProcessor);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DAY_OFF_CREATE2)
+    public IProcessor dayOffCreateSecondStep(IAppointmentService appointmentService) {
+        return new CreateDayOffSecondStepProcessor(appointmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DAY_OFF_CREATE3)
+    public IProcessor dayOffCreateThirdStep(IAppointmentService appointmentService) {
+        return new CreateDayOffThirdStepProcessor(appointmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DAY_OFF_CREATE4)
+    public IProcessor dayOffCreateFourthStep(IAppointmentService appointmentService, IContextService contextService) {
+        return new CreateDayOffFourthStepProcessor(appointmentService, contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DAY_OFF_CREATE5)
+    public IProcessor dayOffCreateFifthStep(IAppointmentService appointmentService, IContextService contextService) {
+        return new CreateDayOffFifthStepProcessor(appointmentService, contextService);
+    }
+
+    // --------------------Next step processors -------------------
+
+    @Provides
+    @Singleton
+    @Named("createDayOffSecond")
+    public IProcessor crDayOffSecond(IAppointmentService appointmentService) {
+        return new CreateDayOffSecondStepProcessor(appointmentService);
     }
 
     @Provides

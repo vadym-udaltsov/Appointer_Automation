@@ -112,6 +112,16 @@ public class MessageUtils {
         return holder(message, ButtonsType.KEYBOARD, request, messageLines);
     }
 
+    public static List<MessageHolder> buildCustomKeyboardHolders(String message, List<String> buttonTitles, KeyBoardType keyBoardType,
+                                                         boolean withCommon) {
+        BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
+                .type(keyBoardType)
+                .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttonTitles), withCommon))
+                .build();
+        MessageHolder holder = MessageUtils.holder(message, ButtonsType.KEYBOARD, holderRequest);
+        return List.of(holder);
+    }
+
     public static MessageHolder holder(String message, ButtonsType buttonsType,
                                        BuildKeyboardRequest request) {
         return MessageHolder.builder()

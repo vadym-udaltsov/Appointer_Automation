@@ -3,6 +3,7 @@ package com.bot.processor.impl.general.user.appointment.create;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
+import com.bot.model.DatePickerRequest;
 import com.bot.model.FreeSlot;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
@@ -10,12 +11,10 @@ import com.bot.processor.IProcessor;
 import com.bot.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
-import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
-import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProcessor implements IProcessor {
 
     private final IAppointmentService appointmentService;
@@ -47,20 +45,29 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
         String selectedDay = MessageUtils.getTextFromUpdate(update);
         String selectedService = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
         int monthNumber = Integer.parseInt(ContextUtils.getStringParam(context, Constants.MONTH));
-
+        DatePickerRequest datePickerRequest = DatePickerRequest.builder()
+                .department(department)
+                .message("")
+                .context(context)
+                .selectedService(selectedService)
+                .build();
         if (Constants.NEXT_MONTH.equals(selectedDay)) {
             updateContextData(context, department, true);
-            return buildResponse(department, true, "", context, selectedService);
+            datePickerRequest.setNextMonth(true);
+            return buildResponse(datePickerRequest);
         }
         if (Constants.CURRENT_MONTH.equals(selectedDay)) {
             updateContextData(context, department, false);
-            return buildResponse(department, false, "", context, selectedService);
+            datePickerRequest.setNextMonth(false);
+            return buildResponse(datePickerRequest);
         }
 
         List<String> availableDates = (List<String>) context.getParams().get(Constants.AVAILABLE_DATES);
         if (!availableDates.contains(selectedDay) && !Constants.BACK.equals(selectedDay)) {
             updateContextData(context, department, false);
-            return buildResponse(department, false, "Select available date", context, selectedService);
+            datePickerRequest.setNextMonth(false);
+            datePickerRequest.setMessage("Select available date");
+            return buildResponse(datePickerRequest);
         }
 
         List<Specialist> availableSpecialists = department.getAvailableSpecialists();
@@ -104,14 +111,7 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
         }
 
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(filteredSpecialists);
-        MessageHolder holder = MessageUtils.holder("Select specialist", ButtonsType.KEYBOARD, holderRequest);
+        MessageHolder holder = MessageUtils.holder(Constants.Messages.SELECT_SPECIALIST, ButtonsType.KEYBOARD, holderRequest);
         return List.of(holder);
-    }
-
-    private void updateContextData(Context context, Department department, boolean nextMonth) {
-        int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
-        int monthToAdd = nextMonth ? 1 : 0;
-        ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(numberOfCurrentMonth + monthToAdd));
-        ContextUtils.setPreviousStep(context);
     }
 }

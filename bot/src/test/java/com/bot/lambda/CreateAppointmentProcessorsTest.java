@@ -17,7 +17,7 @@ import java.util.Map;
 
 class CreateAppointmentProcessorsTest {
 
-//        @Test
+    //        @Test
     public void testCreateAppFirstStep() throws IOException {
         Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("Записаться"));
         Context context = TestUtils.getContext(TestUtils.CR_APP_1_NAV, new HashMap<>());
@@ -27,11 +27,11 @@ class CreateAppointmentProcessorsTest {
         botLambda.handleRequest(is, null, null);
     }
 
-    //    @Test
+    //        @Test
     public void testCreateAppSecondStep() throws IOException {
-        Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("30"));
+        Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("test"));
         HashMap<String, Object> map = new HashMap<>();
-        map.put(Constants.MONTH, "5");
+        map.put(Constants.MONTH, "7");
         Context context = TestUtils.getContext(TestUtils.CR_APP_2_NAV, map);
         IContextService contextService = TestUtils.getMockedContextService(context);
         InputStream is = new ByteArrayInputStream(JsonUtils.convertObjectToString(params).getBytes(StandardCharsets.UTF_8));
@@ -40,6 +40,19 @@ class CreateAppointmentProcessorsTest {
     }
 
 //    @Test
+    public void testCreateDayOffSecondStep() throws IOException {
+        System.setProperty("log4j.configurationFile", "log4j2.xml");
+        Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("Tatiana"));
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(Constants.MONTH, "7");
+        Context context = TestUtils.getContext(TestUtils.CR_DAY_OFF_2_NAV, map);
+        IContextService contextService = TestUtils.getMockedContextService(context);
+        InputStream is = new ByteArrayInputStream(JsonUtils.convertObjectToString(params).getBytes(StandardCharsets.UTF_8));
+        BotLambda botLambda = TestUtils.getBotLambda(contextService);
+        botLambda.handleRequest(is, null, null);
+    }
+
+    //    @Test
     public void testCreateAppSecondStepNextMonth() throws IOException {
         Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("nextMonth"));
         HashMap<String, Object> map = new HashMap<>();

@@ -15,14 +15,12 @@ import com.bot.util.MessageUtils;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
 public class CreateAppointmentFourthStepProcessor implements IProcessor {
 
@@ -60,7 +58,7 @@ public class CreateAppointmentFourthStepProcessor implements IProcessor {
             }
         }
 
-        context.getParams().put(Constants.AVAILABLE_SLOTS, slotTitles);
+        context.getParams().put(Constants.AVAILABLE_SLOT_TITLES, slotTitles);
         BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.FOUR_ROW)
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(slotTitles), true))

@@ -82,7 +82,7 @@ public abstract class AppointmentsSecondStepProcessor {
         return List.of(datePicker);
     }
 
-    private void updateContextData(Context context, Department department, boolean nextMonth) {
+    protected void updateContextData(Context context, Department department, boolean nextMonth) {
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
         int monthToAdd = nextMonth ? 1 : 0;
         ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(numberOfCurrentMonth + monthToAdd));

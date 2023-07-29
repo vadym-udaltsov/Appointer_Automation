@@ -6,5 +6,10 @@
   "Отменить запись": "Cancel appointment",
   "Подтверждаю": "Submit",
   "Записи": "Appointments",
-  "Мастера": "Specialists"
+  "Мастера": "Specialists",
+  "Выходной": "DayOff",
+  "Создать": "Create",
+  "Просмотреть": "View",
+  "Весь день": "Whole day",
+  "Удалить": "Delete"
 }

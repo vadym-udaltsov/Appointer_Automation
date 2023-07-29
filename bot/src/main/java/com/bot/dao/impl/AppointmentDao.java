@@ -45,4 +45,18 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
                         .withNumber(":end", finishDate));
         return getItemsByIndexQuery(spec, Appointment.USER_INDEX_NAME);
     }
+
+    @Override
+    public List<Appointment> getAppointmentsBySpecialist(String specialist, long startDate, long finishDate) {
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("#hash = :id AND #range BETWEEN :start AND :end")
+                .withNameMap(new NameMap()
+                        .with("#hash", "s")
+                        .with("#range", "d"))
+                .withValueMap(new ValueMap()
+                        .withString(":id", specialist)
+                        .withNumber(":start", startDate)
+                        .withNumber(":end", finishDate));
+        return findAllByQuery(spec);
+    }
 }

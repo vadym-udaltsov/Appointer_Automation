@@ -24,13 +24,24 @@ public class AppointmentDaoTest {
         System.out.println();
     }
 
-    @Test
+//    @Test
     public void shouldGetAppointmentsByDay() {
         long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), false);
         long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), true);
         System.out.println(DateUtils.getDateTitle(startOfDay));
         System.out.println(DateUtils.getDateTitle(endOfDay));
 
+//        List<Appointment> res = appointmentDao.getAppointmentsByUserId(538025182, startOfDay, endOfDay);
+        System.out.println();
+    }
+
+//    @Test
+    public void shouldGetAppointmentsBySpecialist() {
+        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("25"), false);
+        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("28"), true);
+        System.out.println(DateUtils.getDateTitle(startOfDay));
+        System.out.println(DateUtils.getDateTitle(endOfDay));
+        List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialist("Tatiana", startOfDay, endOfDay);
 //        List<Appointment> res = appointmentDao.getAppointmentsByUserId(538025182, startOfDay, endOfDay);
         System.out.println();
     }

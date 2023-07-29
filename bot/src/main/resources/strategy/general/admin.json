@@ -26,9 +26,49 @@
                   ]
                 },
                 {
-                  "name": "getAllSpecialists",
-                  "key": "Specialists",
-                  "nested": []
+                  "name": "dayOffStart",
+                  "key": "DayOff",
+                  "nested": [
+                    {
+                      "name": "dayOffCreate1",
+                      "key": "Create",
+                      "nested": [
+                        {
+                          "name": "dayOffCreate2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "dayOffCreate3",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "dayOffCreate4",
+                                  "key": "any",
+                                  "nested": [
+                                    {
+                                      "name": "dayOffCreate5",
+                                      "key": "any",
+                                      "nested": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "dayOffView",
+                      "key": "View",
+                      "nested": []
+                    },
+                    {
+                      "name": "dayOffDelete",
+                      "key": "Delete",
+                      "nested": []
+                    }
+                  ]
                 }
               ]
             }

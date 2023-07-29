@@ -4,10 +4,12 @@ import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
+import com.bot.model.DatePickerRequest;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.service.IAppointmentService;
 import com.bot.util.Constants;
+import com.bot.util.ContextUtils;
 import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.CustomerService;
@@ -37,8 +39,14 @@ public class AbstractGetCalendarProcessor {
 
     private final IAppointmentService appointmentService;
 
-    public List<MessageHolder> buildResponse(Department department, boolean isNextMonth, String message,
-                                             Context context, String selectedService) {
+    public List<MessageHolder> buildResponse(DatePickerRequest request) {
+        Department department = request.getDepartment();
+        Context context = request.getContext();
+        boolean isNextMonth = request.isNextMonth();
+        String message = request.getMessage();
+        String selectedService = request.getSelectedService();
+        String selectedSpecialist = request.getSelectedSpecialist();
+
         List<Specialist> specialists = department.getAvailableSpecialists();
         if (specialists.isEmpty()) {
             throw new RuntimeException("Specialists list can not be empty");
@@ -58,7 +66,12 @@ public class AbstractGetCalendarProcessor {
             month = month.plus(1);
         }
 
-        List<Appointment> allAppointments = appointmentService.getAppointmentsByDepartment(department, startDate, endDate);
+        List<Appointment> allAppointments;
+        if (StringUtils.isNotBlank(selectedSpecialist)) {
+            allAppointments = appointmentService.getAppointmentsBySpecialist(selectedSpecialist, startDate, endDate);
+        } else {
+            allAppointments = appointmentService.getAppointmentsByDepartment(department, startDate, endDate);
+        }
 
         List<String> busyDayTitles = allAppointments.isEmpty() ? List.of() : defineBusyDayTitles(allAppointments,
                 department, month.getValue(), selectedService);
@@ -93,10 +106,12 @@ public class AbstractGetCalendarProcessor {
                 .map(Pair::left)
                 .collect(Collectors.toList());
 
-        List<Specialist> specialists = department.getAvailableSpecialists();
-        for (Specialist specialist : specialists) {
-            if (!specialistsWithAppointments.contains(specialist.getName())) {
-                appointmentsBySpecialist.add(Pair.of(specialist.getName(), List.of()));
+        if (StringUtils.isNotBlank(serviceName)) {
+            List<Specialist> specialists = department.getAvailableSpecialists();
+            for (Specialist specialist : specialists) {
+                if (!specialistsWithAppointments.contains(specialist.getName())) {
+                    appointmentsBySpecialist.add(Pair.of(specialist.getName(), List.of()));
+                }
             }
         }
 
@@ -148,13 +163,18 @@ public class AbstractGetCalendarProcessor {
 
     private boolean freeSlotsAvailable(List<Appointment> dailyAppointments, int dayOfMonth, Department department,
                                        int month, String serviceName) {
-        CustomerService service = department.getServices().stream()
-                .filter(s -> serviceName.equals(s.getName()))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Service was not found: " + serviceName));
+        long serviceDuration = 3600L;
+        if (StringUtils.isNotBlank(serviceName)) {
+            CustomerService service = department.getServices().stream()
+                    .filter(s -> serviceName.equals(s.getName()))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Service was not found: " + serviceName));
+            serviceDuration = service.getDuration() * 60L;
+        }
         dailyAppointments.sort(Comparator.comparing(Appointment::getDate));
         List<Long> freeSlots = getFreeSlots(dailyAppointments, department, dayOfMonth, month);
-        return freeSlots.stream().anyMatch(slot -> slot >= service.getDuration() * 60L);
+        long finalServiceDuration = serviceDuration;
+        return freeSlots.stream().anyMatch(slot -> slot >= finalServiceDuration);
     }
 
     private List<Long> getFreeSlots(List<Appointment> appointments, Department department, int dayOfMonth, int month) {
@@ -172,5 +192,12 @@ public class AbstractGetCalendarProcessor {
         }
         result.add(finish - currentPoint);
         return result;
+    }
+
+    protected void updateContextData(Context context, Department department, boolean nextMonth) {
+        int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
+        int monthToAdd = nextMonth ? 1 : 0;
+        context.getParams().put(Constants.MONTH, numberOfCurrentMonth + monthToAdd);
+        ContextUtils.setPreviousStep(context);
     }
 }

@@ -15,7 +15,11 @@ public interface IAppointmentService {
 
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
+    List<Appointment> getAppointmentsBySpecialist(String specialist, long startDate, long finishDate);
+
     List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate);
 
     Map<String, List<FreeSlot>> getFreeSlotsByDepartment(Department department, int month, int dayNumber);
+
+    List<FreeSlot> getFreeSlotsBySpecialist(Department department, String specialist, int month, int dayNumber);
 }

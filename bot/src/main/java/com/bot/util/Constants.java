@@ -18,6 +18,8 @@ public class Constants {
 
     public static final String TODAY = "Today";
     public static final String TOMORROW = "Tomorrow";
+    public static final String WHOLE_DAY = "Whole day";
+    public static final String DAY_OFF = "DayOff";
     public static final int DAYS_IN_WEEK = 7;
 
     public static final String NEXT_MONTH = "nextMonth";
@@ -27,6 +29,8 @@ public class Constants {
     public static final String SELECTED_SERVICE = "selectedService";
     public static final String SELECTED_SPEC = "selectedSpec";
     public static final String SELECTED_DAY = "selectedDay";
+    public static final String SELECTED_HOUR = "selectedHour";
+    public static final String SELECTED_MINUTE = "selectedMinute";
     public static final String SELECTED_APPOINTMENT = "selectedAppointment";
 
     public static final String DEPARTMENT = "department";
@@ -35,15 +39,17 @@ public class Constants {
     public static final String AVAILABLE_DATES = "availableDates";
     public static final String AVAILABLE_SPECIALISTS = "availableSpecialists";
     public static final String AVAILABLE_SERVICES = "availableServices";
+    public static final String AVAILABLE_SLOT_TITLES = "availableSlotTitles";
     public static final String AVAILABLE_SLOTS = "availableSlots";
     public static final String AVAILABLE_APPOINTMENTS = "availableAppointments";
+    public static final String AVAILABLE_DURATIONS = "availableDurations";
 
     public static final String USER_APPOINTMENTS = "userAppointments";
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "Specialists"),
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment")
     );
 
@@ -72,10 +78,18 @@ public class Constants {
         //admin
         public static final String GET_ALL_APPOINTMENTS_1 = "getAllAppointments";
         public static final String GET_ALL_APPOINTMENTS_2 = "getAllAppointmentsByDate";
+
+        public static final String DAY_OFF_START = "dayOffStart";
+        public static final String DAY_OFF_CREATE1 = "dayOffCreate1";
+        public static final String DAY_OFF_CREATE2 = "dayOffCreate2";
+        public static final String DAY_OFF_CREATE3 = "dayOffCreate3";
+        public static final String DAY_OFF_CREATE4 = "dayOffCreate4";
+        public static final String DAY_OFF_CREATE5 = "dayOffCreate5";
     }
 
     public static class Numbers {
         public static final Map<String, String> SPEC_NUMBERS = new HashMap<>();
+        public static final Map<Integer, String> PERIOD_TITLES = new HashMap<>();
 
         static {
             SPEC_NUMBERS.put("01", "0️⃣1️⃣");
@@ -109,12 +123,32 @@ public class Constants {
             SPEC_NUMBERS.put("29", "2️⃣9️⃣");
             SPEC_NUMBERS.put("30", "3️⃣0️⃣");
             SPEC_NUMBERS.put("31", "3️⃣1️⃣");
+
+            PERIOD_TITLES.put(0, "0:30");
+            PERIOD_TITLES.put(1, "1:00");
+            PERIOD_TITLES.put(2, "1:30");
+            PERIOD_TITLES.put(3, "2:00");
+            PERIOD_TITLES.put(4, "2:30");
+            PERIOD_TITLES.put(5, "3:00");
+            PERIOD_TITLES.put(6, "3:30");
+            PERIOD_TITLES.put(7, "4:00");
+            PERIOD_TITLES.put(8, "4:30");
+            PERIOD_TITLES.put(9, "5:00");
+            PERIOD_TITLES.put(10, "5:30");
+            PERIOD_TITLES.put(11, "6:00");
+            PERIOD_TITLES.put(12, "6:30");
+            PERIOD_TITLES.put(13, "7:00");
+            PERIOD_TITLES.put(14, "7:30");
+            PERIOD_TITLES.put(15, "8:00");
+            PERIOD_TITLES.put(16, "8:30");
+            PERIOD_TITLES.put(17, "9:00");
         }
     }
 
     public static class Messages {
         public static final String SHARE_CONTACT = "Please share your phone number";
         public static final String SELECT_ACTION = "Select action";
+        public static final String SELECT_SPECIALIST = "Select specialist";
         public static final String INCORRECT_ACTION = "You entered incorrect value, select again";
         public static final String INCORRECT_DATE = "You entered incorrect date, select again";
     }

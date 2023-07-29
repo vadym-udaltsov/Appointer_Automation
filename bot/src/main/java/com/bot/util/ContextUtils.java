@@ -8,6 +8,7 @@ import com.commons.model.Department;
 import com.commons.model.DepartmentType;
 import com.commons.utils.JsonUtils;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ContextUtils {
+
+    public static int getIntParam(Context context, String paramName) {
+        return ((BigDecimal) context.getParams().get(paramName)).intValue();
+    }
 
     public static String getStringParam(Context context, String paramName) {
         return (String) context.getParams().get(paramName);

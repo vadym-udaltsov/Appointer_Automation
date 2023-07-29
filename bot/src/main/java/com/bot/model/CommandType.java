@@ -33,7 +33,14 @@ public enum CommandType {
 
     //admin
     GET_ALL_APPOINTMENTS_1(Constants.Processors.GET_ALL_APPOINTMENTS_1),
-    GET_ALL_APPOINTMENTS_2(Constants.Processors.GET_ALL_APPOINTMENTS_2);
+    GET_ALL_APPOINTMENTS_2(Constants.Processors.GET_ALL_APPOINTMENTS_2),
+
+    DAY_OFF_START(Constants.Processors.DAY_OFF_START),
+    DAY_OFF_CREATE1(Constants.Processors.DAY_OFF_CREATE1),
+    DAY_OFF_CREATE2(Constants.Processors.DAY_OFF_CREATE2),
+    DAY_OFF_CREATE3(Constants.Processors.DAY_OFF_CREATE3),
+    DAY_OFF_CREATE4(Constants.Processors.DAY_OFF_CREATE4),
+    DAY_OFF_CREATE5(Constants.Processors.DAY_OFF_CREATE5);
 
 
     private final String value;
