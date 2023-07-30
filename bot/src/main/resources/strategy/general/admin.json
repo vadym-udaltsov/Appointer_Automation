@@ -78,9 +78,27 @@
                       ]
                     },
                     {
-                      "name": "dayOffDelete",
+                      "name": "dayOffCancel1",
                       "key": "Delete",
-                      "nested": []
+                      "nested": [
+                        {
+                          "name": "dayOffCancel2",
+                          "key": "Delete",
+                          "nested": [
+                            {
+                              "name": "dayOffCancel3",
+                              "key": "Delete",
+                              "nested": [
+                                {
+                                  "name": "dayOffCancel4",
+                                  "key": "Delete",
+                                  "nested": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }

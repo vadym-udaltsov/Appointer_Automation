@@ -31,6 +31,11 @@
   "Select appointment": "Выбери запись",
   "Submit": "Подтверждаю",
   "Submit appointment deletion": "Подтверди удаление записи",
+  "Select day off period": "Выбери нерабочий период",
+  "Select day off period from proposed": "Выбери доступный нерабочий период",
+  "Day off cancelled:": "Нерабочее время УДАЛЕНО:",
+  "Day off created:": "Нерабочее время ДОБАВЛЕНО:",
+  "Select duration": "Выбери длительность",
 
   "Service: ${service}": "\uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",

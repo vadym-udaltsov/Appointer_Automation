@@ -43,6 +43,10 @@ public class CreateDayOffSecondStepProcessor extends AbstractGetCalendarProcesso
             return List.of(MessageUtils.holder("Select specialist from proposed", ButtonsType.KEYBOARD, holderRequest));
         }
 
+        if (Constants.BACK.equals(selectedSpecialist)) {
+            selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
+        }
+
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
         context.getParams().put(Constants.MONTH, numberOfCurrentMonth);
         ContextUtils.setStringParameter(context, Constants.SELECTED_SPEC, selectedSpecialist);

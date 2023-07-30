@@ -39,9 +39,9 @@ public class CreateDayOffProcessor {
         appointmentService.save(appointment);
         contextService.resetLocationToDashboard(context);
         List<LString> messagesToLocalize = new ArrayList<>();
-        messagesToLocalize.add(LString.builder().title("Day off CREATED:").build());
+        messagesToLocalize.add(LString.builder().title("Day off created:").build());
         messagesToLocalize.add(LString.empty());
-        MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_ALL_FIELDS);
+        MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.DAY_OFF_ALL_FIELDS);
         String strategyKey = ContextUtils.getStrategyKey(context, department);
         return List.of(MessageUtils.buildDashboardHolder("", messagesToLocalize, strategyKey));
     }

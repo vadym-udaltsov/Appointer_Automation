@@ -89,6 +89,11 @@ public class Constants {
         public static final String DAY_OFF_VIEW1 = "dayOffView1";
         public static final String DAY_OFF_VIEW2 = "dayOffView2";
         public static final String DAY_OFF_VIEW3 = "dayOffView3";
+
+        public static final String DAY_OFF_CANCEL1 = "dayOffCancel1";
+        public static final String DAY_OFF_CANCEL2 = "dayOffCancel2";
+        public static final String DAY_OFF_CANCEL3 = "dayOffCancel3";
+        public static final String DAY_OFF_CANCEL4 = "dayOffCancel4";
     }
 
     public static class Numbers {

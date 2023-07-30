@@ -63,7 +63,6 @@ public class CreateDayOffThirdStepProcessor extends AbstractGetCalendarProcessor
         }
         if (Constants.BACK.equals(selectedDay)) {
             selectedDay = String.valueOf(ContextUtils.getIntParam(context, Constants.SELECTED_DAY));
-
         }
         List<String> availableDates = (List<String>) context.getParams().get(Constants.AVAILABLE_DATES);
         if (!availableDates.contains(selectedDay) && !Constants.BACK.equals(selectedDay)) {

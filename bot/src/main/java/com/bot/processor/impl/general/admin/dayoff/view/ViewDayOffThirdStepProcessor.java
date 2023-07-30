@@ -25,10 +25,12 @@ import java.util.stream.Collectors;
 public class ViewDayOffThirdStepProcessor extends AppointmentsSecondStepProcessor implements IProcessor {
 
     private final IAppointmentService appointmentService;
+    private final IProcessor previousStepProcessor;
 
-    public ViewDayOffThirdStepProcessor(IAppointmentService appointmentService) {
+    public ViewDayOffThirdStepProcessor(IAppointmentService appointmentService, IProcessor previousStepProcessor) {
         super(appointmentService);
         this.appointmentService = appointmentService;
+        this.previousStepProcessor = previousStepProcessor;
     }
 
     @Override
@@ -38,11 +40,9 @@ public class ViewDayOffThirdStepProcessor extends AppointmentsSecondStepProcesso
         Update update = request.getUpdate();
         String selectedDay = MessageUtils.getTextFromUpdate(update);
         if (!availableDates.contains(selectedDay)) {
-            ContextUtils.resetLocationToDashboard(context);
-            Department department = request.getDepartment();
-            String strategyKey = ContextUtils.getStrategyKey(context, department);
-            return List.of(MessageUtils.buildDashboardHolder("You entered wrong date or have no days off",
-                    List.of(), strategyKey));
+            ContextUtils.setPreviousStep(context);
+            MessageUtils.setTextToUpdate(update, ContextUtils.getStringParam(context, Constants.SELECTED_SPEC));
+            return previousStepProcessor.processRequest(request);
         }
         if (Constants.NEXT_MONTH.equals(selectedDay) || Constants.CURRENT_MONTH.equals(selectedDay)) {
             return buildResponse(request);
