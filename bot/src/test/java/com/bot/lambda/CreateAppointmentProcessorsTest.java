@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 class CreateAppointmentProcessorsTest {
 
@@ -27,11 +28,11 @@ class CreateAppointmentProcessorsTest {
         botLambda.handleRequest(is, null, null);
     }
 
-    //        @Test
+    //    @Test
     public void testCreateAppSecondStep() throws IOException {
         Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("test"));
         HashMap<String, Object> map = new HashMap<>();
-        map.put(Constants.MONTH, "7");
+        map.put(Constants.MONTH, 7);
         Context context = TestUtils.getContext(TestUtils.CR_APP_2_NAV, map);
         IContextService contextService = TestUtils.getMockedContextService(context);
         InputStream is = new ByteArrayInputStream(JsonUtils.convertObjectToString(params).getBytes(StandardCharsets.UTF_8));
@@ -39,13 +40,25 @@ class CreateAppointmentProcessorsTest {
         botLambda.handleRequest(is, null, null);
     }
 
-//    @Test
+    //    @Test
     public void testCreateDayOffSecondStep() throws IOException {
-        System.setProperty("log4j.configurationFile", "log4j2.xml");
         Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("Tatiana"));
         HashMap<String, Object> map = new HashMap<>();
-        map.put(Constants.MONTH, "7");
+        map.put(Constants.MONTH, 7);
         Context context = TestUtils.getContext(TestUtils.CR_DAY_OFF_2_NAV, map);
+        IContextService contextService = TestUtils.getMockedContextService(context);
+        InputStream is = new ByteArrayInputStream(JsonUtils.convertObjectToString(params).getBytes(StandardCharsets.UTF_8));
+        BotLambda botLambda = TestUtils.getBotLambda(contextService);
+        botLambda.handleRequest(is, null, null);
+    }
+
+//    @Test
+    public void viewDayOffThirdStep() throws IOException {
+        Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("31"));
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(Constants.MONTH, 7);
+        Context context = TestUtils.getContext(TestUtils.VIEW_DAY_OFF_3_NAV, map);
+        context.getParams().put(Constants.AVAILABLE_DATES, Set.of("31"));
         IContextService contextService = TestUtils.getMockedContextService(context);
         InputStream is = new ByteArrayInputStream(JsonUtils.convertObjectToString(params).getBytes(StandardCharsets.UTF_8));
         BotLambda botLambda = TestUtils.getBotLambda(contextService);
@@ -56,7 +69,7 @@ class CreateAppointmentProcessorsTest {
     public void testCreateAppSecondStepNextMonth() throws IOException {
         Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("nextMonth"));
         HashMap<String, Object> map = new HashMap<>();
-        map.put(Constants.MONTH, "5");
+        map.put(Constants.MONTH, 5);
         Context context = TestUtils.getContext(TestUtils.CR_APP_2_NAV, map);
         IContextService contextService = TestUtils.getMockedContextService(context);
         InputStream is = new ByteArrayInputStream(JsonUtils.convertObjectToString(params).getBytes(StandardCharsets.UTF_8));
@@ -68,7 +81,7 @@ class CreateAppointmentProcessorsTest {
     public void testCreateAppThirdStep() throws IOException {
         Map<String, Object> params = TestUtils.getParams(TestUtils.getUpdateStr("9b91bc16"));
         HashMap<String, Object> contextParams = new HashMap<>();
-        contextParams.put(Constants.MONTH, "5");
+        contextParams.put(Constants.MONTH, 5);
         contextParams.put(Constants.SELECTED_DAY, "30");
         contextParams.put("9b917777",
                 Map.of("specialist", "9b917777", "durationSec", 32400L, "startPoint", 1685437200L)

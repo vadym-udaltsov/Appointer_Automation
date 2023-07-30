@@ -23,7 +23,9 @@ import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Data
@@ -87,6 +89,10 @@ public class Department extends DynamoDbEntity {
     @DynamoDBAttribute(attributeName = "adm")
     private List<String> admins;
 
+    @JsonProperty("dof")
+    @DynamoDBAttribute(attributeName = "dof")
+    private Map<String, List<BusySlot>> daysOff;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -107,6 +113,7 @@ public class Department extends DynamoDbEntity {
                 .withList("as", availableSpecialists.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
                 .withList("nwd", nonWorkingDays)
                 .withList("adm", admins == null ? new ArrayList<>() : admins)
+                .withMap("dof", daysOff == null ? new HashMap<>() : daysOff)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()));
     }
 

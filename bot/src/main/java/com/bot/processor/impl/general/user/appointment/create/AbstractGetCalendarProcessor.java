@@ -68,7 +68,7 @@ public class AbstractGetCalendarProcessor {
 
         List<Appointment> allAppointments;
         if (StringUtils.isNotBlank(selectedSpecialist)) {
-            allAppointments = appointmentService.getAppointmentsBySpecialist(selectedSpecialist, startDate, endDate);
+            allAppointments = appointmentService.getAppointmentsBySpecialist(department, selectedSpecialist, startDate, endDate);
         } else {
             allAppointments = appointmentService.getAppointmentsByDepartment(department, startDate, endDate);
         }

@@ -40,7 +40,7 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         Department department = request.getDepartment();
         String specialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
         String serviceName = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
-        String month = ContextUtils.getStringParam(context, Constants.MONTH);
+        int month = ContextUtils.getIntParam(context, Constants.MONTH);
         String day = ContextUtils.getStringParam(context, Constants.SELECTED_DAY);
         String timeString = MessageUtils.getTextFromUpdate(update);
         List<String> availableSlots = (List<String>) context.getParams().get(Constants.AVAILABLE_SLOT_TITLES);
@@ -53,7 +53,7 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         String[] timeParts = timeString.split(":");
         int hour = Integer.parseInt(timeParts[0]);
         int minute = Integer.parseInt(timeParts[1]);
-        LocalDateTime localDateTime = LocalDateTime.of(year, Integer.parseInt(month), Integer.parseInt(day), hour, minute);
+        LocalDateTime localDateTime = LocalDateTime.of(year, month, Integer.parseInt(day), hour, minute);
         long appointmentDate = localDateTime.toEpochSecond(ZoneOffset.UTC);
         CustomerService selectedService = department.getServices().stream()
                 .filter(s -> serviceName.equals(s.getName()))

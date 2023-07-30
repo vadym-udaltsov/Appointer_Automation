@@ -17,6 +17,6 @@ public class CancelAppointmentFirstStepProcessor extends AppointmentsFirstStepPr
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
-        return getAppointmentsFirstStepResponse(request);
+        return buildAppointmentsCalendar(request);
     }
 }

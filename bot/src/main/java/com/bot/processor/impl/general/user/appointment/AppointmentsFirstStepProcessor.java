@@ -1,8 +1,6 @@
 package com.bot.processor.impl.general.user.appointment;
 
 import com.bot.model.Appointment;
-import com.bot.model.BuildKeyboardRequest;
-import com.bot.model.ButtonsType;
 import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
@@ -27,7 +25,7 @@ public class AppointmentsFirstStepProcessor {
 
     private final IAppointmentService appointmentService;
 
-    public List<MessageHolder> getAppointmentsFirstStepResponse(ProcessRequest request) {
+    public List<MessageHolder> buildAppointmentsCalendar(ProcessRequest request) {
         Context context = request.getContext();
         Department department = request.getDepartment();
         long startDate = DateUtils.getStartOfMonthDate(department, false);
@@ -37,13 +35,8 @@ public class AppointmentsFirstStepProcessor {
         if (appointments.size() == 0) {
             ContextUtils.resetLocationToDashboard(context);
             String strategyKey = ContextUtils.getStrategyKey(context, department);
-            BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
-                    .type(KeyBoardType.TWO_ROW)
-                    .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(Constants.DASHBOARD_BUTTONS.get(strategyKey)), false))
-                    .build();
-            MessageHolder commonButtonsHolder = MessageUtils.holder("You have no appointments for current and next months",
-                    ButtonsType.KEYBOARD, commonsRequest);
-            return List.of(commonButtonsHolder);
+            return MessageUtils.buildCustomKeyboardHolders("You have no appointments for current and next months",
+                    Constants.DASHBOARD_BUTTONS.get(strategyKey), KeyBoardType.TWO_ROW, false);
         }
         appointments.removeIf(a -> a.getDate() > currentMothEndDate);
         Set<String> appointmentDays = appointments.stream()
@@ -52,7 +45,7 @@ public class AppointmentsFirstStepProcessor {
         appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.CURRENT_MONTH));
         context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
         Month month = LocalDate.now().getMonth();
-        ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(month.getValue()));
+        context.getParams().put(Constants.MONTH, month.getValue());
         return MessageUtils.buildDatePicker(appointmentDays, "Select available date", false);
     }
 

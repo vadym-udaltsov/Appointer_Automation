@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.user.appointment.my;
+package com.bot.processor.impl.general.user.appointment.view;
 
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
@@ -9,14 +9,14 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 
-public class MyAppointmentsFirstStepProcessor extends AppointmentsFirstStepProcessor implements IProcessor {
+public class ViewAppointmentsFirstStepProcessor extends AppointmentsFirstStepProcessor implements IProcessor {
 
-    public MyAppointmentsFirstStepProcessor(IAppointmentService appointmentService) {
+    public ViewAppointmentsFirstStepProcessor(IAppointmentService appointmentService) {
         super(appointmentService);
     }
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
-        return getAppointmentsFirstStepResponse(request);
+        return buildAppointmentsCalendar(request);
     }
 }

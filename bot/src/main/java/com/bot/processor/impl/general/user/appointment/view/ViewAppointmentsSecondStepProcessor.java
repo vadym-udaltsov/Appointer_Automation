@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.user.appointment.my;
+package com.bot.processor.impl.general.user.appointment.view;
 
 import com.bot.model.Appointment;
 import com.bot.model.Context;
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class MyAppointmentsSecondStepProcessor extends AppointmentsSecondStepProcessor implements IProcessor {
+public class ViewAppointmentsSecondStepProcessor extends AppointmentsSecondStepProcessor implements IProcessor {
 
-    public MyAppointmentsSecondStepProcessor(IAppointmentService appointmentService) {
+    public ViewAppointmentsSecondStepProcessor(IAppointmentService appointmentService) {
         super(appointmentService);
     }
 

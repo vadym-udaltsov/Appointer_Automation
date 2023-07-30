@@ -9,13 +9,16 @@ import com.bot.processor.IProcessor;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
+import com.commons.model.BusySlot;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor

@@ -15,7 +15,7 @@ public interface IAppointmentService {
 
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
-    List<Appointment> getAppointmentsBySpecialist(String specialist, long startDate, long finishDate);
+    List<Appointment> getAppointmentsBySpecialist(Department department, String specialist, long startDate, long finishDate);
 
     List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate);
 

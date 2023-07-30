@@ -59,9 +59,23 @@
                       ]
                     },
                     {
-                      "name": "dayOffView",
+                      "name": "dayOffView1",
                       "key": "View",
-                      "nested": []
+                      "nested": [
+                        {
+                          "name": "dayOffView2",
+                          "key": "View",
+                          "nested": [
+                            {
+                              "name": "dayOffView3",
+                              "key": "View",
+                              "nested": [
+
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "name": "dayOffDelete",

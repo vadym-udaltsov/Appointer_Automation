@@ -66,6 +66,15 @@ public class TestUtils {
             "dayOffStart",
             "dayOffCreate1"));
 
+    public static List<String> VIEW_DAY_OFF_3_NAV = new ArrayList<>(List.of(
+            "askLang",
+            "setLangAskContact",
+            "setContact",
+            "startDash",
+            "dayOffStart",
+            "dayOffView1",
+            "dayOffView2"));
+
     public static BotLambda getBotLambda(IContextService mockedContextService) {
         BotLambda botLambda = new BotLambda();
         TelegramBot botExecutor = botLambda.getBotExecutor();

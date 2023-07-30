@@ -40,7 +40,11 @@ public enum CommandType {
     DAY_OFF_CREATE2(Constants.Processors.DAY_OFF_CREATE2),
     DAY_OFF_CREATE3(Constants.Processors.DAY_OFF_CREATE3),
     DAY_OFF_CREATE4(Constants.Processors.DAY_OFF_CREATE4),
-    DAY_OFF_CREATE5(Constants.Processors.DAY_OFF_CREATE5);
+    DAY_OFF_CREATE5(Constants.Processors.DAY_OFF_CREATE5),
+
+    DAY_OFF_VIEW1(Constants.Processors.DAY_OFF_VIEW1),
+    DAY_OFF_VIEW2(Constants.Processors.DAY_OFF_VIEW2),
+    DAY_OFF_VIEW3(Constants.Processors.DAY_OFF_VIEW3);
 
 
     private final String value;

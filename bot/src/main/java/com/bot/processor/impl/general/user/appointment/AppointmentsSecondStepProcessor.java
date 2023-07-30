@@ -39,14 +39,14 @@ public abstract class AppointmentsSecondStepProcessor {
             return List.of(MessageUtils.holder("Select appointment", ButtonsType.KEYBOARD, holderRequest));
         }
         if (Constants.NEXT_MONTH.equals(selectedDay)) {
-            return buildResponse(request, true);
+            return buildAnotherMonthResponse(request, true);
         }
         if (Constants.CURRENT_MONTH.equals(selectedDay)) {
-            return buildResponse(request, false);
+            return buildAnotherMonthResponse(request, false);
         }
-        String monthStr = ContextUtils.getStringParam(context, Constants.MONTH);
-        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), false);
-        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt(monthStr), Integer.parseInt(selectedDay), true);
+        int month = ContextUtils.getIntParam(context, Constants.MONTH);
+        long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false);
+        long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true);
 
         resetLocationToDashboard(context);
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
@@ -62,7 +62,7 @@ public abstract class AppointmentsSecondStepProcessor {
 
     protected abstract List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey);
 
-    private List<MessageHolder> buildResponse(ProcessRequest request, boolean isNextMonth) {
+    private List<MessageHolder> buildAnotherMonthResponse(ProcessRequest request, boolean isNextMonth) {
         Department department = request.getDepartment();
         Context context = request.getContext();
         long startDate = DateUtils.getStartOfMonthDate(department, isNextMonth);
@@ -72,6 +72,7 @@ public abstract class AppointmentsSecondStepProcessor {
                 .map(a -> DateUtils.getDayTitle(a.getDate()))
                 .collect(Collectors.toSet());
         updateContextData(context, department, isNextMonth);
+        updateAvailableDates(context, appointmentDays);
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
                 .params(Map.of(
                         Constants.IS_NEXT_MONTH, isNextMonth,
@@ -85,8 +86,11 @@ public abstract class AppointmentsSecondStepProcessor {
     protected void updateContextData(Context context, Department department, boolean nextMonth) {
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
         int monthToAdd = nextMonth ? 1 : 0;
-        ContextUtils.setStringParameter(context, Constants.MONTH, String.valueOf(numberOfCurrentMonth + monthToAdd));
+        context.getParams().put(Constants.MONTH, (numberOfCurrentMonth + monthToAdd));
         ContextUtils.setPreviousStep(context);
+    }
+
+    protected void updateAvailableDates(Context context, Set<String> appointmentDays) {
     }
 
     protected void fillContextParams(List<Appointment> appointments, Context context) {

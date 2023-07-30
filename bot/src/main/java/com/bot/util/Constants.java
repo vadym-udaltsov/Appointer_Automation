@@ -85,6 +85,10 @@ public class Constants {
         public static final String DAY_OFF_CREATE3 = "dayOffCreate3";
         public static final String DAY_OFF_CREATE4 = "dayOffCreate4";
         public static final String DAY_OFF_CREATE5 = "dayOffCreate5";
+
+        public static final String DAY_OFF_VIEW1 = "dayOffView1";
+        public static final String DAY_OFF_VIEW2 = "dayOffView2";
+        public static final String DAY_OFF_VIEW3 = "dayOffView3";
     }
 
     public static class Numbers {

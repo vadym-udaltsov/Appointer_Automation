@@ -10,6 +10,7 @@ import java.util.Map;
 @Getter
 public enum MessageTemplate {
     APPOINTMENT_ALL_FIELDS(List.of("date", "time", "service", "specialist")),
+    DAY_OFF_ALL_FIELDS(List.of("date", "time", "specialist")),
     APPOINTMENT_WITHOUT_DATE_FIELD(List.of("service", "specialist", "time"));
 
     private final List<String> fields;

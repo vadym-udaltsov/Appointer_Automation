@@ -1,6 +1,11 @@
-package com.bot.processor.impl.general.admin.appointments;
+package com.bot.processor.impl.general.admin.appointment;
 
-import com.bot.model.*;
+import com.bot.model.Appointment;
+import com.bot.model.Context;
+import com.bot.model.LString;
+import com.bot.model.MessageHolder;
+import com.bot.model.MessageTemplate;
+import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
 import com.bot.service.IAppointmentService;
@@ -38,13 +43,13 @@ public class AllAppointmentsSecondStepProcessor extends AppointmentsSecondStepPr
         Department department = request.getDepartment();
         String selectedDay = MessageUtils.getTextFromUpdate(update);
         int currentMonth = DateUtils.getNumberOfCurrentMonth(department);
-        int selectedMonth = Integer.parseInt(ContextUtils.getStringParam(context, Constants.MONTH));
+        int selectedMonth = ContextUtils.getIntParam(context, Constants.MONTH);
         boolean isNextMonth = currentMonth != selectedMonth;
         long startDate = DateUtils.getStartOfMonthDate(department, isNextMonth);
         long nextMonthEndDate = DateUtils.getEndOfMonthDate(department, isNextMonth);
         List<Appointment> appointments = getAppointmentSupplier(request, startDate, nextMonthEndDate).get();
         Set<String> appointmentsDates = appointments.stream()
-                .map(a->DateUtils.getDayTitle(a.getDate()))
+                .map(a -> DateUtils.getDayTitle(a.getDate()))
                 .collect(Collectors.toSet());
         if (Constants.NEXT_MONTH.equals(selectedDay) || Constants.CURRENT_MONTH.equals(selectedDay)
                 || Constants.BACK.equals(selectedDay) || Constants.HOME.equals(selectedDay)
@@ -79,6 +84,8 @@ public class AllAppointmentsSecondStepProcessor extends AppointmentsSecondStepPr
     @Override
     protected Supplier<List<Appointment>> getAppointmentSupplier(ProcessRequest request, long start, long finish) {
         Department department = request.getDepartment();
-        return () -> appointmentService.getAppointmentsByDepartment(department, start, finish);
+        return () -> appointmentService.getAppointmentsByDepartment(department, start, finish).stream()
+                .filter(a -> !Constants.DAY_OFF.equals(a.getService()))
+                .collect(Collectors.toList());
     }
 }

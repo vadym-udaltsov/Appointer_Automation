@@ -7,6 +7,7 @@ import com.bot.service.IAppointmentService;
 import com.bot.util.DateUtils;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
+import com.commons.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,8 +45,11 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public List<Appointment> getAppointmentsBySpecialist(String specialist, long startDate, long finishDate) {
-        return appointmentDao.getAppointmentsBySpecialist(specialist, startDate, finishDate);
+    public List<Appointment> getAppointmentsBySpecialist(Department department, String specialist, long startDate,
+                                                         long finishDate) {
+        return appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate).stream()
+                .filter(a -> specialist.equals(a.getSpecialist()))
+                .collect(Collectors.toList());
     }
 
     @Override

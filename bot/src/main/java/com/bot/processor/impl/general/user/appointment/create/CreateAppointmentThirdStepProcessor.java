@@ -44,7 +44,7 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
 
         String selectedDay = MessageUtils.getTextFromUpdate(update);
         String selectedService = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
-        int monthNumber = Integer.parseInt(ContextUtils.getStringParam(context, Constants.MONTH));
+        int monthNumber = ContextUtils.getIntParam(context, Constants.MONTH);
         DatePickerRequest datePickerRequest = DatePickerRequest.builder()
                 .department(department)
                 .message("")
