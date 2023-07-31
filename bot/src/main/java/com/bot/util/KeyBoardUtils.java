@@ -123,12 +123,14 @@ public class KeyBoardUtils {
             todayIsFinished = false;
         } else {
             int todayInWeek = DateUtils.getDayOfWeek(currentYear, currentMonth, today);
-            int tomorrowInWeek = DateUtils.getDayOfWeek(currentYear, currentMonth, today + 1);
+            int tomorrowInWeek = DateUtils.getNextDayOfWeek(currentYear, currentMonth, today);
+
             List<InlineKeyboardButton> firstRow = new ArrayList<>();
             firstRow.add(buildButton(busyDays, today, todayIsFinished || nonWorkingDays.contains(todayInWeek)
                     ? Constants.UNAVAILABLE_DATE
                     : Constants.TODAY));
             firstRow.add(buildButton(busyDays, today + 1, nonWorkingDays.contains(tomorrowInWeek)
+                    || DateUtils.isLastDayOfMonth(currentYear, currentMonth, today)
                     ? Constants.UNAVAILABLE_DATE
                     : Constants.TOMORROW));
             keyboard.add(firstRow);

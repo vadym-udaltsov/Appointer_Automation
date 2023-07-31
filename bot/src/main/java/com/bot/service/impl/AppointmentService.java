@@ -47,9 +47,8 @@ public class AppointmentService implements IAppointmentService {
     @Override
     public List<Appointment> getAppointmentsBySpecialist(Department department, String specialist, long startDate,
                                                          long finishDate) {
-        return appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate).stream()
-                .filter(a -> specialist.equals(a.getSpecialist()))
-                .collect(Collectors.toList());
+        String specId = specialist + "::" + department.getId();
+        return appointmentDao.getAppointmentsBySpecialist(specId, startDate, finishDate);
     }
 
     @Override
@@ -58,7 +57,8 @@ public class AppointmentService implements IAppointmentService {
         long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork());
         long now = DateUtils.now(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
-        List<Appointment> specAppointments = appointmentDao.getAppointmentsBySpecialist(specialist, startDate, finishDate);
+        String specId = specialist + "::" + department.getId();
+        List<Appointment> specAppointments = appointmentDao.getAppointmentsBySpecialist(specId, startDate, finishDate);
         List<FreeSlot> slots = getSlots(specAppointments, startDate, dayNumber, todayDayNumber, specialist, finishDate, now);
         if (specAppointments.isEmpty()) {
             if (dayNumber == todayDayNumber && now > startDate) {

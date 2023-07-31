@@ -66,8 +66,16 @@ public class DateUtils {
         return endDateTime.toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
     }
 
+    public static boolean isLastDayOfMonth(int year, int month, int day) {
+        return LocalDate.of(year, month, day).plusDays(1).getMonth().getValue() > month;
+    }
+
     public static int getDayOfWeek(int year, int month, int day) {
         return LocalDate.of(year, month, day).getDayOfWeek().getValue();
+    }
+
+    public static int getNextDayOfWeek(int year, int month, int day) {
+        return LocalDate.of(year, month, day).plusDays(1).getDayOfWeek().getValue();
     }
 
     public static int getNumberOfCurrentDay(Department department) {

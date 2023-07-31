@@ -41,7 +41,7 @@ public class AppointmentDaoTest {
         long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("28"), true);
         System.out.println(DateUtils.getDateTitle(startOfDay));
         System.out.println(DateUtils.getDateTitle(endOfDay));
-        List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialist("Tatiana", startOfDay, endOfDay);
+        List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialist("Tatiana::52c59292", startOfDay, endOfDay);
 //        List<Appointment> res = appointmentDao.getAppointmentsByUserId(538025182, startOfDay, endOfDay);
         System.out.println();
     }

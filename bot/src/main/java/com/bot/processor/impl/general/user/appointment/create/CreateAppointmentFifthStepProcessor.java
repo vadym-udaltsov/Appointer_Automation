@@ -60,8 +60,9 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Could not find service with name " + serviceName));
         Appointment appointment = Appointment.builder()
-                .specialist(specialist)
+                .id(String.format("%s::%s", specialist, department.getId()))
                 .service(serviceName)
+                .specialist(specialist)
                 .userId(context.getUserId())
                 .departmentId(department.getId())
                 .date(appointmentDate)

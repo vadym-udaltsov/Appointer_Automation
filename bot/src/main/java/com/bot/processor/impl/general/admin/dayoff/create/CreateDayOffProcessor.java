@@ -29,8 +29,9 @@ public class CreateDayOffProcessor {
         LocalDateTime localDateTime = LocalDateTime.of(year, month, day, hour, minute);
         long appointmentDate = localDateTime.toEpochSecond(ZoneOffset.UTC);
         Appointment appointment = Appointment.builder()
-                .specialist(specialist)
+                .id(String.format("%s::%s", specialist, department.getId()))
                 .service(Constants.DAY_OFF)
+                .specialist(specialist)
                 .userId(0)
                 .departmentId(department.getId())
                 .date(appointmentDate)

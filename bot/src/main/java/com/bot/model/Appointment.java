@@ -29,7 +29,7 @@ public class Appointment extends DynamoDbEntity {
 
     @DynamoDBHashKey(attributeName = HASH_KEY)
     @JsonProperty("s")
-    private String specialist;
+    private String id;
 
     @DynamoDBRangeKey(attributeName = RANGE_KEY)
     @DynamoDBIndexRangeKey(attributeName = RANGE_KEY, globalSecondaryIndexNames = {DEP_INDEX_NAME, USER_INDEX_NAME})
@@ -47,6 +47,9 @@ public class Appointment extends DynamoDbEntity {
     @JsonProperty("serv")
     private String service;
 
+    @JsonProperty("spec")
+    private String specialist;
+
     @JsonProperty("dur")
     private int duration;
 
@@ -59,11 +62,12 @@ public class Appointment extends DynamoDbEntity {
     @Override
     public Item toItem() {
         return new Item()
-                .with(HASH_KEY, specialist)
+                .with(HASH_KEY, id)
                 .withNumber(RANGE_KEY, date)
                 .withNumber("uid", userId)
                 .withNumber("dur", duration)
                 .withString("did", departmentId)
+                .withString("spec", specialist)
                 .withString("serv", service);
     }
 

@@ -47,14 +47,14 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
     }
 
     @Override
-    public List<Appointment> getAppointmentsBySpecialist(String specialist, long startDate, long finishDate) {
+    public List<Appointment> getAppointmentsBySpecialist(String specId, long startDate, long finishDate) {
         QuerySpec spec = new QuerySpec()
                 .withKeyConditionExpression("#hash = :id AND #range BETWEEN :start AND :end")
                 .withNameMap(new NameMap()
                         .with("#hash", "s")
                         .with("#range", "d"))
                 .withValueMap(new ValueMap()
-                        .withString(":id", specialist)
+                        .withString(":id", specId)
                         .withNumber(":start", startDate)
                         .withNumber(":end", finishDate));
         return findAllByQuery(spec);
