@@ -12,7 +12,6 @@ import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.DateUtils;
 import com.bot.util.MessageUtils;
-import com.commons.model.Department;
 import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -59,30 +58,30 @@ public class CancelDayOffThirdStepProcessor extends AppointmentsSecondStepProces
         Context context = request.getContext();
         String selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
         return () -> {
-            List<Appointment> appointments = appointmentService.getAppointmentsBySpecialist(request.getDepartment(),
+            List<Appointment> dayOffs = appointmentService.getAppointmentsBySpecialist(request.getDepartment(),
                             selectedSpecialist, start, finish).stream()
                     .filter(a -> Constants.DAY_OFF.equals(a.getService()))
                     .collect(Collectors.toList());
-            appointments.forEach(a -> context.getParams().put(getAppointmentTitle(a), JsonUtils.convertObjectToString(a)));
-            List<String> titles = appointments.stream().map(this::getAppointmentTitle).collect(Collectors.toList());
+            dayOffs.forEach(a -> context.getParams().put(getDayOffTitle(a), JsonUtils.convertObjectToString(a)));
+            List<String> titles = dayOffs.stream().map(this::getDayOffTitle).collect(Collectors.toList());
             context.getParams().put(Constants.AVAILABLE_APPOINTMENTS, titles);
-            return appointments;
+            return dayOffs;
         };
     }
 
     @Override
     protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
-        List<String> dayOffTitles = appointments.stream().map(this::getAppointmentTitle)
+        List<String> dayOffTitles = appointments.stream().map(this::getDayOffTitle)
                 .collect(Collectors.toList());
         return MessageUtils.buildCustomKeyboardHolders("Select day off period", dayOffTitles,
                 KeyBoardType.VERTICAL, true);
     }
 
-    private String getAppointmentTitle(Appointment appointment) {
+    private String getDayOffTitle(Appointment appointment) {
         long date = appointment.getDate();
         String dateTitle = DateUtils.getDateTitle(date);
-        long periodsCount = appointment.getDuration() / 1800;
-        return dateTitle + ", " + Constants.Numbers.PERIOD_TITLES.get((int) periodsCount);
+        long periodsCount = appointment.getDuration() / 30;
+        return dateTitle + ", " + Constants.Numbers.PERIOD_TITLES.get((int) periodsCount - 1);
     }
 
     @Override

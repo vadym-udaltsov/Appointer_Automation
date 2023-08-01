@@ -34,7 +34,7 @@ public class CreateAppointmentFourthStepProcessor implements IProcessor {
         if (!availableSpecialists.contains(specName) && !Constants.BACK.equals(specName)) {
             ContextUtils.setPreviousStep(context);
             BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(availableSpecialists);
-            return List.of(MessageUtils.holder("Select specialist from proposed", ButtonsType.KEYBOARD, holderRequest));
+            return List.of(MessageUtils.holder(Constants.Messages.INCORRECT_SPECIALIST, ButtonsType.KEYBOARD, holderRequest));
         }
         if (Constants.BACK.equals(specName)) {
             specName = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);

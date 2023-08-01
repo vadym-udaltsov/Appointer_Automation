@@ -160,5 +160,7 @@ public class Constants {
         public static final String SELECT_SPECIALIST = "Select specialist";
         public static final String INCORRECT_ACTION = "You entered incorrect value, select again";
         public static final String INCORRECT_DATE = "You entered incorrect date, select again";
+        public static final String INCORRECT_SPECIALIST = "Select specialist from proposed";
+
     }
 }

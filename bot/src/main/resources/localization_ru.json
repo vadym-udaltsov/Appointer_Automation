@@ -25,7 +25,7 @@
   "Select available date": "Выбери доступную дату",
   "You entered incorrect date, select again": "Вы указали некорректную дату, сделайте выбор снова",
   "You entered incorrect value, select again": "Вы ввели некорректные данные, сделайте выбор снова",
-  "Select service from proposed": "Выбери услугу из доступных",
+  "Select service from proposed": "Выбери доступную услугу",
   "Select time from proposed": "Выбери доступное время",
   "Select option from proposed": "Выбери из доступных",
   "Select appointment": "Выбери запись",
@@ -36,6 +36,12 @@
   "Day off cancelled:": "Нерабочее время УДАЛЕНО:",
   "Day off created:": "Нерабочее время ДОБАВЛЕНО:",
   "Select duration": "Выбери длительность",
+  "Select duration from proposed": "Выбери доступную длительность",
+  "Select specialist from proposed": "Выбери доступного специалиста",
+  "Your days off:": "Твое нерабочее время",
+  "You have no appointments for current and next months": "У тебя нет записей на текущий месяц и следующий",
+  "You have no days off for selected date": "У тебя нет нерабочего времени на выбраную дату",
+  "You have no appointments for selected date": "У тебя нет записей на выбраную дату",
 
   "Service: ${service}": "\uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
@@ -56,6 +62,11 @@
   "JUNE": "Июнь",
   "JULY": "Июль",
   "AUGUST": "Август",
+  "SEPTEMBER": "Сентябрь",
+  "OCTOBER": "Октябрь",
+  "NOVEMBER": "Ноябрь",
+  "DECEMBER": "Декабрь",
+
   "Today": "Сегодня",
   "Tomorrow": "Завтра",
 

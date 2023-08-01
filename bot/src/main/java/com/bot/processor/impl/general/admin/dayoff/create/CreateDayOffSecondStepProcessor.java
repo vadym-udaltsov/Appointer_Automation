@@ -40,7 +40,7 @@ public class CreateDayOffSecondStepProcessor extends AbstractGetCalendarProcesso
         if (!specialistNames.contains(selectedSpecialist) && !Constants.BACK.equals(selectedSpecialist)) {
             ContextUtils.setPreviousStep(context);
             BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(specialistNames);
-            return List.of(MessageUtils.holder("Select specialist from proposed", ButtonsType.KEYBOARD, holderRequest));
+            return List.of(MessageUtils.holder(Constants.Messages.INCORRECT_SPECIALIST, ButtonsType.KEYBOARD, holderRequest));
         }
 
         if (Constants.BACK.equals(selectedSpecialist)) {
