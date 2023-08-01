@@ -17,19 +17,19 @@ public class DaoProvider {
 
     @Provides
     @Singleton
-    IAppointmentDao appointmentDao(DynamoDbFactory factory) {
+    public static IAppointmentDao appointmentDao(DynamoDbFactory factory) {
         return new AppointmentDao(factory);
     }
 
     @Provides
     @Singleton
-    IContextDao contextDao(DynamoDbFactory factory) {
+    public static IContextDao contextDao(DynamoDbFactory factory) {
         return new ContextDao(factory);
     }
 
     @Provides
     @Singleton
-    IDepartmentDao departmentDao(DynamoDbFactory factory) {
+    public static IDepartmentDao departmentDao(DynamoDbFactory factory) {
         return new DepartmentDao(factory);
     }
 }

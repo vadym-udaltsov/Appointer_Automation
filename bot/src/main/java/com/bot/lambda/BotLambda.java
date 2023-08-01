@@ -3,6 +3,7 @@ package com.bot.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.bot.dagger.DaggerBotLambdaComponent;
+import com.bot.util.WarmUpUtils;
 import com.commons.model.ProxyResponse;
 import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -21,6 +22,10 @@ public class BotLambda implements RequestStreamHandler {
 
     TelegramBot botExecutor;
 
+    static {
+        WarmUpUtils.warmUp();
+    }
+
     public BotLambda() {
         DaggerBotLambdaComponent.create().inject(this);
     }
@@ -29,9 +34,9 @@ public class BotLambda implements RequestStreamHandler {
     public void handleRequest(InputStream input, OutputStream output, Context context) throws IOException {
         Map<String, Object> mapInput = JsonUtils.parseInputStreamToObject(input, new TypeReference<>() {
         });
-        Map<String, Object> pathParameters = (Map)mapInput.get("pathParameters");
+        Map<String, Object> pathParameters = (Map) mapInput.get("pathParameters");
         String departmentId = (String) pathParameters.get("id");
-        String body = (String)mapInput.get("body");
+        String body = (String) mapInput.get("body");
         Update update = JsonUtils.parseStringToObject(body, Update.class);
         botExecutor.processBotMessage(departmentId, update);
 
@@ -43,5 +48,4 @@ public class BotLambda implements RequestStreamHandler {
     public void setTelegramBot(TelegramBot telegramBot) {
         this.botExecutor = telegramBot;
     }
-
 }

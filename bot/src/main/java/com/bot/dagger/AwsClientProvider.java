@@ -14,19 +14,19 @@ public class AwsClientProvider {
 
     @Provides
     @Singleton
-    DynamoDbFactory dynamoDbFactory(AmazonDynamoDB dynamoDb) {
+    public static DynamoDbFactory dynamoDbFactory(AmazonDynamoDB dynamoDb) {
         return new DynamoDbFactory(dynamoDb);
     }
 
     @Provides
     @Singleton
-    public AmazonDynamoDB dynamoDb() {
+    public static AmazonDynamoDB dynamoDb() {
         return AmazonDynamoDBClientBuilder.standard().build();
     }
 
     @Provides
     @Singleton
-    public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB dynamoDB) {
+    public static DynamoDBMapper dynamoDBMapper(AmazonDynamoDB dynamoDB) {
         return new DynamoDBMapper(dynamoDB);
     }
 }
