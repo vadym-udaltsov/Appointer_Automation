@@ -264,7 +264,8 @@ public class KeyBoardUtils {
     private static InlineKeyboardButton buildButton(Set<String> busyDays, int currentDay, String value) {
         String currentDayValue = String.valueOf(currentDay);
         String todayTitle = busyDays.contains(currentDayValue) ? Constants.UNAVAILABLE_DATE : value;
-        String todayCallBack = Constants.UNAVAILABLE_DATE.equals(todayTitle) ? Constants.IGNORE : currentDayValue;
+        String callbackValue = currentDay < 10 ? "0" + currentDayValue : currentDayValue;
+        String todayCallBack = Constants.UNAVAILABLE_DATE.equals(todayTitle) ? Constants.IGNORE : callbackValue;
         InlineKeyboardButton button = new InlineKeyboardButton();
         button.setText(todayTitle);
         button.setCallbackData(todayCallBack);

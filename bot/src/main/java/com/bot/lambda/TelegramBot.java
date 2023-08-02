@@ -45,10 +45,11 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        System.out.println("Received update -------------- " + JsonUtils.convertObjectToString(update));
+        System.out.println("Received update --------------------------------------- " + JsonUtils.convertObjectToString(update));
         long userId = MessageUtils.getUserIdFromUpdate(update);
         try {
             Context context = contextService.getContext(update, department.getId());
+            System.out.println("Got context --------------------------------------- " + JsonUtils.convertObjectToString(context));
             localizer.localizeRequest(update, context);
             IProcessor processor = factory.getProcessor(update, context, department);
             ProcessRequest request = ProcessRequest.builder()

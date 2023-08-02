@@ -72,7 +72,7 @@ public class AbstractGetCalendarProcessor {
         } else {
             allAppointments = appointmentService.getAppointmentsByDepartment(department, startDate, endDate);
         }
-
+        allAppointments.removeIf(a -> specialists.stream().map(Specialist::getName).noneMatch(n -> n.equals(a.getSpecialist())));
         List<String> busyDayTitles = allAppointments.isEmpty() ? List.of() : defineBusyDayTitles(allAppointments,
                 department, month.getValue(), selectedService);
 

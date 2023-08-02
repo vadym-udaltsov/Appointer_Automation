@@ -27,6 +27,12 @@ public class DayOffFirstStepProcessor {
         Context context = request.getContext();
         Update update = request.getUpdate();
         List<Specialist> specialists = department.getAvailableSpecialists();
+        String text = MessageUtils.getTextFromUpdate(update);
+        if (Constants.BACK.equals(text) && specialists.size() == 1) {
+            ContextUtils.setPreviousStep(context);
+            return MessageUtils.buildCustomKeyboardHolders("Select action", List.of("Create", "View", "Delete"),
+                    KeyBoardType.TWO_ROW, true);
+        }
         if (specialists.size() == 1) {
             MessageUtils.setTextToUpdate(update, specialists.get(0).getName());
             ContextUtils.addNextStepToLocation(context, Constants.ANY, department);
