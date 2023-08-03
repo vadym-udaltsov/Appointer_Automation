@@ -12,7 +12,7 @@ $(window).ready(function () {
 
         var newAdminBlock = document.createElement('div');
         newAdminBlock.classList.add('admin');
-        newAdminBlock.setAttribute('value', specialist);
+        newAdminBlock.setAttribute('value', admin);
 
         var phoneDiv = document.createElement('div');
         phoneDiv.classList.add('admCol centerPos');
