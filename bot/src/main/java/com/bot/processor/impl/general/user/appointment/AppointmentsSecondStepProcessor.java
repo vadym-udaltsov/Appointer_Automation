@@ -4,6 +4,7 @@ import com.bot.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
+import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.service.IAppointmentService;
@@ -44,6 +45,14 @@ public abstract class AppointmentsSecondStepProcessor {
         if (Constants.CURRENT_MONTH.equals(selectedDay)) {
             return buildAnotherMonthResponse(request, false);
         }
+        Set<String> availableDates = (Set<String>) context.getParams().get(Constants.AVAILABLE_DATES);
+        if (!availableDates.contains(selectedDay)) {
+            List<MessageHolder> holders = MessageUtils.buildCustomKeyboardHolders("Select available date", List.of(),
+                    KeyBoardType.TWO_ROW, true);
+            holders.addAll(buildAnotherMonthResponse(request, false));
+            return holders;
+        }
+
         int month = ContextUtils.getIntParam(context, Constants.MONTH);
         long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false);
         long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true);

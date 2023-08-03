@@ -28,17 +28,6 @@ public class ViewAppointmentsSecondStepProcessor extends AppointmentsSecondStepP
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
-        Context context = request.getContext();
-        Set<String> availableDates = (Set<String>) context.getParams().get(Constants.AVAILABLE_DATES);
-        Update update = request.getUpdate();
-        String selectedDay = MessageUtils.getTextFromUpdate(update);
-        if (!availableDates.contains(selectedDay)) {
-            ContextUtils.resetLocationToDashboard(context);
-            Department department = request.getDepartment();
-            String strategyKey = ContextUtils.getStrategyKey(context, department);
-            return List.of(MessageUtils.buildDashboardHolder("You entered wrong date or have no appointments",
-                    List.of(), strategyKey));
-        }
         return buildResponse(request);
     }
 

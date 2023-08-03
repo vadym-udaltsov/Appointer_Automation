@@ -114,12 +114,13 @@ public class MessageUtils {
 
     public static List<MessageHolder> buildCustomKeyboardHolders(String message, List<String> buttonTitles, KeyBoardType keyBoardType,
                                                          boolean withCommon) {
+        ArrayList<MessageHolder> response = new ArrayList<>();
         BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
                 .type(keyBoardType)
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttonTitles), withCommon))
                 .build();
-        MessageHolder holder = MessageUtils.holder(message, ButtonsType.KEYBOARD, holderRequest);
-        return List.of(holder);
+        response.add(MessageUtils.holder(message, ButtonsType.KEYBOARD, holderRequest));
+        return response;
     }
 
     public static MessageHolder holder(String message, ButtonsType buttonsType,

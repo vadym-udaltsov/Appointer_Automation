@@ -73,9 +73,9 @@ public class AbstractGetCalendarProcessor {
             allAppointments = appointmentService.getAppointmentsByDepartment(department, startDate, endDate);
         }
         allAppointments.removeIf(a -> specialists.stream().map(Specialist::getName).noneMatch(n -> n.equals(a.getSpecialist())));
-        List<String> busyDayTitles = allAppointments.isEmpty() ? List.of() : defineBusyDayTitles(allAppointments,
-                department, month.getValue(), selectedService);
-
+        List<String> busyDayTitles = allAppointments.isEmpty()
+                ? new ArrayList<>()
+                : defineBusyDayTitles(allAppointments, department, month.getValue(), selectedService);
         BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
                 .buttonsMap(MessageUtils.buildButtons(List.of(), true))
@@ -94,9 +94,8 @@ public class AbstractGetCalendarProcessor {
         return List.of(commonButtonsHolder, datePicker);
     }
 
-    private List<String> defineBusyDayTitles(List<Appointment> allAppointments, Department department, int month,
+    public List<String> defineBusyDayTitles(List<Appointment> allAppointments, Department department, int month,
                                              String serviceName) {
-
         List<Pair<String, List<Appointment>>> appointmentsBySpecialist = allAppointments.stream()
                 .collect(Collectors.groupingBy(Appointment::getSpecialist))
                 .entrySet().stream()

@@ -97,7 +97,7 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
         ItemCollection<QueryOutcome> result = index.query(querySpec);
         List<Item> itemsFromQueryResult = getItemsFromQueryResult(result);
         if (itemsFromQueryResult.size() == 0) {
-            return List.of();
+            return new ArrayList<>();
         }
         return itemsFromQueryResult.stream()
                 .map(i -> JsonUtils.parseStringToObject(i.toJSON(), tClass))
