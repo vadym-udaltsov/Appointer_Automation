@@ -1,6 +1,7 @@
 package com.bot.service.impl;
 
 import com.bot.dao.IContextDao;
+import com.bot.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.service.IContextService;
@@ -48,6 +49,11 @@ public class ContextService implements IContextService {
     }
 
     @Override
+    public List<Context> getContextListByAppointments(List<Appointment> appointments) {
+        return contextDao.getContextListByAppointments(appointments);
+    }
+
+    @Override
     public void setPreviousStep(Context context) {
         List<String> navigation = context.getNavigation();
         navigation.remove(navigation.size() - 1);
@@ -80,4 +86,5 @@ public class ContextService implements IContextService {
     public void updateLocale(long id, String departmentId, Language language) {
         contextDao.updateLocale(id, departmentId, language);
     }
+
 }

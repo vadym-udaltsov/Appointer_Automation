@@ -48,7 +48,7 @@ public class CancelDayOffFourthStepProcessor implements IProcessor {
         List<LString> messagesToLocalize = new ArrayList<>();
         messagesToLocalize.add(LString.builder().title("Day off cancelled:").build());
         messagesToLocalize.add(LString.empty());
-        MessageUtils.fillMessagesToLocalize(messagesToLocalize, dayOff, MessageTemplate.DAY_OFF_ALL_FIELDS);
+        MessageUtils.fillMessagesToLocalize(messagesToLocalize, dayOff, context, MessageTemplate.DAY_OFF_ALL_FIELDS);
         return List.of(MessageUtils.buildDashboardHolder("", messagesToLocalize, strategyKey));
     }
 }

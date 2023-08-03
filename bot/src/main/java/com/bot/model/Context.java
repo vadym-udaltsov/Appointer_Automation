@@ -44,6 +44,7 @@ public class Context extends DynamoDbEntity {
     private long userId;
 
     @DynamoDBRangeKey(attributeName = RANGE_KEY)
+    @JsonProperty(RANGE_KEY)
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = INDEX_NAME)
     private String departmentId;
 
@@ -55,6 +56,7 @@ public class Context extends DynamoDbEntity {
     @DynamoDBAttribute(attributeName = NAVIGATION_FIELD)
     private List<String> navigation;
 
+    @JsonProperty(PHONE_FIELD)
     @DynamoDBAttribute(attributeName = PHONE_FIELD)
     @DynamoDBIndexHashKey(globalSecondaryIndexName = INDEX_NAME)
     private String phoneNumber;

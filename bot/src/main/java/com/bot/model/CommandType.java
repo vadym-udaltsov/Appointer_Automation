@@ -32,6 +32,10 @@ public enum CommandType {
     CANCEL_APP4(Constants.Processors.CANCEL_APP4),
 
     //admin
+    START_APP_DASH(Constants.Processors.START_APP_DASH),
+    ALL_APP_BY_DATE_1(Constants.Processors.GET_ALL_APP_BY_DATE_1),
+    ALL_APP_BY_DATE_2(Constants.Processors.GET_ALL_APP_BY_DATE_2),
+    ALL_APP_TODAY_TOMORROW(Constants.Processors.GET_ALL_APP_TODAY_TOMORROW),
     GET_ALL_APPOINTMENTS_1(Constants.Processors.GET_ALL_APPOINTMENTS_1),
     GET_ALL_APPOINTMENTS_2(Constants.Processors.GET_ALL_APPOINTMENTS_2),
 

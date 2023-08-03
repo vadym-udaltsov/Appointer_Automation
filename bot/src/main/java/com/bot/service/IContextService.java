@@ -1,8 +1,11 @@
 package com.bot.service;
 
+import com.bot.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import java.util.List;
 
 public interface IContextService {
 
@@ -25,4 +28,6 @@ public interface IContextService {
     void updateLocation(Context context, String location);
 
     void setPhoneNumber(Context context, String number);
+
+    List<Context> getContextListByAppointments(List<Appointment> appointments);
 }

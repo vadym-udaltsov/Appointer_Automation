@@ -1,19 +1,24 @@
 package com.bot.dao.impl;
 
+import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.bot.dao.IContextDao;
+import com.bot.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.util.Constants;
 import com.commons.dao.AbstractDao;
 import com.commons.dao.impl.DynamoDbFactory;
+import org.apache.commons.collections4.ListUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ContextDao extends AbstractDao<Context> implements IContextDao {
 
@@ -109,5 +114,32 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
                         Context.RANGE_KEY, new AttributeValue().withS(context.getDepartmentId())))
                 .withUpdateExpression("REMOVE n[" + (navigation.size() - 1) + "]");
         updateItem(request);
+    }
+
+    @Override
+    public List<Context> getContextListByAppointments(List<Appointment> appointments) {
+        List<Context> resultList = new ArrayList<>();
+        if (appointments.size() == 0) {
+            return resultList;
+        }
+        String departmentId = appointments.get(0).getDepartmentId();
+        List<Object> keyList = new ArrayList<>();
+        appointments.stream()
+                .collect(Collectors.toMap(Appointment::getUserId, a -> departmentId, (a, b) -> a))
+                .forEach((k, v) -> {
+                    keyList.add(k);
+                    keyList.add(v);
+                });
+        List<List<Object>> partitions = ListUtils.partition(keyList, 100);
+        for (List<Object> partition : partitions) {
+            resultList.addAll(addBatchGetResult(partition));
+        }
+        return resultList;
+    }
+
+    private List<Context> addBatchGetResult(List<Object> keyList) {
+        TableKeysAndAttributes tableKeysAndAttributes = new TableKeysAndAttributes(Context.TABLE_NAME);
+        tableKeysAndAttributes.addHashAndRangePrimaryKeys(Context.HASH_KEY, Context.RANGE_KEY, keyList.toArray());
+        return getItemsByKeyList(tableKeysAndAttributes);
     }
 }

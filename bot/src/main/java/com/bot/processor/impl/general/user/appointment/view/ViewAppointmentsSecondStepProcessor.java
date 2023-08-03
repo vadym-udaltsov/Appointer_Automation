@@ -52,7 +52,7 @@ public class ViewAppointmentsSecondStepProcessor extends AppointmentsSecondStepP
         messagesToLocalize.add(LString.builder().title("Your appointments:").build());
         messagesToLocalize.add(LString.empty());
         for (Appointment appointment : appointments) {
-            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_ALL_FIELDS);
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, null, MessageTemplate.APPOINTMENT_ALL_FIELDS);
             messagesToLocalize.add(LString.empty());
         }
         return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));

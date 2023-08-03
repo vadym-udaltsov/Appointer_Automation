@@ -1,18 +1,17 @@
 package com.commons.dao;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.document.AttributeUpdate;
+import com.amazonaws.services.dynamodbv2.document.BatchGetItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.Page;
-import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
-import com.amazonaws.services.dynamodbv2.model.DeleteItemRequest;
 import com.amazonaws.services.dynamodbv2.model.ExecuteStatementRequest;
 import com.amazonaws.services.dynamodbv2.model.ExecuteStatementResult;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
@@ -110,6 +109,14 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
         T item = getMapper().load(tClass, hashKey);
         log.info("Successfully got item from table: {}, hash key: {}", tableName, hashKey);
         return item;
+    }
+
+    public List<T> getItemsByKeyList(TableKeysAndAttributes tableKeysAndAttributes) {
+        BatchGetItemOutcome outcome = getDynamoDb().batchGetItem(tableKeysAndAttributes);
+        List<Item> items = outcome.getTableItems().get(tableName);
+        return items.stream()
+                .map(i -> JsonUtils.parseStringToObject(i.toJSON(), tClass))
+                .collect(Collectors.toList());
     }
 
     public T getItem(T item) {

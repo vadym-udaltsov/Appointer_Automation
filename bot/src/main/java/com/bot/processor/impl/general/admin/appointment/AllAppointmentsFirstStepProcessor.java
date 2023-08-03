@@ -31,7 +31,8 @@ public class AllAppointmentsFirstStepProcessor extends AppointmentsFirstStepProc
     @Override
     protected Supplier<List<Appointment>> getAppointmentsSupplier(ProcessRequest request, long startDate, long finishDate) {
         Department department = request.getDepartment();
-        return () -> appointmentService.getAppointmentsByDepartment(department, startDate, finishDate).stream()
+        return () -> appointmentService.getAppointmentsByDepartment(department, startDate, finishDate)
+                .stream()
                 .filter(a -> !Constants.DAY_OFF.equals(a.getService()))
                 .collect(Collectors.toList());
     }

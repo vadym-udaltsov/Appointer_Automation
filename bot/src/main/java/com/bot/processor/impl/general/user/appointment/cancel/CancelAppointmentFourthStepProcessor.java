@@ -44,7 +44,7 @@ public class CancelAppointmentFourthStepProcessor implements IProcessor {
             List<LString> messagesToLocalize = new ArrayList<>();
             messagesToLocalize.add(LString.builder().title("Appointment CANCELED:").build());
             messagesToLocalize.add(LString.empty());
-            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_ALL_FIELDS);
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, context, MessageTemplate.APPOINTMENT_ALL_FIELDS);
             List<LString> adminMessages = MessageUtils.buildNotificationForAdmins(messagesToLocalize, context, department);
             sendMessageService.sendNotificationToAdmins(adminMessages, department);
             return List.of(MessageUtils.buildDashboardHolder("Appointment was canceled", List.of(), strategyKey));

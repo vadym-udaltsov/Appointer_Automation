@@ -75,7 +75,7 @@ public class ViewDayOffThirdStepProcessor extends AppointmentsSecondStepProcesso
         messagesToLocalize.add(LString.builder().title("Your days off:").build());
         messagesToLocalize.add(LString.empty());
         for (Appointment appointment : appointments) {
-            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.DAY_OFF_ALL_FIELDS);
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, null, MessageTemplate.DAY_OFF_ALL_FIELDS);
             messagesToLocalize.add(LString.empty());
         }
         return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));

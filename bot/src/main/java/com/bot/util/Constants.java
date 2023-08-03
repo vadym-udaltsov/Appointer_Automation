@@ -76,6 +76,10 @@ public class Constants {
         public static final String CANCEL_APP4 = "cancelApp4";
 
         //admin
+        public static final String START_APP_DASH = "startAppointmentsDash";
+        public static final String GET_ALL_APP_BY_DATE_1 = "getAppointmentsByDateFirst";
+        public static final String GET_ALL_APP_BY_DATE_2 = "getAppointmentsByDateSecond";
+        public static final String GET_ALL_APP_TODAY_TOMORROW = "getAppointmentsTodayTomorrow";
         public static final String GET_ALL_APPOINTMENTS_1 = "getAllAppointments";
         public static final String GET_ALL_APPOINTMENTS_2 = "getAllAppointmentsByDate";
 
@@ -160,6 +164,11 @@ public class Constants {
         public static final String SELECT_SPECIALIST = "Select specialist";
         public static final String INCORRECT_ACTION = "You entered incorrect value, select again";
         public static final String INCORRECT_DATE = "You entered incorrect date, select again";
+        public static final String NO_APP_FOR_DATE = "No appointments";
+        public static final String APP_FOR_DATE = "All appointments for ${date}";
+        public static final String APP_SPECIALIST = "Specialist: ${specialist}";
+        public static final String APP_CLIENT_INFO = "Client: ${client} Phone: ${phone}";
+
         public static final String INCORRECT_SPECIALIST = "Select specialist from proposed";
 
     }

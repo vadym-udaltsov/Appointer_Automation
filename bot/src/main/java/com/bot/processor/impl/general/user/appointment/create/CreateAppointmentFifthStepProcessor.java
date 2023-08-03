@@ -73,7 +73,7 @@ public class CreateAppointmentFifthStepProcessor implements IProcessor {
         List<LString> messagesToLocalize = new ArrayList<>();
         messagesToLocalize.add(LString.builder().title("Appointment CREATED:").build());
         messagesToLocalize.add(LString.empty());
-        MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, MessageTemplate.APPOINTMENT_ALL_FIELDS);
+        MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, context, MessageTemplate.APPOINTMENT_ALL_FIELDS);
         List<LString> adminMessages = MessageUtils.buildNotificationForAdmins(messagesToLocalize, context, department);
         sendMessageService.sendNotificationToAdmins(adminMessages, department);
         String strategyKey = ContextUtils.getStrategyKey(context, department);

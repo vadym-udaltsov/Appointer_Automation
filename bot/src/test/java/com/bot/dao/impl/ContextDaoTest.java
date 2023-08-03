@@ -2,8 +2,10 @@ package com.bot.dao.impl;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.bot.converter.MapObjectConverter;
+import com.bot.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.FreeSlot;
 import com.bot.model.Strategy;
@@ -13,8 +15,10 @@ import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.utils.JsonUtils;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 class ContextDaoTest {
 
@@ -29,7 +33,7 @@ class ContextDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     public void shouldGetItemByIndex() {
         Context context = contextDao.getAdminContext("+380505746182", "52c59292");
         System.out.println();
@@ -71,6 +75,29 @@ class ContextDaoTest {
         context.setParams(params);
         contextDao.overwriteItem(context);
 //        Item item = context.toItem();
+        System.out.println();
+    }
+
+//    @Test
+    void testContextList() {
+        List<Appointment> appointments = new ArrayList<>();
+        for (int i = 1; i < 120; i++) {
+            StringBuilder builder = new StringBuilder();
+            for (int s = 1; s < 80; s++) {
+                builder.append(s);
+            }
+            Appointment appointment = new Appointment("", 0L, i, builder.toString(), "", "", 0);
+            appointments.add(appointment);
+        }
+        Appointment appointment1 = new Appointment("", 0L, 2006806288L, "790b0de6", "", "", 0);
+        Appointment appointment2 = new Appointment("", 0L, 263609752L, "790b0de6", "", "", 0);
+        Appointment appointment3 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0);
+        Appointment appointment4 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0);
+        appointments.add(appointment1);
+        appointments.add(appointment2);
+        appointments.add(appointment3);
+        appointments.add(appointment4);
+        List<Context> list = contextDao.getContextListByAppointments(appointments);
         System.out.println();
     }
 }

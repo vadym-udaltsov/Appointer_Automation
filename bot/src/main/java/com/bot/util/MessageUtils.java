@@ -211,7 +211,7 @@ public class MessageUtils {
                 .build();
     }
 
-    public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment, MessageTemplate template) {
+    public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment, Context userContext, MessageTemplate template) {
         String specialist = appointment.getSpecialist();
         String service = appointment.getService();
         int duration = appointment.getDuration();
@@ -225,8 +225,12 @@ public class MessageUtils {
         messagesMap.put("date", LString.builder().title("Date: ${date}").placeholders(Map.of("date", dateTitle.split(",")[0])).build());
         messagesMap.put("time", LString.builder().title("Time from ${timeFrom} to ${timeTo}").placeholders(Map.of("timeFrom", startTime, "timeTo", endTime)).build());
         messagesMap.put("service", LString.builder().title("Service: ${service}").placeholders(Map.of("service", service)).build());
-        if (!"owner".equals(specialist)) {
-            messagesMap.put("specialist", LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
+        messagesMap.put("specialist", LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
+        if (userContext != null) {
+            messagesMap.put("client", LString.builder().title("Client: ${client}").placeholders(Map.of("client", userContext.getName())).build());
+            messagesMap.put("clientPhone", LString.builder().title("Phone Number: ${phone}").placeholders(Map.of("phone", userContext.getPhoneNumber())).build());
+            Map<String, String> clientPhonePlaceholder = Map.of("client", userContext.getName(), "phone", userContext.getPhoneNumber());
+            messagesMap.put("clientWithPhone", LString.builder().title(Constants.Messages.APP_CLIENT_INFO).placeholders(clientPhonePlaceholder).build());
         }
         template.buildMessages(messagesToLocalize, messagesMap);
     }

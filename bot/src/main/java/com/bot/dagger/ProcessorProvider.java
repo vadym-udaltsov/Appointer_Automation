@@ -6,6 +6,8 @@ import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
 import com.bot.processor.impl.general.admin.appointment.AllAppointmentsFirstStepProcessor;
 import com.bot.processor.impl.general.admin.appointment.AllAppointmentsSecondStepProcessor;
+import com.bot.processor.impl.general.admin.appointment.AppointmentsTodayAndTomorrowProcessor;
+import com.bot.processor.impl.general.admin.appointment.StartAppointmentsDashProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFourthStepProcessor;
@@ -196,17 +198,33 @@ public class ProcessorProvider {
     @Provides
     @Singleton
     @IntoMap
-    @CommandKey(CommandType.GET_ALL_APPOINTMENTS_1)
-    public IProcessor getAllAppointmentsFirst(IAppointmentService appointmentService) {
+    @CommandKey(CommandType.START_APP_DASH)
+    public IProcessor startAppointmentsDash(IAppointmentService appointmentService) {
+        return new StartAppointmentsDashProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.ALL_APP_BY_DATE_1)
+    public IProcessor getAppointmentsByDateFirst(IAppointmentService appointmentService) {
         return new AllAppointmentsFirstStepProcessor(appointmentService);
     }
 
     @Provides
     @Singleton
     @IntoMap
-    @CommandKey(CommandType.GET_ALL_APPOINTMENTS_2)
-    public IProcessor getAllAppointmentsSecond(IAppointmentService appointmentService) {
-        return new AllAppointmentsSecondStepProcessor(appointmentService);
+    @CommandKey(CommandType.ALL_APP_BY_DATE_2)
+    public IProcessor getAppointmentsByDateSecond(IAppointmentService appointmentService, IContextService contextService) {
+        return new AllAppointmentsSecondStepProcessor(appointmentService, contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.ALL_APP_TODAY_TOMORROW)
+    public IProcessor getAppointmentsToday(IAppointmentService appointmentService, IContextService contextService) {
+        return new AppointmentsTodayAndTomorrowProcessor(appointmentService, contextService);
     }
 
     // --------------------Day off -----------------------

@@ -1,7 +1,10 @@
 package com.bot.dao;
 
+import com.bot.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
+
+import java.util.List;
 
 public interface IContextDao {
 
@@ -22,5 +25,7 @@ public interface IContextDao {
     void updateLocation(Context context, String location);
 
     void setPhoneNumber(Context context, String number);
+
+    List<Context> getContextListByAppointments(List<Appointment> appointments);
 
 }

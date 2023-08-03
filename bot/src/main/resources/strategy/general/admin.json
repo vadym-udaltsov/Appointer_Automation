@@ -15,12 +15,28 @@
               "key": "any",
               "nested": [
                 {
-                  "name": "getAllAppointments",
+                  "name": "startAppointmentsDash",
                   "key": "Appointments",
                   "nested": [
                     {
-                      "name": "getAllAppointmentsByDate",
-                      "key": "any",
+                      "name": "getAppointmentsByDateFirst",
+                      "key": "By Date",
+                      "nested": [
+                        {
+                          "name": "getAppointmentsByDateSecond",
+                          "key": "any",
+                          "nested": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "getAppointmentsTodayTomorrow",
+                      "key": "Tomorrow",
+                      "nested": []
+                    },
+                    {
+                      "name": "getAppointmentsTodayTomorrow",
+                      "key": "Today",
                       "nested": []
                     }
                   ]

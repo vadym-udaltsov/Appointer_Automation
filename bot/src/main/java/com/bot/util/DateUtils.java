@@ -45,6 +45,11 @@ public class DateUtils {
         return localDate.format(DateTimeFormatter.ofPattern("dd"));
     }
 
+    public static String getMonthTitle(long date) {
+        LocalDate localDate = LocalDate.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
+        return localDate.format(DateTimeFormatter.ofPattern("MM"));
+    }
+
     public static String getDateTitle(long date) {
         LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
         return dateTime.format(DateTimeFormatter.ofPattern("MM/dd,HH:mm"));
