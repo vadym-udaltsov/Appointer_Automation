@@ -2,23 +2,20 @@ package com.bot.dao.impl;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.bot.converter.MapObjectConverter;
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.Context;
-import com.bot.model.FreeSlot;
+import com.commons.model.FreeSlot;
 import com.bot.model.Strategy;
 import com.bot.util.ContextUtils;
 import com.bot.util.StrategyProvider;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.utils.JsonUtils;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 class ContextDaoTest {
 

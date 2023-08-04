@@ -1,11 +1,11 @@
 package com.bot.processor.impl.general.admin.appointment;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsFirstStepProcessor;
-import com.bot.service.IAppointmentService;
+import com.commons.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.commons.model.Department;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class AllAppointmentsFirstStepProcessor extends AppointmentsFirstStepProcessor implements IProcessor {
+public class AppointmentsByDateFirstStepProcessor extends AppointmentsFirstStepProcessor implements IProcessor {
 
     private final IAppointmentService appointmentService;
 
-    public AllAppointmentsFirstStepProcessor(IAppointmentService appointmentService) {
+    public AppointmentsByDateFirstStepProcessor(IAppointmentService appointmentService) {
         super(appointmentService);
         this.appointmentService = appointmentService;
     }

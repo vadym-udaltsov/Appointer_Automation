@@ -1,8 +1,8 @@
 package com.bot.dagger;
 
-import com.bot.dao.IAppointmentDao;
+import com.commons.dao.IAppointmentDao;
 import com.bot.dao.IContextDao;
-import com.bot.dao.impl.AppointmentDao;
+import com.commons.dao.impl.AppointmentDao;
 import com.bot.dao.impl.ContextDao;
 import com.commons.dao.IDepartmentDao;
 import com.commons.dao.impl.DepartmentDao;

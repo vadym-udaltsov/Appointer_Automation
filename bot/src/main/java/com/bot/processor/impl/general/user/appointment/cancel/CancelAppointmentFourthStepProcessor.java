@@ -1,6 +1,6 @@
 package com.bot.processor.impl.general.user.appointment.cancel;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
@@ -9,7 +9,7 @@ import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.bot.service.IAppointmentService;
+import com.commons.service.IAppointmentService;
 import com.bot.service.ISendMessageService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;

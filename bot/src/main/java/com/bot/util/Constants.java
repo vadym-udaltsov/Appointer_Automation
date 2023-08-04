@@ -167,7 +167,7 @@ public class Constants {
         public static final String NO_APP_FOR_DATE = "No appointments";
         public static final String APP_FOR_DATE = "All appointments for ${date}";
         public static final String APP_SPECIALIST = "Specialist: ${specialist}";
-        public static final String APP_CLIENT_INFO = "Client: ${client} Phone: ${phone}";
+        public static final String APP_CLIENT_INFO = "Client: ${client}\n Phone: ${phone}";
 
         public static final String INCORRECT_SPECIALIST = "Select specialist from proposed";
 

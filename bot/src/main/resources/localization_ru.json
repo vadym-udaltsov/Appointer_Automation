@@ -57,7 +57,7 @@
   "Appointment CREATED:": "Запись СОЗДАНА:",
   "Client: ${client}": "\uD83E\uDDD2 Клиент: ${client}",
   "Phone Number: ${phone}": "Телефон: ${phone}",
-  "Client: ${client} Phone: ${phone}": "  \uD83E\uDDD2 Клиент: ${client} ☎ ${phone}",
+  "Client: ${client}\n Phone: ${phone}": "  \uD83E\uDDD2 Клиент: ${client}\n ☎ ${phone}",
   "Department: ${department}": "Салон: ${department}",
   "Time from ${timeFrom} to ${timeTo}": "  ⌛ Время с ${timeFrom} до ${timeTo}",
 

@@ -1,6 +1,6 @@
 package com.bot.service;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import org.telegram.telegrambots.meta.api.objects.Update;

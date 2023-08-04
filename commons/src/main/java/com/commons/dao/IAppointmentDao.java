@@ -1,6 +1,6 @@
-package com.bot.dao;
+package com.commons.dao;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.commons.model.Department;
 
 import java.util.List;
@@ -10,6 +10,8 @@ public interface IAppointmentDao {
     boolean createItem(Appointment appointment);
 
     void deleteItem(Appointment appointment);
+
+    void deleteSpecialistAppointments(String specialist, String departmentId, long endDate);
 
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 

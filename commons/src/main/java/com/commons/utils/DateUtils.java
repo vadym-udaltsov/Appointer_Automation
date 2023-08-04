@@ -1,6 +1,6 @@
-package com.bot.util;
+package com.commons.utils;
 
-import com.bot.model.FreeSlot;
+import com.commons.model.FreeSlot;
 import com.commons.model.Department;
 
 import java.time.Instant;

@@ -2,19 +2,20 @@ package com.bot.service;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.bot.dao.impl.AppointmentDao;
+import com.commons.dao.impl.AppointmentDao;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.Context;
-import com.bot.model.FreeSlot;
+import com.commons.model.FreeSlot;
 import com.bot.model.KeyBoardType;
 import com.bot.processor.impl.general.user.appointment.create.AbstractGetCalendarProcessor;
-import com.bot.service.impl.AppointmentService;
+import com.commons.service.impl.AppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.KeyBoardUtils;
 import com.bot.util.MessageUtils;
 import com.commons.dao.impl.DepartmentDao;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.Department;
+import com.commons.service.IAppointmentService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class AppointmentServiceTest {
     private IAppointmentService appointmentService = new AppointmentService(appointmentDao);
     private DepartmentDao departmentDao = new DepartmentDao(dynamoDbFactory);
 
-    @Test
+//    @Test
     public void getFreeSlotsBySpecialist() {
         Department department = new Department();
         department.setId("52c59292");

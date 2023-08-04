@@ -1,11 +1,11 @@
 package com.bot.processor.impl.general.admin.dayoff.create;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.LString;
 import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
-import com.bot.service.IAppointmentService;
+import com.commons.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;

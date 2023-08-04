@@ -4,8 +4,8 @@ import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
-import com.bot.processor.impl.general.admin.appointment.AllAppointmentsFirstStepProcessor;
-import com.bot.processor.impl.general.admin.appointment.AllAppointmentsSecondStepProcessor;
+import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateFirstStepProcessor;
+import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateSecondStepProcessor;
 import com.bot.processor.impl.general.admin.appointment.AppointmentsTodayAndTomorrowProcessor;
 import com.bot.processor.impl.general.admin.appointment.StartAppointmentsDashProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
@@ -36,7 +36,7 @@ import com.bot.processor.impl.start.AskLanguageProcessor;
 import com.bot.processor.impl.start.SetContactProcessor;
 import com.bot.processor.impl.start.SetLanguageAskContactsProcessor;
 import com.bot.processor.impl.start.StartDashProcessor;
-import com.bot.service.IAppointmentService;
+import com.commons.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.service.ISendMessageService;
 import dagger.Module;
@@ -208,7 +208,7 @@ public class ProcessorProvider {
     @IntoMap
     @CommandKey(CommandType.ALL_APP_BY_DATE_1)
     public IProcessor getAppointmentsByDateFirst(IAppointmentService appointmentService) {
-        return new AllAppointmentsFirstStepProcessor(appointmentService);
+        return new AppointmentsByDateFirstStepProcessor(appointmentService);
     }
 
     @Provides
@@ -216,7 +216,7 @@ public class ProcessorProvider {
     @IntoMap
     @CommandKey(CommandType.ALL_APP_BY_DATE_2)
     public IProcessor getAppointmentsByDateSecond(IAppointmentService appointmentService, IContextService contextService) {
-        return new AllAppointmentsSecondStepProcessor(appointmentService, contextService);
+        return new AppointmentsByDateSecondStepProcessor(appointmentService, contextService);
     }
 
     @Provides

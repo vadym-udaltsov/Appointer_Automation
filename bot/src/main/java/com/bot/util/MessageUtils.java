@@ -1,6 +1,6 @@
 package com.bot.util;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.Button;
 import com.bot.model.ButtonsType;
@@ -11,6 +11,7 @@ import com.bot.model.Language;
 import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
 import com.commons.model.Department;
+import com.commons.utils.DateUtils;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Contact;

@@ -1,7 +1,7 @@
 package com.bot.service.impl;
 
 import com.bot.dao.IContextDao;
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.service.IContextService;

@@ -1,16 +1,16 @@
 package com.bot.processor.impl.general.user.appointment;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
-import com.bot.service.IAppointmentService;
+import com.commons.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
-import com.bot.util.DateUtils;
+import com.commons.utils.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
 import com.commons.model.Specialist;

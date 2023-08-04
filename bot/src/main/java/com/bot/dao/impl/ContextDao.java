@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.bot.dao.IContextDao;
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.util.Constants;

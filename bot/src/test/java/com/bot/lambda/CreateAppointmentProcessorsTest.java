@@ -1,11 +1,9 @@
 package com.bot.lambda;
 
 import com.bot.model.Context;
-import com.bot.model.FreeSlot;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.commons.utils.JsonUtils;
-import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

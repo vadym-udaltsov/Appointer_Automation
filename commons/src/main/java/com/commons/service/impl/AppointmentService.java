@@ -1,13 +1,13 @@
-package com.bot.service.impl;
+package com.commons.service.impl;
 
-import com.bot.dao.IAppointmentDao;
-import com.bot.model.Appointment;
-import com.bot.model.FreeSlot;
-import com.bot.service.IAppointmentService;
-import com.bot.util.DateUtils;
+
+import com.commons.dao.IAppointmentDao;
+import com.commons.model.Appointment;
+import com.commons.model.FreeSlot;
+import com.commons.service.IAppointmentService;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
-import com.commons.utils.JsonUtils;
+import com.commons.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +42,11 @@ public class AppointmentService implements IAppointmentService {
     @Override
     public List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate) {
         return appointmentDao.getAppointmentsByUserId(userId, startDate, finishDate);
+    }
+
+    @Override
+    public void deleteAppointmentsBySpecialist(String departmentId, String specialist, long endDate) {
+        appointmentDao.deleteSpecialistAppointments(specialist, departmentId, endDate);
     }
 
     @Override

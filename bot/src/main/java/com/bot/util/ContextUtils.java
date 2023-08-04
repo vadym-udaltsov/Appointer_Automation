@@ -1,7 +1,7 @@
 package com.bot.util;
 
 import com.bot.model.Context;
-import com.bot.model.FreeSlot;
+import com.commons.model.FreeSlot;
 import com.bot.model.Role;
 import com.bot.model.Strategy;
 import com.commons.model.Department;

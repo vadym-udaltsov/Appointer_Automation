@@ -2,11 +2,11 @@ package com.bot.dao.impl;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.bot.model.Appointment;
-import com.bot.util.DateUtils;
+import com.commons.dao.impl.AppointmentDao;
 import com.commons.dao.impl.DynamoDbFactory;
+import com.commons.model.Appointment;
 import com.commons.model.Department;
-import org.junit.jupiter.api.Test;
+import com.commons.utils.DateUtils;
 
 import java.util.List;
 
@@ -24,7 +24,36 @@ public class AppointmentDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
+    public void shouldDeleteAppointmentsBySpecialistId() {
+        Department department = new Department();
+        department.setId("fc871929");
+        department.setZone("Europe/Berlin");
+        long endDate = DateUtils.getEndOfMonthDate(department, true);
+        appointmentDao.deleteSpecialistAppointments("Tatiana", "52c59292", endDate);
+        System.out.println();
+    }
+
+    //    @Test
+    public void shouldCreateAppointments() {
+        long startDate = 152445552;
+        for (int i = 0; i < 105; i++) {
+            Appointment appointment = Appointment.builder()
+                    .date(startDate)
+                    .id("Tatiana::52c59292")
+                    .departmentId("52c59292")
+                    .service("TEST")
+                    .specialist("Tatiana")
+                    .duration(60)
+                    .build();
+            appointmentDao.createItem(appointment);
+            startDate += 1000;
+        }
+//        appointmentDao.deleteSpecialistAppointments("Tatiana", "52c59292", endDate);
+        System.out.println();
+    }
+
+    //    @Test
     public void shouldGetAppointmentsByDay() {
         long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), false);
         long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), true);
@@ -35,7 +64,7 @@ public class AppointmentDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     public void shouldGetAppointmentsBySpecialist() {
         long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("25"), false);
         long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("28"), true);

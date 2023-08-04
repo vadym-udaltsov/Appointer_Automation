@@ -1,6 +1,6 @@
 package com.bot.dao;
 
-import com.bot.model.Appointment;
+import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 

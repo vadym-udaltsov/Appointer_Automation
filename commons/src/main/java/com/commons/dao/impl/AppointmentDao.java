@@ -1,20 +1,43 @@
-package com.bot.dao.impl;
+package com.commons.dao.impl;
 
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
-import com.bot.dao.IAppointmentDao;
-import com.bot.model.Appointment;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.DeleteRequest;
+import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 import com.commons.dao.AbstractDao;
-import com.commons.dao.impl.DynamoDbFactory;
+import com.commons.dao.IAppointmentDao;
+import com.commons.model.Appointment;
 import com.commons.model.Department;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AppointmentDao extends AbstractDao<Appointment> implements IAppointmentDao {
 
     public AppointmentDao(DynamoDbFactory dynamoDbFactory) {
         super(dynamoDbFactory, Appointment.class, Appointment.TABLE_NAME);
+    }
+
+    @Override
+    public void deleteSpecialistAppointments(String specialist, String departmentId, long endDate) {
+        String specId = specialist + "::" + departmentId;
+        List<Appointment> appointments = getAppointmentsBySpecialist(specId, 0, endDate);
+        List<WriteRequest> writeRequests = new ArrayList<>();
+
+        for (Appointment item : appointments) {
+            Map<String, AttributeValue> key = new HashMap<>();
+            key.put("s", new AttributeValue(item.getId()));
+            key.put("d", new AttributeValue().withN(String.valueOf(item.getDate())));
+            DeleteRequest deleteRequest = new DeleteRequest().withKey(key);
+
+            writeRequests.add(new WriteRequest().withDeleteRequest(deleteRequest));
+        }
+
+        batchDeleteItems(writeRequests);
     }
 
     @Override

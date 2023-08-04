@@ -11,18 +11,22 @@ import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.model.BatchWriteItemRequest;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExecuteStatementRequest;
 import com.amazonaws.services.dynamodbv2.model.ExecuteStatementResult;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
+import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.DynamoDbEntity;
 import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.ListUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -102,6 +106,17 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
         return itemsFromQueryResult.stream()
                 .map(i -> JsonUtils.parseStringToObject(i.toJSON(), tClass))
                 .collect(Collectors.toList());
+    }
+
+    public void batchDeleteItems(List<WriteRequest> writeRequests) {
+        List<List<WriteRequest>> partition = ListUtils.partition(writeRequests, 25);
+
+        for (List<WriteRequest> requests : partition) {
+            BatchWriteItemRequest request = new BatchWriteItemRequest();
+            request.setRequestItems(Map.of(tableName, requests));
+
+            dynamoDbFactory.getAmazonDynamoDB().batchWriteItem(request);
+        }
     }
 
     public T getItemByHashKey(Object hashKey) {

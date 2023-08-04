@@ -1,8 +1,8 @@
-package com.bot.service;
+package com.commons.service;
 
-import com.bot.model.Appointment;
-import com.bot.model.FreeSlot;
+import com.commons.model.Appointment;
 import com.commons.model.Department;
+import com.commons.model.FreeSlot;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +16,8 @@ public interface IAppointmentService {
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
     List<Appointment> getAppointmentsBySpecialist(Department department, String specialist, long startDate, long finishDate);
+
+    void deleteAppointmentsBySpecialist(String departmentId, String specialist, long endDate);
 
     List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate);
 
