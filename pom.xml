@@ -7,7 +7,6 @@
         <module>admin</module>
         <module>commons</module>
         <module>layer</module>
-        <module>annotation-processor</module>
         <module>bot</module>
     </modules>
 
