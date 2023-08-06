@@ -13,9 +13,15 @@ const langArr = {
     },
     "updateDepartment": {
         "en": "Update Department",
-        "ua": "Оновити Департамент",
+        "ua": "Оновити Салон",
         "pl": "Zaktualizuj Dział",
-        "ru": "Обновить Департамент",
+        "ru": "Обновить Салон",
+    },
+    "createDepartment": {
+        "en": "Create Department",
+        "ua": "Создать Салон",
+        "pl": "Utworzyć Dział",
+        "ru": "Створити Салон",
     },
     "create": {
         "en": "Add New",
@@ -85,9 +91,9 @@ const langArr = {
     },
     "disabledDep": {
         "en": "Department",
-        "ua": "Департамент",
+        "ua": "Салон",
         "pl": "Dział",
-        "ru": "Департамент",
+        "ru": "Салон",
     },
     "timeZone": {
         "en": "Time Zone",

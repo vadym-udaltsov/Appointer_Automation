@@ -9,6 +9,8 @@ $(window).on('load', function() {
 
     var update_timeZoneSelect = $("#update_timeZoneSelect");
 
+    hideElements();
+
     choose_depNameSelect.append('<option value="Loading...">Loading...</option>');
     update_timeZoneSelect.append('<option value="Loading...">Loading...</option>');
     typeSelect.append('<option value="Loading...">Loading...</option>');
@@ -60,19 +62,28 @@ $(window).on('load', function() {
     });
 
      $("#create_depBtn").click(function() {
-     const createButton = document.getElementById('create_depBtn');
-      if (createButton.classList.contains('disabled')) {
-              return false;
-          }
+        const createButton = document.getElementById('create_depBtn');
+        if (createButton.classList.contains('disabled')) {
+            return false;
+        }
         var department = new Object();
-        department.departmentName = $("#depName").val();
-        department.email = email;
-        department.type = $("#update_depTypeSelect").val();
-        executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
+        department.name = $("#depName_create").val();
+        department.email = localStorage.getItem('customer');
+        executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/create');
         $("#department_CreateModal").modal("hide");
         return false;
      });
+
+     function hideElements() {
+         document.getElementById('department_UpdatePopup').style.display = 'none';
+         document.getElementById('department_CreatePopup').style.display = 'none';
+         document.getElementById('notRegisteredContainer').style.display = 'none';
+         document.getElementById('service_createOpenBtn').disabled = true;
+         document.getElementById('specialist_createOpenBtn').disabled = true;
+         document.getElementById('admin_createOpenBtn').disabled = true;
+     }
 });
+var email = localStorage.getItem('customer');
 
 function relocateToPage(depType) {
    switch(depType)
@@ -92,7 +103,7 @@ function relocateToPage(depType) {
    }
 }
 
-function loadCommonData(selectedDepartmentData) {
+function loadDataForTables(selectedDepartmentData) {
   var serviceTable = $("#servicesTable");
   serviceTable.find('.service').remove();
   $.each(selectedDepartmentData.s, function (j, item) {
@@ -165,35 +176,58 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
     type: 'get',
     dataType: 'json',
     success: function (data) {
-      choose_depNameSelect.empty();
-      update_timeZoneSelect.empty();
-      typeSelect.empty();
+        choose_depNameSelect.empty();
+        update_timeZoneSelect.empty();
+        typeSelect.empty();
+        console.log(localStorage.getItem('customer'));
+        console.log(data.customerDepartments.length);
 
-      console.log(data);
-      var lastSelectedOption = JSON.parse(localStorage.getItem('lastSelectedOption'));
+        var createServiceBtn  = document.getElementById('service_createOpenBtn');
+        var createSpecialistBtn  = document.getElementById('specialist_createOpenBtn');
+        var createAdminBtn  = document.getElementById('admin_createOpenBtn');
 
-      $.each(data.customerDepartments, function (i, department) {
-        var name = $("<option value='" + JSON.stringify(department) + "'></option>").text(this.n);
+        if(data.registered == false && data.customerDepartments.length === 0) {
+            document.getElementById('notRegisteredContainer').style.display = 'block';
+            document.getElementById('department_CreatePopup').style.display = 'block';
+            document.getElementById('department_UpdatePopup').style.display = 'none';
 
-        if (lastSelectedOption && this.n === lastSelectedOption.n) {
-          name.prop("selected", true);
+            createServiceBtn.disabled = true;
+            createSpecialistBtn.disabled = true;
+            createAdminBtn.disabled = true;
+        } else {
+            document.getElementById('department_UpdatePopup').style.display = 'block';
+            document.getElementById('department_CreatePopup').style.display = 'none';
+            document.getElementById('notRegisteredContainer').style.display = 'none';
+            createServiceBtn.disabled = false;
+            createSpecialistBtn.disabled = false;
+            createAdminBtn.disabled = false;
+            console.log(data);
+            localStorage.setItem('lastSelectedOption', data.customerDepartments[0].n);
+            var lastSelectedOption = localStorage.getItem('lastSelectedOption');
+
+            $.each(data.customerDepartments, function (i, department) {
+                var name = $("<option value='" + JSON.stringify(department) + "'></option>").text(this.n);
+
+                if (lastSelectedOption && this.n === lastSelectedOption) {
+                  name.prop("selected", true);
+                }
+
+                choose_depNameSelect.append(name);
+            });
+
+            $.each(data.availableTypes, function () {
+                var type = $("<option value='" + this + "'></option>").text(this);
+                typeSelect.append(type);
+            });
+
+            $.each(data.availableZones, function () {
+                var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
+                update_timeZoneSelect.append(timeZone);
+            });
+
+            var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
+            loadDataForTables(selectedDepartmentData);
         }
-
-        choose_depNameSelect.append(name);
-      });
-
-      $.each(data.availableTypes, function () {
-        var type = $("<option value='" + this + "'></option>").text(this);
-        typeSelect.append(type);
-      });
-
-      $.each(data.availableZones, function () {
-        var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
-        update_timeZoneSelect.append(timeZone);
-      });
-
-      var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
-      loadCommonData(selectedDepartmentData);
     },
     error: function (data) {
       if (data.status === 0) {
@@ -241,7 +275,7 @@ function loadDataFromSelectedDep(url, typeSelect, choose_depNameSelect, update_t
     dataType: 'json',
     success: function (data) {
       var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
-      loadCommonData(selectedDepartmentData);
+      loadDataForTables(selectedDepartmentData);
     },
     error: function (data) {
         if (data.status === 0) {

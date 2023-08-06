@@ -1,6 +1,6 @@
 .department_container {
     width: 450px;
-    margin-top: 25px;
+    margin-top: 60px;
 }
 
 .department_inner {
@@ -33,7 +33,8 @@
     width: 200px;
 }
 
-#department_UpdatePopup {
+#department_UpdatePopup,
+#department_CreatePopup {
     background: #393330;
     color: white;
     appearance: none;

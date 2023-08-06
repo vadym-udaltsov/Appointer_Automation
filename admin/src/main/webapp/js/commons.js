@@ -7,7 +7,6 @@ function executePost(data, url) {
         data: data,
         success: function (data) {
             console.log(data);
-            console.log(jqXHR);
         },
         error: function (data) {
             if (data.status === 0) {

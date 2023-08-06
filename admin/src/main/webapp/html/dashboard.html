@@ -67,9 +67,19 @@
                         data-target="#department_UpdateModal" id="department_UpdatePopup">
                     Update Department
                 </button>
+                <button type="button" class="sub-button create-dep lng-createDepartment" data-toggle="modal"
+                        data-target="#department_CreateModal" id="department_CreatePopup">
+                    Create Department
+                </button>
             </div>
         </div>
     </div>
+
+    <div class="notRegisteredMessage" id="notRegisteredContainer">
+        <span class="close_notRegisteredMessage">×</span>
+        <p>You are not registered yet.You need to create a Department.</p>
+    </div>
+
 
     <!-- Service Container -->
     <div class="modal_container">
@@ -147,9 +157,7 @@
 
 <!-- Modals HTML -->
 
-<!--
-<div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal"
-     aria-hidden="true">
+<div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -160,20 +168,14 @@
                     <label for="depName_create">Name</label>
                     <input type="text" class="form-control" id="depName_create" placeholder="Enter Name">
                 </div>
-                <div class="form-group">
-                    <label for="depType_create">Type</label>
-                    <select class="form-control" id="depType_create" size="1"></select>
-                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_depModalBtn">Cancel
-                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
                 <button type="button" class="btn btn-primary" id="create_depBtn">Create</button>
             </div>
         </div>
     </div>
 </div>
--->
 
 <div class="modal fade" id="department_UpdateModal" tabindex="-1" aria-labelledby="department_UpdateModal"
      aria-hidden="true">
@@ -572,6 +574,7 @@
 <script type="text/javascript" src="../js/tables/specialist_table.js"></script>
 <script type="text/javascript" src="../js/tables/admin_table.js"></script>
 
+<script type="text/javascript" src="../js/disable/department_disable.js"></script>
 <script type="text/javascript" src="../js/disable/service_disable.js"></script>
 <script type="text/javascript" src="../js/disable/specialist_disable.js"></script>
 <script type="text/javascript" src="../js/disable/admin_disable.js"></script>
@@ -579,6 +582,7 @@
 <script type="text/javascript" src="../js/lang.js"></script>
 <script type="text/javascript" src="../js/change_language.js"></script>
 <script type="text/javascript" src="../js/spinner.js"></script>
+<script type="text/javascript" src="../js/notRegisteredMessage.js"></script>
 <script type="text/javascript" src="../js/logout.js"></script>
 <script type="text/javascript" src="../js/commons.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>

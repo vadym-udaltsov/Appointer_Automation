@@ -41,7 +41,8 @@ select {
   width: 150px;
 }
 
-.update-dep {
+.update-dep,
+.create-dep {
   width: 250px !important;
 }
 
@@ -223,3 +224,4 @@ select,
   font-size: 12px;
   text-align: center;
 }
+
