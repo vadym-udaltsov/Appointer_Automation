@@ -45,7 +45,7 @@ Resources:
       Code:
         S3Bucket:
           Ref: DeploymentBucket
-        S3Key: pythonLambdasPackage.zip
+        S3Key: pythonLambdasPackage1.zip
       FunctionName: !Ref PostSignUpLambdaName
       Handler: PostSignUpHandler.lambda_handler
       MemorySize: 512
