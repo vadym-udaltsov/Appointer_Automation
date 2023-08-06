@@ -20,6 +20,7 @@ public class Customer extends DynamoDbEntity{
     @DynamoDBHashKey(attributeName="email")
     private String email;
     private String phone;
+    private boolean isRegistered;
 
     @Override
     public PrimaryKey getPrimaryKey() {
@@ -30,12 +31,12 @@ public class Customer extends DynamoDbEntity{
     public Item toItem() {
         return new Item()
                 .with("email", email)
+                .with("isRegistered", isRegistered)
                 .with("phone", phone);
     }
 
     @Override
     public String getCondition() {
         return "attribute_not_exists(email)";
-
     }
 }

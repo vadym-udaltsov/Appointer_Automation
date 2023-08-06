@@ -10,5 +10,7 @@ public interface ICustomerDao {
 
     Customer getItemByHashKey(Object email);
 
+    void registerCustomer(String email);
+
     void addCustomerDepartment(String email, Department department);
 }

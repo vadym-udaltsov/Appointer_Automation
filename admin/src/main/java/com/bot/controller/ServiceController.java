@@ -1,6 +1,6 @@
 package com.bot.controller;
 
-import com.bot.request.service.CreateServiceRequest;
+import com.bot.request.CreateServiceRequest;
 import com.commons.DbItemUpdateException;
 import com.commons.request.service.UpdateServiceRequest;
 import com.commons.model.SimpleResponse;

@@ -18,6 +18,9 @@ Resources:
       SnapStart:
         ApplyOn: PublishedVersions
       Runtime: java11
+      Environment:
+        Variables:
+          ACCOUNT: !Ref AccountId
       Timeout: 300
     DependsOn:
       - AdminLayer
@@ -238,12 +241,23 @@ Resources:
           AttributeType: N
         - AttributeName: did
           AttributeType: S
+        - AttributeName: pn
+          AttributeType: S
       KeySchema:
         - AttributeName: id
           KeyType: HASH
         - AttributeName: did
           KeyType: RANGE
       BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: pn-did-index
+          KeySchema:
+            - AttributeName: pn
+              KeyType: HASH
+            - AttributeName: did
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
       TableName: context
   AppointmentTable:
     Type: 'AWS::DynamoDB::Table'
@@ -441,6 +455,14 @@ Resources:
       PathPart: '{customer}'
     DependsOn:
       - DepartmentDataResource
+  DepartmentCreateResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref BotApi
+      ParentId: !Ref DepartmentResource
+      PathPart: create
+    DependsOn:
+      - DepartmentResource
   CompanyResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -870,6 +892,35 @@ Resources:
         Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
     DependsOn:
       - DepartmentResource
+  DepartmentCreatePost:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref DepartmentCreateResource
+      HttpMethod: POST
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref Authorizer
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 300
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 400
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        - StatusCode: 500
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+      Integration:
+        Type: AWS_PROXY
+        IntegrationResponses:
+          - StatusCode: 200
+        IntegrationHttpMethod: POST
+        Uri: !Join [ "", [ "arn:aws:apigateway:", !Ref Region, ":lambda:path/2015-03-31/functions/", !Ref AdminLambdaAlias, "/invocations" ] ]
+    DependsOn:
+      - DepartmentCreateResource
   DepartmentDataGet:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -1130,6 +1181,34 @@ Resources:
       AuthorizationType: NONE
       RestApiId: !Ref BotApi
       ResourceId: !Ref DepartmentDataGetResource
+      HttpMethod: OPTIONS
+      Integration:
+        IntegrationResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,token'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: '{"statusCode": 200}'
+        Type: MOCK
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: 'Empty'
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: false
+            method.response.header.Access-Control-Allow-Methods: false
+            method.response.header.Access-Control-Allow-Origin: false
+  DepartmentCreateOptions:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      RestApiId: !Ref BotApi
+      ResourceId: !Ref DepartmentCreateResource
       HttpMethod: OPTIONS
       Integration:
         IntegrationResponses:

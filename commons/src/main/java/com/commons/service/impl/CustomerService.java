@@ -23,6 +23,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public void registerCustomer(String email) {
+        customerDao.registerCustomer(email);
+    }
+
+    @Override
     public Customer getCustomerByEmail(String email) {
         return customerDao.getItemByHashKey(email);
     }

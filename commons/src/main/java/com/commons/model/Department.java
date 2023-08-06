@@ -93,6 +93,12 @@ public class Department extends DynamoDbEntity {
     @DynamoDBAttribute(attributeName = "dof")
     private Map<String, List<BusySlot>> daysOff;
 
+    @JsonProperty("bun")
+    private String botUserName;
+
+    @JsonProperty("bn")
+    private String botName;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -110,6 +116,8 @@ public class Department extends DynamoDbEntity {
                 .withNumber("sw", startWork)
                 .withNumber("ew", endWork)
                 .withString("zone", zone)
+                .withString("bun", botUserName)
+                .withString("bn", botName)
                 .withList("as", availableSpecialists.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
                 .withList("nwd", nonWorkingDays)
                 .withList("adm", admins == null ? new ArrayList<>() : admins)

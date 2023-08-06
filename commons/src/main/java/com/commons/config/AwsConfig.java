@@ -35,6 +35,12 @@ public class AwsConfig {
     }
 
     @Bean
+    public SqsClient sqsClient() {
+        return SqsClient.builder()
+                .build();
+    }
+
+    @Bean
     public AWSSimpleSystemsManagement ssmClient() {
         log.info("Ssm client initialized");
         return AWSSimpleSystemsManagementClientBuilder.defaultClient();

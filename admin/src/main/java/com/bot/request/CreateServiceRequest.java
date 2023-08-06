@@ -1,4 +1,4 @@
-package com.bot.request.service;
+package com.bot.request;
 
 import com.commons.request.service.ServiceRequest;
 import lombok.Data;

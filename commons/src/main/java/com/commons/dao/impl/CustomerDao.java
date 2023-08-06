@@ -20,6 +20,16 @@ public class CustomerDao extends AbstractDao<Customer> implements ICustomerDao {
     }
 
     @Override
+    public void registerCustomer(String email) {
+        UpdateItemRequest request = new UpdateItemRequest()
+                .withTableName("customer")
+                .withKey(Map.of("email", new AttributeValue(email)))
+                .withUpdateExpression("SET isRegistered = :newValue")
+                .withExpressionAttributeValues(Map.of(":newValue", new AttributeValue().withBOOL(true)));
+        updateItem(request);
+    }
+
+    @Override
     public void addCustomerDepartment(String email, Department department) {
         String listAttributeName = "departments";
         UpdateItemRequest request = new UpdateItemRequest()

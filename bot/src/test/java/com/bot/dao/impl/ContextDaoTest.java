@@ -19,9 +19,9 @@ import java.util.Map;
 
 class ContextDaoTest {
 
-    private AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
-    private DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
-    private ContextDao contextDao = new ContextDao(dynamoDbFactory);
+    private final AmazonDynamoDB dynamoDb = AmazonDynamoDBClientBuilder.standard().build();
+    private final DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
+    private final ContextDao contextDao = new ContextDao(dynamoDbFactory);
 
     //    @Test
     void getContext() {

@@ -1,21 +1,31 @@
 package com.commons.service.impl;
 
 import com.commons.service.ISqsService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 
-@AllArgsConstructor
+@Component
 public class SqsService implements ISqsService {
 
-    private SqsClient client;
+    private final SqsClient sqsClient;
+    private final String queueUrl;
+
+    @Autowired
+    public SqsService(SqsClient sqsClient, @Value("${queue.url}") String queueUrl) {
+        this.sqsClient = sqsClient;
+        this.queueUrl = queueUrl;
+    }
 
     @Override
     public void sendMessage(String message) {
-        SendMessageRequest request = SendMessageRequest.builder()
+        SendMessageRequest sendMessageRequest = SendMessageRequest.builder()
+                .queueUrl(queueUrl)
                 .messageBody(message)
-                .queueUrl("https://sqs.eu-central-1.amazonaws.com/773974733061/BotQueue")
                 .build();
-        client.sendMessage(request);
+
+        sqsClient.sendMessage(sendMessageRequest);
     }
 }

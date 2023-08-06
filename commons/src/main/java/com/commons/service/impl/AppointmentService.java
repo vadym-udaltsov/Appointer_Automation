@@ -10,6 +10,7 @@ import com.commons.model.Specialist;
 import com.commons.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class AppointmentService implements IAppointmentService {
 
     private final IAppointmentDao appointmentDao;

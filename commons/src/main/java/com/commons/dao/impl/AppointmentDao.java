@@ -10,12 +10,14 @@ import com.commons.dao.AbstractDao;
 import com.commons.dao.IAppointmentDao;
 import com.commons.model.Appointment;
 import com.commons.model.Department;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class AppointmentDao extends AbstractDao<Appointment> implements IAppointmentDao {
 
     public AppointmentDao(DynamoDbFactory dynamoDbFactory) {

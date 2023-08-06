@@ -9,5 +9,7 @@ public interface ICustomerService {
 
     Customer getCustomerByEmail(String email);
 
+    void registerCustomer(String email);
+
     void addCustomerDepartment(String email, Department department);
 }
