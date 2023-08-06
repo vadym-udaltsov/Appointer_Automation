@@ -130,7 +130,7 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
                     keyList.add(k);
                     keyList.add(v);
                 });
-        List<List<Object>> partitions = ListUtils.partition(keyList, 100);
+        List<List<Object>> partitions = ListUtils.partition(keyList, 200);
         for (List<Object> partition : partitions) {
             resultList.addAll(addBatchGetResult(partition));
         }

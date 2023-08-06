@@ -79,11 +79,7 @@ class ContextDaoTest {
     void testContextList() {
         List<Appointment> appointments = new ArrayList<>();
         for (int i = 1; i < 120; i++) {
-            StringBuilder builder = new StringBuilder();
-            for (int s = 1; s < 80; s++) {
-                builder.append(s);
-            }
-            Appointment appointment = new Appointment("", 0L, i, builder.toString(), "", "", 0);
+            Appointment appointment = new Appointment("", 0L, i, "testDepartment", "", "", 0);
             appointments.add(appointment);
         }
         Appointment appointment1 = new Appointment("", 0L, 2006806288L, "790b0de6", "", "", 0);

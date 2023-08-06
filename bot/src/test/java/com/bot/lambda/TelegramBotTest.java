@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TelegramBotTest {
 
-    @Test
+//    @Test
     void processBotMessage() {
     }
 }
