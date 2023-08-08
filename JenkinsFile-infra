@@ -19,16 +19,24 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script {
-                    if (params.Action == 'destroy' || params.Action == 'redeploy') {
-                        sh 'chmod +x ./destroy.sh'
-                        sh './destroy.sh ' + params.Account
-                    }
-                    if (params.Action == 'deploy' || params.Action == 'redeploy') {
-                        sh 'chmod +x ./deploy.sh'
-                        sh './deploy.sh ' + params.Account + ' ' + params.VerifiedEmail
+                withCredentials([[
+                                         $class           : 'AmazonWebServicesCredentialsBinding',
+                                         credentialsId    : params.Account,
+                                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                                 ]]) {
+                    script {
+                        if (params.Action == 'destroy' || params.Action == 'redeploy') {
+                            sh 'chmod +x ./destroy.sh'
+                            sh './destroy.sh ' + params.Account
+                        }
+                        if (params.Action == 'deploy' || params.Action == 'redeploy') {
+                            sh 'chmod +x ./deploy.sh'
+                            sh './deploy.sh ' + params.Account + ' ' + params.VerifiedEmail + ' ' + params.Env
+                        }
                     }
                 }
+
             }
         }
     }
