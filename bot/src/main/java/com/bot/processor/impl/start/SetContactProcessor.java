@@ -30,7 +30,7 @@ public class SetContactProcessor implements IProcessor {
         Department department = request.getDepartment();
         Contact contact = MessageUtils.getPhoneNumberFromUpdate(update);
         if (contact == null) {
-            contextService.removeLastLocation(context);
+            ContextUtils.setPreviousStep(context);
             return List.of(MessageUtils.getContactsMessageHolder());
         }
         context.setPhoneNumber("+" + contact.getPhoneNumber());

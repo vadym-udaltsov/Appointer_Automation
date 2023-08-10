@@ -1,10 +1,12 @@
 package com.bot.processor.impl.start;
 
+import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.service.IContextService;
+import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +28,18 @@ public class SetLanguageAskContactsProcessor implements IProcessor {
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) {
         Update update = request.getUpdate();
+        Context context = request.getContext();
         long id = MessageUtils.getUserIdFromUpdate(update);
         String languageName = MessageUtils.getTextFromUpdate(update);
         Language language = Language.fromValue(languageName);
         if (language == null) {
+            ContextUtils.setPreviousStep(context);
             log.warn(MarkerFactory.getMarker("SEV3"), "Default dictionary will be used");
             return Collections.singletonList(MessageUtils.getLanguageMessageHolder());
         }
         Department department = request.getDepartment();
         contextService.updateLocale(id, department.getId(), language);
-        request.getContext().setLanguage(language);
+        context.setLanguage(language);
         MessageHolder holder = MessageUtils.getContactsMessageHolder();
         return Collections.singletonList(holder);
     }
