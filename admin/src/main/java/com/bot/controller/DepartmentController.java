@@ -75,7 +75,11 @@ public class DepartmentController {
             Map<String, String> messageData = new HashMap<>();
             messageData.put("email", email);
             messageData.put("bot_name", name);
-            messageData.put("phone_number", "test");
+            String phoneNumber = "";
+            if (customer != null) {
+                phoneNumber = customer.getPhone();
+            }
+            messageData.put("phone_number", phoneNumber);
             sqsService.sendMessage(JsonUtils.convertObjectToString(messageData));
             customerService.registerCustomer(email);
             return new ResponseEntity<>(SimpleResponse.builder().body("Created").build(), HttpStatus.OK);
