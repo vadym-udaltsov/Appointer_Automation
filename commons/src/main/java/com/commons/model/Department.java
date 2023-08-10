@@ -119,7 +119,7 @@ public class Department extends DynamoDbEntity {
                 .withString("bun", botUserName)
                 .withString("bn", botName)
                 .withList("as", availableSpecialists.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
-                .withList("nwd", nonWorkingDays)
+                .withList("nwd", nonWorkingDays == null ? new ArrayList<>() : nonWorkingDays)
                 .withList("adm", admins == null ? new ArrayList<>() : admins)
                 .withMap("dof", daysOff == null ? new HashMap<>() : daysOff)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()));

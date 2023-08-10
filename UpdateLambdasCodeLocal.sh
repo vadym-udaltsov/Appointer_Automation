@@ -4,9 +4,8 @@ source deployment.config
 
 deploymentBucket="appointer-deployment-773974733061"
 
-#lambdasLocal="appointerBotLambda||bot||true"
-lambdasLocal="adminLambda||admin||true"
-#lambdasLocal="postSignUpLambda||registration||false"
+lambdasLocal="appointerBotLambda||bot||true"
+#lambdasLocal="adminLambda||admin||true"
 update_layer="y"
 
 if [ "y" = ${update_layer} ];
