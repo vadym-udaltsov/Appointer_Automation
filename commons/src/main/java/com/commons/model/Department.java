@@ -115,7 +115,7 @@ public class Department extends DynamoDbEntity {
                 .withString("tn", token)
                 .withNumber("sw", startWork)
                 .withNumber("ew", endWork)
-                .withString("zone", zone)
+                .withString("zone", zone == null ? "" : zone)
                 .withString("bun", botUserName)
                 .withString("bn", botName)
                 .withList("as", availableSpecialists.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
