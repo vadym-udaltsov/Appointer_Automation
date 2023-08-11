@@ -21,8 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SetContactProcessor implements IProcessor {
 
-    private final IContextService contextService;
-
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
         Update update = request.getUpdate();
@@ -37,7 +35,6 @@ public class SetContactProcessor implements IProcessor {
         context.setName(contact.getFirstName() + " " + contact.getLastName());
         String strategyKey = ContextUtils.getStrategyKey(context, department);
         ContextUtils.addNextStepToLocation(context, "startDash", department);
-        contextService.updateContext(context);
         return List.of(MessageUtils.buildDashboardHolder(Constants.Messages.SELECT_ACTION, List.of(), strategyKey));
     }
 }

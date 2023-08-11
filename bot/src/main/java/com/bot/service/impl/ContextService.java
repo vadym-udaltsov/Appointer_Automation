@@ -43,12 +43,6 @@ public class ContextService implements IContextService {
     }
 
     @Override
-    public void setPhoneNumber(Context context, String number) {
-        log.info("Setting phone number: {} to context id: {}", number, context.getUserId());
-        contextDao.setPhoneNumber(context, number);
-    }
-
-    @Override
     public List<Context> getContextListByAppointments(List<Appointment> appointments) {
         return contextDao.getContextListByAppointments(appointments);
     }
@@ -73,13 +67,6 @@ public class ContextService implements IContextService {
         context.setNavigation(List.of(Constants.Processors.ASK_LANG, Constants.Processors.SET_LANG_ASK_CONT,
                 Constants.Processors.SET_CONTACT, Constants.Processors.START_DASH));
         contextDao.updateContext(context);
-    }
-
-    @Override
-    public void removeLastLocation(Context context) {
-        List<String> navigation = context.getNavigation();
-        log.info("Removing last location: {} from context id: {}", navigation.get(navigation.size() - 1), context.getUserId());
-        contextDao.removeLastLocation(context);
     }
 
     @Override

@@ -7,12 +7,12 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
 import com.bot.dao.IContextDao;
-import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.util.Constants;
 import com.commons.dao.AbstractDao;
 import com.commons.dao.impl.DynamoDbFactory;
+import com.commons.model.Appointment;
 import org.apache.commons.collections4.ListUtils;
 
 import java.util.ArrayList;
@@ -70,17 +70,6 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
     }
 
     @Override
-    public void setPhoneNumber(Context context, String number) {
-        UpdateItemRequest request = new UpdateItemRequest()
-                .withTableName(Context.TABLE_NAME)
-                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId())),
-                        Context.RANGE_KEY, new AttributeValue().withS(context.getDepartmentId())))
-                .withUpdateExpression("SET pn = :phoneNumber")
-                .withExpressionAttributeValues(Map.of(":phoneNumber", new AttributeValue(number)));
-        updateItem(request);
-    }
-
-    @Override
     public void updateLocale(long id, String departmentId, Language language) {
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Context.TABLE_NAME)
@@ -101,18 +90,6 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
                 .withUpdateExpression("SET n[" + (navigation.size()) + "] = :newLocation")
                 .withConditionExpression("NOT contains(n, :newLocation)")
                 .withExpressionAttributeValues(Map.of(":newLocation", new AttributeValue(location)));
-        updateItem(request);
-    }
-
-    @Override
-    public void removeLastLocation(Context context) {
-        List<String> navigation = context.getNavigation();
-
-        UpdateItemRequest request = new UpdateItemRequest()
-                .withTableName(Context.TABLE_NAME)
-                .withKey(Map.of(Context.HASH_KEY, new AttributeValue().withN(String.valueOf(context.getUserId())),
-                        Context.RANGE_KEY, new AttributeValue().withS(context.getDepartmentId())))
-                .withUpdateExpression("REMOVE n[" + (navigation.size() - 1) + "]");
         updateItem(request);
     }
 

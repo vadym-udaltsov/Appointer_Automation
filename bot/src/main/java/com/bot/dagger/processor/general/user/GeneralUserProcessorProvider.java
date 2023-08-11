@@ -157,8 +157,8 @@ public class GeneralUserProcessorProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.SET_CONT)
-    public IProcessor setCont(IContextService contextService) {
-        return new SetContactProcessor(contextService);
+    public IProcessor setCont() {
+        return new SetContactProcessor();
     }
 
     @Provides
