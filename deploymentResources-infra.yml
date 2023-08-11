@@ -1246,6 +1246,7 @@ Resources:
       - CustomerGet
       - BotLambdaPost
       - DepartmentDataGet
+      - DepartmentCreatePost
       - ServicePost
 #ApiGateway permission
   AdminApiPermission:
