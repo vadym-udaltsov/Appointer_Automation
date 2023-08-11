@@ -1,10 +1,11 @@
 package com.bot.processor.impl.general.admin.dayoff.cancel;
 
-import com.commons.model.Appointment;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsFirstStepProcessor;
+import com.bot.util.Constants;
+import com.commons.model.Appointment;
 import com.commons.service.IAppointmentService;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -25,5 +26,10 @@ public class CancelDayOffSecondStepProcessor extends AppointmentsFirstStepProces
     @Override
     protected Supplier<List<Appointment>> getAppointmentsSupplier(ProcessRequest request, long startDate, long finishDate) {
         return getDayOffAppointmentsSupplier(request, startDate, finishDate);
+    }
+
+    @Override
+    protected String getNoAppointmentsMessage() {
+        return Constants.NO_DAYS_OFF;
     }
 }

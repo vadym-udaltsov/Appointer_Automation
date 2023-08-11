@@ -39,7 +39,7 @@ public class AppointmentsFirstStepProcessor {
         if (appointments.size() == 0) {
             ContextUtils.resetLocationToDashboard(context);
             String strategyKey = ContextUtils.getStrategyKey(context, department);
-            return MessageUtils.buildCustomKeyboardHolders("You have no appointments for current and next months",
+            return MessageUtils.buildCustomKeyboardHolders(getNoAppointmentsMessage(),
                     Constants.DASHBOARD_BUTTONS.get(strategyKey), KeyBoardType.TWO_ROW, false);
         }
         appointments.removeIf(a -> a.getDate() > currentMothEndDate);
@@ -50,7 +50,11 @@ public class AppointmentsFirstStepProcessor {
         context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
         Month month = LocalDate.now().getMonth();
         context.getParams().put(Constants.MONTH, month.getValue());
-        return MessageUtils.buildDatePicker(appointmentDays, "Select available date", false);
+        return MessageUtils.buildDatePicker(appointmentDays, Constants.Messages.INCORRECT_DATE, false);
+    }
+
+    protected String getNoAppointmentsMessage() {
+        return "You have no appointments for current and next months";
     }
 
     protected List<MessageHolder> buildDayOffResponse(ProcessRequest request) {

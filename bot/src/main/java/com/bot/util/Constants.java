@@ -38,11 +38,12 @@ public class Constants {
     public static final String IS_NEXT_MONTH = "isNextMonth";
     public static final String AVAILABLE_DATES = "availableDates";
     public static final String AVAILABLE_SPECIALISTS = "availableSpecialists";
-    public static final String AVAILABLE_SERVICES = "availableServices";
     public static final String AVAILABLE_SLOT_TITLES = "availableSlotTitles";
     public static final String AVAILABLE_SLOTS = "availableSlots";
     public static final String AVAILABLE_APPOINTMENTS = "availableAppointments";
     public static final String AVAILABLE_DURATIONS = "availableDurations";
+
+    public static final String NO_DAYS_OFF = "You have no non working days for current and next months";
 
     public static final String USER_APPOINTMENTS = "userAppointments";
 
@@ -162,8 +163,8 @@ public class Constants {
         public static final String SHARE_CONTACT = "Please share your phone number";
         public static final String SELECT_ACTION = "Select action";
         public static final String SELECT_SPECIALIST = "Select specialist";
-        public static final String INCORRECT_ACTION = "You entered incorrect value, select again";
-        public static final String INCORRECT_DATE = "You entered incorrect date, select again";
+        public static final String INCORRECT_ACTION = "Select available option";
+        public static final String INCORRECT_DATE = "Select available date";
         public static final String NO_APP_FOR_DATE = "No appointments";
         public static final String APP_FOR_DATE = "All appointments for ${date}";
         public static final String APP_SPECIALIST = "Specialist: ${specialist}";

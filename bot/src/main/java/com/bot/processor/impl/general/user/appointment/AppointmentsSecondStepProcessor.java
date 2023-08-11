@@ -47,7 +47,7 @@ public abstract class AppointmentsSecondStepProcessor {
         }
         Set<String> availableDates = (Set<String>) context.getParams().get(Constants.AVAILABLE_DATES);
         if (!availableDates.contains(selectedDay)) {
-            List<MessageHolder> holders = MessageUtils.buildCustomKeyboardHolders("Select available date", List.of(),
+            List<MessageHolder> holders = MessageUtils.buildCustomKeyboardHolders(Constants.Messages.INCORRECT_DATE, List.of(),
                     KeyBoardType.TWO_ROW, true);
             holders.addAll(buildAnotherMonthResponse(request, false));
             return holders;

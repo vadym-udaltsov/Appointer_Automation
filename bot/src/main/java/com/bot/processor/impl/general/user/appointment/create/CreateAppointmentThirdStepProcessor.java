@@ -66,7 +66,7 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
         if (!availableDates.contains(selectedDay) && !Constants.BACK.equals(selectedDay)) {
             updateContextData(context, department, false);
             datePickerRequest.setNextMonth(false);
-            datePickerRequest.setMessage("Select available date");
+            datePickerRequest.setMessage(Constants.Messages.INCORRECT_DATE);
             return buildResponse(datePickerRequest);
         }
 

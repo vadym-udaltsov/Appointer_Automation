@@ -1,5 +1,6 @@
 package com.bot.processor.impl.general.admin.dayoff.view;
 
+import com.bot.util.Constants;
 import com.commons.model.Appointment;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
@@ -25,5 +26,10 @@ public class ViewDayOffSecondStepProcessor extends AppointmentsFirstStepProcesso
     @Override
     protected Supplier<List<Appointment>> getAppointmentsSupplier(ProcessRequest request, long startDate, long finishDate) {
         return getDayOffAppointmentsSupplier(request, startDate, finishDate);
+    }
+
+    @Override
+    protected String getNoAppointmentsMessage() {
+        return Constants.NO_DAYS_OFF;
     }
 }
