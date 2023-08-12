@@ -4,7 +4,6 @@ import com.bot.model.Context;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
@@ -21,6 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SetContactProcessor implements IProcessor {
 
+    private static final String EMPTY = "";
+
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
         Update update = request.getUpdate();
@@ -32,7 +33,10 @@ public class SetContactProcessor implements IProcessor {
             return List.of(MessageUtils.getContactsMessageHolder());
         }
         context.setPhoneNumber("+" + contact.getPhoneNumber());
-        context.setName(contact.getFirstName() + " " + contact.getLastName());
+        String firstName = contact.getFirstName() == null ? EMPTY : contact.getFirstName();
+        String lastName = contact.getLastName() == null ? EMPTY : contact.getLastName();
+        String delimiter = lastName.equals(EMPTY) || firstName.equals(EMPTY) ? EMPTY : " ";
+        context.setName(firstName + delimiter + lastName);
         String strategyKey = ContextUtils.getStrategyKey(context, department);
         ContextUtils.addNextStepToLocation(context, "startDash", department);
         return List.of(MessageUtils.buildDashboardHolder(Constants.Messages.SELECT_ACTION, List.of(), strategyKey));

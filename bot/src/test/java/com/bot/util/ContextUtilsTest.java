@@ -17,7 +17,7 @@ class ContextUtilsTest {
         Context context = new Context();
         context.setPhoneNumber("0667882320");
         Department department = new Department();
-        department.setType(DepartmentType.MASSAGE);
+        department.setType(DepartmentType.GENERAL);
         List<String> adminsList = new ArrayList<>();
         adminsList.add("0667882320");
         department.setAdmins(adminsList);

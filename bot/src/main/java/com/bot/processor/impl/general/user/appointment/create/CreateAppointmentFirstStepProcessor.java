@@ -32,6 +32,12 @@ public class CreateAppointmentFirstStepProcessor implements IProcessor {
         List<CustomerService> services = department.getServices();
         Context context = request.getContext();
         Update update = request.getUpdate();
+        String action = MessageUtils.getTextFromUpdate(update);
+        if (Constants.BACK.equals(action) && services.size() == 1) {
+            ContextUtils.resetLocationToDashboard(context);
+            String strategyKey = ContextUtils.getStrategyKey(context, department);
+            return List.of(MessageUtils.buildDashboardHolder("Select action", List.of(), strategyKey));
+        }
         if (services.size() == 0) {
             throw new RuntimeException("Department should have at least one service");
         }
@@ -40,6 +46,7 @@ public class CreateAppointmentFirstStepProcessor implements IProcessor {
             ContextUtils.addNextStepToLocation(context, Constants.ANY, department);
             return nextStepProcessor.processRequest(request);
         }
+
         List<String> serviceNames = services.stream().map(CustomerService::getName).collect(Collectors.toList());
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(serviceNames);
         return List.of(MessageUtils.holder("Select service", ButtonsType.KEYBOARD, holderRequest));
