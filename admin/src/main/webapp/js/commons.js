@@ -15,12 +15,3 @@ function executePost(data, url) {
         }
     });
 }
-
-function validatePhoneNumber(input) {
-  input.value = input.value.replace(/[^0-9+]/g, '');
-  const inputValue = input.value.trim();
-
-  if (inputValue.length === 0 || inputValue.charAt(0) !== '+') {
-     input.value = '+' + inputValue;
-  }
-}

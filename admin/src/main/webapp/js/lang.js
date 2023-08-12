@@ -281,4 +281,16 @@ const langArr = {
         "pl": "Usuń Administratora",
         "ru": "Удалить Администратора"
     },
+    "notRegisteredMessage": {
+        "en": "You are not registered yet. You need to create a Department.",
+        "ua": "Ви ще не зареєстровані. Потрібно створити салон.",
+        "pl": "Nie jesteś jeszcze zarejestrowany. Musisz utworzyć dział.",
+        "ru": "Вы еще не зарегистрированы. Вам нужно создать салон."
+    },
+    "botName": {
+        "en": "Bot name: ",
+        "ua": "Назва боту: ",
+        "pl": "Nazwa bota: ",
+        "ru": "Имя бота: "
+    },
 }

@@ -1,116 +1,122 @@
-var admin_create_fields = [
+const adminCreateFields = [
   { inputId: 'admin_CreatePhoneInput', errorId: 'admin_phoneError' },
 ];
 
-var admin_createBtn = document.getElementById('admin_CreateBtn');
-var admin_create_cancelBtn = document.getElementById('admin_Create-CancelBtn');
-var admin_openCreateModal = document.getElementById('admin_createOpenBtn');
+const adminCreateBtn = document.getElementById('admin_CreateBtn');
+const adminCreateCancelBtn = document.getElementById('admin_Create-CancelBtn');
+const adminOpenCreateModal = document.getElementById('admin_createOpenBtn');
 
-var admin_createNames = [];
+let adminCreateNames = [];
 
-admin_openCreateModal.addEventListener('click', function () {
-  admin_createNames = [];
-  var selectedOption = document.querySelector('#department_NameSelect option:checked');
-  JSON.parse(selectedOption.value).adm.forEach(function (option) {
-    admin_createNames.push(option);
-  });
-  initializeAdminCreateForm();
-  admin_createBtn.disabled = true;
+adminOpenCreateModal.addEventListener('click', () => {
+  adminCreateNames = [];
+  const selectedOption = document.querySelector('#department_NameSelect option:checked');
+  adminCreateNames = JSON.parse(selectedOption.value).adm;
+  adminCreateBtn.disabled = true;
 });
 
-function adminHideError(error) {
+function hideError(error) {
   error.style.display = 'none';
 }
 
-function adminSetError(error) {
+function setError(error) {
   error.style.display = 'block';
 }
 
-function validateAdminCreateField(input, error) {
-  if (input.value.trim() === '') {
-    adminSetError(error);
+function validateField(input, error) {
+  const trimmedValue = input.value.trim();
+
+  if (trimmedValue === '') {
+    setError(error);
     return false;
   } else {
-    adminHideError(error);
+    hideError(error);
     return true;
   }
 }
 
-function checkCreateAdminExists(input, error) {
-  var value = input.value.trim();
-  for (var i = 0; i < admin_createNames.length; i++) {
-    if (admin_createNames[i] === value) {
-      adminSetError(document.getElementById('duplicateAdminError'));
-      return true;
-    }
+function checkAdminExists(input) {
+  const value = input.value.trim();
+
+  if (adminCreateNames.includes(value)) {
+    setError(document.getElementById('duplicateAdminError'));
+    return true;
+  } else {
+    hideError(document.getElementById('duplicateAdminError'));
+    return false;
   }
-  adminHideError(error);
-  return false;
 }
 
-function validateAdminCreateForm() {
+function validateForm() {
   let valid = true;
 
-  for (const field of admin_create_fields) {
+  for (const field of adminCreateFields) {
     const input = document.getElementById(field.inputId);
     const error = document.getElementById(field.errorId);
 
-    if (!validateAdminCreateField(input, error)) {
+    if (!validateField(input, error)) {
       valid = false;
     }
 
     if (input.value.trim() !== '') {
-      if (checkCreateAdminExists(input, error)) {
+      if (checkAdminExists(input)) {
         valid = false;
       }
     }
 
     if (input.value.length < 11) {
-        adminSetError(document.getElementById('admin_validPhoneError'));
-        admin_createBtn.disabled = true;
-        return true;
+        setError(document.getElementById('admin_validPhoneError'));
+        adminCreateBtn.disabled = true;
     } else {
-        adminHideError(document.getElementById('admin_validPhoneError'));
+        hideError(document.getElementById('admin_validPhoneError'));
     }
-
   }
 
-  admin_createBtn.disabled = !valid;
+  adminCreateBtn.disabled = !valid;
 }
 
-function resetAdminCreateForm() {
-  for (const field of admin_create_fields) {
+function resetForm() {
+  for (const field of adminCreateFields) {
     const input = document.getElementById(field.inputId);
     input.value = '';
     const error = document.getElementById(field.errorId);
-    adminHideError(error);
-    adminHideError(document.getElementById('duplicateAdminError'));
-    adminHideError(document.getElementById('admin_validPhoneError'));
+    hideError(error);
+    hideError(document.getElementById('duplicateAdminError'));
+    hideError(document.getElementById('admin_validPhoneError'));
   }
 }
 
-function initializeAdminCreateForm() {
-  resetAdminCreateForm();
-  admin_createBtn.disabled = true;
+function initializeForm() {
+  resetForm();
+  adminCreateBtn.disabled = true;
 }
 
-function handleAdminCreateInputChange(input, error) {
-  validateAdminCreateField(input, error);
-  validateAdminCreateForm();
+function handleInputChange(input, error) {
+  validateField(input, error);
+  validateForm();
 }
 
 /* Create Form */
-for (const field of admin_create_fields) {
+for (const field of adminCreateFields) {
   const input = document.getElementById(field.inputId);
   const error = document.getElementById(field.errorId);
 
-  input.addEventListener('input', function () {
-    handleAdminCreateInputChange(input, error);
+  input.addEventListener('input', () => {
+    handleInputChange(input, error);
   });
 }
 
-admin_create_cancelBtn.addEventListener('click', function () {
-  initializeAdminCreateForm();
+adminCreateCancelBtn.addEventListener('click', () => {
+  initializeForm();
 });
 
-initializeAdminCreateForm();
+initializeForm();
+
+function validatePhoneNumber(input) {
+  input.value = input.value.replace(/[^0-9]/g, '');
+  const trimmedValue = input.value.trim();
+
+  if (trimmedValue.length === 0 || trimmedValue.charAt(0) !== '+') {
+    input.value = '+' + trimmedValue;
+  }
+}

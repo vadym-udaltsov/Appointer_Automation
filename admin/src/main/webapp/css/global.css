@@ -50,7 +50,7 @@ button:focus {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
-    max-width: 470px;
+    max-width: 500px;
     background-color: #e12424;
     color: white;
     text-align: center;
@@ -61,6 +61,12 @@ button:focus {
     animation: fadeIn 1s ease-in-out forwards, fadeOut 1s ease-in-out forwards 58s;
     border-radius: 5px;
 }
+.notRegisteredMessage p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 
 .close_notRegisteredMessage {
     position: absolute;
@@ -134,13 +140,13 @@ button:focus {
 
 .circle_1, .circle_2, .circle_3, .circle_4 {
     position: absolute;
-    left: 740px;
-    top: -100px;
+    left: 500px;
+    top: -130px;
     opacity: 0.5;
 }
 
 .circle_2 {
-    left: 1030px;
+    left: 1330px;
     width: 110px;
     top: -20px;
 }

@@ -14,6 +14,7 @@ body {
 .creator_container {
     display: flex;
     align-items: center;
+    font-size: 25px;
 }
 
 .creator_item {
@@ -36,7 +37,7 @@ body {
 
 .navbar-nav li {
     margin-right: 20px;
-    min-width: 110.48px;
+    min-width: 110.48px !important;
 }
 
 .nav-button {
@@ -56,6 +57,27 @@ body {
     color: black;
 }
 
+.bot_name_container {
+    margin-left: 265px;
+    font-size: 25px;
+    height: 38px;
+    color: black;
+    white-space: nowrap;
+    max-width: 350px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    font-weight: 400;
+    align-items: center;
+}
+}
+
+.bot_title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 #logout_container {
     display: flex;
     justify-content: space-between;
@@ -67,7 +89,11 @@ body {
 }
 
 .change-lang {
-    width: 70px !important;
+    width: 80px !important;
+    background-color: #393330;
+    color: white;
+    height: 30px;
+    padding: 0;
 }
 
 #logout_button {
@@ -79,6 +105,9 @@ body {
     text-align: center;
     border: none;
     height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .main-head{

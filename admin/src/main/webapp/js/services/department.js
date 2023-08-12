@@ -179,8 +179,6 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         choose_depNameSelect.empty();
         update_timeZoneSelect.empty();
         typeSelect.empty();
-        console.log(localStorage.getItem('customer'));
-        console.log(data.customerDepartments.length);
 
         var createServiceBtn  = document.getElementById('service_createOpenBtn');
         var createSpecialistBtn  = document.getElementById('specialist_createOpenBtn');
@@ -190,6 +188,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             document.getElementById('notRegisteredContainer').style.display = 'block';
             document.getElementById('department_CreatePopup').style.display = 'block';
             document.getElementById('department_UpdatePopup').style.display = 'none';
+            document.getElementById('bot_name_section').style.display = 'none';
 
             createServiceBtn.disabled = true;
             createSpecialistBtn.disabled = true;
@@ -204,6 +203,8 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             console.log(data);
             localStorage.setItem('lastSelectedOption', data.customerDepartments[0].n);
             var lastSelectedOption = localStorage.getItem('lastSelectedOption');
+            var botNameSpan = document.getElementById('bot_name_value');
+            botNameSpan.textContent = data.customerDepartments[0].bn;
 
             $.each(data.customerDepartments, function (i, department) {
                 var name = $("<option value='" + JSON.stringify(department) + "'></option>").text(this.n);
