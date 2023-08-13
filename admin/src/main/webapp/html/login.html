@@ -24,6 +24,7 @@
 <div id="messageDiv">
     <p>Your session was expired</p>
 </div>
+
 <img src="../pictures/circle.svg" alt="Circle1" class="login_circle_1">
 <img src="../pictures/circle.svg" alt="Circle2" class="login_circle_2">
 <img src="../pictures/circle.svg" alt="Circle3" class="login_circle_3">
@@ -42,6 +43,9 @@
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" class="form-control" id="pass" placeholder="Password">
+                </div>
+                <div id="notValidPassword" style="display: none;">
+                    <p>Password or login was incorrect. Please try again.</p>
                 </div>
                 <button type="submit" class="btn btn-black" id="log">Login</button>
                 <button type="button" class="btn btn-primary registration" data-toggle="modal" data-target="#emailModal">

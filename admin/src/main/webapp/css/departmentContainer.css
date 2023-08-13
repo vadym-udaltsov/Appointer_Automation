@@ -45,3 +45,17 @@
     height: 38px;
     font-weight: normal;
 }
+
+.depName_create_message {
+    font-size: 15px;
+    color: red;
+    font-weight: 500;
+    display: block;
+    margin-top: 5px;
+}
+
+.depName_create_message:after {
+    content: "*";
+    position: relative;
+    top: -3px;
+}

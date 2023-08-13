@@ -37,7 +37,7 @@ const langArr = {
     },
     "Name": {
         "en": "Name",
-        "ua": "Ім'я",
+        "ua": "Назва",
         "pl": "Nazwa",
         "ru": "Имя",
     },
@@ -259,7 +259,7 @@ const langArr = {
     },
     "newPhone": {
         "en": "New Phone Number",
-        "ua": "Новый номер телефону",
+        "ua": "Новий номер телефону",
         "pl": "Nowy numer telefonu",
         "ru": "Новый номер телефона"
     },
@@ -292,5 +292,47 @@ const langArr = {
         "ua": "Назва боту: ",
         "pl": "Nazwa bota: ",
         "ru": "Имя бота: "
+    },
+    "createMessage": {
+        "en": "The name cannot be changed later.",
+        "ua": "Назву не можна змінити пізніше.",
+        "pl": "Nazwę nie można później zmienić.",
+        "ru": "Имя не может быть изменено позже."
+    },
+    "namePlaceholder": {
+        "en": "Enter name",
+        "ua": "Ввідіть назву",
+        "pl": "Napisz nazwe",
+        "ru": "Ведите имя"
+    },
+    "newNamePlaceholder": {
+        "en": "Enter new name",
+        "ua": "Ввідіть нову назву",
+        "pl": "Napisz nową nazwe",
+        "ru": "Ведите новое имя"
+    },
+    "durationPlaceholder": {
+        "en": "Enter duration",
+        "ua": "Ввідіть тривалість",
+        "pl": "Napisz czas trwania",
+        "ru": "Ведите Продолжительность"
+    },
+    "pricePlaceholder": {
+        "en": "Enter price",
+        "ua": "Ввідіть ціну",
+        "pl": "Napisz cene",
+        "ru": "Ведите цену"
+    },
+    "phonePlaceholder": {
+        "en": "Enter phone number",
+        "ua": "Ввідіть номер телефону",
+        "pl": "Napisz numer telefonu",
+        "ru": "Ведите номер телефона"
+    },
+    "newPhonePlaceholder": {
+        "en": "Enter new phone number",
+        "ua": "Ввідіть новий номер телефону",
+        "pl": "Napisz nowy numer telefonu",
+        "ru": "Ведите новый номер телефона"
     }
 }

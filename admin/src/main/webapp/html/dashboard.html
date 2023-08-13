@@ -168,13 +168,14 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="depName_create">Name</label>
-                    <input type="text" class="form-control" id="depName_create" placeholder="Enter Name">
+                    <label for="depName_create" class="lng-Name">Name</label>
+                    <input type="text" class="form-control enterName lng-namePlaceholder" id="depName_create" placeholder="Enter Name">
+                    <span class="depName_create_message lng-createMessage">The name cannot be changed later.</span>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
-                <button type="button" class="btn btn-primary" id="create_depBtn">Create</button>
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
+                <button type="button" class="btn btn-primary lng-createBtn" id="create_depBtn">Create</button>
             </div>
         </div>
     </div>
@@ -289,7 +290,7 @@
                     <div class="form-group">
                         <label for="service_Create-servNameInput" class="update__asterisks lng-Name"
                                id="service_nameField">Name</label>
-                        <input type="text" class="form-control" id="service_Create-servNameInput"
+                        <input type="text" class="form-control enterName lng-namePlaceholder" id="service_Create-servNameInput"
                                placeholder="Enter Name">
                         <small class="error-message lng-requiredField" id="nameError" style="color: red; display: none;"></small>
                         <small class="error-message lng-duplicateServiceName" id="duplicateServiceError" style="color: red; display: none;"></small>
@@ -297,13 +298,13 @@
                     <div class="form-group">
                         <label for="service_Create-servDurationInput" class="update__asterisks lng-serviceDuration"
                                id="service_durationField">Duration</label>
-                        <input type="number" class="form-control" id="service_Create-servDurationInput"
+                        <input type="number" class="form-control enterDuration lng-durationPlaceholder" id="service_Create-servDurationInput"
                                placeholder="Enter Duration" oninput="validateInput(this)">
                         <small class="error-message lng-requiredField" id="durationError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice" id="service_priceField">Price</label>
-                        <input type="number" class="form-control" id="service_Create-servPriceInput"
+                        <input type="number" class="form-control enterPrice lng-pricePlaceholder" id="service_Create-servPriceInput"
                                placeholder="Enter Price" oninput="validateInput(this)">
                         <small class="error-message lng-requiredField" id="priceError" style="color: red; display: none;"></small>
                     </div>
@@ -336,7 +337,7 @@
                     <div class="form-group">
                         <label for="update-service_newNameInput" class="update__asterisks lng-newName" id="service_updateNewName">New
                             Name</label>
-                        <input type="text" class="form-control" id="update-service_newNameInput"
+                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder" id="update-service_newNameInput"
                                placeholder="Enter New Name">
                         <small class="update_error-message lng-requiredField" id="update_nameError" style="color: red; display: none;"></small>
                         <small class="error-message lng-duplicateServiceName" id="duplicateServiceUpdateError" style="color: red; display: none;"></small>
@@ -344,14 +345,14 @@
                     <div class="form-group">
                         <label for="update-service_newDurationInput" class="update__asterisks lng-newDuration"
                                id="service_updateDuration">New Duration</label>
-                        <input type="number" class="form-control" id="update-service_newDurationInput"
+                        <input type="number" class="form-control enterDuration lng-durationPlaceholder" id="update-service_newDurationInput"
                                placeholder="Enter Duration">
                         <small class="update_error-message lng-requiredField" id="update_durationError" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="update-service_newPriceInput" class="update__asterisks lng-newPrice" id="service_updatePrice">New
                             Price</label>
-                        <input type="number" class="form-control" id="update-service_newPriceInput"
+                        <input type="number" class="form-control enterPrice lng-pricePlaceholder" id="update-service_newPriceInput"
                                placeholder="Enter Price">
                         <small class="update_error-message lng-requiredField" id="update_priceError" style="color: red; display: none;"></small>
                     </div>
@@ -405,7 +406,7 @@
                 <form>
                     <div class="form-group">
                         <label for="specialist_CreateNameInput" class="update__asterisks lng-Name" id="specialist_nameField">Name</label>
-                        <input type="text" class="form-control" id="specialist_CreateNameInput"
+                        <input type="text" class="form-control enterName lng-namePlaceholder" id="specialist_CreateNameInput"
                                placeholder="Enter Name">
                         <small class="error-message lng-requiredField" id="specialist_nameError" style="color: red; display: none;"></small>
                         <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistError" style="color: red; display: none;"></small>
@@ -413,7 +414,7 @@
                     <div class="form-group">
                         <label for="specialist_CreatePhoneInput" class="update__asterisks lng-phone"
                                id="specialist_phoneField">Phone Number</label>
-                        <input type="text" class="form-control" id="specialist_CreatePhoneInput"
+                        <input type="text" class="form-control enterPhone lng-phonePlaceholder" id="specialist_CreatePhoneInput"
                                placeholder="Enter Phone Number" oninput="validatePhoneNumber(this)">
                         <small class="error-message lng-requiredField" id="specialist_phoneError" style="color: red; display: none;"></small>
                         <small class="update_error-message lng-notValidPhoneError" id="specialist_create_validPhoneError" style="color: red; display: none;"></small>
@@ -447,7 +448,7 @@
                     <div class="form-group">
                         <label for="update-specialist_newNameInput" class="update__asterisks lng-newName"
                                id="specialist_updateNewName">New Name</label>
-                        <input type="text" class="form-control" id="update-specialist_newNameInput"
+                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder" id="update-specialist_newNameInput"
                                placeholder="Enter New Name">
                         <small class="update_error-message lng-requiredField" id="specialist_update_nameError" style="color: red; display: none;"></small>
                         <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistUpdateError" style="color: red; display: none;"></small>
@@ -455,7 +456,7 @@
                     <div class="form-group">
                         <label for="update-specialist_newPhoneInput" class="update__asterisks lng-newPhone"
                                id="specialist_updateDuration">New Phone Number</label>
-                        <input type="text" class="form-control" id="update-specialist_newPhoneInput"
+                        <input type="text" class="form-control enterNewPhone lng-newPhonePlaceholder" id="update-specialist_newPhoneInput"
                                placeholder="Enter New Phone Number" oninput="validatePhoneNumber(this)">
                         <small class="update_error-message lng-requiredField" id="specialist_update_phoneError" style="color: red; display: none;"></small>
                         <small class="update_error-message lng-notValidPhoneError" id="specialist_update_validPhoneError" style="color: red; display: none;"></small>
@@ -512,7 +513,7 @@
                     <div class="form-group">
                         <label for="service_Create-servDurationInput" class="update__asterisks lng-phone"
                                id="admin_phoneField">Phone Number</label>
-                        <input type="text" class="form-control" id="admin_CreatePhoneInput"
+                        <input type="text" class="form-control enterPhone lng-phonePlaceholder" id="admin_CreatePhoneInput"
                                placeholder="Enter Phone Number" oninput="validatePhoneNumber(this)">
                         <small class="error-message lng-requiredField" id="admin_phoneError" style="color: red; display: none;"></small>
                         <small class="update_error-message lng-notValidPhoneError" id="admin_validPhoneError" style="color: red; display: none;"></small>

@@ -40,22 +40,11 @@ function executeGet(url) {
         error: function (data) {
             alert('Please, enter valid email.')
             $('#register').prop('disabled', true);
-        },
-        complete: function (data) {
-            $('#spinner-container').empty();
         }
     });
-
 }
 
 function executePost(data, url) {
-    $("#log").click(function() {
-        $("#loadingOverlay").show();
-
-        $(".sidenav").hide();
-        $(".main").hide();
-    });
-
     $.ajax({
         type: 'post',
         url: url,
@@ -64,20 +53,12 @@ function executePost(data, url) {
         data: data,
         success: function (data) {
             console.log(data)
-            var error = document.getElementById("error")
-            if (data.status === 401) {
-                error.textContent = "Login or password is wrong"
-                error.style.color = "red"
-            } else {
-                localStorage.setItem('token', data.body);
-                $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
-            }
+            localStorage.setItem('token', data.body);
+            $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
         },
         error: function (data) {
-            $(location).attr('href', '');
-        },
-        complete: function (data) {
-            console.log(data);
+        var errorPassword = document.getElementById("notValidPassword");
+        errorPassword.style.display = 'block';
         }
     });
 }

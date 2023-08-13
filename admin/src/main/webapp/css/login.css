@@ -64,6 +64,13 @@ body {
     font-size: 20px;
 }
 
+#notValidPassword {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: red;
+    border-radius: 10px;
+}
+
 .login-main-text{
     margin-top: 20%;
     padding: 60px;
