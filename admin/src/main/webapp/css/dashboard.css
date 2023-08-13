@@ -94,6 +94,7 @@ body {
     color: white;
     height: 30px;
     padding: 0;
+    cursor: pointer;
 }
 
 #logout_button {

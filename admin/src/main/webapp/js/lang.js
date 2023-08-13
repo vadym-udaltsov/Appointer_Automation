@@ -18,10 +18,10 @@ const langArr = {
         "ru": "Обновить Салон",
     },
     "createDepartment": {
-        "en": "Create Department",
-        "ua": "Создать Салон",
-        "pl": "Utworzyć Dział",
-        "ru": "Створити Салон",
+        "en": "Create Bot",
+        "ua": "Створити Бота",
+        "pl": "Utworzyć Bota",
+        "ru": "Создать Бота",
     },
     "create": {
         "en": "Add New",
@@ -282,15 +282,15 @@ const langArr = {
         "ru": "Удалить Администратора"
     },
     "notRegisteredMessage": {
-        "en": "You are not registered yet. You need to create a Department.",
-        "ua": "Ви ще не зареєстровані. Потрібно створити салон.",
-        "pl": "Nie jesteś jeszcze zarejestrowany. Musisz utworzyć dział.",
-        "ru": "Вы еще не зарегистрированы. Вам нужно создать салон."
+        "en": "You haven't bot. You need to create it.",
+        "ua": "У вас немає бота. Вам потрібно його створити.",
+        "pl": "Nie masz bota. Musisz go utworzyć.",
+        "ru": "У вас нет бота. Вам нужно создать его."
     },
     "botName": {
         "en": "Bot name: ",
         "ua": "Назва боту: ",
         "pl": "Nazwa bota: ",
         "ru": "Имя бота: "
-    },
+    }
 }

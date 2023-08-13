@@ -193,6 +193,8 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             createServiceBtn.disabled = true;
             createSpecialistBtn.disabled = true;
             createAdminBtn.disabled = true;
+            window.dataLoaded = true;
+            changeLanguage();
         } else {
             document.getElementById('department_UpdatePopup').style.display = 'block';
             document.getElementById('department_CreatePopup').style.display = 'none';
@@ -201,6 +203,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             createSpecialistBtn.disabled = false;
             createAdminBtn.disabled = false;
             console.log(data);
+            changeLanguage();
             localStorage.setItem('lastSelectedOption', data.customerDepartments[0].n);
             var lastSelectedOption = localStorage.getItem('lastSelectedOption');
             var botNameSpan = document.getElementById('bot_name_value');
