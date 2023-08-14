@@ -53,7 +53,7 @@ public class DepartmentController {
                 .build();
         if (customerDepartments.size() == 0) {
             Customer customer = customerService.getCustomerByEmail(customerEmail);
-            data.setRegistered(customer != null && customer.isRegistered());
+            data.setRegistered(customer != null && customer.isBotRegistered());
         }
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
@@ -71,7 +71,7 @@ public class DepartmentController {
         String name = request.getName();
         String email = request.getEmail();
         Customer customer = customerService.getCustomerByEmail(email);
-        if (customer == null || !customer.isRegistered()) {
+        if (customer == null || !customer.isBotRegistered()) {
             Map<String, String> messageData = new HashMap<>();
             messageData.put("email", email);
             messageData.put("bot_name", name);
