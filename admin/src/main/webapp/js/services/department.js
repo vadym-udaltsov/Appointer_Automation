@@ -188,16 +188,17 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         var createSpecialistBtn  = document.getElementById('specialist_createOpenBtn');
         var createAdminBtn  = document.getElementById('admin_createOpenBtn');
 
-        if(data.registered == false && data.customerDepartments.length === 0) {
-            const createButtonClicked = localStorage.getItem('createBtnClicked');
-            if (createButtonClicked === 'true') {
-                document.getElementById('waitMessageContainer').style.display = 'block';
-                document.getElementById('department_CreatePopup').disabled = true;
-                document.getElementById('notRegisteredContainer').style.display = 'none';
-            } else {
+
+        if(data.customerDepartments.length === 0) {
+            if (data.registered == false) {
+                localStorage.setItem('createBtnClicked', 'false');
                 document.getElementById('waitMessageContainer').style.display = 'none';
                 document.getElementById('notRegisteredContainer').style.display = 'block';
                 document.getElementById('department_CreatePopup').disabled = false;
+            } else {
+                document.getElementById('waitMessageContainer').style.display = 'block';
+                document.getElementById('department_CreatePopup').disabled = true;
+                document.getElementById('notRegisteredContainer').style.display = 'none';
             }
             document.getElementById('department_CreatePopup').style.display = 'block';
             document.getElementById('department_UpdatePopup').style.display = 'none';
@@ -220,7 +221,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             localStorage.setItem('lastSelectedOption', data.customerDepartments[0].n);
             var lastSelectedOption = localStorage.getItem('lastSelectedOption');
             var botNameSpan = document.getElementById('bot_name_value');
-            botNameSpan.textContent = data.customerDepartments[0].bn;
+            botNameSpan.textContent = data.customerDepartments[0].bun;
 
             $.each(data.customerDepartments, function (i, department) {
                 var name = $("<option value='" + JSON.stringify(department) + "'></option>").text(this.n);

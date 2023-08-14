@@ -63,7 +63,6 @@ body {
     height: 38px;
     color: black;
     white-space: nowrap;
-    max-width: 350px;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;

@@ -1,5 +1,5 @@
 var selectLanguage = document.getElementsByClassName('change-lang')[0];
-var allLang = ['en', 'ua', 'pl', 'ru'];
+var allLang = ['en', 'ua', 'pl', 'ru', 'cnr'];
 
 var selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
 selectLanguage.value = selectedLanguage;
