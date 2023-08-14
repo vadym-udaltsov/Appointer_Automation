@@ -18,10 +18,10 @@ const langArr = {
         "ru": "Обновить Салон",
     },
     "createDepartment": {
-        "en": "Create Bot",
-        "ua": "Створити Бота",
-        "pl": "Utworzyć Bota",
-        "ru": "Создать Бота",
+        "en": "Create bot",
+        "ua": "Створити бот",
+        "pl": "Utworzyć bot",
+        "ru": "Создать бот",
     },
     "create": {
         "en": "Add New",
@@ -127,45 +127,45 @@ const langArr = {
     },
     "monDay": {
         "en": "Mon",
-        "ua": "Пнд",
+        "ua": "Пн",
         "pl": "Pnd",
-        "ru": "Пнд",
+        "ru": "Пн",
     },
     "tueDay": {
         "en": "Tue",
-        "ua": "Втр",
+        "ua": "Вт",
         "pl": "Wtr",
-        "ru": "Втр",
+        "ru": "Вт",
     },
     "wedDay": {
         "en": "Wed",
-        "ua": "Срд",
+        "ua": "Ср",
         "pl": "Śrd",
-        "ru": "Срд",
+        "ru": "Ср",
     },
     "thuDay": {
         "en": "Thu",
-        "ua": "Чтв",
+        "ua": "Чт",
         "pl": "Czw",
-        "ru": "Чтв",
+        "ru": "Чт",
     },
     "friDay": {
         "en": "Fri",
-        "ua": "Птн",
+        "ua": "Пт",
         "pl": "Pią",
-        "ru": "Птн",
+        "ru": "Пт",
     },
     "satDay": {
         "en": "Sat",
-        "ua": "Сбт",
+        "ua": "Сб",
         "pl": "Sbt",
-        "ru": "Суб",
+        "ru": "Сб",
     },
     "sunDay": {
         "en": "Sun",
-        "ua": "Ндл",
+        "ua": "Нд",
         "pl": "Ndz",
-        "ru": "Вср",
+        "ru": "Вс",
     },
     "cancelBtn": {
         "en": "Cancel",
@@ -283,13 +283,19 @@ const langArr = {
     },
     "notRegisteredMessage": {
         "en": "You haven't bot. You need to create it.",
-        "ua": "У вас немає бота. Вам потрібно його створити.",
+        "ua": "У вас немає боту. Вам потрібно його створити.",
         "pl": "Nie masz bota. Musisz go utworzyć.",
         "ru": "У вас нет бота. Вам нужно создать его."
     },
+    "waitMessage": {
+        "en": "Bot in the process of creation. Refresh the page after 2-3 minutes.",
+        "ua": "Бот в процесі створення. Оновіть сторінку через 2-3 хвилини.",
+        "pl": "Bot w trakcie tworzenia. Odśwież stronę po 2-3 minutach.",
+        "ru": "Бот в процессе создания. Обновите страницу через 2-3 минуты."
+    },
     "botName": {
         "en": "Bot name: ",
-        "ua": "Назва боту: ",
+        "ua": "Назва бота: ",
         "pl": "Nazwa bota: ",
         "ru": "Имя бота: "
     },

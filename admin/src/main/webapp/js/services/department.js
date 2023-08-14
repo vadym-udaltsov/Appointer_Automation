@@ -71,6 +71,10 @@ $(window).on('load', function() {
         department.email = localStorage.getItem('customer');
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/create');
         $("#department_CreateModal").modal("hide");
+        document.getElementById('notRegisteredContainer').style.display = 'none';
+        document.getElementById('waitMessageContainer').style.display = 'block';
+        document.getElementById('department_CreatePopup').disabled = true;
+        localStorage.setItem('createBtnClicked', 'true');
         return false;
      });
 
@@ -185,7 +189,16 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         var createAdminBtn  = document.getElementById('admin_createOpenBtn');
 
         if(data.registered == false && data.customerDepartments.length === 0) {
-            document.getElementById('notRegisteredContainer').style.display = 'block';
+            const createButtonClicked = localStorage.getItem('createBtnClicked');
+            if (createButtonClicked === 'true') {
+                document.getElementById('waitMessageContainer').style.display = 'block';
+                document.getElementById('department_CreatePopup').disabled = true;
+                document.getElementById('notRegisteredContainer').style.display = 'none';
+            } else {
+                document.getElementById('waitMessageContainer').style.display = 'none';
+                document.getElementById('notRegisteredContainer').style.display = 'block';
+                document.getElementById('department_CreatePopup').disabled = false;
+            }
             document.getElementById('department_CreatePopup').style.display = 'block';
             document.getElementById('department_UpdatePopup').style.display = 'none';
             document.getElementById('bot_name_section').style.display = 'none';

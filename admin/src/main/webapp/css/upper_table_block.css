@@ -29,7 +29,7 @@
     width: 100px;
 }
 
-#service_createOpenBtn:disabled, #specialist_createOpenBtn:disabled, #admin_createOpenBtn:disabled {
+#service_createOpenBtn:disabled, #specialist_createOpenBtn:disabled, #admin_createOpenBtn:disabled, #department_CreatePopup:disabled {
     cursor: not-allowed;
     border: 1px solid black;
     opacity: 0.5;
