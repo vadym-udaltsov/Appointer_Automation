@@ -338,6 +338,14 @@ function validateUpdateDepInput(input, inputType) {
   }
 }
 
+function updateCharCount() {
+  const depNameInput = document.getElementById("depName_create");
+  const charCount = depNameInput.value.length;
+  const charCounter = document.getElementById("charCounter");
+
+  charCounter.textContent = `${charCount}/30`;
+}
+
 
 
 

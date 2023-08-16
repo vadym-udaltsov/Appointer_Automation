@@ -51,7 +51,7 @@
     color: red;
     font-weight: 500;
     display: block;
-    margin-top: 5px;
+    margin-top: -15px;
 }
 
 .depName_create_message:after {
@@ -59,3 +59,12 @@
     position: relative;
     top: -3px;
 }
+
+#charCounter {
+    position: relative;
+    left: 220px;
+    bottom: 20px;
+    font-size: 14px;
+    color: grey;
+}
+

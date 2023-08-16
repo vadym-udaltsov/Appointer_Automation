@@ -175,7 +175,9 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="depName_create" class="lng-Name">Name</label>
-                    <input type="text" class="form-control enterName lng-namePlaceholder" id="depName_create" placeholder="Enter Name">
+                    <input type="text" maxlength="30" class="form-control enterName lng-namePlaceholder" id="depName_create"
+                           placeholder="Enter Name" oninput="updateCharCount()">
+                    <div id="charCounter">0/30</div>
                     <span class="depName_create_message lng-createMessage">The name cannot be changed later.</span>
                 </div>
             </div>
