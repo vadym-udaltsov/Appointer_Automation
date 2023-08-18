@@ -136,6 +136,8 @@ Resources:
                   - 'ssm:*'
                   - 's3:*'
                   - 'sqs:*'
+                  - 'polly:*'
+                  - 'transcribe:*'
                 Resource: '*'
               - Effect: Allow
                 Action:
@@ -165,6 +167,20 @@ Resources:
                   - 'ses:VerifyDomainIdentity'
                   - 'mobiletargeting:GetApps'
                   - 'acm:ListCertificates'
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - 's3:GetObject'
+                Resource: 'arn:aws:s3:::*transcribe*'
+              - Effect: Allow
+                Action:
+                  - 'translate:*'
+                  - 'comprehend:DetectDominantLanguage'
+                  - 's3:ListAllMyBuckets'
+                  - 's3:ListBucket'
+                  - 's3:GetBucketLocation'
+                  - 'iam:ListRoles'
+                  - 'iam:GetRole'
                 Resource: '*'
   PostSignUpLambdaPermission:
     Type: AWS::Lambda::Permission
