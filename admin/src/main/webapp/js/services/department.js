@@ -43,7 +43,7 @@ $(window).on('load', function() {
         department.id = id;
         department.n = name;
         department.c = email;
-        department.tp = $("#update_depTypeSelect").val();
+
         department.zone = $("#update_timeZoneSelect").val();
         department.sw = $("#startWork").val();
         department.ew = $("#finishWork").val();
@@ -69,6 +69,7 @@ $(window).on('load', function() {
         var department = new Object();
         department.name = $("#depName_create").val();
         department.email = localStorage.getItem('customer');
+        department.tp = $("#update_depTypeSelect").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/create');
         $("#department_CreateModal").modal("hide");
         document.getElementById('notRegisteredContainer').style.display = 'none';
@@ -199,6 +200,17 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                 document.getElementById('waitMessageContainer').style.display = 'block';
                 document.getElementById('department_CreatePopup').disabled = true;
                 document.getElementById('notRegisteredContainer').style.display = 'none';
+                if(data.isAdmin) {
+                    $.each(data.availableTypes, function () {
+                        var type = $("<option value='" + this + "'></option>").text(this);
+                        typeSelect.append(type);
+                    });
+                } else {
+                    if (data.availableTypes.length > 0) {
+                        var firstType = $("<option value='" + data.availableTypes[0] + "'></option>").text(data.availableTypes[0]);
+                        typeSelect.append(firstType);
+                    }
+                }
             }
             document.getElementById('department_CreatePopup').style.display = 'block';
             document.getElementById('department_UpdatePopup').style.display = 'none';
@@ -233,11 +245,6 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                 choose_depNameSelect.append(name);
             });
 
-            $.each(data.availableTypes, function () {
-                var type = $("<option value='" + this + "'></option>").text(this);
-                typeSelect.append(type);
-            });
-
             $.each(data.availableZones, function () {
                 var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
                 update_timeZoneSelect.append(timeZone);
@@ -264,7 +271,7 @@ function loadDepUpdateData(url) {
         var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
         document.getElementById("update_selectedDepartment").value = selectedDepartmentData.n;
         document.getElementById("update_timeZoneSelect").value = selectedDepartmentData.zone;
-        document.getElementById("update_depTypeSelect").value = selectedDepartmentData.tp;
+        document.getElementById("update_depTypeInput").value = selectedDepartmentData.tp;
         document.getElementById("startWork").value = selectedDepartmentData.sw;
         document.getElementById("finishWork").value = selectedDepartmentData.ew;
 

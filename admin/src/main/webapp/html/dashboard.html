@@ -181,6 +181,10 @@
                     <span class="depName_create_message lng-createMessage">The name cannot be changed later.</span>
                 </div>
             </div>
+            <div class="typeDep-group">
+                <p class="typeDep-group-title lng-depType">Type</p>
+                <select class="form-control typeDep-select" id="update_depTypeSelect"></select>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
                 <button type="button" class="btn btn-primary lng-createBtn" id="create_depBtn">Create</button>
@@ -211,7 +215,7 @@
                 </div>
                 <div class="popup-row last-row">
                     <p class="popup-field-title lng-depType">Type</p>
-                    <select class="form-control" id="update_depTypeSelect"></select>
+                    <input class="form-control" id="update_depTypeInput" disabled>
                 </div>
                 <div class="row">
                     <div class="col-md-3 start-hour">
