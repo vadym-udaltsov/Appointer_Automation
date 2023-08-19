@@ -196,11 +196,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                 document.getElementById('waitMessageContainer').style.display = 'none';
                 document.getElementById('notRegisteredContainer').style.display = 'block';
                 document.getElementById('department_CreatePopup').disabled = false;
-            } else {
-                document.getElementById('waitMessageContainer').style.display = 'block';
-                document.getElementById('department_CreatePopup').disabled = true;
-                document.getElementById('notRegisteredContainer').style.display = 'none';
-                if(data.isAdmin) {
+                if(data.admin) {
                     $.each(data.availableTypes, function () {
                         var type = $("<option value='" + this + "'></option>").text(this);
                         typeSelect.append(type);
@@ -211,6 +207,10 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                         typeSelect.append(firstType);
                     }
                 }
+            } else {
+                document.getElementById('waitMessageContainer').style.display = 'block';
+                document.getElementById('department_CreatePopup').disabled = true;
+                document.getElementById('notRegisteredContainer').style.display = 'none';
             }
             document.getElementById('department_CreatePopup').style.display = 'block';
             document.getElementById('department_UpdatePopup').style.display = 'none';
