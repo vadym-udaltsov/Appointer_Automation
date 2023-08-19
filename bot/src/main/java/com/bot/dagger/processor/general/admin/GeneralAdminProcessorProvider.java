@@ -7,6 +7,9 @@ import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateFirstS
 import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateSecondStepProcessor;
 import com.bot.processor.impl.general.admin.appointment.AppointmentsTodayAndTomorrowProcessor;
 import com.bot.processor.impl.general.admin.appointment.StartAppointmentsDashProcessor;
+import com.bot.processor.impl.general.admin.block.BlockUserFirstStepProcessor;
+import com.bot.processor.impl.general.admin.block.BlockUserSecondStepProcessor;
+import com.bot.processor.impl.general.admin.block.BlockUserThirdStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFourthStepProcessor;
@@ -31,6 +34,32 @@ import javax.inject.Singleton;
 
 @Module
 public class GeneralAdminProcessorProvider {
+
+    //---------------------------------------- Block -------------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.BLOCK_USER1)
+    public IProcessor blockUser1(IContextService contextService) {
+        return new BlockUserFirstStepProcessor(contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.BLOCK_USER2)
+    public IProcessor blockUser2() {
+        return new BlockUserSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.BLOCK_USER3)
+    public IProcessor blockUser3(IAppointmentService appointmentService, IContextService contextService) {
+        return new BlockUserThirdStepProcessor(appointmentService, contextService);
+    }
 
     @Provides
     @Singleton

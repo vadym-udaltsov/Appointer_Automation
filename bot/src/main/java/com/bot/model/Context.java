@@ -19,6 +19,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import software.amazon.awssdk.utils.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,15 +38,19 @@ public class Context extends DynamoDbEntity {
     public static final String LOCALE_FIELD = "l";
     public static final String NAVIGATION_FIELD = "n";
     public static final String PHONE_FIELD = "pn";
+    public static final String BLOCKED_FIELD = "b";
     public static final String INDEX_NAME = "pn-did-index";
+    public static final String DID_ID_INDEX = "did-id-index";
 
     @DynamoDBHashKey(attributeName = HASH_KEY)
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = DID_ID_INDEX)
     @JsonProperty(HASH_KEY)
     private long userId;
 
     @DynamoDBRangeKey(attributeName = RANGE_KEY)
     @JsonProperty(RANGE_KEY)
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = INDEX_NAME)
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = DID_ID_INDEX)
     private String departmentId;
 
     @JsonProperty(LOCALE_FIELD)
@@ -68,6 +73,10 @@ public class Context extends DynamoDbEntity {
     @DynamoDBAttribute(attributeName = "name")
     private String name;
 
+    @DynamoDBAttribute(attributeName = BLOCKED_FIELD)
+    @JsonProperty(BLOCKED_FIELD)
+    private boolean blocked;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -83,7 +92,8 @@ public class Context extends DynamoDbEntity {
                 .with(NAVIGATION_FIELD, navigation)
                 .with(LOCALE_FIELD, language == null ? Language.US.name() : language.name())
                 .withString(PHONE_FIELD, StringUtils.isBlank(phoneNumber) ? "n/a" : phoneNumber)
-                .withMap(PARAMS_FIELD, params)
+                .withMap(PARAMS_FIELD, params == null ? new HashMap<>() : params)
+                .withBoolean(BLOCKED_FIELD, blocked)
                 .withString("name", name == null ? "n/a" : name)
                 .withList("n", navigation == null ? List.of() : navigation);
     }

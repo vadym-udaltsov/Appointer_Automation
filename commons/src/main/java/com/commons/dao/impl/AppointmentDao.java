@@ -28,18 +28,16 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
     public void deleteSpecialistAppointments(String specialist, String departmentId, long endDate) {
         String specId = specialist + "::" + departmentId;
         List<Appointment> appointments = getAppointmentsBySpecialist(specId, 0, endDate);
-        List<WriteRequest> writeRequests = new ArrayList<>();
-
-        for (Appointment item : appointments) {
-            Map<String, AttributeValue> key = new HashMap<>();
-            key.put("s", new AttributeValue(item.getId()));
-            key.put("d", new AttributeValue().withN(String.valueOf(item.getDate())));
-            DeleteRequest deleteRequest = new DeleteRequest().withKey(key);
-
-            writeRequests.add(new WriteRequest().withDeleteRequest(deleteRequest));
-        }
+        List<WriteRequest> writeRequests = buildDeleteRequests(appointments);
 
         batchDeleteItems(writeRequests);
+    }
+
+    @Override
+    public void deleteClientAppointments(long userId) {
+        List<Appointment> clientAppointments = getClientAppointments(userId);
+        List<WriteRequest> deleteRequests = buildDeleteRequests(clientAppointments);
+        batchDeleteItems(deleteRequests);
     }
 
     @Override
@@ -83,5 +81,29 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
                         .withNumber(":start", startDate)
                         .withNumber(":end", finishDate));
         return findAllByQuery(spec);
+    }
+
+    private List<WriteRequest> buildDeleteRequests(List<Appointment> appointments) {
+        List<WriteRequest> writeRequests = new ArrayList<>();
+
+        for (Appointment item : appointments) {
+            Map<String, AttributeValue> key = new HashMap<>();
+            key.put("s", new AttributeValue(item.getId()));
+            key.put("d", new AttributeValue().withN(String.valueOf(item.getDate())));
+            DeleteRequest deleteRequest = new DeleteRequest().withKey(key);
+
+            writeRequests.add(new WriteRequest().withDeleteRequest(deleteRequest));
+        }
+        return writeRequests;
+    }
+
+    private List<Appointment> getClientAppointments(long userId) {
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("#hash = :id")
+                .withNameMap(new NameMap()
+                        .with("#hash", "uid"))
+                .withValueMap(new ValueMap()
+                        .withNumber(":id", userId));
+        return getItemsByIndexQuery(spec, Appointment.USER_INDEX_NAME);
     }
 }

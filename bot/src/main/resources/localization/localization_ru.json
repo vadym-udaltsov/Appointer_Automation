@@ -8,6 +8,8 @@
   "No appointments": "Нет записей на этот день",
   "You have no appointments for current and next months": "Нет записей в текущем и следующем месяце",
 
+  "Block user": "Заблокировать",
+
   "Create appointment": "Записаться",
   "My appointments": "Мои записи",
   "Appointments": "Записи",
@@ -45,6 +47,12 @@
   "You have no days off for selected date": "У тебя нет нерабочего времени на выбраную дату",
   "You have no appointments for selected date": "У тебя нет записей на выбраную дату",
   "You have no non working days for current and next months": "У тебя нет нерабочего времени на этот и следующий месяцы",
+
+  "You have no clients": "У тебя нет клиентов",
+  "Select client": "Выбери клиента",
+  "Select client from proposed": "Выбери доступного клиента",
+  "Submit client blocking": "Подтверди блокировку клиента",
+  "Client was blocked": "Клиент заблокирован",
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",

@@ -7,6 +7,7 @@ import com.bot.model.Language;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.MessageUtils;
+import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -19,6 +20,11 @@ import java.util.Map;
 public class ContextService implements IContextService {
 
     private final IContextDao contextDao;
+
+    @Override
+    public List<Context> getUserContextsByDepartment(Department department) {
+        return contextDao.getUserContextsByDepartment(department);
+    }
 
     @Override
     public Context getContext(Update update, String departmentId) {

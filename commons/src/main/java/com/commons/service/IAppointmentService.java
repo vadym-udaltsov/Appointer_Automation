@@ -19,6 +19,8 @@ public interface IAppointmentService {
 
     void deleteAppointmentsBySpecialist(String departmentId, String specialist, long endDate);
 
+    void deleteAppointmentsByClientId(long userId);
+
     List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate);
 
     Map<String, List<FreeSlot>> getFreeSlotsByDepartment(Department department, int month, int dayNumber);

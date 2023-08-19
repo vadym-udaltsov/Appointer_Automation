@@ -36,6 +36,10 @@ public class ProcessorFactory implements IProcessorFactory {
         if (context == null) {
             return processorsMap.get(CommandType.ASK_LANGUAGE);
         }
+        if (context.isBlocked()) {
+            contextService.resetLocationToDashboard(context);
+            return processorsMap.get(CommandType.START_DASH);
+        }
         String commandKey = MessageUtils.getTextFromUpdate(update);
         log.info("Command key ---------------- " + commandKey);
         if (Constants.HOME.equalsIgnoreCase(commandKey)) {

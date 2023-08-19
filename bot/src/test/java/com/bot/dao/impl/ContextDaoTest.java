@@ -6,12 +6,14 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.bot.converter.MapObjectConverter;
 import com.commons.model.Appointment;
 import com.bot.model.Context;
+import com.commons.model.Department;
 import com.commons.model.FreeSlot;
 import com.bot.model.Strategy;
 import com.bot.util.ContextUtils;
 import com.bot.util.StrategyProvider;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.utils.JsonUtils;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,14 @@ class ContextDaoTest {
     //    @Test
     public void shouldGetItemByIndex() {
         Context context = contextDao.getAdminContext("+380505746182", "52c59292");
+        System.out.println();
+    }
+
+//    @Test
+    public void shouldGetItemsByIndex() {
+        Department department = new Department();
+        department.setId("b4031bb7");
+        List<Context> userContextsByDepartment = contextDao.getUserContextsByDepartment(department);
         System.out.println();
     }
 
@@ -75,7 +85,7 @@ class ContextDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     void testContextList() {
         List<Appointment> appointments = new ArrayList<>();
         for (int i = 1; i < 120; i++) {

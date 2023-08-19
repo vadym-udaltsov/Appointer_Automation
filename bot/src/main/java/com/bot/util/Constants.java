@@ -28,6 +28,7 @@ public class Constants {
 
     public static final String SELECTED_SERVICE = "selectedService";
     public static final String SELECTED_SPEC = "selectedSpec";
+    public static final String SELECTED_TITLE = "selectedTitle";
     public static final String SELECTED_DAY = "selectedDay";
     public static final String SELECTED_HOUR = "selectedHour";
     public static final String SELECTED_MINUTE = "selectedMinute";
@@ -37,6 +38,7 @@ public class Constants {
     public static final String CONTEXT = "context";
     public static final String IS_NEXT_MONTH = "isNextMonth";
     public static final String AVAILABLE_DATES = "availableDates";
+    public static final String AVAILABLE_TITLES = "availableTitles";
     public static final String AVAILABLE_SPECIALISTS = "availableSpecialists";
     public static final String AVAILABLE_SLOT_TITLES = "availableSlotTitles";
     public static final String AVAILABLE_SLOTS = "availableSlots";
@@ -50,7 +52,7 @@ public class Constants {
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "DayOff"),
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment")
     );
 
@@ -99,6 +101,10 @@ public class Constants {
         public static final String DAY_OFF_CANCEL2 = "dayOffCancel2";
         public static final String DAY_OFF_CANCEL3 = "dayOffCancel3";
         public static final String DAY_OFF_CANCEL4 = "dayOffCancel4";
+
+        public static final String BLOCK_USER1 = "blockUser1";
+        public static final String BLOCK_USER2 = "blockUser2";
+        public static final String BLOCK_USER3 = "blockUser3";
     }
 
     public static class Numbers {

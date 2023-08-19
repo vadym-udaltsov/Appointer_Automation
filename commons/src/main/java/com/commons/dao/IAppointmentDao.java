@@ -13,6 +13,8 @@ public interface IAppointmentDao {
 
     void deleteSpecialistAppointments(String specialist, String departmentId, long endDate);
 
+    void deleteClientAppointments(long userId);
+
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 
     List<Appointment> getAppointmentsBySpecialist(String specId, long startDate, long finishDate);

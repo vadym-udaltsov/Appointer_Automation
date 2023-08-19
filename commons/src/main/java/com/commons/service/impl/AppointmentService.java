@@ -37,6 +37,11 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
+    public void deleteAppointmentsByClientId(long userId) {
+        appointmentDao.deleteClientAppointments(userId);
+    }
+
+    @Override
     public List<Appointment> getAppointmentsByDepartment(Department department, long startDate, long finishDate) {
         return appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate);
     }

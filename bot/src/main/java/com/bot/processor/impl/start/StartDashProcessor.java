@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +25,9 @@ public class StartDashProcessor implements IProcessor {
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
         Update update = request.getUpdate();
         Context context = request.getContext();
+        if (context.isBlocked()) {
+            return Collections.singletonList(MessageUtils.getClientBlockedMessageHolder());
+        }
         Department department = request.getDepartment();
         String text = MessageUtils.getTextFromUpdate(update);
         String message = Constants.Messages.INCORRECT_ACTION;

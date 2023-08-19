@@ -2,6 +2,7 @@ package com.bot.dao.impl;
 
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
@@ -13,6 +14,7 @@ import com.bot.util.Constants;
 import com.commons.dao.AbstractDao;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.Appointment;
+import com.commons.model.Department;
 import org.apache.commons.collections4.ListUtils;
 
 import java.util.ArrayList;
@@ -34,6 +36,17 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
     @Override
     public void updateContext(Context context) {
         overwriteItem(context);
+    }
+
+    @Override
+    public List<Context> getUserContextsByDepartment(Department department) {
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("#hash = :id")
+                .withNameMap(new NameMap()
+                        .with("#hash", "did"))
+                .withValueMap(new ValueMap()
+                        .withString(":id", department.getId()));
+        return getItemsByIndexQuery(spec, Context.DID_ID_INDEX);
     }
 
     @Override

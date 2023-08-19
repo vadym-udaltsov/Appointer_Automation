@@ -3,6 +3,7 @@ package com.bot.dao;
 import com.bot.model.Context;
 import com.bot.model.Language;
 import com.commons.model.Appointment;
+import com.commons.model.Department;
 
 import java.util.List;
 
@@ -24,4 +25,5 @@ public interface IContextDao {
 
     List<Context> getContextListByAppointments(List<Appointment> appointments);
 
+    List<Context> getUserContextsByDepartment(Department department);
 }

@@ -274,6 +274,14 @@ Resources:
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
+        - IndexName: did-id-index
+          KeySchema:
+            - AttributeName: did
+              KeyType: HASH
+            - AttributeName: id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
       TableName: context
   AppointmentTable:
     Type: 'AWS::DynamoDB::Table'

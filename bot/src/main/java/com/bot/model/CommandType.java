@@ -53,7 +53,11 @@ public enum CommandType {
     DAY_OFF_CANCEL1(Constants.Processors.DAY_OFF_CANCEL1),
     DAY_OFF_CANCEL2(Constants.Processors.DAY_OFF_CANCEL2),
     DAY_OFF_CANCEL3(Constants.Processors.DAY_OFF_CANCEL3),
-    DAY_OFF_CANCEL4(Constants.Processors.DAY_OFF_CANCEL4);
+    DAY_OFF_CANCEL4(Constants.Processors.DAY_OFF_CANCEL4),
+
+    BLOCK_USER1(Constants.Processors.BLOCK_USER1),
+    BLOCK_USER2(Constants.Processors.BLOCK_USER2),
+    BLOCK_USER3(Constants.Processors.BLOCK_USER3);
 
 
     private final String value;

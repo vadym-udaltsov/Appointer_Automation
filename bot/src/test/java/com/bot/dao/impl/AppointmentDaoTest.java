@@ -7,6 +7,7 @@ import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.Appointment;
 import com.commons.model.Department;
 import com.commons.utils.DateUtils;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -21,6 +22,12 @@ public class AppointmentDaoTest {
         Department department = new Department();
         department.setId("fc871929");
         List<Appointment> res = appointmentDao.getAppointmentsByDepartment(department, 1687528700, 1687528900);
+        System.out.println();
+    }
+
+//    @Test
+    public void shouldGetClientAppointments() {
+       appointmentDao.deleteClientAppointments(596819031);
         System.out.println();
     }
 

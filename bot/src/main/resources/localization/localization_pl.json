@@ -44,6 +44,14 @@
   "You have no days off for selected date": "Nie masz dni wolnych na wybraną datę",
   "You have no appointments for selected date": "Nie masz wizyt na wybraną datę",
   "You have no non working days for current and next months": "Nie masz dni wolnych w bieżącym i następnym miesiącu",
+
+  "Block user": "Zablokuj użytkownika",
+  "You have no clients": "Nie masz żadnych klientów",
+  "Select client": "Wybierz klienta",
+  "Select client from proposed": "Wybierz dostępnego klienta",
+  "Submit client blocking": "Potwierdź blokowanie klienta",
+  "Client was blocked": "Klient został zablokowany",
+
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",
   "Date: ${date}": "Data: ${date}",
@@ -58,6 +66,7 @@
   "Client: ${client}\n Phone: ${phone}": "Klient: ${client}\n Numer telefonu: ${phone}",
   "Department: ${department}": "Dział: ${department}",
   "Time from ${timeFrom} to ${timeTo}": "Czas od ${timeFrom} do ${timeTo}",
+
   "JANUARY": "Styczeń",
   "FEBRUARY": "Luty",
   "MARCH": "Marzec",

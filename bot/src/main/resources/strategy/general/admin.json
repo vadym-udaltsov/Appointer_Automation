@@ -80,11 +80,11 @@
                       "nested": [
                         {
                           "name": "dayOffView2",
-                          "key": "View",
+                          "key": "any",
                           "nested": [
                             {
                               "name": "dayOffView3",
-                              "key": "View",
+                              "key": "any",
                               "nested": [
 
                               ]
@@ -99,20 +99,37 @@
                       "nested": [
                         {
                           "name": "dayOffCancel2",
-                          "key": "Delete",
+                          "key": "any",
                           "nested": [
                             {
                               "name": "dayOffCancel3",
-                              "key": "Delete",
+                              "key": "any",
                               "nested": [
                                 {
                                   "name": "dayOffCancel4",
-                                  "key": "Delete",
+                                  "key": "any",
                                   "nested": []
                                 }
                               ]
                             }
                           ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "blockUser1",
+                  "key": "Block user",
+                  "nested": [
+                    {
+                      "name": "blockUser2",
+                      "key": "any",
+                      "nested": [
+                        {
+                          "name": "blockUser3",
+                          "key": "any",
+                          "nested": []
                         }
                       ]
                     }
