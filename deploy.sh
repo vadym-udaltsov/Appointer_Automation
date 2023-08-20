@@ -49,6 +49,8 @@ echo "creationStatus: ${creationStatus}"
 
 if [[ "CREATE_COMPLETE" == "${creationStatus}" ]]; then
     echo "Stack created."
+elif [[ "UPDATE_COMPLETE" == "${creationStatus}" ]]; then
+    echo "Stack updated."
 else
     echo "Stack failed with status: ${creationStatus}";
     exit 1;
