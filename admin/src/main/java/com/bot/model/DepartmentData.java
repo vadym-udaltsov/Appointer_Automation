@@ -16,4 +16,5 @@ public class DepartmentData {
     private List<DepartmentType> availableTypes;
     private List<TimeZoneDto> availableZones;
     private boolean isRegistered;
+    private boolean admin;
 }

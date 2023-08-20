@@ -249,6 +249,17 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
       TableName: customer
+  TestTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: email
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      TableName: testTable
   ContextTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:
