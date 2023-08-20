@@ -6,7 +6,6 @@ $(window).on('load', function() {
 
     var typeSelect = $("#update_depTypeSelect");
     var choose_depNameSelect = $("#department_NameSelect");
-
     var update_timeZoneSelect = $("#update_timeZoneSelect");
 
     hideElements();
@@ -16,6 +15,7 @@ $(window).on('load', function() {
     typeSelect.append('<option value="Loading...">Loading...</option>');
 
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
+
     window.dataLoaded;
     loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect);
 
@@ -82,12 +82,12 @@ $(window).on('load', function() {
      function hideElements() {
          document.getElementById('department_UpdatePopup').style.display = 'none';
          document.getElementById('department_CreatePopup').style.display = 'none';
-         document.getElementById('notRegisteredContainer').style.display = 'none';
          document.getElementById('service_createOpenBtn').disabled = true;
          document.getElementById('specialist_createOpenBtn').disabled = true;
          document.getElementById('admin_createOpenBtn').disabled = true;
      }
 });
+
 var email = localStorage.getItem('customer');
 
 function relocateToPage(depType) {
@@ -181,6 +181,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
     type: 'get',
     dataType: 'json',
     success: function (data) {
+        document.getElementById('spinner_loading').style.display = 'flex';
         choose_depNameSelect.empty();
         update_timeZoneSelect.empty();
         typeSelect.empty();
@@ -221,6 +222,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             createAdminBtn.disabled = true;
             window.dataLoaded = true;
             changeLanguage();
+            document.getElementById('spinner_loading').style.display = 'none';
         } else {
             document.getElementById('department_UpdatePopup').style.display = 'block';
             document.getElementById('department_CreatePopup').style.display = 'none';
@@ -252,6 +254,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
 
             var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
             loadDataForTables(selectedDepartmentData);
+            document.getElementById('spinner_loading').style.display = 'none';
         }
     },
     error: function (data) {

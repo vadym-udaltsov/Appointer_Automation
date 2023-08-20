@@ -171,14 +171,15 @@ button:focus {
 .sea_1, .sea_2 {
     position: absolute;
     left: -80px;
-    top: 310px;
+    top: 298px;
     opacity: 0.2;
     rotate: 120deg;
+    height: 600px;
 }
 
 .sea_2 {
-    left: 770px;
-    top: 710px;
+    left: 723px;
+    top: 300px;
     rotate: -130deg;
     width: 700px;
 }
@@ -193,7 +194,21 @@ button:focus {
 
 .group_2 {
     left: 1430px;
-    top: 440px;
+    top: 277px;
     opacity: 0.3;
-    rotate: 90deg;
+    rotate: 305deg;
+}
+
+.user-info {
+    position: relative;
+    bottom: -140px;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    transition: bottom 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
 }
