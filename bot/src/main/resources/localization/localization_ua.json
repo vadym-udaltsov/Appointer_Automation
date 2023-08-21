@@ -51,7 +51,13 @@
   "Select client": "Вибери клієнта",
   "Select client from proposed": "Вибери доступного клієнта",
   "Submit client blocking": "Підтверди блокування клієнта",
-  "Client was blocked": "Клиента заблоковано",
+  "Client was blocked": "Кліента заблоковано",
+
+  "Appointment by phone": "Запис по телефону",
+  "Cancel appointment by phone": "Скасувати запис по телефону",
+  "Enter client name using keyboard": "Введи ім'я кліента з клавіатури",
+  "Appointment by phone CANCELED:": "Запис по телефону СКАСОВАНО:",
+  "Appointment by phone CREATED:": "Запис по телефону СТВОРЕНО:",
 
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",

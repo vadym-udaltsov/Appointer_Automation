@@ -14,6 +14,8 @@ public interface IContextService {
 
     void create(Context context);
 
+    void delete(Context context);
+
     void updateContext(Context context);
 
     void updateLocale(long id, String departmentId, Language language);

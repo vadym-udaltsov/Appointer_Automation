@@ -78,7 +78,8 @@ public class AppointmentsAdminProcessor {
         messagesToLocalize.add(LString.builder().title(Constants.Messages.APP_FOR_DATE)
                 .placeholders(Map.of("date", date)).build());
         messagesToLocalize.add(LString.empty());
-        Map<String, List<Appointment>> specialistMap = appointments.stream().collect(Collectors.groupingBy(Appointment::getSpecialist));
+        Map<String, List<Appointment>> specialistMap = appointments.stream()
+                .collect(Collectors.groupingBy(Appointment::getSpecialist));
         Map<Long, Context> contextMap = contextService.getContextListByAppointments(appointments)
                 .stream()
                 .collect(Collectors.toMap(Context::getUserId, Function.identity()));
@@ -88,7 +89,8 @@ public class AppointmentsAdminProcessor {
             messagesToLocalize.add(LString.empty());
             for (Appointment appointment : entry.getValue()) {
                 Context context = contextMap.get(appointment.getUserId());
-                MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, context, MessageTemplate.APPOINTMENT_TIME_SERVICE_CLIENT);
+                MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, context,
+                        MessageTemplate.APPOINTMENT_TIME_SERVICE_CLIENT);
                 messagesToLocalize.add(LString.empty());
             }
         }

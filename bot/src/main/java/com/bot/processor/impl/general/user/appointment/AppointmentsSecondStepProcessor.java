@@ -100,6 +100,8 @@ public abstract class AppointmentsSecondStepProcessor {
     }
 
     protected void updateAvailableDates(Context context, Set<String> appointmentDays) {
+        appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.CURRENT_MONTH));
+        context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
     }
 
     protected void fillContextParams(List<Appointment> appointments, Context context) {

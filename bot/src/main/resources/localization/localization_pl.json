@@ -52,6 +52,12 @@
   "Submit client blocking": "Potwierdź blokowanie klienta",
   "Client was blocked": "Klient został zablokowany",
 
+  "Appointment by phone": "Umów wizytę telefonicznie",
+  "Cancel appointment by phone": "Anuluj wizytę telefonicznie",
+  "Enter client name using keyboard": "Wprowadź imię klienta za pomocą klawiatury",
+  "Appointment by phone CANCELED:": "Wizyta telefoniczna ANULOWANA:",
+  "Appointment by phone CREATED:": "Wizyta telefoniczna UTWORZONA:",
+
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",
   "Date: ${date}": "Data: ${date}",

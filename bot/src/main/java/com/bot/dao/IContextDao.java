@@ -11,6 +11,8 @@ public interface IContextDao {
 
     void saveContext(Context context);
 
+    void deleteContext(Context context);
+
     void updateContext(Context context);
 
     Context getContext(long userId, String departmentId);

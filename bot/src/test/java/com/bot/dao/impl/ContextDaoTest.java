@@ -32,13 +32,23 @@ class ContextDaoTest {
         System.out.println();
     }
 
-    //    @Test
+//    @Test
     public void shouldGetItemByIndex() {
-        Context context = contextDao.getAdminContext("+380505746182", "52c59292");
+        Context context = new Context();
+        context.setUserId(-4680956891992054288L);
+        context.setDepartmentId("7590843a");
+        contextDao.deleteItem(context);
+//        Context context = contextDao.getAdminContext("+380505746182", "52c59292");
         System.out.println();
     }
 
 //    @Test
+    public void shouldDeleteItem() {
+        Context context = contextDao.getAdminContext("+380505746182", "52c59292");
+        System.out.println();
+    }
+
+    //    @Test
     public void shouldGetItemsByIndex() {
         Department department = new Department();
         department.setId("b4031bb7");
@@ -89,13 +99,13 @@ class ContextDaoTest {
     void testContextList() {
         List<Appointment> appointments = new ArrayList<>();
         for (int i = 1; i < 120; i++) {
-            Appointment appointment = new Appointment("", 0L, i, "testDepartment", "", "", 0);
+            Appointment appointment = new Appointment("", 0L, i, "testDepartment", "", "", 0, false);
             appointments.add(appointment);
         }
-        Appointment appointment1 = new Appointment("", 0L, 2006806288L, "790b0de6", "", "", 0);
-        Appointment appointment2 = new Appointment("", 0L, 263609752L, "790b0de6", "", "", 0);
-        Appointment appointment3 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0);
-        Appointment appointment4 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0);
+        Appointment appointment1 = new Appointment("", 0L, 2006806288L, "790b0de6", "", "", 0, false);
+        Appointment appointment2 = new Appointment("", 0L, 263609752L, "790b0de6", "", "", 0, false);
+        Appointment appointment3 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0, false);
+        Appointment appointment4 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0, false);
         appointments.add(appointment1);
         appointments.add(appointment2);
         appointments.add(appointment3);

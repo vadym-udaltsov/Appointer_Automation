@@ -52,7 +52,8 @@ public class Constants {
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user"),
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user", "Appointment by phone",
+                    "Cancel appointment by phone"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment")
     );
 
@@ -69,6 +70,7 @@ public class Constants {
         public static final String SET_SPEC_ASK_SERVICE = "createApp3";
         public static final String SET_SERVICE_ASK_SLOT = "createApp4";
         public static final String CREATE_APPOINTMENT = "createApp5";
+        public static final String CREATE_APPOINTMENT6 = "createApp6";
 
         public static final String MY_APP_1 = "myApps1";
         public static final String MY_APP_2 = "myApps2";
@@ -77,6 +79,11 @@ public class Constants {
         public static final String CANCEL_APP2 = "cancelApp2";
         public static final String CANCEL_APP3 = "cancelApp3";
         public static final String CANCEL_APP4 = "cancelApp4";
+
+        public static final String CANCEL_PHONE_APP1 = "cancelPhoneApp1";
+        public static final String CANCEL_PHONE_APP2 = "cancelPhoneApp2";
+        public static final String CANCEL_PHONE_APP3 = "cancelPhoneApp3";
+        public static final String CANCEL_PHONE_APP4 = "cancelPhoneApp4";
 
         //admin
         public static final String START_APP_DASH = "startAppointmentsDash";
@@ -175,6 +182,7 @@ public class Constants {
         public static final String APP_FOR_DATE = "All appointments for ${date}";
         public static final String APP_SPECIALIST = "Specialist: ${specialist}";
         public static final String APP_CLIENT_INFO = "Client: ${client}\n Phone: ${phone}";
+        public static final String CLIENT_INFO = "Client: ${client}";
 
         public static final String INCORRECT_SPECIALIST = "Select specialist from proposed";
 

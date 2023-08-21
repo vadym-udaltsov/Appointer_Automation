@@ -34,6 +34,11 @@ public class ContextDao extends AbstractDao<Context> implements IContextDao {
     }
 
     @Override
+    public void deleteContext(Context context) {
+        deleteItem(context);
+    }
+
+    @Override
     public void updateContext(Context context) {
         overwriteItem(context);
     }

@@ -221,7 +221,8 @@ public class MessageUtils {
                 .build();
     }
 
-    public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment, Context userContext, MessageTemplate template) {
+    public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment,
+                                              Context userContext, MessageTemplate template) {
         String specialist = appointment.getSpecialist();
         String service = appointment.getService();
         int duration = appointment.getDuration();
@@ -238,9 +239,13 @@ public class MessageUtils {
         messagesMap.put("specialist", LString.builder().title("Specialist: ${specialist}").placeholders(Map.of("specialist", specialist)).build());
         if (userContext != null) {
             messagesMap.put("client", LString.builder().title("Client: ${client}").placeholders(Map.of("client", userContext.getName())).build());
-            messagesMap.put("clientPhone", LString.builder().title("Phone Number: ${phone}").placeholders(Map.of("phone", userContext.getPhoneNumber())).build());
-            Map<String, String> clientPhonePlaceholder = Map.of("client", userContext.getName(), "phone", userContext.getPhoneNumber());
-            messagesMap.put("clientWithPhone", LString.builder().title(Constants.Messages.APP_CLIENT_INFO).placeholders(clientPhonePlaceholder).build());
+            if (!"n/a".equals(userContext.getPhoneNumber())) {
+                messagesMap.put("clientPhone", LString.builder().title("Phone Number: ${phone}").placeholders(Map.of("phone", userContext.getPhoneNumber())).build());
+                Map<String, String> clientPhonePlaceholder = Map.of("client", userContext.getName(), "phone", userContext.getPhoneNumber());
+                messagesMap.put("clientWithPhone", LString.builder().title(Constants.Messages.APP_CLIENT_INFO).placeholders(clientPhonePlaceholder).build());
+            } else {
+                messagesMap.put("clientWithPhone", LString.builder().title(Constants.Messages.CLIENT_INFO).placeholders(Map.of("client", userContext.getName())).build());
+            }
         }
         template.buildMessages(messagesToLocalize, messagesMap);
     }
@@ -251,8 +256,12 @@ public class MessageUtils {
         adminMessages.add(LString.builder().title(Constants.STAR_SIGN).build());
         adminMessages.addAll(messagesToLocalize);
         adminMessages.add(LString.builder().title("Client: ${client}").placeholders(Map.of("client", context.getName())).build());
-        adminMessages.add(LString.builder().title("Phone Number: ${phone}").placeholders(Map.of("phone", context.getPhoneNumber())).build());
-        adminMessages.add(LString.builder().title("Department: ${department}").placeholders(Map.of("department", department.getName())).build());
+        if (!"n/a".equalsIgnoreCase(context.getPhoneNumber())) {
+            adminMessages.add(LString.builder().title("Phone Number: ${phone}").placeholders(Map.of("phone", context.getPhoneNumber())).build());
+        }
+        if (!"default".equalsIgnoreCase(department.getName())) {
+            adminMessages.add(LString.builder().title("Department: ${department}").placeholders(Map.of("department", department.getName())).build());
+        }
         return adminMessages;
     }
 }

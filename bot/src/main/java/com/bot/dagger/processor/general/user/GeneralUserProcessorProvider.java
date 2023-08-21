@@ -13,6 +13,7 @@ import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentF
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentFourthStepProcessor;
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentSecondStepProcessor;
+import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentSixStepProcessor;
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentThirdStepProcessor;
 import com.bot.processor.impl.general.user.appointment.view.ViewAppointmentsFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.view.ViewAppointmentsSecondStepProcessor;
@@ -134,6 +135,15 @@ public class GeneralUserProcessorProvider {
     public IProcessor createAppFifth(IContextService contextService, IAppointmentService appointmentService,
                                      ISendMessageService sendMessageService) {
         return new CreateAppointmentFifthStepProcessor(contextService, appointmentService, sendMessageService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CREATE_APP_6)
+    public IProcessor createAppSix(IContextService contextService, IAppointmentService appointmentService,
+                                     ISendMessageService sendMessageService) {
+        return new CreateAppointmentSixStepProcessor(contextService, appointmentService, sendMessageService);
     }
 
     //next step processor beans

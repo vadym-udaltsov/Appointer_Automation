@@ -15,5 +15,7 @@
   "Поглед": "View",
   "Цео дан": "Whole day",
   "Избриши": "Delete",
-  "Блокирати":"Block user"
+  "Блокирати": "Block user",
+  "Резервација путем телефона": "Appointment by phone",
+  "Откажите термин телефоном": "Cancel appointment by phone"
 }

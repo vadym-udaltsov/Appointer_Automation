@@ -1,6 +1,5 @@
 package com.bot.processor.impl.general.user.appointment.view;
 
-import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.LString;
 import com.bot.model.MessageHolder;
@@ -8,9 +7,10 @@ import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
-import com.commons.service.IAppointmentService;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
+import com.commons.model.Appointment;
+import com.commons.service.IAppointmentService;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;

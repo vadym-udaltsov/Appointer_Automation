@@ -83,10 +83,4 @@ public class CancelDayOffThirdStepProcessor extends AppointmentsSecondStepProces
         long periodsCount = appointment.getDuration() / 30;
         return dateTitle + ", " + Constants.Numbers.PERIOD_TITLES.get((int) periodsCount - 1);
     }
-
-    @Override
-    protected void updateAvailableDates(Context context, Set<String> appointmentDays) {
-        appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.CURRENT_MONTH));
-        context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
-    }
 }

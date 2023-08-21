@@ -22,6 +22,7 @@ public enum CommandType {
     CREATE_APP_3(Constants.Processors.SET_SPEC_ASK_SERVICE),
     CREATE_APP_4(Constants.Processors.SET_SERVICE_ASK_SLOT),
     CREATE_APP_5(Constants.Processors.CREATE_APPOINTMENT),
+    CREATE_APP_6(Constants.Processors.CREATE_APPOINTMENT6),
 
     MY_APP_1(Constants.Processors.MY_APP_1),
     MY_APP_2(Constants.Processors.MY_APP_2),
@@ -30,6 +31,11 @@ public enum CommandType {
     CANCEL_APP2(Constants.Processors.CANCEL_APP2),
     CANCEL_APP3(Constants.Processors.CANCEL_APP3),
     CANCEL_APP4(Constants.Processors.CANCEL_APP4),
+
+    CANCEL_PHONE_APP1(Constants.Processors.CANCEL_PHONE_APP1),
+    CANCEL_PHONE_APP2(Constants.Processors.CANCEL_PHONE_APP2),
+    CANCEL_PHONE_APP3(Constants.Processors.CANCEL_PHONE_APP3),
+    CANCEL_PHONE_APP4(Constants.Processors.CANCEL_PHONE_APP4),
 
     //admin
     START_APP_DASH(Constants.Processors.START_APP_DASH),

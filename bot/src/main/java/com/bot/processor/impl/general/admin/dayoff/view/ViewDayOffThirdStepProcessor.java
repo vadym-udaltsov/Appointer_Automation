@@ -79,10 +79,4 @@ public class ViewDayOffThirdStepProcessor extends AppointmentsSecondStepProcesso
         }
         return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));
     }
-
-    @Override
-    protected void updateAvailableDates(Context context, Set<String> appointmentDays) {
-        appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.CURRENT_MONTH));
-        context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
-    }
 }

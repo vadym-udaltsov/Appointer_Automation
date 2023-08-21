@@ -49,6 +49,11 @@ public class ContextService implements IContextService {
     }
 
     @Override
+    public void delete(Context context) {
+        contextDao.deleteContext(context);
+    }
+
+    @Override
     public List<Context> getContextListByAppointments(List<Appointment> appointments) {
         return contextDao.getContextListByAppointments(appointments);
     }

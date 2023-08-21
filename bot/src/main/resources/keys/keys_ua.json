@@ -15,5 +15,7 @@
   "Переглянути": "View",
   "Весь день": "Whole day",
   "Видалити": "Delete",
-  "Заблокувати":"Block user"
+  "Заблокувати": "Block user",
+  "Запис по телефону": "Appointment by phone",
+  "Скасувати запис по телефону": "Cancel appointment by phone"
 }

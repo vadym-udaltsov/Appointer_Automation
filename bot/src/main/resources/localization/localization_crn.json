@@ -52,6 +52,12 @@
   "Submit client blocking": "Потврдите блок клијента",
   "Client was blocked": "Клијент је блокиран",
 
+  "Appointment by phone": "Резервација путем телефона",
+  "Cancel appointment by phone": "Откажите термин телефоном",
+  "Enter client name using keyboard": "Унесите име клијента помоћу тастатуре",
+  "Appointment by phone CANCELED:": "Телефонски позив ОТКАЗАН:",
+  "Appointment by phone CREATED:": "Телефонска резервација КРЕИРАНА:",
+
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специјалиста: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Датум: ${date}",

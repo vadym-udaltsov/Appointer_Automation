@@ -10,6 +10,10 @@ import com.bot.processor.impl.general.admin.appointment.StartAppointmentsDashPro
 import com.bot.processor.impl.general.admin.block.BlockUserFirstStepProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserSecondStepProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserThirdStepProcessor;
+import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentFirstStepProcessor;
+import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentFourthStepProcessor;
+import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentSecondStepProcessor;
+import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentThirdStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFourthStepProcessor;
@@ -24,6 +28,7 @@ import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffFirstStepProce
 import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffSecondStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffThirdStepProcessor;
 import com.bot.service.IContextService;
+import com.bot.service.ISendMessageService;
 import com.commons.service.IAppointmentService;
 import dagger.Module;
 import dagger.Provides;
@@ -34,6 +39,40 @@ import javax.inject.Singleton;
 
 @Module
 public class GeneralAdminProcessorProvider {
+    //---------------------------------------- Cancel appointment ------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_PHONE_APP1)
+    public IProcessor cancelPhoneApp1(IAppointmentService appointmentService) {
+        return new CancelPhoneAppointmentFirstStepProcessor(appointmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_PHONE_APP2)
+    public IProcessor cancelPhoneApp2(IAppointmentService appointmentService, IContextService contextService) {
+        return new CancelPhoneAppointmentSecondStepProcessor(appointmentService, contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_PHONE_APP3)
+    public IProcessor cancelPhoneApp3() {
+        return new CancelPhoneAppointmentThirdStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CANCEL_PHONE_APP4)
+    public IProcessor cancelPhoneApp4(IAppointmentService appointmentService, ISendMessageService sendMessageService,
+                                      IContextService contextService) {
+        return new CancelPhoneAppointmentFourthStepProcessor(appointmentService, sendMessageService, contextService);
+    }
 
     //---------------------------------------- Block -------------------------------
 

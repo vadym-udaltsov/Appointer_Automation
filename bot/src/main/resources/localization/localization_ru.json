@@ -54,6 +54,12 @@
   "Submit client blocking": "Подтверди блокировку клиента",
   "Client was blocked": "Клиент заблокирован",
 
+  "Appointment by phone": "Запись по телефону",
+  "Cancel appointment by phone": "Отменить телефонную запись",
+  "Enter client name using keyboard": "Введи имя клиента с клавиатуры",
+  "Appointment by phone CANCELED:": "Запись по телефону ОТМЕНЕНА:",
+  "Appointment by phone CREATED:": "Запись по телефону СОЗДАНА:",
+
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",

@@ -4,8 +4,6 @@ import com.bot.model.Context;
 import com.bot.model.Language;
 import com.bot.service.IContextService;
 import org.mockito.Mockito;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +73,14 @@ public class TestUtils {
             "dayOffView1",
             "dayOffView2"));
 
+    public static List<String> VIEW_ADMIN_APP_3_NAV = new ArrayList<>(List.of(
+            "askLang",
+            "setLangAskContact",
+            "setContact",
+            "startDash",
+            "startAppointmentsDash",
+            "getAppointmentsByDateFirst"));
+
     public static BotLambda getBotLambda(IContextService mockedContextService) {
         BotLambda botLambda = new BotLambda();
         TelegramBot botExecutor = botLambda.getBotExecutor();
@@ -97,14 +103,14 @@ public class TestUtils {
         context.setLanguage(Language.RU);
         context.setPhoneNumber("+380505746182");
         context.setNavigation(navigation);
-        context.setDepartmentId("52c59292");
+        context.setDepartmentId("7590843a");
         context.setParams(params);
         return context;
     }
 
     public static Map<String, Object> getParams(String update) {
         Map<String, Object> params = new HashMap<>();
-        Map<String, Object> pathParameters = Map.of("id", "52c59292");
+        Map<String, Object> pathParameters = Map.of("id", "7590843a");
         params.put("pathParameters", pathParameters);
         params.put("body", update);
         return params;
