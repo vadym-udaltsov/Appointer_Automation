@@ -37,6 +37,13 @@ public enum CommandType {
     CANCEL_PHONE_APP3(Constants.Processors.CANCEL_PHONE_APP3),
     CANCEL_PHONE_APP4(Constants.Processors.CANCEL_PHONE_APP4),
 
+    PROFILE(Constants.Processors.PROFILE),
+
+    CHANGE_LANG1(Constants.Processors.CHANGE_LANG1),
+    CHANGE_LANG2(Constants.Processors.CHANGE_LANG2),
+
+    ADMIN_APP_DASH(Constants.Processors.ADMIN_APP_DASH),
+
     //admin
     START_APP_DASH(Constants.Processors.START_APP_DASH),
     ALL_APP_BY_DATE_1(Constants.Processors.GET_ALL_APP_BY_DATE_1),

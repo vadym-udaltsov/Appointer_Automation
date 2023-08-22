@@ -1,15 +1,17 @@
 package com.bot.processor.impl.general.admin.appointment;
 
 import com.bot.model.Context;
+import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.commons.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
-import com.commons.utils.DateUtils;
+import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
+import com.commons.service.IAppointmentService;
+import com.commons.utils.DateUtils;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AppointmentsTodayAndTomorrowProcessor extends AppointmentsAdminProcessor implements IProcessor {
+
     public AppointmentsTodayAndTomorrowProcessor(IAppointmentService appointmentService, IContextService contextService) {
         super(appointmentService, contextService);
     }
@@ -42,5 +45,9 @@ public class AppointmentsTodayAndTomorrowProcessor extends AppointmentsAdminProc
         context.getParams().put(Constants.MONTH, selectedMonth);
         request.setContext(context);
         return buildResponse(request);
+    }
+
+    @Override
+    protected void resetLocationToDashboard(Context context) {
     }
 }

@@ -1,20 +1,21 @@
 package com.bot.processor.impl.general.admin.appointment;
 
-import com.commons.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
+import com.bot.model.KeyBoardType;
 import com.bot.model.LString;
 import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
-import com.commons.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
-import com.commons.utils.DateUtils;
 import com.bot.util.MessageUtils;
+import com.commons.model.Appointment;
 import com.commons.model.Department;
+import com.commons.service.IAppointmentService;
+import com.commons.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -53,10 +54,13 @@ public class AppointmentsAdminProcessor {
         long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false);
         long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true);
 
-        ContextUtils.resetLocationToDashboard(context);
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
         String strategyKey = ContextUtils.getStrategyKey(context, department);
-        return getHolders(appointments, strategyKey);
+        return getHolders(appointments, strategyKey, context);
+    }
+
+    protected void resetLocationToDashboard(Context context) {
+        ContextUtils.resetLocationToDashboard(context);
     }
 
     protected Supplier<List<Appointment>> getAppointmentSupplier(ProcessRequest request, long start, long finish) {
@@ -67,12 +71,12 @@ public class AppointmentsAdminProcessor {
                 .collect(Collectors.toList());
     }
 
-    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey, Context context) {
         List<LString> messagesToLocalize = new ArrayList<>();
         if (appointments.size() == 0) {
-            messagesToLocalize.add(LString.builder().title(Constants.Messages.NO_APP_FOR_DATE).build());
-            messagesToLocalize.add(LString.builder().title(Constants.Messages.SELECT_ACTION).build());
-            return List.of(MessageUtils.buildDashboardHolder("", messagesToLocalize, strategyKey));
+            ContextUtils.resetLocationToStep(context, Constants.Processors.START_APP_DASH);
+            return MessageUtils.buildCustomKeyboardHolders(Constants.Messages.NO_APP_FOR_DATE, Constants.VIEW_ADMIN_APP_BUTTONS,
+                    KeyBoardType.THREE_ROW, true);
         }
         String date = getReportDate(appointments);
         messagesToLocalize.add(LString.builder().title(Constants.Messages.APP_FOR_DATE)
@@ -88,14 +92,22 @@ public class AppointmentsAdminProcessor {
                     .placeholders(Map.of("specialist", entry.getKey())).build());
             messagesToLocalize.add(LString.empty());
             for (Appointment appointment : entry.getValue()) {
-                Context context = contextMap.get(appointment.getUserId());
-                MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, context,
+                Context userContext = contextMap.get(appointment.getUserId());
+                MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, userContext,
                         MessageTemplate.APPOINTMENT_TIME_SERVICE_CLIENT);
                 messagesToLocalize.add(LString.empty());
             }
         }
+        ContextUtils.resetLocationToStep(context, Constants.Processors.START_APP_DASH);
         messagesToLocalize.add(LString.builder().title(Constants.Messages.SELECT_ACTION).build());
-        return List.of(MessageUtils.buildDashboardHolder("", messagesToLocalize, strategyKey));
+        return MessageUtils.buildCustomKeyboardHolders(Constants.Messages.NO_APP_FOR_DATE, Constants.VIEW_ADMIN_APP_BUTTONS,
+                KeyBoardType.THREE_ROW, messagesToLocalize, true);
+    }
+
+    protected List<MessageHolder> getNoAppointmentsMessage(Context context) {
+        ContextUtils.resetLocationToStep(context, Constants.Processors.START_APP_DASH);
+        return MessageUtils.buildCustomKeyboardHolders(Constants.Messages.NO_APP_FOR_DATE, Constants.VIEW_ADMIN_APP_BUTTONS,
+                KeyBoardType.THREE_ROW, true);
     }
 
     private List<MessageHolder> buildAnotherMonthResponse(ProcessRequest request, boolean isNextMonth) {

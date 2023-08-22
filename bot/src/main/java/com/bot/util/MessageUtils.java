@@ -40,11 +40,15 @@ import java.util.stream.Collectors;
 public class MessageUtils {
 
     public static MessageHolder getLanguageMessageHolder() {
+        return getLanguageMessageHolder("Select language");
+    }
+
+    public static MessageHolder getLanguageMessageHolder(String message) {
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.VERTICAL)
                 .buttonsMap(buildButtons(commonButtons(getFlags()), false))
                 .build();
-        return holder("Select language", ButtonsType.INLINE, request);
+        return holder(message, ButtonsType.INLINE, request);
     }
 
     public static MessageHolder getBotNotReadyMessageHolder() {
@@ -61,6 +65,16 @@ public class MessageUtils {
                 .buttonsMap(buildButtons(commonButtons(List.of("Try bot")), false))
                 .build();
         return holder("You are blocked", ButtonsType.KEYBOARD, request);
+    }
+
+    public static List<MessageHolder> buildProfileDashboard(String message) {
+        return buildCustomKeyboardHolders(message, Constants.PROFILE_BUTTONS,
+                KeyBoardType.TWO_ROW, true);
+    }
+
+    public static List<MessageHolder> buildAdminAppointmentsDashboard() {
+        return buildCustomKeyboardHolders("Select action", Constants.ADMIN_APPOINTMENT_BUTTONS,
+                KeyBoardType.TWO_ROW, true);
     }
 
     public static List<String> getFlags() {
@@ -129,6 +143,18 @@ public class MessageUtils {
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttonTitles), withCommon))
                 .build();
         response.add(MessageUtils.holder(message, ButtonsType.KEYBOARD, holderRequest));
+        return response;
+    }
+
+    public static List<MessageHolder> buildCustomKeyboardHolders(String message, List<String> buttonTitles,
+                                                                 KeyBoardType keyBoardType, List<LString> messageLines,
+                                                                 boolean withCommon) {
+        ArrayList<MessageHolder> response = new ArrayList<>();
+        BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
+                .type(keyBoardType)
+                .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttonTitles), withCommon))
+                .build();
+        response.add(MessageUtils.holder(message, ButtonsType.KEYBOARD, holderRequest, messageLines));
         return response;
     }
 

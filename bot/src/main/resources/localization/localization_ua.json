@@ -59,6 +59,12 @@
   "Appointment by phone CANCELED:": "Запис по телефону СКАСОВАНО:",
   "Appointment by phone CREATED:": "Запис по телефону СТВОРЕНО:",
 
+  "Profile": "Профіль",
+  "Language was changed": "Мову було змінено",
+  "Select language": "Вибери мову",
+  "Change language": "Змінити мову",
+  "Select language from available": "Вибери доступну мову",
+
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",

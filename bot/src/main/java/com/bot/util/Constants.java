@@ -44,6 +44,7 @@ public class Constants {
     public static final String AVAILABLE_SLOTS = "availableSlots";
     public static final String AVAILABLE_APPOINTMENTS = "availableAppointments";
     public static final String AVAILABLE_DURATIONS = "availableDurations";
+    public static final String AVAILABLE_BUTTONS = "availableButtons";
 
     public static final String NO_DAYS_OFF = "You have no non working days for current and next months";
 
@@ -51,10 +52,13 @@ public class Constants {
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
+    public static final List<String> PROFILE_BUTTONS = List.of("Change language");
+    public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
+    public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Cancel");
+
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user", "Appointment by phone",
-                    "Cancel appointment by phone"),
-            "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment")
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user", "Profile"),
+            "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment", "Profile")
     );
 
     public static class Processors {
@@ -112,6 +116,12 @@ public class Constants {
         public static final String BLOCK_USER1 = "blockUser1";
         public static final String BLOCK_USER2 = "blockUser2";
         public static final String BLOCK_USER3 = "blockUser3";
+
+        public static final String PROFILE = "profile";
+        public static final String CHANGE_LANG1 = "changeLanguage1";
+        public static final String CHANGE_LANG2 = "changeLanguage2";
+
+        public static final String ADMIN_APP_DASH = "appointments";
     }
 
     public static class Numbers {
@@ -178,7 +188,7 @@ public class Constants {
         public static final String SELECT_SPECIALIST = "Select specialist";
         public static final String INCORRECT_ACTION = "Select available option";
         public static final String INCORRECT_DATE = "Select available date";
-        public static final String NO_APP_FOR_DATE = "No appointments";
+        public static final String NO_APP_FOR_DATE = "You have no appointments for selected date";
         public static final String APP_FOR_DATE = "All appointments for ${date}";
         public static final String APP_SPECIALIST = "Specialist: ${specialist}";
         public static final String APP_CLIENT_INFO = "Client: ${client}\n Phone: ${phone}";

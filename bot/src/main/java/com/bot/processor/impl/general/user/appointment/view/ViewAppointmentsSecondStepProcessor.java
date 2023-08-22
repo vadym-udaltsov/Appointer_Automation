@@ -7,6 +7,7 @@ import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
+import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Appointment;
@@ -31,7 +32,7 @@ public class ViewAppointmentsSecondStepProcessor extends AppointmentsSecondStepP
     protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
         List<LString> messagesToLocalize = new ArrayList<>();
         if (appointments == null || appointments.size() == 0) {
-            messagesToLocalize.add(LString.builder().title("You have no appointments for selected date").build());
+            messagesToLocalize.add(LString.builder().title(Constants.Messages.NO_APP_FOR_DATE).build());
             return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));
         }
         messagesToLocalize.add(LString.builder().title("Your appointments:").build());

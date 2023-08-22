@@ -58,6 +58,12 @@
   "Appointment by phone CANCELED:": "Телефонски позив ОТКАЗАН:",
   "Appointment by phone CREATED:": "Телефонска резервација КРЕИРАНА:",
 
+  "Profile": "Профил",
+  "Language was changed": "Језик је промењен",
+  "Select language": "Изаберите свој језик",
+  "Change language": "Промени језик",
+  "Select language from available": "Изаберите доступни језик",
+
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специјалиста: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Датум: ${date}",

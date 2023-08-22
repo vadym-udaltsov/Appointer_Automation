@@ -15,29 +15,95 @@
               "key": "any",
               "nested": [
                 {
-                  "name": "startAppointmentsDash",
+                  "name": "appointments",
                   "key": "Appointments",
                   "nested": [
                     {
-                      "name": "getAppointmentsByDateFirst",
-                      "key": "By Date",
+                      "name": "startAppointmentsDash",
+                      "key": "View",
                       "nested": [
                         {
-                          "name": "getAppointmentsByDateSecond",
-                          "key": "any",
+                          "name": "getAppointmentsByDateFirst",
+                          "key": "By Date",
+                          "nested": [
+                            {
+                              "name": "getAppointmentsByDateSecond",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "getAppointmentsTodayTomorrow",
+                          "key": "Tomorrow",
+                          "nested": []
+                        },
+                        {
+                          "name": "getAppointmentsTodayTomorrow",
+                          "key": "Today",
                           "nested": []
                         }
                       ]
                     },
                     {
-                      "name": "getAppointmentsTodayTomorrow",
-                      "key": "Tomorrow",
-                      "nested": []
+                      "name": "createApp1",
+                      "key": "Create",
+                      "nested": [
+                        {
+                          "name": "createApp2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "createApp3",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "createApp4",
+                                  "key": "any",
+                                  "nested": [
+                                    {
+                                      "name": "createApp5",
+                                      "key": "any",
+                                      "nested": [
+                                        {
+                                          "name": "createApp6",
+                                          "key": "any",
+                                          "nested": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
-                      "name": "getAppointmentsTodayTomorrow",
-                      "key": "Today",
-                      "nested": []
+                      "name": "cancelPhoneApp1",
+                      "key": "Cancel",
+                      "nested": [
+                        {
+                          "name": "cancelPhoneApp2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "cancelPhoneApp3",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "cancelPhoneApp4",
+                                  "key": "any",
+                                  "nested": [
+
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 },
@@ -135,60 +201,28 @@
                   ]
                 },
                 {
-                  "name": "createApp1",
-                  "key": "Appointment by phone",
+                  "name": "profile",
+                  "key": "Profile",
                   "nested": [
                     {
-                      "name": "createApp2",
-                      "key": "any",
+                      "name": "changeLanguage1",
+                      "key": "Change language",
                       "nested": [
                         {
-                          "name": "createApp3",
+                          "name": "changeLanguage2",
                           "key": "any",
-                          "nested": [
-                            {
-                              "name": "createApp4",
-                              "key": "any",
-                              "nested": [
-                                {
-                                  "name": "createApp5",
-                                  "key": "any",
-                                  "nested": [
-                                    {
-                                      "name": "createApp6",
-                                      "key": "any",
-                                      "nested": []
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
+                          "nested": []
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "name": "cancelPhoneApp1",
-                  "key": "Cancel appointment by phone",
-                  "nested": [
+                    },
                     {
-                      "name": "cancelPhoneApp2",
-                      "key": "any",
+                      "name": "support1",
+                      "key": "Report a bug",
                       "nested": [
                         {
-                          "name": "cancelPhoneApp3",
+                          "name": "support2",
                           "key": "any",
-                          "nested": [
-                            {
-                              "name": "cancelPhoneApp4",
-                              "key": "any",
-                              "nested": [
-
-                              ]
-                            }
-                          ]
+                          "nested": []
                         }
                       ]
                     }

@@ -78,6 +78,34 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "name": "profile",
+                  "key": "Profile",
+                  "nested": [
+                    {
+                      "name": "changeLanguage1",
+                      "key": "Change language",
+                      "nested": [
+                        {
+                          "name": "changeLanguage2",
+                          "key": "any",
+                          "nested": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "support1",
+                      "key": "Report a bug",
+                      "nested": [
+                        {
+                          "name": "support2",
+                          "key": "any",
+                          "nested": []
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }

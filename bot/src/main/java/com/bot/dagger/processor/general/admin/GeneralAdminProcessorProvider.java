@@ -3,10 +3,11 @@ package com.bot.dagger.processor.general.admin;
 import com.bot.dagger.CommandKey;
 import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
+import com.bot.processor.impl.general.admin.appointment.StartAdminAppointmentDashProcessor;
 import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateFirstStepProcessor;
 import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateSecondStepProcessor;
 import com.bot.processor.impl.general.admin.appointment.AppointmentsTodayAndTomorrowProcessor;
-import com.bot.processor.impl.general.admin.appointment.StartAppointmentsDashProcessor;
+import com.bot.processor.impl.general.admin.appointment.ViewAppointmentsDashProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserFirstStepProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserSecondStepProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserThirdStepProcessor;
@@ -39,6 +40,17 @@ import javax.inject.Singleton;
 
 @Module
 public class GeneralAdminProcessorProvider {
+
+    //----------------------------------------Appointments -------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.ADMIN_APP_DASH)
+    public IProcessor adminAppDash() {
+        return new StartAdminAppointmentDashProcessor();
+    }
+
     //---------------------------------------- Cancel appointment ------------------
 
     @Provides
@@ -105,7 +117,7 @@ public class GeneralAdminProcessorProvider {
     @IntoMap
     @CommandKey(CommandType.START_APP_DASH)
     public IProcessor startAppointmentsDash(IAppointmentService appointmentService) {
-        return new StartAppointmentsDashProcessor();
+        return new ViewAppointmentsDashProcessor();
     }
 
     @Provides

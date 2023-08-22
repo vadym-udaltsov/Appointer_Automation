@@ -15,7 +15,9 @@
   "Просмотреть": "View",
   "Весь день": "Whole day",
   "Удалить": "Delete",
-  "Заблокировать":"Block user",
+  "Заблокировать": "Block user",
   "Запись по телефону": "Appointment by phone",
-  "Отменить телефонную запись": "Cancel appointment by phone"
+  "Отменить телефонную запись": "Cancel appointment by phone",
+  "Профиль": "Profile",
+  "Сменить язык": "Change language"
 }

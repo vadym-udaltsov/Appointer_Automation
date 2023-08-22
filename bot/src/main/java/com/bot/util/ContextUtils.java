@@ -73,6 +73,13 @@ public class ContextUtils {
                 Constants.Processors.SET_CONTACT, Constants.Processors.START_DASH));
     }
 
+    public static void resetLocationToStep(Context context, String step) {
+        context.setParams(Map.of());
+        List<String> navigation = context.getNavigation();
+        List<String> newNavigation = navigation.subList(0, navigation.indexOf(step) + 1);
+        context.setNavigation(newNavigation);
+    }
+
     public static String getStrategyKey(Context context, Department department) {
         DepartmentType departmentType = department.getType();
         Role role = getRole(context, department);
