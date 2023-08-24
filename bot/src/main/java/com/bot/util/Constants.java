@@ -54,7 +54,7 @@ public class Constants {
 
     public static final List<String> PROFILE_BUTTONS = List.of("Change language");
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
-    public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Cancel");
+    public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
             "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user", "Profile"),

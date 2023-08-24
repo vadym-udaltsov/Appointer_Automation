@@ -14,6 +14,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,10 +114,10 @@ public class KeyBoardUtils {
         int currentYear = currentDate.getYear();
         int today = currentDate.getDayOfMonth();
 
-        long endOfWorkingDay = DateUtils.getPointOfDay(currentMonth, today, department.getEndWork());
-        long now = DateUtils.now(department);
+        ZonedDateTime now = DateUtils.nowZoneDateTime(department);
+        int hourNow = now.getHour();
 
-        boolean todayIsFinished = now > endOfWorkingDay;
+        boolean todayIsFinished = hourNow >= department.getEndWork();
         Set<String> busyDays = request.getButtonsMap().keySet();
 
         if (isNextMonth) {

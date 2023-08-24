@@ -52,7 +52,7 @@ public class AbstractGetCalendarProcessor {
             throw new RuntimeException("Specialists list can not be empty");
         }
 
-        long startDate = DateUtils.now(department);
+        long startDate = DateUtils.nowZone(department);
         LocalDateTime endDateTime = LocalDate.now()
                 .atStartOfDay()
                 .with(TemporalAdjusters.lastDayOfMonth())
@@ -76,6 +76,10 @@ public class AbstractGetCalendarProcessor {
         List<String> busyDayTitles = allAppointments.isEmpty()
                 ? new ArrayList<>()
                 : defineBusyDayTitles(allAppointments, department, month.getValue(), selectedService);
+        String currentDayTitle = getCurrentDayBusyTitle(department, selectedService);
+        if (!"".equals(currentDayTitle)) {
+            busyDayTitles.add(currentDayTitle);
+        }
         BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
                 .buttonsMap(MessageUtils.buildButtons(List.of(), true))
@@ -92,6 +96,17 @@ public class AbstractGetCalendarProcessor {
                 .build();
         MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER, datePickerRequest);
         return List.of(commonButtonsHolder, datePicker);
+    }
+
+    private String getCurrentDayBusyTitle(Department department, String serviceName) {
+        long serviceDuration = getServiceDuration(department, serviceName);
+        ZonedDateTime now = DateUtils.nowZoneDateTime(department);
+        long finishDate = DateUtils.getPointOfDay(now.getMonthValue(), now.getDayOfMonth(), department.getEndWork());
+        long nowLong = DateUtils.nowZone(department);
+        if ((finishDate - nowLong) < serviceDuration) {
+            return String.valueOf(now.getDayOfMonth());
+        }
+        return "";
     }
 
     public List<String> defineBusyDayTitles(List<Appointment> allAppointments, Department department, int month,
@@ -162,6 +177,14 @@ public class AbstractGetCalendarProcessor {
 
     private boolean freeSlotsAvailable(List<Appointment> dailyAppointments, int dayOfMonth, Department department,
                                        int month, String serviceName) {
+        long serviceDuration = getServiceDuration(department, serviceName);
+        dailyAppointments.sort(Comparator.comparing(Appointment::getDate));
+        List<Long> freeSlots = getFreeSlots(dailyAppointments, department, dayOfMonth, month);
+        long finalServiceDuration = serviceDuration;
+        return freeSlots.stream().anyMatch(slot -> slot >= finalServiceDuration);
+    }
+
+    private long getServiceDuration(Department department, String serviceName) {
         long serviceDuration = 3600L;
         if (StringUtils.isNotBlank(serviceName)) {
             CustomerService service = department.getServices().stream()
@@ -170,15 +193,11 @@ public class AbstractGetCalendarProcessor {
                     .orElseThrow(() -> new RuntimeException("Service was not found: " + serviceName));
             serviceDuration = service.getDuration() * 60L;
         }
-        dailyAppointments.sort(Comparator.comparing(Appointment::getDate));
-        List<Long> freeSlots = getFreeSlots(dailyAppointments, department, dayOfMonth, month);
-        long finalServiceDuration = serviceDuration;
-        return freeSlots.stream().anyMatch(slot -> slot >= finalServiceDuration);
+        return serviceDuration;
     }
 
     private List<Long> getFreeSlots(List<Appointment> appointments, Department department, int dayOfMonth, int month) {
-        LocalDateTime now = LocalDateTime.now();
-        long nowLong = now.toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
+        long nowLong = DateUtils.nowZone(department);
         long finish = DateUtils.getPointOfDay(month, dayOfMonth, department.getEndWork());
         List<Long> result = new ArrayList<>();
         long currentPoint = DateUtils.getPointOfDay(month, dayOfMonth, department.getStartWork());

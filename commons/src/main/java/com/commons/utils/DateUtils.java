@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
@@ -27,6 +28,16 @@ public class DateUtils {
         return localDateTime.toEpochSecond(ZoneOffset.UTC);
     }
 
+    public static long getPointOfDay(int month, int dayOfMonth, int hourOfDay, int minute) {
+        LocalDateTime localDateTime = LocalDate.now()
+                .atStartOfDay()
+                .withMonth(month)
+                .withDayOfMonth(dayOfMonth)
+                .with(ChronoField.HOUR_OF_DAY, hourOfDay)
+                .with(ChronoField.MINUTE_OF_HOUR, minute);
+        return localDateTime.toEpochSecond(ZoneOffset.UTC);
+    }
+
     public static long getStartOrEndOfDay(int month, int dayOfMonth, boolean endOfDay) {
         LocalDateTime localDateTime = LocalDate.now()
                 .atStartOfDay()
@@ -36,8 +47,15 @@ public class DateUtils {
         return localDateTime.toEpochSecond(ZoneOffset.UTC);
     }
 
-    public static long now(Department department) {
-        return LocalDateTime.now().toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
+    public static long nowZone(Department department) {
+        ZoneId zone = ZoneId.of(department.getZone());
+        ZonedDateTime now = ZonedDateTime.now(zone);
+        return getPointOfDay(now.getMonthValue(), now.getDayOfMonth(), now.getHour(), now.getMinute());
+    }
+
+    public static ZonedDateTime nowZoneDateTime(Department department) {
+        ZoneId zone = ZoneId.of(department.getZone());
+        return ZonedDateTime.now(zone);
     }
 
     public static String getDayTitle(long date) {

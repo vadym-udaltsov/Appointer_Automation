@@ -3,10 +3,10 @@ package com.commons.service.impl;
 
 import com.commons.dao.IAppointmentDao;
 import com.commons.model.Appointment;
-import com.commons.model.FreeSlot;
-import com.commons.service.IAppointmentService;
 import com.commons.model.Department;
+import com.commons.model.FreeSlot;
 import com.commons.model.Specialist;
+import com.commons.service.IAppointmentService;
 import com.commons.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,7 +67,7 @@ public class AppointmentService implements IAppointmentService {
     public List<FreeSlot> getFreeSlotsBySpecialist(Department department, String specialist, int month, int dayNumber) {
         long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork());
         long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork());
-        long now = DateUtils.now(department);
+        long now = DateUtils.nowZone(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
         String specId = specialist + "::" + department.getId();
         List<Appointment> specAppointments = appointmentDao.getAppointmentsBySpecialist(specId, startDate, finishDate);
@@ -91,7 +91,7 @@ public class AppointmentService implements IAppointmentService {
     public Map<String, List<FreeSlot>> getFreeSlotsByDepartment(Department department, int month, int dayNumber) {
         long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork());
         long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork());
-        long now = DateUtils.now(department);
+        long now = DateUtils.nowZone(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
         List<Specialist> departmentSpecialists = department.getAvailableSpecialists();
         List<String> specialistNames = departmentSpecialists.stream().map(Specialist::getName).collect(Collectors.toList());

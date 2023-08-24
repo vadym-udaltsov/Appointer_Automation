@@ -32,7 +32,7 @@ public class AppointmentsTodayAndTomorrowProcessor extends AppointmentsAdminProc
         Context context = request.getContext();
         Message message = update.getMessage();
         Department department = request.getDepartment();
-        long currentDate = DateUtils.now(department);
+        long currentDate = DateUtils.nowZone(department);
         String textFromUpdate = MessageUtils.getTextFromUpdate(update);
         if (textFromUpdate.equals("Tomorrow")) {
             currentDate = currentDate + TimeUnit.DAYS.toSeconds(1);

@@ -82,7 +82,7 @@
                     },
                     {
                       "name": "cancelPhoneApp1",
-                      "key": "Cancel",
+                      "key": "Delete",
                       "nested": [
                         {
                           "name": "cancelPhoneApp2",
