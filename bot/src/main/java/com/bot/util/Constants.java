@@ -12,6 +12,7 @@ public class Constants {
 
     public static final String UNAVAILABLE_DATE = "❌";
     public static final String STAR_SIGN = "⭐⭐⭐⭐⭐";
+    public static final String LONE_STAR_SIGN = "⭐";
     public static final String EMPTY_DATE = "--";
     public static final String IGNORE = "ignore";
     public static final String SUBMIT = "Submit";
@@ -46,6 +47,8 @@ public class Constants {
     public static final String AVAILABLE_DURATIONS = "availableDurations";
     public static final String AVAILABLE_BUTTONS = "availableButtons";
 
+    public static final String TEXT_FOR_SUBMIT = "textForSubmit";
+
     public static final String NO_DAYS_OFF = "You have no non working days for current and next months";
 
     public static final String USER_APPOINTMENTS = "userAppointments";
@@ -57,7 +60,7 @@ public class Constants {
     public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user", "Profile"),
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user", "Profile", "Messaging"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment", "Profile")
     );
 
@@ -96,6 +99,10 @@ public class Constants {
         public static final String GET_ALL_APP_TODAY_TOMORROW = "getAppointmentsTodayTomorrow";
         public static final String GET_ALL_APPOINTMENTS_1 = "getAllAppointments";
         public static final String GET_ALL_APPOINTMENTS_2 = "getAllAppointmentsByDate";
+
+        public static final String MASS_MESSAGING_1 = "massMessaging1";
+        public static final String MASS_MESSAGING_2 = "massMessaging2";
+        public static final String MASS_MESSAGING_3 = "massMessaging3";
 
         public static final String DAY_OFF_START = "dayOffStart";
         public static final String DAY_OFF_CREATE1 = "dayOffCreate1";
@@ -185,6 +192,10 @@ public class Constants {
     public static class Messages {
         public static final String SHARE_CONTACT = "Please share your phone number";
         public static final String SELECT_ACTION = "Select action";
+        public static final String INPUT_MESSAGE = "Input message text";
+        public static final String SUBMIT_MESSAGE = "Submit message text:";
+        public static final String MASS_MESSAGE_HEADER = "⭐ Attention ⭐";
+        public static final String MESSAGES_SENT = "All messages sent to recipients";
         public static final String SELECT_SPECIALIST = "Select specialist";
         public static final String INCORRECT_ACTION = "Select available option";
         public static final String INCORRECT_DATE = "Select available date";

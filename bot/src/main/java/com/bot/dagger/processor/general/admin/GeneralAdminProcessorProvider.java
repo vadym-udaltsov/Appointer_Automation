@@ -1,6 +1,7 @@
 package com.bot.dagger.processor.general.admin;
 
 import com.bot.dagger.CommandKey;
+import com.bot.localization.ILocalizer;
 import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.admin.appointment.StartAdminAppointmentDashProcessor;
@@ -28,6 +29,9 @@ import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffThirdStepP
 import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffSecondStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffThirdStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.MassMessagingFirstStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.MassMessagingSecondStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.MassMessagingThirdStepProcessor;
 import com.bot.service.IContextService;
 import com.bot.service.ISendMessageService;
 import com.commons.service.IAppointmentService;
@@ -112,6 +116,8 @@ public class GeneralAdminProcessorProvider {
         return new BlockUserThirdStepProcessor(appointmentService, contextService);
     }
 
+    //---------------------------------------- Appointments -------------------------------
+
     @Provides
     @Singleton
     @IntoMap
@@ -142,6 +148,32 @@ public class GeneralAdminProcessorProvider {
     @CommandKey(CommandType.ALL_APP_TODAY_TOMORROW)
     public IProcessor getAppointmentsToday(IAppointmentService appointmentService, IContextService contextService) {
         return new AppointmentsTodayAndTomorrowProcessor(appointmentService, contextService);
+    }
+
+    //---------------------------------------- Messaging -------------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.MASS_MESSAGING_1)
+    public IProcessor getMassMessagingFirst() {
+        return new MassMessagingFirstStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.MASS_MESSAGING_2)
+    public IProcessor getMassMessagingSecond() {
+        return new MassMessagingSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.MASS_MESSAGING_3)
+    public IProcessor getMassMessagingThird(IContextService contextService, ISendMessageService sendMessageService) {
+        return new MassMessagingThirdStepProcessor(contextService, sendMessageService);
     }
 
     // --------------------Day off -----------------------

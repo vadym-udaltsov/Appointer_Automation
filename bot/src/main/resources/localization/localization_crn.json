@@ -52,6 +52,12 @@
   "Submit client blocking": "Потврдите блок клијента",
   "Client was blocked": "Клијент је блокиран",
 
+  "All messages sent to recipients": "Поруке су послате",
+  "Input message text": "Унесите своју поруку",
+  "Messaging": "Поруке",
+  "⭐ Attention ⭐": "⭐ Пажња ⭐",
+  "Submit message text:": "Потврдите текст поруке:",
+
   "Appointment by phone": "Резервација путем телефона",
   "Cancel appointment by phone": "Откажите термин телефоном",
   "Enter client name using keyboard": "Унесите име клијента помоћу тастатуре",

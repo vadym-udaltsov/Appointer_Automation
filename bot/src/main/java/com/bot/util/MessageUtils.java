@@ -290,4 +290,12 @@ public class MessageUtils {
         }
         return adminMessages;
     }
+
+    public static MessageHolder buildKeyboardHolder(String message, List<LString> messageLines, List<String> buttons) {
+        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.THREE_ROW)
+                .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttons), true))
+                .build();
+        return MessageUtils.holder(message, ButtonsType.KEYBOARD, request, messageLines);
+    }
 }

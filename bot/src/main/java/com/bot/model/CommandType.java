@@ -52,6 +52,10 @@ public enum CommandType {
     GET_ALL_APPOINTMENTS_1(Constants.Processors.GET_ALL_APPOINTMENTS_1),
     GET_ALL_APPOINTMENTS_2(Constants.Processors.GET_ALL_APPOINTMENTS_2),
 
+    MASS_MESSAGING_1(Constants.Processors.MASS_MESSAGING_1),
+    MASS_MESSAGING_2(Constants.Processors.MASS_MESSAGING_2),
+    MASS_MESSAGING_3(Constants.Processors.MASS_MESSAGING_3),
+
     DAY_OFF_START(Constants.Processors.DAY_OFF_START),
     DAY_OFF_CREATE1(Constants.Processors.DAY_OFF_CREATE1),
     DAY_OFF_CREATE2(Constants.Processors.DAY_OFF_CREATE2),

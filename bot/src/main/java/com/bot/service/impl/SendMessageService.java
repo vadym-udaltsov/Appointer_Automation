@@ -34,4 +34,12 @@ public class SendMessageService implements ISendMessageService {
             messageSender.sendMessage(department, message, String.valueOf(adminContext.getUserId()));
         });
     }
+
+    @Override
+    public void sendNotificationToUsers(List<LString> localizedMessages, List<Context> contextList, Department department) {
+        contextList.parallelStream().forEach(a -> {
+            String message = localizer.localizeMessage(localizedMessages, a);
+            messageSender.sendMessage(department, message, String.valueOf(a.getUserId()));
+        });
+    }
 }

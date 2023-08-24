@@ -52,6 +52,12 @@
   "Submit client blocking": "Potwierdź blokowanie klienta",
   "Client was blocked": "Klient został zablokowany",
 
+  "All messages sent to recipients": "Wiadomości wysłane",
+  "Input message text": "Wpisz swoją wiadomość",
+  "Messaging": "Wiadomości",
+  "⭐ Attention ⭐": "⭐ Uwaga ⭐",
+  "Submit message text:": "Potwierdź treść wiadomości:",
+
   "Appointment by phone": "Umów wizytę telefonicznie",
   "Cancel appointment by phone": "Anuluj wizytę telefonicznie",
   "Enter client name using keyboard": "Wprowadź imię klienta za pomocą klawiatury",

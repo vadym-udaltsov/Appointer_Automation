@@ -47,6 +47,12 @@
   "You have no appointments for selected date": "У тебя нет записей на выбраную дату",
   "You have no non working days for current and next months": "У тебя нет нерабочего времени на этот и следующий месяцы",
 
+  "All messages sent to recipients": "Сообщения отправлены",
+  "Input message text": "Введите текст сообщения",
+  "Messaging": "Сообщения",
+  "⭐ Attention ⭐": "⭐ Внимание ⭐",
+  "Submit message text:": "Подтвердите текст сообщения:",
+
   "You have no clients": "У тебя нет клиентов",
   "Select client": "Выбери клиента",
   "Select client from proposed": "Выбери доступного клиента",
