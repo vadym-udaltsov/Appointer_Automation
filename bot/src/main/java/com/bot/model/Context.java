@@ -59,6 +59,7 @@ public class Context extends DynamoDbEntity {
     private Language language;
 
     @DynamoDBAttribute(attributeName = NAVIGATION_FIELD)
+    @JsonProperty(NAVIGATION_FIELD)
     private List<String> navigation;
 
     @JsonProperty(PHONE_FIELD)
@@ -68,6 +69,7 @@ public class Context extends DynamoDbEntity {
 
     @DynamoDBAttribute(attributeName = PARAMS_FIELD)
     @DynamoDBTypeConverted(converter = MapObjectConverter.class)
+    @JsonProperty(PARAMS_FIELD)
     private Map<String, Object> params;
 
     @DynamoDBAttribute(attributeName = "name")

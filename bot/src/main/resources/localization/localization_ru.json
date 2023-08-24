@@ -7,7 +7,7 @@
   "All appointments for ${date}": "\uD83D\uDCC5 Все записи на ${date}:",
   "You have no appointments for current and next months": "Нет записей в текущем и следующем месяце",
 
-  "Block user": "Заблокировать",
+  "Block": "Заблокировать",
 
   "Create appointment": "Записаться",
   "My appointments": "Мои записи",
@@ -70,6 +70,12 @@
   "Select language": "Выбери язык",
   "Change language": "Сменить язык",
   "Select language from available": "Выбери доступный язык",
+
+  "Block user": "Заблокировать пользователя",
+  "Unblock user": "Разблокировать пользователя",
+  "You have no blocked clients": "У тебя нет заблокированных клиентов",
+  "Submit client unblocking": "Подтверди разблокировку клиента",
+  "Client was unblocked": "Клиент был разблокирован",
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",

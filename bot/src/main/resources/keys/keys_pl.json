@@ -15,10 +15,12 @@
   "Pogląd": "View",
   "Cały dzień": "Whole day",
   "Usuwać": "Delete",
-  "Zablokuj użytkownika": "Block user",
+  "Zablokuj": "Block",
   "Umów wizytę telefonicznie": "Appointment by phone",
   "Anuluj wizytę telefonicznie": "Cancel appointment by phone",
   "Profil": "Profile",
   "Zmień język": "Change language",
+  "Zablokować użytkownika": "Block user",
+  "Odblokuj użytkownika": "Unblock user",
   "Wiadomości": "Messaging"
 }

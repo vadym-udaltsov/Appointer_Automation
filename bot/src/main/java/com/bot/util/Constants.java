@@ -58,9 +58,10 @@ public class Constants {
     public static final List<String> PROFILE_BUTTONS = List.of("Change language");
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
     public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
+    public static final List<String> START_BLOCK_BUTTONS = List.of("Block user", "Unblock user");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block user", "Profile", "Messaging"),
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block", "Profile", "Messaging"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment", "Profile")
     );
 
@@ -120,6 +121,10 @@ public class Constants {
         public static final String DAY_OFF_CANCEL3 = "dayOffCancel3";
         public static final String DAY_OFF_CANCEL4 = "dayOffCancel4";
 
+        public static final String BLOCK_USER_DASH = "blockUserDash";
+        public static final String UNBLOCK_USER1 = "unBlockUser1";
+        public static final String UNBLOCK_USER2 = "unblockUser2";
+        public static final String UNBLOCK_USER3 = "unblockUser3";
         public static final String BLOCK_USER1 = "blockUser1";
         public static final String BLOCK_USER2 = "blockUser2";
         public static final String BLOCK_USER3 = "blockUser3";

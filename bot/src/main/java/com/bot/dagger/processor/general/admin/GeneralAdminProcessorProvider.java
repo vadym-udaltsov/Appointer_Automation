@@ -9,9 +9,13 @@ import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateFirstS
 import com.bot.processor.impl.general.admin.appointment.AppointmentsByDateSecondStepProcessor;
 import com.bot.processor.impl.general.admin.appointment.AppointmentsTodayAndTomorrowProcessor;
 import com.bot.processor.impl.general.admin.appointment.ViewAppointmentsDashProcessor;
+import com.bot.processor.impl.general.admin.block.BlockUserDashProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserFirstStepProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserSecondStepProcessor;
 import com.bot.processor.impl.general.admin.block.BlockUserThirdStepProcessor;
+import com.bot.processor.impl.general.admin.block.UnBlockUserThirdStepProcessor;
+import com.bot.processor.impl.general.admin.block.UnblockUserFirstStepProcessor;
+import com.bot.processor.impl.general.admin.block.UnblockUserSecondStepProcessor;
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentFirstStepProcessor;
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentFourthStepProcessor;
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentSecondStepProcessor;
@@ -91,6 +95,38 @@ public class GeneralAdminProcessorProvider {
     }
 
     //---------------------------------------- Block -------------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.BLOCK_USER_DASH)
+    public IProcessor blockUserDash() {
+        return new BlockUserDashProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.UNBLOCK_USER1)
+    public IProcessor unblockUser1(IContextService contextService) {
+        return new UnblockUserFirstStepProcessor(contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.UNBLOCK_USER2)
+    public IProcessor unblockUser2() {
+        return new UnblockUserSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.UNBLOCK_USER3)
+    public IProcessor unblockUser3(IContextService contextService) {
+        return new UnBlockUserThirdStepProcessor(contextService);
+    }
 
     @Provides
     @Singleton

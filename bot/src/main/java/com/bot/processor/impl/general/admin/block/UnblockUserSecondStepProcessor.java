@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 
-public class BlockUserSecondStepProcessor extends AbstractBlockUserSecondStepProcessor implements IProcessor {
+public class UnblockUserSecondStepProcessor extends AbstractBlockUserSecondStepProcessor implements IProcessor {
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
@@ -16,6 +16,6 @@ public class BlockUserSecondStepProcessor extends AbstractBlockUserSecondStepPro
 
     @Override
     protected String getSubmitMessage() {
-        return "Submit client blocking";
+        return "Submit client unblocking";
     }
 }

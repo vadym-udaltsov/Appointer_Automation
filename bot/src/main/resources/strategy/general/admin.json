@@ -96,7 +96,6 @@
                                   "name": "cancelPhoneApp4",
                                   "key": "any",
                                   "nested": [
-
                                   ]
                                 }
                               ]
@@ -201,17 +200,40 @@
                   ]
                 },
                 {
-                  "name": "blockUser1",
-                  "key": "Block user",
+                  "name": "blockUserDash",
+                  "key": "Block",
                   "nested": [
                     {
-                      "name": "blockUser2",
-                      "key": "any",
+                      "name": "blockUser1",
+                      "key": "Block user",
                       "nested": [
                         {
-                          "name": "blockUser3",
+                          "name": "blockUser2",
                           "key": "any",
-                          "nested": []
+                          "nested": [
+                            {
+                              "name": "blockUser3",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "unBlockUser1",
+                      "key": "Unblock user",
+                      "nested": [
+                        {
+                          "name": "unBlockUser2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "unBlockUser3",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
                         }
                       ]
                     }

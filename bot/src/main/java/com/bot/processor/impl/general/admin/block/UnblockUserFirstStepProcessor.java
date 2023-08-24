@@ -9,9 +9,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 
-public class BlockUserFirstStepProcessor extends AbstractBlockUserFirstStepProcessor implements IProcessor {
+public class UnblockUserFirstStepProcessor extends AbstractBlockUserFirstStepProcessor implements IProcessor {
 
-    public BlockUserFirstStepProcessor(IContextService contextService) {
+    public UnblockUserFirstStepProcessor(IContextService contextService) {
         super(contextService);
     }
 
@@ -22,11 +22,11 @@ public class BlockUserFirstStepProcessor extends AbstractBlockUserFirstStepProce
 
     @Override
     protected String getNoUsersMessage() {
-        return "You have no clients";
+        return "You have no blocked clients";
     }
 
     @Override
     protected void filterContexts(List<Context> userContexts) {
-        userContexts.removeIf(Context::isBlocked);
+        userContexts.removeIf(c -> !c.isBlocked());
     }
 }

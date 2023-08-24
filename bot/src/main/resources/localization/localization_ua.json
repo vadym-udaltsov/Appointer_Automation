@@ -46,13 +46,13 @@
   "You have no appointments for selected date": "Немає записів на выбрану дату",
   "You have no non working days for current and next months": "Немає неробочого часу на цей і наступний місяці",
 
+  "Block": "Заблокувати",
   "All messages sent to recipients": "Повідомлення відправлені",
   "Input message text": "Введіть текст повідомлення",
   "Messaging": "Повідомлення",
   "⭐ Attention ⭐": "⭐ Увага ⭐",
   "Submit message text:": "Підтвердіть текст повідомлення:",
 
-  "Block user": "Заблокувати",
   "You have no clients": "У тебе немає клієнтів",
   "Select client": "Вибери клієнта",
   "Select client from proposed": "Вибери доступного клієнта",
@@ -70,6 +70,12 @@
   "Select language": "Вибери мову",
   "Change language": "Змінити мову",
   "Select language from available": "Вибери доступну мову",
+
+  "Block user": "Заблокувати клієнта",
+  "Unblock user": "Розблокувати клієнта",
+  "You have no blocked clients": "У тебе немає заблокованих клієнтів",
+  "Submit client unblocking": "Підтверди розблокування клієнта",
+  "Client was unblocked": "Клієнта було розблоковано",
 
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",

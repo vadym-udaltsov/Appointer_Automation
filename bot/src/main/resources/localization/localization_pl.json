@@ -45,7 +45,7 @@
   "You have no appointments for selected date": "Nie masz wizyt na wybraną datę",
   "You have no non working days for current and next months": "Nie masz dni wolnych w bieżącym i następnym miesiącu",
 
-  "Block user": "Zablokuj użytkownika",
+  "Block": "Zablokuj",
   "You have no clients": "Nie masz żadnych klientów",
   "Select client": "Wybierz klienta",
   "Select client from proposed": "Wybierz dostępnego klienta",
@@ -69,6 +69,12 @@
   "Select language": "Wybierz język",
   "Change language": "Zmień język",
   "Select language from available": "Wybierz dostępny język",
+
+  "Block user": "Zablokować użytkownika",
+  "Unblock user": "Odblokuj użytkownika",
+  "You have no blocked clients": "Nie masz zablokowanych klientów",
+  "Submit client unblocking": "Potwierdź odblokowanie klienta",
+  "Client was unblocked": "Klient został odblokowany",
 
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",

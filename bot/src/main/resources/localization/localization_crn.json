@@ -45,7 +45,7 @@
   "You have no appointments for selected date": "Нема уноса за изабрани датум",
   "You have no non working days for current and next months": "Нема нерадног времена за овај и наредни месец",
 
-  "Block user": "Блокирати",
+  "Block": "Блокирати",
   "You have no clients": "Немате клијенте",
   "Select client": "Изаберите клијента",
   "Select client from proposed": "Изаберите доступног клијента",
@@ -69,6 +69,12 @@
   "Select language": "Изаберите свој језик",
   "Change language": "Промени језик",
   "Select language from available": "Изаберите доступни језик",
+
+  "Block user": "Блокирај корисника",
+  "Unblock user": "Деблокирај корисника",
+  "You have no blocked clients": "Немате блокиране клијенте",
+  "Submit client unblocking": "Потврдите откључавање клијента",
+  "Client was unblocked": "Клијент је откључан",
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специјалиста: ${specialist}",

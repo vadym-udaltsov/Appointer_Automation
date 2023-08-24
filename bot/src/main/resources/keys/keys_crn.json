@@ -15,10 +15,12 @@
   "Поглед": "View",
   "Цео дан": "Whole day",
   "Избриши": "Delete",
-  "Блокирати": "Block user",
+  "Блокирати": "Block",
   "Резервација путем телефона": "Appointment by phone",
   "Откажите термин телефоном": "Cancel appointment by phone",
   "Профил": "Profile",
   "Промени језик": "Change language",
+  "Блокирај корисника": "Block user",
+  "Деблокирај корисника": "Unblock user",
   "Поруке": "Messaging"
 }

@@ -15,10 +15,12 @@
   "Просмотреть": "View",
   "Весь день": "Whole day",
   "Удалить": "Delete",
-  "Заблокировать":"Block user",
-  "Сообщения": "Messaging",
+  "Заблокировать": "Block",
   "Запись по телефону": "Appointment by phone",
   "Отменить телефонную запись": "Cancel appointment by phone",
   "Профиль": "Profile",
-  "Сменить язык": "Change language"
+  "Сменить язык": "Change language",
+  "Сообщения": "Messaging",
+  "Заблокировать пользователя": "Block user",
+  "Разблокировать пользователя": "Unblock user"
 }

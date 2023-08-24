@@ -77,6 +77,11 @@ public class MessageUtils {
                 KeyBoardType.TWO_ROW, true);
     }
 
+    public static List<MessageHolder> buildStartBlockDashboard() {
+        return buildCustomKeyboardHolders("Select action", Constants.START_BLOCK_BUTTONS,
+                KeyBoardType.TWO_ROW, true);
+    }
+
     public static List<String> getFlags() {
         return Arrays.stream(Language.values())
                 .map(Language::getValue)

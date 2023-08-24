@@ -5,18 +5,14 @@ import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.service.IContextService;
-import com.commons.service.IAppointmentService;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 
-public class BlockUserThirdStepProcessor extends AbstractBlockUserThirdStepProcessor implements IProcessor {
+public class UnBlockUserThirdStepProcessor extends AbstractBlockUserThirdStepProcessor implements IProcessor {
 
-    private final IAppointmentService appointmentService;
-
-    public BlockUserThirdStepProcessor(IAppointmentService appointmentService, IContextService contextService) {
+    public UnBlockUserThirdStepProcessor(IContextService contextService) {
         super(contextService);
-        this.appointmentService = appointmentService;
     }
 
     @Override
@@ -26,13 +22,11 @@ public class BlockUserThirdStepProcessor extends AbstractBlockUserThirdStepProce
 
     @Override
     protected void executeContextAction(Context selectedContext) {
-        long userId = selectedContext.getUserId();
-        appointmentService.deleteAppointmentsByClientId(userId);
-        selectedContext.setBlocked(true);
+        selectedContext.setBlocked(false);
     }
 
     @Override
     protected String getSuccessMessage() {
-        return "Client was blocked";
+        return "Client was unblocked";
     }
 }
