@@ -108,7 +108,7 @@
                 },
                 {
                   "name": "massMessaging1",
-                  "key": "Messaging",
+                  "key": "Mailing",
                   "nested": [
                     {
                       "name": "massMessaging2",

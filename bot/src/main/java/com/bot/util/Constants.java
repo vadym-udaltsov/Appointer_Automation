@@ -61,7 +61,7 @@ public class Constants {
     public static final List<String> START_BLOCK_BUTTONS = List.of("Block user", "Unblock user");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block", "Profile", "Messaging"),
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block", "Mailing", "Profile"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment", "Profile")
     );
 

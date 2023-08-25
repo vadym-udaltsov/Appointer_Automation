@@ -13,7 +13,7 @@ public class DayOffStartProcessor implements IProcessor {
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
-        return MessageUtils.buildCustomKeyboardHolders("Select action", List.of("Create", "View", "Delete"),
+        return MessageUtils.buildCustomKeyboardHolders("Select action", List.of("View", "Create", "Delete"),
                 KeyBoardType.TWO_ROW, true);
     }
 }

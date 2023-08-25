@@ -300,7 +300,7 @@ public class MessageUtils {
 
     public static MessageHolder buildKeyboardHolder(String message, List<LString> messageLines, List<String> buttons) {
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()
-                .type(KeyBoardType.THREE_ROW)
+                .type(KeyBoardType.VERTICAL)
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttons), true))
                 .build();
         return MessageUtils.holder(message, ButtonsType.KEYBOARD, request, messageLines);
