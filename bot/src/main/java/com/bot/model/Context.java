@@ -39,6 +39,7 @@ public class Context extends DynamoDbEntity {
     public static final String NAVIGATION_FIELD = "n";
     public static final String PHONE_FIELD = "pn";
     public static final String BLOCKED_FIELD = "b";
+    public static final String CUSTOM_FIELD = "c";
     public static final String INDEX_NAME = "pn-did-index";
     public static final String DID_ID_INDEX = "did-id-index";
 
@@ -79,6 +80,10 @@ public class Context extends DynamoDbEntity {
     @JsonProperty(BLOCKED_FIELD)
     private boolean blocked;
 
+    @DynamoDBAttribute(attributeName = CUSTOM_FIELD)
+    @JsonProperty(CUSTOM_FIELD)
+    private boolean custom;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -96,6 +101,7 @@ public class Context extends DynamoDbEntity {
                 .withString(PHONE_FIELD, StringUtils.isBlank(phoneNumber) ? "n/a" : phoneNumber)
                 .withMap(PARAMS_FIELD, params == null ? new HashMap<>() : params)
                 .withBoolean(BLOCKED_FIELD, blocked)
+                .withBoolean(CUSTOM_FIELD, custom)
                 .withString("name", name == null ? "n/a" : name)
                 .withList("n", navigation == null ? List.of() : navigation);
     }

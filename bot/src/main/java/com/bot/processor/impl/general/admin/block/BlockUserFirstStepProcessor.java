@@ -27,6 +27,6 @@ public class BlockUserFirstStepProcessor extends AbstractBlockUserFirstStepProce
 
     @Override
     protected void filterContexts(List<Context> userContexts) {
-        userContexts.removeIf(Context::isBlocked);
+        userContexts.removeIf(uc -> uc.isBlocked() || uc.isCustom());
     }
 }

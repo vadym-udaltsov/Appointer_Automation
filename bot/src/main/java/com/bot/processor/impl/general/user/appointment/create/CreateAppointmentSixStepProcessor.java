@@ -40,6 +40,7 @@ public class CreateAppointmentSixStepProcessor extends BaseCreateAppointmentProc
         clientContext.setUserId(new Random().nextLong());
         clientContext.setName(client);
         clientContext.setPhoneNumber("n/a");
+        clientContext.setCustom(true);
         contextService.create(clientContext);
         appointment.setUserId(clientContext.getUserId());
         appointment.setPhoneOrder(true);

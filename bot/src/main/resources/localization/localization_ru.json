@@ -7,7 +7,7 @@
   "All appointments for ${date}": "\uD83D\uDCC5 Все записи на ${date}:",
   "You have no appointments for current and next months": "Нет записей в текущем и следующем месяце",
 
-  "Block": "Заблокировать",
+  "Block": "Блокировка",
 
   "Create appointment": "Записаться",
   "My appointments": "Мои записи",
