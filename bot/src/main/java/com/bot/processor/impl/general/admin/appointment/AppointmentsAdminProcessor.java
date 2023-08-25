@@ -125,7 +125,8 @@ public class AppointmentsAdminProcessor {
                         Constants.IS_NEXT_MONTH, isNextMonth,
                         Constants.USER_APPOINTMENTS, appointmentDays))
                 .build();
-        Month month = LocalDate.now().getMonth().plus(isNextMonth ? 1 : 0);
+        Month month = DateUtils.nowZoneDateTime(department).getMonth().plus(isNextMonth ? 1 : 0);
+//        Month month = LocalDate.now().getMonth().plus(isNextMonth ? 1 : 0);
         MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER_MY_APP, datePickerRequest);
         return List.of(datePicker);
     }

@@ -116,13 +116,15 @@ public class MessageUtils {
         return message.getContact();
     }
 
-    public static List<MessageHolder> buildDatePicker(Set<String> stringSet, String message, boolean isNextMonth) {
+    public static List<MessageHolder> buildDatePicker(Set<String> stringSet, String message, boolean isNextMonth,
+                                                      Department department) {
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
                 .params(Map.of(
                         Constants.IS_NEXT_MONTH, isNextMonth,
                         Constants.USER_APPOINTMENTS, stringSet))
                 .build();
-        Month month = LocalDate.now().getMonth();
+        Month month = DateUtils.nowZoneDateTime(department).getMonth();
+//        Month month = LocalDate.now().getMonth();
         MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER_MY_APP, datePickerRequest);
         BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)

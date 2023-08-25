@@ -59,7 +59,8 @@ public class AbstractGetCalendarProcessor {
                 .plusDays(1);
         long endDate = endDateTime.toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
 
-        Month month = LocalDate.now().getMonth();
+        Month month = DateUtils.nowZoneDateTime(department).getMonth();
+//        Month month = LocalDate.now().getMonth();
         if (isNextMonth) {
             startDate = endDate;
             endDate = endDateTime.plusMonths(1).toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));

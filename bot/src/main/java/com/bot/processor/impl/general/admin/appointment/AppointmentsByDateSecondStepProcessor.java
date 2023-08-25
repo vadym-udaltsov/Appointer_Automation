@@ -46,6 +46,6 @@ public class AppointmentsByDateSecondStepProcessor extends AppointmentsAdminProc
             return buildResponse(request);
         }
         ContextUtils.setPreviousStep(context);
-        return MessageUtils.buildDatePicker(appointmentsDates, Constants.Messages.INCORRECT_DATE, isNextMonth);
+        return MessageUtils.buildDatePicker(appointmentsDates, Constants.Messages.INCORRECT_DATE, isNextMonth, department);
     }
 }

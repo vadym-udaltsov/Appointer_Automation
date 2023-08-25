@@ -110,11 +110,11 @@ public class KeyBoardUtils {
         List<Integer> nonWorkingDays = department.getNonWorkingDays() == null ? List.of() : department.getNonWorkingDays();
 
         LocalDate currentDate = LocalDate.now();
-        int currentMonth = currentDate.getMonthValue();
-        int currentYear = currentDate.getYear();
-        int today = currentDate.getDayOfMonth();
-
         ZonedDateTime now = DateUtils.nowZoneDateTime(department);
+        int currentMonth = now.getMonthValue();
+        int currentYear = now.getYear();
+        int today = now.getDayOfMonth();
+
         int hourNow = now.getHour();
 
         boolean todayIsFinished = hourNow >= department.getEndWork();

@@ -48,9 +48,10 @@ public class AppointmentsFirstStepProcessor {
                 .collect(Collectors.toSet());
         appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.CURRENT_MONTH));
         context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
-        Month month = LocalDate.now().getMonth();
+        Month month = DateUtils.nowZoneDateTime(department).getMonth();
+//        Month month = LocalDate.now().getMonth();
         context.getParams().put(Constants.MONTH, month.getValue());
-        return MessageUtils.buildDatePicker(appointmentDays, Constants.Messages.INCORRECT_DATE, false);
+        return MessageUtils.buildDatePicker(appointmentDays, Constants.Messages.INCORRECT_DATE, false, department);
     }
 
     protected String getNoAppointmentsMessage() {

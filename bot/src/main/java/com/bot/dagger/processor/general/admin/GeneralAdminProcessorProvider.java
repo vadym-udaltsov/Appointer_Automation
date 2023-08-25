@@ -1,7 +1,6 @@
 package com.bot.dagger.processor.general.admin;
 
 import com.bot.dagger.CommandKey;
-import com.bot.localization.ILocalizer;
 import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.admin.appointment.StartAdminAppointmentDashProcessor;
