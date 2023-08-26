@@ -1,10 +1,8 @@
 package com.bot.service;
 
-import java.io.UnsupportedEncodingException;
+import com.commons.model.SetWebHookResult;
 
 public interface IBotService {
 
-    String registerNewBot(String newBotName) throws UnsupportedEncodingException;
-
-    void deleteBot(String botName);
+    SetWebHookResult registerNewWebHook(String botToken, String departmentId);
 }

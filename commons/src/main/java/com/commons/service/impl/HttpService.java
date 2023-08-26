@@ -28,12 +28,8 @@ public class HttpService implements IHttpService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             String body = response.body();
             return JsonUtils.parseStringToObject(body, type);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Http request failed");
         }
-
-        return null;
     }
 }

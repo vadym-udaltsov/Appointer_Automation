@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,6 +24,19 @@ public enum TimeZone {
 //
     private final String id;
     private final String title;
+
+    public static void validateZoneTitle(String title) {
+        System.out.println("Searching zone for title -------------------------------- " + title);
+        for (TimeZone value : values()) {
+            if (value.getId().equals(title)) {
+                return;
+            }
+        }
+        throw new RuntimeException("Time zone not found for title: " + title);
+//        if (Arrays.stream(values()).noneMatch(z -> z.getId().equals(title))) {
+//            throw new RuntimeException("Time zone not found for title: " + title);
+//        }
+    }
 
     public static List<TimeZoneDto> buildDtos() {
         List<TimeZoneDto> dtos = new ArrayList<>();
