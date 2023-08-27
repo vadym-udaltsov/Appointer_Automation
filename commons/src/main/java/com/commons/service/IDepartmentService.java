@@ -16,6 +16,8 @@ public interface IDepartmentService {
 
     boolean updateDepartment(Department department);
 
+    void updateToken(String departmentName, String customer, String token);
+
     List<Department> getCustomerDepartments(String customer);
 
     Department getDepartmentById(String departmentId);

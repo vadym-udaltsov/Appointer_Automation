@@ -71,12 +71,16 @@ public class DepartmentController {
 
     @PutMapping()
     public ResponseEntity<SimpleResponse> updateWebhook(@RequestBody UpdateWebhookRequest request) {
-        String departmentId = request.getDepartmentId();
-        SetWebHookResult result = botService.registerNewWebHook(request.getBotToken(), departmentId);
+        log.info("Got request for webhook update. Request: {}", JsonUtils.convertObjectToString(request));
+        String departmentName = request.getDepartmentName();
+        String customer = request.getEmail();
+        String botToken = request.getBotToken();
+        SetWebHookResult result = botService.registerNewWebHook(botToken, request.getDepartmentId());
         if (!result.isOk()) {
             return new ResponseEntity<>(SimpleResponse.builder().body("Failed to create webhook").build(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        departmentService.updateToken(departmentName, customer, botToken);
         return new ResponseEntity<>(SimpleResponse.builder().body("Webhook updated").build(),
                 HttpStatus.OK);
     }
@@ -88,7 +92,8 @@ public class DepartmentController {
         String departmentTypeName = request.getType();
         Customer customer = customerService.getCustomerByEmail(email);
         if (customer == null) {
-            throw new RuntimeException("Customer not found for email: " + email);
+            return new ResponseEntity<>(SimpleResponse.builder().body("Failed to find customer").build(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         String zone = request.getZone();
         TimeZone.validateZoneTitle(zone);

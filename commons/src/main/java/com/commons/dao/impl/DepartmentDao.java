@@ -166,6 +166,22 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     }
 
     @Override
+    public void updateToken(String departmentName, String customer, String token) {
+        Map<String, AttributeValueUpdate> updates = new HashMap<>();
+        AttributeValueUpdate tokenPar = new AttributeValueUpdate(new AttributeValue().withS(token), AttributeAction.PUT);
+        updates.put("tn", tokenPar);
+
+        UpdateItemRequest request = new UpdateItemRequest()
+                .withTableName(Department.TABLE_NAME)
+                .withKey(Map.of(
+                        "c", new AttributeValue(customer),
+                        "n", new AttributeValue(departmentName)))
+                .withAttributeUpdates(updates);
+
+        updateItem(request);
+    }
+
+    @Override
     public boolean updateDepartment(Department department) {
         Map<String, AttributeValueUpdate> updates = new HashMap<>();
         AttributeValueUpdate startWork = new AttributeValueUpdate(

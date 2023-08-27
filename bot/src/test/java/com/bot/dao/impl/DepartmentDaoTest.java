@@ -29,6 +29,11 @@ public class DepartmentDaoTest {
     }
 
 //    @Test
+    void shouldUpdateToken() {
+        departmentDao.updateToken("My massage in Bar", "udalcov@ukr.net", "test token");
+    }
+
+//    @Test
     public void shouldAddNewAdmin() {
         AdminRequest request = new AdminRequest();
         request.setDepartmentName("Default");

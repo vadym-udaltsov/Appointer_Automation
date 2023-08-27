@@ -17,6 +17,8 @@ public interface IDepartmentDao {
 
     boolean updateDepartment(Department department);
 
+    void updateToken(String departmentName, String customer, String token);
+
     Department getDepartmentById(String departmentId);
 
     List<Department> findAllByQuery(QuerySpec querySpec);

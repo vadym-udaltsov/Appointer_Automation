@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateWebhookRequest {
 
+    private String email;
+    private String departmentName;
     private String departmentId;
     private String botToken;
 }

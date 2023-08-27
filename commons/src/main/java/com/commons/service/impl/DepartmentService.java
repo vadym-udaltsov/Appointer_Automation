@@ -32,6 +32,11 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
+    public void updateToken(String departmentName, String customer, String token) {
+        departmentDao.updateToken(departmentName, customer, token);
+    }
+
+    @Override
     public void updateSpecialist(UpdateSpecialistRequest request) {
         departmentDao.updateSpecialist(request);
     }
