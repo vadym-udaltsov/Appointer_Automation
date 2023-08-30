@@ -44,37 +44,45 @@
   "You have no days off for selected date": "Nie masz dni wolnych na wybraną datę",
   "You have no appointments for selected date": "Nie masz wizyt na wybraną datę",
   "You have no non working days for current and next months": "Nie masz dni wolnych w bieżącym i następnym miesiącu",
-
   "Block": "Zablokuj",
   "You have no clients": "Nie masz żadnych klientów",
   "Select client": "Wybierz klienta",
   "Select client from proposed": "Wybierz dostępnego klienta",
   "Submit client blocking": "Potwierdź blokowanie klienta",
   "Client was blocked": "Klient został zablokowany",
-
   "All messages sent to recipients": "Wiadomości wysłane",
   "Input message text": "Wpisz swoją wiadomość",
   "Mailing": "Bloking",
   "⭐ Attention ⭐": "⭐ Uwaga ⭐",
   "Submit message text:": "Potwierdź treść wiadomości:",
-
   "Appointment by phone": "Umów wizytę telefonicznie",
   "Cancel appointment by phone": "Anuluj wizytę telefonicznie",
   "Enter client name using keyboard": "Wprowadź imię klienta za pomocą klawiatury",
   "Appointment by phone CANCELED:": "Wizyta telefoniczna ANULOWANA:",
   "Appointment by phone CREATED:": "Wizyta telefoniczna UTWORZONA:",
-
   "Profile": "Profil",
   "Language was changed": "Zmieniono język",
   "Select language": "Wybierz język",
   "Change language": "Zmień język",
   "Select language from available": "Wybierz dostępny język",
-
   "Block user": "Zablokować użytkownika",
   "Unblock user": "Odblokuj użytkownika",
   "You have no blocked clients": "Nie masz zablokowanych klientów",
   "Submit client unblocking": "Potwierdź odblokowanie klienta",
   "Client was unblocked": "Klient został odblokowany",
+
+  "Period": "Okres",
+  "Daily": "Dzień",
+
+  "Select start date of period": "Wybierz datę rozpoczęcia",
+  "Select end date of period": "Wybierz datę zakończenia",
+  "Finish date should be after start date\nSelect available date": "Data zakończenia musi być późniejsza od daty rozpoczęcia",
+  "Day off period was created": "Utworzono okres wakacyjny",
+  "Your appointment was cancelled": "Twój wpis został anulowany",
+  "Cancelled appointments made by bot.": "Anulowane wpisy dokonane przez bota",
+  "Cancelled appointments made by phone.": "Anulowane wpisy dokonane telefonicznie",
+  "You can send the reason of cancelling appointments?\nType on keyboard": "\nWyślij wiadomość z powodem anulowania?\nWpisz na klawiaturze",
+
 
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",
@@ -90,7 +98,6 @@
   "Client: ${client}\n Phone: ${phone}": "Klient: ${client}\n Numer telefonu: ${phone}",
   "Department: ${department}": "Dział: ${department}",
   "Time from ${timeFrom} to ${timeTo}": "Czas od ${timeFrom} do ${timeTo}",
-
   "JANUARY": "Styczeń",
   "FEBRUARY": "Luty",
   "MARCH": "Marzec",
@@ -108,7 +115,6 @@
   "Tomorrow": "Jutro",
   "tomorrow": "jutro",
   "By Date": "Według daty",
-
   "Mon": "Pn",
   "Tue": "Wt",
   "Wed": "Śr",

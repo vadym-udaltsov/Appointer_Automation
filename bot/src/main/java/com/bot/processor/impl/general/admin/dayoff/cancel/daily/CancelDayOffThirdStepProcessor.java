@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.cancel;
+package com.bot.processor.impl.general.admin.dayoff.cancel.daily;
 
 import com.commons.model.Appointment;
 import com.bot.model.Context;
@@ -7,6 +7,7 @@ import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
+import com.commons.model.Department;
 import com.commons.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
@@ -44,7 +45,7 @@ public class CancelDayOffThirdStepProcessor extends AppointmentsSecondStepProces
                     KeyBoardType.VERTICAL, true);
         }
         if (!availableDates.contains(selectedDay)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             String selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
             MessageUtils.setTextToUpdate(update, selectedSpecialist);
             return previousProcessor.processRequest(request);
@@ -56,30 +57,34 @@ public class CancelDayOffThirdStepProcessor extends AppointmentsSecondStepProces
     @Override
     protected Supplier<List<Appointment>> getAppointmentSupplier(ProcessRequest request, long start, long finish) {
         Context context = request.getContext();
+        Department department = request.getDepartment();
         String selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
         return () -> {
-            List<Appointment> dayOffs = appointmentService.getAppointmentsBySpecialist(request.getDepartment(),
+            List<Appointment> dayOffs = appointmentService.getAppointmentsBySpecialist(department,
                             selectedSpecialist, start, finish).stream()
                     .filter(a -> Constants.DAY_OFF.equals(a.getService()))
                     .collect(Collectors.toList());
-            dayOffs.forEach(a -> context.getParams().put(getDayOffTitle(a), JsonUtils.convertObjectToString(a)));
-            List<String> titles = dayOffs.stream().map(this::getDayOffTitle).collect(Collectors.toList());
+            dayOffs.forEach(a -> context.getParams().put(getDayOffTitle(a, department), JsonUtils.convertObjectToString(a)));
+            List<String> titles = dayOffs.stream()
+                    .map(dof -> getDayOffTitle(dof, department))
+                    .collect(Collectors.toList());
             context.getParams().put(Constants.AVAILABLE_APPOINTMENTS, titles);
             return dayOffs;
         };
     }
 
     @Override
-    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
-        List<String> dayOffTitles = appointments.stream().map(this::getDayOffTitle)
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey, Department department) {
+        List<String> dayOffTitles = appointments.stream()
+                .map(dof -> getDayOffTitle(dof, department))
                 .collect(Collectors.toList());
         return MessageUtils.buildCustomKeyboardHolders("Select day off period", dayOffTitles,
                 KeyBoardType.VERTICAL, true);
     }
 
-    private String getDayOffTitle(Appointment appointment) {
+    private String getDayOffTitle(Appointment appointment, Department department) {
         long date = appointment.getDate();
-        String dateTitle = DateUtils.getDateTitle(date);
+        String dateTitle = DateUtils.getDateTitle(date, department);
         long periodsCount = appointment.getDuration() / 30;
         return dateTitle + ", " + Constants.Numbers.PERIOD_TITLES.get((int) periodsCount - 1);
     }

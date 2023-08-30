@@ -8,6 +8,7 @@ import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.AppointmentsSecondStepProcessor;
+import com.commons.model.Department;
 import com.commons.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.commons.utils.DateUtils;
@@ -32,11 +33,11 @@ public class CancelAppointmentSecondStepProcessor extends AppointmentsSecondStep
     }
 
     @Override
-    protected void fillContextParams(List<Appointment> appointments, Context context) {
+    protected void fillContextParams(List<Appointment> appointments, Context context, Department department) {
         Map<String, Object> params = context.getParams();
         List<String> availableTitles = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            String title = getAppointmentButtonTitle(appointment);
+            String title = getAppointmentButtonTitle(appointment, department);
             params.put(title, JsonUtils.convertObjectToString(appointment));
             availableTitles.add(title);
         }
@@ -44,16 +45,18 @@ public class CancelAppointmentSecondStepProcessor extends AppointmentsSecondStep
     }
 
     @Override
-    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
-        List<String> buttons = appointments.stream().map(this::getAppointmentButtonTitle).collect(Collectors.toList());
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey, Department department) {
+        List<String> buttons = appointments.stream()
+                .map(a -> getAppointmentButtonTitle(a, department))
+                .collect(Collectors.toList());
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(buttons);
         return List.of(MessageUtils.holder("Select appointment", ButtonsType.KEYBOARD, holderRequest));
     }
 
-    private String getAppointmentButtonTitle(Appointment appointment) {
+    private String getAppointmentButtonTitle(Appointment appointment, Department department) {
         StringBuilder builder = new StringBuilder();
         long date = appointment.getDate();
-        String dateTitle = DateUtils.getDateTitle(date);
+        String dateTitle = DateUtils.getDateTitle(date, department);
         String time = dateTitle.split(",")[1];
         String serviceName = appointment.getService();
         return builder.append(time).append(" ").append(serviceName).toString();

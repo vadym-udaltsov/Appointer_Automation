@@ -20,7 +20,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class CreateAppointmentFifthStepProcessor extends BaseCreateAppointmentProcessor implements IProcessor {
@@ -42,7 +43,7 @@ public class CreateAppointmentFifthStepProcessor extends BaseCreateAppointmentPr
         String timeString = MessageUtils.getTextFromUpdate(update);
         List<String> availableSlots = (List<String>) context.getParams().get(Constants.AVAILABLE_SLOT_TITLES);
         if (!availableSlots.contains(timeString)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return MessageUtils.buildCustomKeyboardHolders("Select time from proposed", availableSlots,
                     KeyBoardType.FOUR_ROW, true);
         }
@@ -51,7 +52,7 @@ public class CreateAppointmentFifthStepProcessor extends BaseCreateAppointmentPr
         int hour = Integer.parseInt(timeParts[0]);
         int minute = Integer.parseInt(timeParts[1]);
         LocalDateTime localDateTime = LocalDateTime.of(year, month, Integer.parseInt(day), hour, minute);
-        long appointmentDate = localDateTime.toEpochSecond(ZoneOffset.UTC);
+        long appointmentDate = ZonedDateTime.of(localDateTime, ZoneId.of(department.getZone())).toEpochSecond();
         CustomerService selectedService = department.getServices().stream()
                 .filter(s -> serviceName.equals(s.getName()))
                 .findFirst()

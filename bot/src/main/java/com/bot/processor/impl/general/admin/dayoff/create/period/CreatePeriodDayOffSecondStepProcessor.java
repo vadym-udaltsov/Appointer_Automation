@@ -1,31 +1,26 @@
-package com.bot.processor.impl.general.admin.dayoff.create;
+package com.bot.processor.impl.general.admin.dayoff.create.period;
 
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
-import com.bot.model.DatePickerRequest;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.bot.processor.impl.general.user.appointment.create.AbstractGetCalendarProcessor;
-import com.commons.service.IAppointmentService;
+import com.bot.processor.impl.general.admin.dayoff.AbstractGetCalendarPeriodDayOff;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
-import com.commons.utils.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
+import com.commons.utils.DateUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CreateDayOffSecondStepProcessor extends AbstractGetCalendarProcessor implements IProcessor {
-
-    public CreateDayOffSecondStepProcessor(IAppointmentService appointmentService) {
-        super(appointmentService);
-    }
+public class CreatePeriodDayOffSecondStepProcessor extends AbstractGetCalendarPeriodDayOff implements IProcessor {
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
@@ -38,25 +33,16 @@ public class CreateDayOffSecondStepProcessor extends AbstractGetCalendarProcesso
                 .map(Specialist::getName)
                 .collect(Collectors.toList());
         if (!specialistNames.contains(selectedSpecialist) && !Constants.BACK.equals(selectedSpecialist)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(specialistNames);
             return List.of(MessageUtils.holder(Constants.Messages.INCORRECT_SPECIALIST, ButtonsType.KEYBOARD, holderRequest));
         }
+        context.getParams().put(Constants.SELECTED_SPEC, selectedSpecialist);
 
-        if (Constants.BACK.equals(selectedSpecialist)) {
-            selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
-        }
+        ZonedDateTime dateTime = DateUtils.nowZoneDateTime(department);
+        int month = dateTime.getMonth().getValue();
+        int year = dateTime.getYear();
 
-        int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
-        context.getParams().put(Constants.MONTH, numberOfCurrentMonth);
-        ContextUtils.setStringParameter(context, Constants.SELECTED_SPEC, selectedSpecialist);
-        DatePickerRequest datePickerRequest = DatePickerRequest.builder()
-                .department(department)
-                .isNextMonth(false)
-                .message("")
-                .selectedSpecialist(selectedSpecialist)
-                .context(context)
-                .build();
-        return buildResponse(datePickerRequest);
+        return buildResponse(department, context, month, Constants.Messages.SELECT_START_DATE, year);
     }
 }

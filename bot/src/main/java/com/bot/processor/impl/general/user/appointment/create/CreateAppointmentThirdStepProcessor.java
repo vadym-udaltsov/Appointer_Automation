@@ -77,7 +77,7 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
 
         if (Constants.BACK.equals(selectedDay)) {
             if (availableSpecialists.size() == 1) {
-                ContextUtils.setPreviousStep(context);
+                ContextUtils.resetLocationToPreviousStep(context);
                 return previousProcessor.processRequest(request);
             }
             selectedDay = ContextUtils.getStringParam(context, Constants.SELECTED_DAY);

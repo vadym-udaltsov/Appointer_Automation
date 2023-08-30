@@ -53,14 +53,14 @@ public class CancelAppointmentFourthStep {
 
             ContextUtils.resetLocationToDashboard(context);
             MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment,
-                    clientContext == null ? context : clientContext, MessageTemplate.APPOINTMENT_ALL_FIELDS);
+                    clientContext == null ? context : clientContext, MessageTemplate.APPOINTMENT_ALL_FIELDS, department);
             List<LString> adminMessages = MessageUtils.buildNotificationForAdmins(messagesToLocalize,
                     clientContext == null ? context : clientContext, department);
 
             sendMessageService.sendNotificationToAdmins(adminMessages, department);
             return List.of(MessageUtils.buildDashboardHolder("Appointment was canceled", List.of(), strategyKey));
         }
-        ContextUtils.setPreviousStep(context);
+        ContextUtils.resetLocationToPreviousStep(context);
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(List.of(Constants.SUBMIT));
         return List.of(MessageUtils.holder("Select option from proposed", ButtonsType.KEYBOARD, holderRequest));
     }

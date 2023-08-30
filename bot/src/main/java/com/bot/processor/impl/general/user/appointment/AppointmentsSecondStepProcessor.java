@@ -16,7 +16,6 @@ import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Map;
@@ -54,14 +53,14 @@ public abstract class AppointmentsSecondStepProcessor {
         }
 
         int month = ContextUtils.getIntParam(context, Constants.MONTH);
-        long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false);
-        long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true);
+        long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false, department);
+        long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true, department);
 
         resetLocationToDashboard(context);
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
-        fillContextParams(appointments, context);
+        fillContextParams(appointments, context, department);
         String strategyKey = ContextUtils.getStrategyKey(context, department);
-        return getHolders(appointments, strategyKey);
+        return getHolders(appointments, strategyKey, department);
     }
 
     protected Supplier<List<Appointment>> getAppointmentSupplier(ProcessRequest request, long start, long finish) {
@@ -69,7 +68,7 @@ public abstract class AppointmentsSecondStepProcessor {
         return () -> appointmentService.getAppointmentsByUserId(userId, start, finish);
     }
 
-    protected abstract List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey);
+    protected abstract List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey, Department department);
 
     private List<MessageHolder> buildAnotherMonthResponse(ProcessRequest request, boolean isNextMonth) {
         Department department = request.getDepartment();
@@ -78,7 +77,7 @@ public abstract class AppointmentsSecondStepProcessor {
         long endDate = DateUtils.getEndOfMonthDate(department, isNextMonth);
         List<Appointment> appointments = getAppointmentSupplier(request, startDate, endDate).get();
         Set<String> appointmentDays = appointments.stream()
-                .map(a -> DateUtils.getDayTitle(a.getDate()))
+                .map(a -> DateUtils.getDayTitle(a.getDate(), department))
                 .collect(Collectors.toSet());
         updateContextData(context, department, isNextMonth);
         updateAvailableDates(context, appointmentDays);
@@ -88,7 +87,6 @@ public abstract class AppointmentsSecondStepProcessor {
                         Constants.USER_APPOINTMENTS, appointmentDays))
                 .build();
         Month month = DateUtils.nowZoneDateTime(department).getMonth().plus(isNextMonth ? 1 : 0);
-//        Month month = LocalDate.now().getMonth().plus(isNextMonth ? 1 : 0);
         MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER_MY_APP, datePickerRequest);
         return List.of(datePicker);
     }
@@ -97,7 +95,7 @@ public abstract class AppointmentsSecondStepProcessor {
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
         int monthToAdd = nextMonth ? 1 : 0;
         context.getParams().put(Constants.MONTH, (numberOfCurrentMonth + monthToAdd));
-        ContextUtils.setPreviousStep(context);
+        ContextUtils.resetLocationToPreviousStep(context);
     }
 
     protected void updateAvailableDates(Context context, Set<String> appointmentDays) {
@@ -105,7 +103,7 @@ public abstract class AppointmentsSecondStepProcessor {
         context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
     }
 
-    protected void fillContextParams(List<Appointment> appointments, Context context) {
+    protected void fillContextParams(List<Appointment> appointments, Context context, Department department) {
     }
 
     protected void resetLocationToDashboard(Context context) {

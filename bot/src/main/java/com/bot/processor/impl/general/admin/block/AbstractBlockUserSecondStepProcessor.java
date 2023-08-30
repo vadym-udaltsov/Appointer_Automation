@@ -21,7 +21,7 @@ public abstract class AbstractBlockUserSecondStepProcessor {
         Context context = request.getContext();
         List<String> availableTitles = (List<String>) context.getParams().get(Constants.AVAILABLE_TITLES);
         if (!availableTitles.contains(selectedTitle)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return MessageUtils.buildCustomKeyboardHolders("Select client from proposed", availableTitles,
                     KeyBoardType.VERTICAL, true);
         }

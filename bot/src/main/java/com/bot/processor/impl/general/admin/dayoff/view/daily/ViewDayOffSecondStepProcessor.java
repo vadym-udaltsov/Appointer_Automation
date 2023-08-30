@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.view;
+package com.bot.processor.impl.general.admin.dayoff.view.daily;
 
 import com.bot.util.Constants;
 import com.commons.model.Appointment;

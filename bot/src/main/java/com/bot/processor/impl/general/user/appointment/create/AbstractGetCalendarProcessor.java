@@ -24,6 +24,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
@@ -57,13 +58,14 @@ public class AbstractGetCalendarProcessor {
                 .atStartOfDay()
                 .with(TemporalAdjusters.lastDayOfMonth())
                 .plusDays(1);
-        long endDate = endDateTime.toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
+        long endDate = ZonedDateTime.of(endDateTime, ZoneId.of(department.getZone())).toEpochSecond();
 
         Month month = DateUtils.nowZoneDateTime(department).getMonth();
-//        Month month = LocalDate.now().getMonth();
         if (isNextMonth) {
             startDate = endDate;
-            endDate = endDateTime.plusMonths(1).toEpochSecond(ZoneOffset.ofHours(-DateUtils.getHourOffset(department)));
+
+            LocalDateTime dateTimePlusMonth = endDateTime.plusMonths(1);
+            endDate = ZonedDateTime.of(dateTimePlusMonth, ZoneId.of(department.getZone())).toEpochSecond();
             month = month.plus(1);
         }
 
@@ -77,9 +79,11 @@ public class AbstractGetCalendarProcessor {
         List<String> busyDayTitles = allAppointments.isEmpty()
                 ? new ArrayList<>()
                 : defineBusyDayTitles(allAppointments, department, month.getValue(), selectedService);
-        String currentDayTitle = getCurrentDayBusyTitle(department, selectedService);
-        if (!"".equals(currentDayTitle)) {
-            busyDayTitles.add(currentDayTitle);
+        if (!isNextMonth) {
+            String currentDayTitle = getCurrentDayBusyTitle(department, selectedService);
+            if (!"".equals(currentDayTitle)) {
+                busyDayTitles.add(currentDayTitle);
+            }
         }
         BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
@@ -102,7 +106,7 @@ public class AbstractGetCalendarProcessor {
     private String getCurrentDayBusyTitle(Department department, String serviceName) {
         long serviceDuration = getServiceDuration(department, serviceName);
         ZonedDateTime now = DateUtils.nowZoneDateTime(department);
-        long finishDate = DateUtils.getPointOfDay(now.getMonthValue(), now.getDayOfMonth(), department.getEndWork());
+        long finishDate = DateUtils.getPointOfDay(now.getMonthValue(), now.getDayOfMonth(), department.getEndWork(), department);
         long nowLong = DateUtils.nowZone(department);
         if ((finishDate - nowLong) < serviceDuration) {
             return String.valueOf(now.getDayOfMonth());
@@ -199,9 +203,9 @@ public class AbstractGetCalendarProcessor {
 
     private List<Long> getFreeSlots(List<Appointment> appointments, Department department, int dayOfMonth, int month) {
         long nowLong = DateUtils.nowZone(department);
-        long finish = DateUtils.getPointOfDay(month, dayOfMonth, department.getEndWork());
+        long finish = DateUtils.getPointOfDay(month, dayOfMonth, department.getEndWork(), department);
         List<Long> result = new ArrayList<>();
-        long currentPoint = DateUtils.getPointOfDay(month, dayOfMonth, department.getStartWork());
+        long currentPoint = DateUtils.getPointOfDay(month, dayOfMonth, department.getStartWork(), department);
         for (Appointment appointment : appointments) {
             long freeSlot = appointment.getDate() - currentPoint;
             if (currentPoint > nowLong) {
@@ -217,6 +221,6 @@ public class AbstractGetCalendarProcessor {
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
         int monthToAdd = nextMonth ? 1 : 0;
         context.getParams().put(Constants.MONTH, numberOfCurrentMonth + monthToAdd);
-        ContextUtils.setPreviousStep(context);
+        ContextUtils.resetLocationToPreviousStep(context);
     }
 }

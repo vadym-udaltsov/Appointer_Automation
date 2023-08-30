@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.cancel;
+package com.bot.processor.impl.general.admin.dayoff.cancel.daily;
 
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;

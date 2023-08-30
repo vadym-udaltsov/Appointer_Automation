@@ -32,7 +32,7 @@ public class CreateAppointmentFourthStepProcessor implements IProcessor {
         String specName = MessageUtils.getTextFromUpdate(update);
         List<String> availableSpecialists = (List<String>) context.getParams().get(Constants.AVAILABLE_SPECIALISTS);
         if (!availableSpecialists.contains(specName) && !Constants.BACK.equals(specName)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(availableSpecialists);
             return List.of(MessageUtils.holder(Constants.Messages.INCORRECT_SPECIALIST, ButtonsType.KEYBOARD, holderRequest));
         }
@@ -51,10 +51,10 @@ public class CreateAppointmentFourthStepProcessor implements IProcessor {
         List<String> slotTitles = new ArrayList<>();
         boolean wholeDayAvailable = DateUtils.isWholeDayAvailable(department, convertedSlots.get(0));
         if (wholeDayAvailable) {
-            slotTitles = DateUtils.getSlotTitles(convertedSlots.get(0), service.getDuration() * 60L, 30);
+            slotTitles = DateUtils.getSlotTitles(convertedSlots.get(0), service.getDuration() * 60L, 30, department);
         } else {
             for (FreeSlot slot : convertedSlots) {
-                slotTitles.addAll(DateUtils.getSlotTitles(slot, service.getDuration() * 60L, 15));
+                slotTitles.addAll(DateUtils.getSlotTitles(slot, service.getDuration() * 60L, 15, department));
             }
         }
 

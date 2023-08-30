@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.create;
+package com.bot.processor.impl.general.admin.dayoff.create.daily;
 
 import com.bot.model.Context;
 import com.commons.model.FreeSlot;
@@ -19,7 +19,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class CreateDayOffFourthStepProcessor extends CreateDayOffProcessor imple
         String selectedTimeTitle = MessageUtils.getTextFromUpdate(update);
         List<String> availableSlotTitles = (List<String>) context.getParams().get(Constants.AVAILABLE_SLOT_TITLES);
         if (!availableSlotTitles.contains(selectedTimeTitle)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return MessageUtils.buildCustomKeyboardHolders("Select time from proposed", availableSlotTitles,
                     KeyBoardType.FOUR_ROW, true);
         }
@@ -63,7 +64,7 @@ public class CreateDayOffFourthStepProcessor extends CreateDayOffProcessor imple
         int hour = Integer.parseInt(timeParts[0]);
         int minute = Integer.parseInt(timeParts[1]);
         LocalDateTime dayOffDateTime = LocalDateTime.of(year, month, day, hour, minute);
-        long dayOffStart = dayOffDateTime.toEpochSecond(ZoneOffset.UTC);
+        long dayOffStart = ZonedDateTime.of(dayOffDateTime, ZoneId.of(department.getZone())).toEpochSecond();
         FreeSlot slot = defineSlot(convertedSlots, dayOffStart);
         List<String> durationTitles = getDurationTitles(slot, dayOffStart);
         context.getParams().put(Constants.AVAILABLE_DURATIONS, durationTitles);

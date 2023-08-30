@@ -27,7 +27,7 @@ public class MassMessagingSecondStepProcessor implements IProcessor {
 
         if (StringUtils.isBlank(textFromUpdate)) {
             String message = Constants.Messages.INPUT_MESSAGE;
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return List.of(MessageUtils.buildKeyboardHolder(message, List.of(), List.of()));
         }
 

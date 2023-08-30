@@ -62,7 +62,7 @@ public class ContextUtils {
         context.getNavigation().add(nextStep.getName());
     }
 
-    public static void setPreviousStep(Context context) {
+    public static void resetLocationToPreviousStep(Context context) {
         List<String> navigation = context.getNavigation();
         navigation.remove(navigation.size() - 1);
     }

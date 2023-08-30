@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.cancel;
+package com.bot.processor.impl.general.admin.dayoff.view.daily;
 
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 
-public class CancelDayOffFirstStepProcessor extends DayOffFirstStepProcessor implements IProcessor {
+public class ViewDayOffFirstStepProcessor extends DayOffFirstStepProcessor implements IProcessor {
 
-    public CancelDayOffFirstStepProcessor(IProcessor nextStepProcessor) {
+    public ViewDayOffFirstStepProcessor(IProcessor nextStepProcessor) {
         super(nextStepProcessor);
     }
 

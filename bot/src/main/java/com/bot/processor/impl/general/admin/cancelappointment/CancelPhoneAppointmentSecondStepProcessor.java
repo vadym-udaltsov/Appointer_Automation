@@ -42,13 +42,13 @@ public class CancelPhoneAppointmentSecondStepProcessor extends AppointmentsSecon
     }
 
     @Override
-    protected void fillContextParams(List<Appointment> appointments, Context context) {
+    protected void fillContextParams(List<Appointment> appointments, Context context, Department department) {
         Map<Long, Context> contextData = contextService.getContextListByAppointments(appointments).stream()
                 .collect(Collectors.toMap(Context::getUserId, Function.identity()));
         Map<String, Object> params = context.getParams();
         List<String> availableTitles = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            String title = getAppointmentButtonTitle(appointment, contextData);
+            String title = getAppointmentButtonTitle(appointment, contextData, department);
             params.put(title, JsonUtils.convertObjectToString(appointment));
             long userId = appointment.getUserId();
             params.put(String.valueOf(userId), JsonUtils.convertObjectToString(contextData.get(userId)));
@@ -67,17 +67,17 @@ public class CancelPhoneAppointmentSecondStepProcessor extends AppointmentsSecon
     }
 
     @Override
-    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey, Department department) {
         Map<Long, Context> contextData = contextService.getContextListByAppointments(appointments).stream()
                 .collect(Collectors.toMap(Context::getUserId, Function.identity()));
         List<String> buttons = appointments.stream()
-                .map(a -> getAppointmentButtonTitle(a, contextData))
+                .map(a -> getAppointmentButtonTitle(a, contextData, department))
                 .collect(Collectors.toList());
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(buttons);
         return List.of(MessageUtils.holder("Select appointment", ButtonsType.KEYBOARD, holderRequest));
     }
 
-    private String getAppointmentButtonTitle(Appointment appointment, Map<Long, Context> contextData) {
+    private String getAppointmentButtonTitle(Appointment appointment, Map<Long, Context> contextData, Department department) {
         Context context = contextData.get(appointment.getUserId());
         if (context == null) {
             throw new RuntimeException("Context not found for user id: " + appointment.getUserId());
@@ -85,7 +85,7 @@ public class CancelPhoneAppointmentSecondStepProcessor extends AppointmentsSecon
         String clientName = context.getName();
         StringBuilder builder = new StringBuilder();
         long date = appointment.getDate();
-        String dateTitle = DateUtils.getDateTitle(date);
+        String dateTitle = DateUtils.getDateTitle(date, department);
         String time = dateTitle.split(",")[1];
         String serviceName = appointment.getService();
         return builder.append(time).append(" ").append(serviceName).append(", ").append(clientName).toString();

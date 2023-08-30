@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.create;
+package com.bot.processor.impl.general.admin.dayoff.create.daily;
 
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
@@ -79,11 +79,11 @@ public class CreateDayOffThirdStepProcessor extends AbstractGetCalendarProcessor
         List<String> slotTitles = new ArrayList<>();
         boolean wholeDayAvailable = DateUtils.isWholeDayAvailable(department, freeSlots.get(0));
         if (wholeDayAvailable) {
-            slotTitles = DateUtils.getSlotTitles(freeSlots.get(0), 3600L, 30);
+            slotTitles = DateUtils.getSlotTitles(freeSlots.get(0), 3600L, 30, department);
             slotTitles.add(Constants.WHOLE_DAY);
         } else {
             for (FreeSlot slot : freeSlots) {
-                slotTitles.addAll(DateUtils.getSlotTitles(slot, 3600L, 15));
+                slotTitles.addAll(DateUtils.getSlotTitles(slot, 3600L, 15, department));
             }
         }
         List<String> convertedSlots = freeSlots.stream()

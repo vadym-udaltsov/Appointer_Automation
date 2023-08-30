@@ -17,7 +17,6 @@ import com.commons.model.Specialist;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Set;
@@ -44,12 +43,11 @@ public class AppointmentsFirstStepProcessor {
         }
         appointments.removeIf(a -> a.getDate() > currentMothEndDate);
         Set<String> appointmentDays = appointments.stream()
-                .map(a -> DateUtils.getDayTitle(a.getDate()))
+                .map(a -> DateUtils.getDayTitle(a.getDate(), department))
                 .collect(Collectors.toSet());
-        appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.CURRENT_MONTH));
+        appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.SELECTED_MONTH));
         context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
         Month month = DateUtils.nowZoneDateTime(department).getMonth();
-//        Month month = LocalDate.now().getMonth();
         context.getParams().put(Constants.MONTH, month.getValue());
         return MessageUtils.buildDatePicker(appointmentDays, Constants.Messages.INCORRECT_DATE, false, department);
     }
@@ -71,7 +69,7 @@ public class AppointmentsFirstStepProcessor {
                 .map(Specialist::getName)
                 .collect(Collectors.toList());
         if (!specialistNames.contains(selectedSpecialist) && !Constants.BACK.equals(selectedSpecialist)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(specialistNames);
             return List.of(MessageUtils.holder(Constants.Messages.INCORRECT_SPECIALIST, ButtonsType.KEYBOARD, holderRequest));
         }

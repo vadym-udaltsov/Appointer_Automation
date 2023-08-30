@@ -48,7 +48,7 @@ public class MassMessagingThirdStepProcessor implements IProcessor {
             messageLines.add(LString.builder().title(Constants.Messages.INCORRECT_ACTION).build());
             messageLines.add(LString.builder().title(Constants.Messages.SUBMIT_MESSAGE).build());
             messageLines.addAll(submittedTextLines);
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return List.of(MessageUtils.buildKeyboardHolder("", messageLines, buttons));
         }
 

@@ -44,37 +44,45 @@
   "You have no days off for selected date": "На изабрани датум нема нерадног времена",
   "You have no appointments for selected date": "Нема уноса за изабрани датум",
   "You have no non working days for current and next months": "Нема нерадног времена за овај и наредни месец",
-
   "Block": "Блокирање",
   "You have no clients": "Немате клијенте",
   "Select client": "Изаберите клијента",
   "Select client from proposed": "Изаберите доступног клијента",
   "Submit client blocking": "Потврдите блок клијента",
   "Client was blocked": "Клијент је блокиран",
-
   "All messages sent to recipients": "Поруке су послате",
   "Input message text": "Унесите своју поруку",
   "Mailing": "Slanje",
   "⭐ Attention ⭐": "⭐ Пажња ⭐",
   "Submit message text:": "Потврдите текст поруке:",
-
   "Appointment by phone": "Резервација путем телефона",
   "Cancel appointment by phone": "Откажите термин телефоном",
   "Enter client name using keyboard": "Унесите име клијента помоћу тастатуре",
   "Appointment by phone CANCELED:": "Телефонски позив ОТКАЗАН:",
   "Appointment by phone CREATED:": "Телефонска резервација КРЕИРАНА:",
-
   "Profile": "Профил",
   "Language was changed": "Језик је промењен",
   "Select language": "Изаберите свој језик",
   "Change language": "Промени језик",
   "Select language from available": "Изаберите доступни језик",
-
   "Block user": "Блокирај корисника",
   "Unblock user": "Деблокирај корисника",
   "You have no blocked clients": "Немате блокиране клијенте",
   "Submit client unblocking": "Потврдите откључавање клијента",
   "Client was unblocked": "Клијент је откључан",
+
+  "Period": "Раздобље",
+  "Daily": "Дан",
+
+  "Select start date of period": "Изаберите датум почетка",
+  "Select end date of period": "Изаберите датум завршетка",
+  "Finish date should be after start date\nSelect available date": "Датум завршетка мора бити после датума почетка",
+  "Day off period was created": "Период одмора креиран",
+  "Your appointment was cancelled": "Ваш унос је отказан",
+  "Cancelled appointments made by bot.": "Поништени уноси које је направио бот",
+  "Cancelled appointments made by phone.": "Поништени уноси направљени телефоном",
+  "You can send the reason of cancelling appointments?\nType on keyboard": "\nПошаљите поруку са разлогом за отказивање?\nУкуцајте на тастатури",
+
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специјалиста: ${specialist}",
@@ -90,7 +98,6 @@
   "Client: ${client}\n Phone: ${phone}": "  \uD83E\uDDD2 Клијент: ${client}\n ☎ ${phone}",
   "Department: ${department}": "Салон: ${department}",
   "Time from ${timeFrom} to ${timeTo}": "  ⌛ Време од ${timeFrom} до ${timeTo}",
-
   "JANUARY": "Jануара",
   "FEBRUARY": "Фебруара",
   "MARCH": "марта",
@@ -108,7 +115,6 @@
   "Tomorrow": "Сутра",
   "tomorrow": "сутра",
   "By Date": "По датуму",
-
   "Mon": "Пн",
   "Tue": "Ут",
   "Wed": "Ср",

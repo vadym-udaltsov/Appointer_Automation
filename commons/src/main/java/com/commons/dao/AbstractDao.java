@@ -108,7 +108,7 @@ public abstract class AbstractDao<T extends DynamoDbEntity> {
                 .collect(Collectors.toList());
     }
 
-    public void batchDeleteItems(List<WriteRequest> writeRequests) {
+    public void executeBatchWriteRequests(List<WriteRequest> writeRequests) {
         List<List<WriteRequest>> partition = ListUtils.partition(writeRequests, 25);
 
         for (List<WriteRequest> requests : partition) {

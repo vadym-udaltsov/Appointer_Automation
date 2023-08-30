@@ -9,5 +9,6 @@ import java.util.List;
 public interface ISendMessageService {
 
     void sendNotificationToAdmins(List<LString> localizedMessages, Department department);
+
     void sendNotificationToUsers(List<LString> localizedMessages, List<Context> contextList, Department department);
 }

@@ -37,8 +37,8 @@ public class AppointmentsTodayAndTomorrowProcessor extends AppointmentsAdminProc
         if (textFromUpdate.equals("Tomorrow")) {
             currentDate = currentDate + TimeUnit.DAYS.toSeconds(1);
         }
-        String selectedDay = DateUtils.getDayTitle(currentDate);
-        BigDecimal selectedMonth = BigDecimal.valueOf(Integer.parseInt(DateUtils.getMonthTitle(currentDate)));
+        String selectedDay = DateUtils.getDayTitle(currentDate, department);
+        BigDecimal selectedMonth = BigDecimal.valueOf(Integer.parseInt(DateUtils.getMonthTitle(currentDate, department)));
         message.setText(selectedDay);
         update.setMessage(message);
         request.setUpdate(update);

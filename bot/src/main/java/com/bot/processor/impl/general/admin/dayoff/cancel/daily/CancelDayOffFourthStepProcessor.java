@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.cancel;
+package com.bot.processor.impl.general.admin.dayoff.cancel.daily;
 
 import com.commons.model.Appointment;
 import com.bot.model.Context;
@@ -35,7 +35,7 @@ public class CancelDayOffFourthStepProcessor implements IProcessor {
         String selectedDayOff = MessageUtils.getTextFromUpdate(update);
         String dayOffStr = ContextUtils.getStringParam(context, selectedDayOff);
         if (dayOffStr == null) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             List<String> dayOffTitles = (List<String>) context.getParams().get(Constants.AVAILABLE_APPOINTMENTS);
             return MessageUtils.buildCustomKeyboardHolders("Select day off period from proposed", dayOffTitles,
                     KeyBoardType.VERTICAL, true);
@@ -48,7 +48,7 @@ public class CancelDayOffFourthStepProcessor implements IProcessor {
         List<LString> messagesToLocalize = new ArrayList<>();
         messagesToLocalize.add(LString.builder().title("Day off cancelled:").build());
         messagesToLocalize.add(LString.empty());
-        MessageUtils.fillMessagesToLocalize(messagesToLocalize, dayOff, context, MessageTemplate.DAY_OFF_ALL_FIELDS);
+        MessageUtils.fillMessagesToLocalize(messagesToLocalize, dayOff, context, MessageTemplate.DAY_OFF_ALL_FIELDS, department);
         return List.of(MessageUtils.buildDashboardHolder("", messagesToLocalize, strategyKey));
     }
 }

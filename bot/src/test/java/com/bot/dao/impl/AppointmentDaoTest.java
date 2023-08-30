@@ -26,8 +26,34 @@ public class AppointmentDaoTest {
     }
 
 //    @Test
+    void shouldGetAppointmentsByPeriod() {
+        Department department = new Department();
+        department.setId("rxQdLSBE");
+        department.setZone("Europe/Berlin");
+        long start = DateUtils.getStartOrEndOfDay(2023, 9, 12, false, department);
+        long finish = DateUtils.getStartOrEndOfDay(2023, 9, 16, true, department);
+
+        List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialist("Oksana::rxQdLSBE", start, finish);
+        System.out.println();
+    }
+
+//    @Test
+    void shouldCreateBatchApp() {
+        Appointment appointment = new Appointment();
+        appointment.setPhoneOrder(false);
+        appointment.setUserId(0);
+        appointment.setDate(100);
+        appointment.setDuration(100);
+        appointment.setId("app::id");
+        appointment.setService("serv");
+        appointment.setSpecialist("spec");
+        appointment.setDepartmentId("jfurhfuhr");
+        appointmentDao.createAppointments(List.of(appointment));
+    }
+
+    //    @Test
     public void shouldGetClientAppointments() {
-       appointmentDao.deleteClientAppointments(596819031);
+        appointmentDao.deleteClientAppointments(596819031);
         System.out.println();
     }
 
@@ -62,10 +88,10 @@ public class AppointmentDaoTest {
 
     //    @Test
     public void shouldGetAppointmentsByDay() {
-        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), false);
-        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), true);
-        System.out.println(DateUtils.getDateTitle(startOfDay));
-        System.out.println(DateUtils.getDateTitle(endOfDay));
+//        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), false);
+//        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), true);
+//        System.out.println(DateUtils.getDateTitle(startOfDay));
+//        System.out.println(DateUtils.getDateTitle(endOfDay));
 
 //        List<Appointment> res = appointmentDao.getAppointmentsByUserId(538025182, startOfDay, endOfDay);
         System.out.println();
@@ -73,11 +99,11 @@ public class AppointmentDaoTest {
 
     //    @Test
     public void shouldGetAppointmentsBySpecialist() {
-        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("25"), false);
-        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("28"), true);
-        System.out.println(DateUtils.getDateTitle(startOfDay));
-        System.out.println(DateUtils.getDateTitle(endOfDay));
-        List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialist("Tatiana::52c59292", startOfDay, endOfDay);
+//        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("25"), false);
+//        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("28"), true);
+//        System.out.println(DateUtils.getDateTitle(startOfDay));
+//        System.out.println(DateUtils.getDateTitle(endOfDay));
+//        List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialist("Tatiana::52c59292", startOfDay, endOfDay);
 //        List<Appointment> res = appointmentDao.getAppointmentsByUserId(538025182, startOfDay, endOfDay);
         System.out.println();
     }

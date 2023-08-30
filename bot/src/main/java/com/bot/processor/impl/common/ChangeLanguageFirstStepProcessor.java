@@ -4,7 +4,6 @@ import com.bot.model.Context;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -20,7 +19,7 @@ public class ChangeLanguageFirstStepProcessor implements IProcessor {
         Context context = request.getContext();
         String selectedButton = MessageUtils.getTextFromUpdate(update);
         if (!"Change language".equals(selectedButton)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return MessageUtils.buildProfileDashboard("Select available option");
         }
         return List.of(MessageUtils.getLanguageMessageHolder());

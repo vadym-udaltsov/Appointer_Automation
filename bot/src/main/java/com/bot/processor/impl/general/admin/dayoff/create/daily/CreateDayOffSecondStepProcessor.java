@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.user.appointment.create;
+package com.bot.processor.impl.general.admin.dayoff.create.daily;
 
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
@@ -7,22 +7,23 @@ import com.bot.model.DatePickerRequest;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
+import com.bot.processor.impl.general.user.appointment.create.AbstractGetCalendarProcessor;
 import com.commons.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.commons.utils.DateUtils;
 import com.bot.util.MessageUtils;
-import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.model.Specialist;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CreateAppointmentSecondStepProcessor extends AbstractGetCalendarProcessor implements IProcessor {
+public class CreateDayOffSecondStepProcessor extends AbstractGetCalendarProcessor implements IProcessor {
 
-    public CreateAppointmentSecondStepProcessor(IAppointmentService appointmentService) {
+    public CreateDayOffSecondStepProcessor(IAppointmentService appointmentService) {
         super(appointmentService);
     }
 
@@ -31,29 +32,30 @@ public class CreateAppointmentSecondStepProcessor extends AbstractGetCalendarPro
         Department department = request.getDepartment();
         Context context = request.getContext();
         Update update = request.getUpdate();
-
-        String selectedServiceName = MessageUtils.getTextFromUpdate(update);
-        List<String> availableServices = department.getServices().stream()
-                .map(CustomerService::getName)
+        List<Specialist> availableSpecialists = department.getAvailableSpecialists();
+        String selectedSpecialist = MessageUtils.getTextFromUpdate(update);
+        List<String> specialistNames = availableSpecialists.stream()
+                .map(Specialist::getName)
                 .collect(Collectors.toList());
-
-        if (!availableServices.contains(selectedServiceName) && !Constants.BACK.equals(selectedServiceName)) {
+        if (!specialistNames.contains(selectedSpecialist) && !Constants.BACK.equals(selectedSpecialist)) {
             ContextUtils.resetLocationToPreviousStep(context);
-            BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(availableServices);
-            return List.of(MessageUtils.holder("Select service from proposed", ButtonsType.KEYBOARD, holderRequest));
+            BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(specialistNames);
+            return List.of(MessageUtils.holder(Constants.Messages.INCORRECT_SPECIALIST, ButtonsType.KEYBOARD, holderRequest));
         }
-        if (Constants.BACK.equals(selectedServiceName)) {
-            selectedServiceName = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
+
+        if (Constants.BACK.equals(selectedSpecialist)) {
+            selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
         }
+
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
         context.getParams().put(Constants.MONTH, numberOfCurrentMonth);
-        ContextUtils.setStringParameter(context, Constants.SELECTED_SERVICE, selectedServiceName);
+        ContextUtils.setStringParameter(context, Constants.SELECTED_SPEC, selectedSpecialist);
         DatePickerRequest datePickerRequest = DatePickerRequest.builder()
                 .department(department)
                 .isNextMonth(false)
                 .message("")
+                .selectedSpecialist(selectedSpecialist)
                 .context(context)
-                .selectedService(selectedServiceName)
                 .build();
         return buildResponse(datePickerRequest);
     }

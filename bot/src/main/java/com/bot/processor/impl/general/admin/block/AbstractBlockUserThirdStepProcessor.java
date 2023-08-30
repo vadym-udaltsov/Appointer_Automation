@@ -36,7 +36,7 @@ public abstract class AbstractBlockUserThirdStepProcessor {
             ContextUtils.resetLocationToDashboard(context);
             return List.of(MessageUtils.buildDashboardHolder(getSuccessMessage(), List.of(), strategyKey));
         }
-        ContextUtils.setPreviousStep(context);
+        ContextUtils.resetLocationToPreviousStep(context);
         BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(List.of(Constants.SUBMIT));
         return List.of(MessageUtils.holder("Select option from proposed", ButtonsType.KEYBOARD, holderRequest));
     }

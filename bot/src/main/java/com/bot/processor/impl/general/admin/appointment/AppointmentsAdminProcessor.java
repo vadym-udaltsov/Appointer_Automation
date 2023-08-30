@@ -20,10 +20,9 @@ import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +50,11 @@ public class AppointmentsAdminProcessor {
             return buildAnotherMonthResponse(request, false);
         }
         int month = ContextUtils.getIntParam(context, Constants.MONTH);
-        long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false);
-        long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true);
+        long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false, department);
+        long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true, department);
 
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
-        String strategyKey = ContextUtils.getStrategyKey(context, department);
-        return getHolders(appointments, strategyKey, context);
+        return getHolders(appointments, context, department);
     }
 
     protected void resetLocationToDashboard(Context context) {
@@ -71,14 +69,14 @@ public class AppointmentsAdminProcessor {
                 .collect(Collectors.toList());
     }
 
-    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey, Context context) {
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, Context context, Department department) {
         List<LString> messagesToLocalize = new ArrayList<>();
         if (appointments.size() == 0) {
             ContextUtils.resetLocationToStep(context, Constants.Processors.START_APP_DASH);
             return MessageUtils.buildCustomKeyboardHolders(Constants.Messages.NO_APP_FOR_DATE, Constants.VIEW_ADMIN_APP_BUTTONS,
                     KeyBoardType.THREE_ROW, true);
         }
-        String date = getReportDate(appointments);
+        String date = getReportDate(appointments, department);
         messagesToLocalize.add(LString.builder().title(Constants.Messages.APP_FOR_DATE)
                 .placeholders(Map.of("date", date)).build());
         messagesToLocalize.add(LString.empty());
@@ -94,7 +92,7 @@ public class AppointmentsAdminProcessor {
             for (Appointment appointment : entry.getValue()) {
                 Context userContext = contextMap.get(appointment.getUserId());
                 MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, userContext,
-                        MessageTemplate.APPOINTMENT_TIME_SERVICE_CLIENT);
+                        MessageTemplate.APPOINTMENT_TIME_SERVICE_CLIENT, department);
                 messagesToLocalize.add(LString.empty());
             }
         }
@@ -117,7 +115,7 @@ public class AppointmentsAdminProcessor {
         long endDate = DateUtils.getEndOfMonthDate(department, isNextMonth);
         List<Appointment> appointments = getAppointmentSupplier(request, startDate, endDate).get();
         Set<String> appointmentDays = appointments.stream()
-                .map(a -> DateUtils.getDayTitle(a.getDate()))
+                .map(a -> DateUtils.getDayTitle(a.getDate(), department))
                 .collect(Collectors.toSet());
         updateContextData(context, department, isNextMonth);
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
@@ -135,11 +133,12 @@ public class AppointmentsAdminProcessor {
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
         int monthToAdd = nextMonth ? 1 : 0;
         context.getParams().put(Constants.MONTH, (numberOfCurrentMonth + monthToAdd));
-        ContextUtils.setPreviousStep(context);
+        ContextUtils.resetLocationToPreviousStep(context);
     }
 
-    private String getReportDate(List<Appointment> appointments) {
-        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(appointments.get(0).getDate()), ZoneId.systemDefault());
-        return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    private String getReportDate(List<Appointment> appointments, Department department) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(appointments.get(0).getDate()), ZoneId.of(department.getZone()));
+//        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(appointments.get(0).getDate()), ZoneId.systemDefault());
+        return zonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }

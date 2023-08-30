@@ -11,6 +11,7 @@ import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Appointment;
+import com.commons.model.Department;
 import com.commons.service.IAppointmentService;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -29,7 +30,7 @@ public class ViewAppointmentsSecondStepProcessor extends AppointmentsSecondStepP
     }
 
     @Override
-    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey) {
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, String strategyKey, Department department) {
         List<LString> messagesToLocalize = new ArrayList<>();
         if (appointments == null || appointments.size() == 0) {
             messagesToLocalize.add(LString.builder().title(Constants.Messages.NO_APP_FOR_DATE).build());
@@ -38,7 +39,8 @@ public class ViewAppointmentsSecondStepProcessor extends AppointmentsSecondStepP
         messagesToLocalize.add(LString.builder().title("Your appointments:").build());
         messagesToLocalize.add(LString.empty());
         for (Appointment appointment : appointments) {
-            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, null, MessageTemplate.APPOINTMENT_ALL_FIELDS);
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, null,
+                    MessageTemplate.APPOINTMENT_ALL_FIELDS, department);
             messagesToLocalize.add(LString.empty());
         }
         return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));

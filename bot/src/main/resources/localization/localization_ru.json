@@ -6,9 +6,7 @@
   "Select day": "Выбери день",
   "All appointments for ${date}": "\uD83D\uDCC5 Все записи на ${date}:",
   "You have no appointments for current and next months": "Нет записей в текущем и следующем месяце",
-
   "Block": "Блокировка",
-
   "Create appointment": "Записаться",
   "My appointments": "Мои записи",
   "Appointments": "Записи",
@@ -46,36 +44,44 @@
   "You have no days off for selected date": "У тебя нет нерабочего времени на выбраную дату",
   "You have no appointments for selected date": "У тебя нет записей на выбраную дату",
   "You have no non working days for current and next months": "У тебя нет нерабочего времени на этот и следующий месяцы",
-
   "All messages sent to recipients": "Сообщения отправлены",
   "Input message text": "Введите текст сообщения",
   "Mailing": "Рассылка",
   "⭐ Attention ⭐": "⭐ Внимание ⭐",
   "Submit message text:": "Подтвердите текст сообщения:",
-
   "You have no clients": "У тебя нет клиентов",
   "Select client": "Выбери клиента",
   "Select client from proposed": "Выбери доступного клиента",
   "Submit client blocking": "Подтверди блокировку клиента",
   "Client was blocked": "Клиент заблокирован",
-
   "Appointment by phone": "Запись по телефону",
   "Cancel appointment by phone": "Отменить телефонную запись",
   "Enter client name using keyboard": "Введи имя клиента с клавиатуры",
   "Appointment by phone CANCELED:": "Запись по телефону ОТМЕНЕНА:",
   "Appointment by phone CREATED:": "Запись по телефону СОЗДАНА:",
-
   "Profile": "Профиль",
   "Language was changed": "Язык был изменен",
   "Select language": "Выбери язык",
   "Change language": "Сменить язык",
   "Select language from available": "Выбери доступный язык",
-
   "Block user": "Заблокировать пользователя",
   "Unblock user": "Разблокировать пользователя",
   "You have no blocked clients": "У тебя нет заблокированных клиентов",
   "Submit client unblocking": "Подтверди разблокировку клиента",
   "Client was unblocked": "Клиент был разблокирован",
+
+  "Period": "Период",
+  "Daily": "День",
+
+  "Select start date of period": "Выбери дату начала выходного",
+  "Select end date of period": "Выбери дату конца выходного",
+  "Finish date should be after start date\nSelect available date": "Дата конца должна быть после даты начала",
+  "Day off period was created": "Выходной период создан",
+  "Not needed": "Не отправлять",
+  "Your appointment was cancelled": "Ваша запись отменена",
+  "Cancelled appointments made by bot.": "Отмененные записи сделанные ботом",
+  "Cancelled appointments made by phone.": "Отмененные записи сделанные по телефону",
+  "You can send the reason of cancelling appointments?\nType on keyboard": "Отправить сообщение с причиной отмены записи?\nНабери на клавиатуре",
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
@@ -91,7 +97,6 @@
   "Client: ${client}\n Phone: ${phone}": "  \uD83E\uDDD2 Клиент: ${client}\n ☎ ${phone}",
   "Department: ${department}": "Салон: ${department}",
   "Time from ${timeFrom} to ${timeTo}": "  ⌛ Время с ${timeFrom} до ${timeTo}",
-
   "JANUARY": "Январь",
   "FEBRUARY": "Февраль",
   "MARCH": "Март",
@@ -109,7 +114,6 @@
   "Tomorrow": "Завтра",
   "tomorrow": "завтра",
   "By Date": "По дате",
-
   "Mon": "Пн",
   "Tue": "Вт",
   "Wed": "Ср",

@@ -32,6 +32,11 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
+    public void createAppointments(List<Appointment> appointments) {
+        appointmentDao.createAppointments(appointments);
+    }
+
+    @Override
     public void delete(Appointment appointment) {
         appointmentDao.deleteItem(appointment);
     }
@@ -39,6 +44,11 @@ public class AppointmentService implements IAppointmentService {
     @Override
     public void deleteAppointmentsByClientId(long userId) {
         appointmentDao.deleteClientAppointments(userId);
+    }
+
+    @Override
+    public void delete(List<Appointment> appointments) {
+        appointmentDao.deleteItems(appointments);
     }
 
     @Override
@@ -65,8 +75,8 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     public List<FreeSlot> getFreeSlotsBySpecialist(Department department, String specialist, int month, int dayNumber) {
-        long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork());
-        long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork());
+        long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork(), department);
+        long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork(), department);
         long now = DateUtils.nowZone(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
         String specId = specialist + "::" + department.getId();
@@ -89,8 +99,8 @@ public class AppointmentService implements IAppointmentService {
 
     @Override
     public Map<String, List<FreeSlot>> getFreeSlotsByDepartment(Department department, int month, int dayNumber) {
-        long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork());
-        long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork());
+        long startDate = DateUtils.getPointOfDay(month, dayNumber, department.getStartWork(), department);
+        long finishDate = DateUtils.getPointOfDay(month, dayNumber, department.getEndWork(), department);
         long now = DateUtils.nowZone(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
         List<Specialist> departmentSpecialists = department.getAvailableSpecialists();

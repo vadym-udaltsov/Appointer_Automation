@@ -24,7 +24,9 @@ public class Constants {
     public static final int DAYS_IN_WEEK = 7;
 
     public static final String NEXT_MONTH = "nextMonth";
+    public static final String PREV_MONTH = "prevMonth";
     public static final String CURRENT_MONTH = "currentMonth";
+    public static final String SELECTED_MONTH = "selectedMonth";
     public static final String MONTH = "month";
 
     public static final String SELECTED_SERVICE = "selectedService";
@@ -34,6 +36,8 @@ public class Constants {
     public static final String SELECTED_HOUR = "selectedHour";
     public static final String SELECTED_MINUTE = "selectedMinute";
     public static final String SELECTED_APPOINTMENT = "selectedAppointment";
+    public static final String SELECTED_YEAR = "selectedYear";
+    public static final String SELECTED_FINISH_YEAR = "selectedFinishYear";
 
     public static final String DEPARTMENT = "department";
     public static final String CONTEXT = "context";
@@ -59,6 +63,7 @@ public class Constants {
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
     public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
     public static final List<String> START_BLOCK_BUTTONS = List.of("Block user", "Unblock user");
+    public static final List<String> START_DAYOFF_BUTTONS = List.of("Daily", "Period");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
             "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block", "Mailing", "Profile"),
@@ -106,6 +111,16 @@ public class Constants {
         public static final String MASS_MESSAGING_3 = "massMessaging3";
 
         public static final String DAY_OFF_START = "dayOffStart";
+        public static final String DAILY_DAY_OFF_START = "dailyDayOffStart";
+        public static final String PERIOD_DAY_OFF_START = "periodDayOffStart";
+
+        public static final String PERIOD_DAY_OFF_CREATE1 = "periodDayOffCreate1";
+        public static final String PERIOD_DAY_OFF_CREATE2 = "periodDayOffCreate2";
+        public static final String PERIOD_DAY_OFF_CREATE3 = "periodDayOffCreate3";
+        public static final String PERIOD_DAY_OFF_CREATE4 = "periodDayOffCreate4";
+        public static final String PERIOD_DAY_OFF_CREATE5 = "periodDayOffCreate5";
+
+        public static final String DAY_OFF_CREATE_START = "createDayOffStart";
         public static final String DAY_OFF_CREATE1 = "dayOffCreate1";
         public static final String DAY_OFF_CREATE2 = "dayOffCreate2";
         public static final String DAY_OFF_CREATE3 = "dayOffCreate3";
@@ -134,6 +149,10 @@ public class Constants {
         public static final String CHANGE_LANG2 = "changeLanguage2";
 
         public static final String ADMIN_APP_DASH = "appointments";
+        public static final String PERIOD_DAY_OFF_DELETE1 = "periodDayOffCancel1";
+        public static final String PERIOD_DAY_OFF_DELETE2 = "periodDayOffCancel2";
+        public static final String PERIOD_DAY_OFF_DELETE3 = "periodDayOffCancel3";
+        public static final String PERIOD_DAY_OFF_DELETE4 = "periodDayOffCancel4";
     }
 
     public static class Numbers {
@@ -204,6 +223,8 @@ public class Constants {
         public static final String SELECT_SPECIALIST = "Select specialist";
         public static final String INCORRECT_ACTION = "Select available option";
         public static final String INCORRECT_DATE = "Select available date";
+        public static final String SELECT_START_DATE = "Select start date of period";
+        public static final String SELECT_END_DATE = "Select end date of period";
         public static final String NO_APP_FOR_DATE = "You have no appointments for selected date";
         public static final String APP_FOR_DATE = "All appointments for ${date}";
         public static final String APP_SPECIALIST = "Specialist: ${specialist}";

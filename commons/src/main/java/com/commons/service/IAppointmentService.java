@@ -11,7 +11,11 @@ public interface IAppointmentService {
 
     void save(Appointment appointment);
 
+    void createAppointments(List<Appointment> appointments);
+
     void delete(Appointment appointment);
+
+    void delete(List<Appointment> appointments);
 
     List<Appointment> getAppointmentsByUserId(long userId, long startDate, long finishDate);
 

@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.admin.dayoff.create;
+package com.bot.processor.impl.general.admin.dayoff.create.daily;
 
 import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
@@ -33,7 +33,7 @@ public class CreateDayOffFifthStepProcessor extends CreateDayOffProcessor implem
         List<String> availableDurations = (List<String>) context.getParams().get(Constants.AVAILABLE_DURATIONS);
 
         if (!availableDurations.contains(selectedPeriod)) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return MessageUtils.buildCustomKeyboardHolders("Select duration from proposed", availableDurations,
                     KeyBoardType.VERTICAL, true);
         }

@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -124,7 +125,6 @@ public class MessageUtils {
                         Constants.USER_APPOINTMENTS, stringSet))
                 .build();
         Month month = DateUtils.nowZoneDateTime(department).getMonth();
-//        Month month = LocalDate.now().getMonth();
         MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER_MY_APP, datePickerRequest);
         BuildKeyboardRequest commonsRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
@@ -255,14 +255,16 @@ public class MessageUtils {
     }
 
     public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment,
-                                              Context userContext, MessageTemplate template) {
+                                              Context userContext, MessageTemplate template, Department department) {
         String specialist = appointment.getSpecialist();
         String service = appointment.getService();
         int duration = appointment.getDuration();
         long date = appointment.getDate();
-        String dateTitle = DateUtils.getDateTitle(date);
-        LocalDateTime startDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
-        LocalDateTime endDate = startDate.plus(duration, ChronoUnit.MINUTES);
+//        String dateTitle = DateUtils.getDateTitle(date);
+        String dateTitle = DateUtils.getDateTitle(date, department);
+        ZonedDateTime startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.of(department.getZone()));
+//        LocalDateTime startDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
+        ZonedDateTime endDate = startDate.plus(duration, ChronoUnit.MINUTES);
         String startTime = startDate.format(DateTimeFormatter.ofPattern("HH:mm"));
         String endTime = endDate.format(DateTimeFormatter.ofPattern("HH:mm"));
         Map<String, LString> messagesMap = new HashMap<>();

@@ -20,18 +20,28 @@ import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppoint
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentSecondStepProcessor;
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentThirdStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
-import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFirstStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffFourthStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffSecondStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.cancel.CancelDayOffThirdStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffFifthStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffFirstStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffFourthStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffSecondStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.create.CreateDayOffThirdStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffFirstStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffSecondStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.view.ViewDayOffThirdStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffFirstStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffFourthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffSecondStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffThirdStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.DayOffDashProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffFirstStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffFourthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffSecondStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffThirdStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffFifthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffFirstStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffFourthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffSecondStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffThirdStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.period.CreatePeriodDayOffFifthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.period.CreatePeriodDayOffFirstStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.period.CreatePeriodDayOffFourthStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.period.CreatePeriodDayOffSecondStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.create.period.CreatePeriodDayOffThirdStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffFirstStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffSecondStepProcessor;
+import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffThirdStepProcessor;
 import com.bot.processor.impl.general.admin.messaging.MassMessagingFirstStepProcessor;
 import com.bot.processor.impl.general.admin.messaging.MassMessagingSecondStepProcessor;
 import com.bot.processor.impl.general.admin.messaging.MassMessagingThirdStepProcessor;
@@ -225,6 +235,96 @@ public class GeneralAdminProcessorProvider {
     @Provides
     @Singleton
     @IntoMap
+    @CommandKey(CommandType.DAILY_DAY_OFF_START)
+    public IProcessor dailyDayOffStartStep() {
+        return new DayOffDashProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_START)
+    public IProcessor periodDayOffStartStep() {
+        return new DayOffDashProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_DELETE1)
+    public IProcessor periodDayOffDeleteFirstStep(@Named("createDayOffSecond") IProcessor nextStepProcessor) {
+        return new CreatePeriodDayOffFirstStepProcessor(nextStepProcessor);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_DELETE2)
+    public IProcessor periodDayOffDeleteSecondStep() {
+        return new CreatePeriodDayOffSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_DELETE3)
+    public IProcessor periodDayOffDeleteThirdStep() {
+        return new CreatePeriodDayOffThirdStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_DELETE4)
+    public IProcessor periodDayOffDeleteFourthStep() {
+        return new DeletePeriodDayOffFourthStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_CREATE1)
+    public IProcessor periodDayOffCreateFirstStep(@Named("createDayOffSecond") IProcessor nextStepProcessor) {
+        return new CreatePeriodDayOffFirstStepProcessor(nextStepProcessor);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_CREATE2)
+    public IProcessor periodDayOffCreateSecondStep() {
+        return new CreatePeriodDayOffSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_CREATE3)
+    public IProcessor periodDayOffCreateThirdStep() {
+        return new CreatePeriodDayOffThirdStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_CREATE4)
+    public IProcessor periodDayOffCreateFourthStep(IAppointmentService appointmentService,
+                                                   IContextService contextService,
+                                                   ISendMessageService sendMessageService) {
+        return new CreatePeriodDayOffFourthStepProcessor(appointmentService, contextService, sendMessageService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PERIOD_DAY_OFF_CREATE5)
+    public IProcessor periodDayOffCreateFifthStep(ISendMessageService sendMessageService) {
+        return new CreatePeriodDayOffFifthStepProcessor(sendMessageService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
     @CommandKey(CommandType.DAY_OFF_CREATE1)
     public IProcessor dayOffCreateFirstStep(@Named("createDayOffSecond") IProcessor nextStepProcessor) {
         return new CreateDayOffFirstStepProcessor(nextStepProcessor);
@@ -347,4 +447,10 @@ public class GeneralAdminProcessorProvider {
         return new CreateDayOffSecondStepProcessor(appointmentService);
     }
 
+    @Provides
+    @Singleton
+    @Named("deleteDayOffSecond")
+    public IProcessor delDayOffSecond(IAppointmentService appointmentService) {
+        return new DeletePeriodDayOffSecondStepProcessor();
+    }
 }

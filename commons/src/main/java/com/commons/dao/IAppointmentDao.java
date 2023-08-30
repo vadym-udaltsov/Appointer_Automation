@@ -9,7 +9,11 @@ public interface IAppointmentDao {
 
     boolean createItem(Appointment appointment);
 
+    void createAppointments(List<Appointment> appointments);
+
     void deleteItem(Appointment appointment);
+
+    void deleteItems(List<Appointment> appointments);
 
     void deleteSpecialistAppointments(String specialist, String departmentId, long endDate);
 

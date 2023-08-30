@@ -24,7 +24,7 @@ public class CancelAppointmentThirdStep {
             Map<String, Object> params = context.getParams();
             Object selectedTitle = params.get(appointmentTitle);
             if (selectedTitle == null) {
-                ContextUtils.setPreviousStep(context);
+                ContextUtils.resetLocationToPreviousStep(context);
                 List<String> availableAppointments = (List<String>) context.getParams().get(Constants.AVAILABLE_APPOINTMENTS);
                 BuildKeyboardRequest holderRequest = MessageUtils.buildVerticalHolderRequestWithCommon(availableAppointments);
                 return List.of(MessageUtils.holder("Select option from proposed", ButtonsType.KEYBOARD, holderRequest));

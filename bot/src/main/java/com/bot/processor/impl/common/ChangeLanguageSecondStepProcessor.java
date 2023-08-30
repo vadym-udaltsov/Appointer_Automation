@@ -22,7 +22,7 @@ public class ChangeLanguageSecondStepProcessor implements IProcessor {
         String languageName = MessageUtils.getTextFromUpdate(update);
         Language language = Language.fromValue(languageName);
         if (language == null) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             return Collections.singletonList(MessageUtils.getLanguageMessageHolder("Select language from available"));
         }
         context.setLanguage(language);

@@ -128,23 +128,70 @@
                   "key": "DayOff",
                   "nested": [
                     {
-                      "name": "dayOffCreate1",
-                      "key": "Create",
+                      "name": "dailyDayOffStart",
+                      "key": "Daily",
                       "nested": [
                         {
-                          "name": "dayOffCreate2",
-                          "key": "any",
+                          "name": "dayOffCreate1",
+                          "key": "Create",
                           "nested": [
                             {
-                              "name": "dayOffCreate3",
+                              "name": "dayOffCreate2",
                               "key": "any",
                               "nested": [
                                 {
-                                  "name": "dayOffCreate4",
+                                  "name": "dayOffCreate3",
                                   "key": "any",
                                   "nested": [
                                     {
-                                      "name": "dayOffCreate5",
+                                      "name": "dayOffCreate4",
+                                      "key": "any",
+                                      "nested": [
+                                        {
+                                          "name": "dayOffCreate5",
+                                          "key": "any",
+                                          "nested": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dayOffView1",
+                          "key": "View",
+                          "nested": [
+                            {
+                              "name": "dayOffView2",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "dayOffView3",
+                                  "key": "any",
+                                  "nested": [
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dayOffCancel1",
+                          "key": "Delete",
+                          "nested": [
+                            {
+                              "name": "dayOffCancel2",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "dayOffCancel3",
+                                  "key": "any",
+                                  "nested": [
+                                    {
+                                      "name": "dayOffCancel4",
                                       "key": "any",
                                       "nested": []
                                     }
@@ -157,39 +204,74 @@
                       ]
                     },
                     {
-                      "name": "dayOffView1",
-                      "key": "View",
+                      "name": "periodDayOffStart",
+                      "key": "Period",
                       "nested": [
                         {
-                          "name": "dayOffView2",
-                          "key": "any",
+                          "name": "periodDayOffCreate1",
+                          "key": "Create",
                           "nested": [
                             {
-                              "name": "dayOffView3",
-                              "key": "any",
-                              "nested": [
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "name": "dayOffCancel1",
-                      "key": "Delete",
-                      "nested": [
-                        {
-                          "name": "dayOffCancel2",
-                          "key": "any",
-                          "nested": [
-                            {
-                              "name": "dayOffCancel3",
+                              "name": "periodDayOffCreate2",
                               "key": "any",
                               "nested": [
                                 {
-                                  "name": "dayOffCancel4",
+                                  "name": "periodDayOffCreate3",
                                   "key": "any",
-                                  "nested": []
+                                  "nested": [
+                                    {
+                                      "name": "periodDayOffCreate4",
+                                      "key": "any",
+                                      "nested": [
+                                        {
+                                          "name": "periodDayOffCreate5",
+                                          "key": "any",
+                                          "nested": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dayOffView1",
+                          "key": "View",
+                          "nested": [
+                            {
+                              "name": "dayOffView2",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "dayOffView3",
+                                  "key": "any",
+                                  "nested": [
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "periodDayOffCancel1",
+                          "key": "Delete",
+                          "nested": [
+                            {
+                              "name": "periodDayOffCancel2",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "periodDayOffCancel3",
+                                  "key": "any",
+                                  "nested": [
+                                    {
+                                      "name": "periodDayOffCancel4",
+                                      "key": "any",
+                                      "nested": []
+                                    }
+                                  ]
                                 }
                               ]
                             }

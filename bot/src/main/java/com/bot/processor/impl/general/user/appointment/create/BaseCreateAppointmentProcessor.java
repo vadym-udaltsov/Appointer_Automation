@@ -36,7 +36,7 @@ public class BaseCreateAppointmentProcessor {
         messagesToLocalize.add(LString.empty());
 
         MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, clientContext == null ? context : clientContext,
-                MessageTemplate.APPOINTMENT_ALL_FIELDS);
+                MessageTemplate.APPOINTMENT_ALL_FIELDS, department);
         List<LString> adminMessages = MessageUtils.buildNotificationForAdmins(messagesToLocalize,
                 clientContext == null ? context : clientContext, department);
         sendMessageService.sendNotificationToAdmins(adminMessages, department);

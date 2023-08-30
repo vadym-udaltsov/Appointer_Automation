@@ -38,14 +38,14 @@ public class AppointmentsByDateSecondStepProcessor extends AppointmentsAdminProc
         long nextMonthEndDate = DateUtils.getEndOfMonthDate(department, isNextMonth);
         List<Appointment> appointments = getAppointmentSupplier(request, startDate, nextMonthEndDate).get();
         Set<String> appointmentsDates = appointments.stream()
-                .map(a -> DateUtils.getDayTitle(a.getDate()))
+                .map(a -> DateUtils.getDayTitle(a.getDate(), department))
                 .collect(Collectors.toSet());
         if (Constants.NEXT_MONTH.equals(selectedDay) || Constants.CURRENT_MONTH.equals(selectedDay)
                 || Constants.BACK.equals(selectedDay) || Constants.HOME.equals(selectedDay)
                 || appointmentsDates.contains(selectedDay)) {
             return buildResponse(request);
         }
-        ContextUtils.setPreviousStep(context);
+        ContextUtils.resetLocationToPreviousStep(context);
         return MessageUtils.buildDatePicker(appointmentsDates, Constants.Messages.INCORRECT_DATE, isNextMonth, department);
     }
 }

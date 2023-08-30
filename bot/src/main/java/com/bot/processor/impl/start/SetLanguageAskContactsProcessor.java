@@ -33,7 +33,7 @@ public class SetLanguageAskContactsProcessor implements IProcessor {
         String languageName = MessageUtils.getTextFromUpdate(update);
         Language language = Language.fromValue(languageName);
         if (language == null) {
-            ContextUtils.setPreviousStep(context);
+            ContextUtils.resetLocationToPreviousStep(context);
             log.warn(MarkerFactory.getMarker("SEV3"), "Default dictionary will be used");
             return Collections.singletonList(MessageUtils.getLanguageMessageHolder());
         }

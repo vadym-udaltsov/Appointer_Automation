@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class Appointment extends DynamoDbEntity {
-    private static final String HASH_KEY = "s";
-    private static final String RANGE_KEY = "d";
+    public static final String HASH_KEY = "s";
+    public static final String RANGE_KEY = "d";
     public static final String TABLE_NAME = "appointment";
     public static final String DEP_INDEX_NAME = "did-d-index";
     public static final String USER_INDEX_NAME = "uid-d-index";
