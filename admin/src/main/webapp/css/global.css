@@ -44,7 +44,7 @@ button:focus {
 }
 
 /* Not Registered Message */
-.notRegisteredMessage, .waitMessage {
+.notRegisteredMessage {
     position: absolute;
     top: 10%;
     left: 50%;
@@ -62,18 +62,14 @@ button:focus {
     border-radius: 5px;
 }
 
-.waitMessage {
-    background-color: #3c4177;
-}
-
-.notRegisteredMessage p, .waitMessage p {
+.notRegisteredMessage p {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 
-.close_notRegisteredMessage, .close_waitMessage {
+.close_notRegisteredMessage {
     position: absolute;
     top: -8px;
     right: 5px;
@@ -101,13 +97,13 @@ button:focus {
 }
 
 @media (max-width: 1600px) {
-    .notRegisteredMessage, .waitMessage  {
+    .notRegisteredMessage {
         top: 10%;
     }
 }
 
 @media (max-width: 1400px) {
-    .notRegisteredMessage, .waitMessage {
+    .notRegisteredMessage {
         top: 13%;
     }
 }

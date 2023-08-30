@@ -57,26 +57,6 @@ body {
     color: black;
 }
 
-.bot_name_container {
-    margin-left: 265px;
-    font-size: 25px;
-    height: 38px;
-    color: black;
-    white-space: nowrap;
-    padding-left: 10px;
-    padding-right: 10px;
-    display: flex;
-    font-weight: 400;
-    align-items: center;
-}
-}
-
-.bot_title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 #logout_container {
     display: flex;
     justify-content: space-between;

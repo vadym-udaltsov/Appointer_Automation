@@ -91,7 +91,7 @@ select,
   width: 274px !important;
 }
 
-.typeDep-select {
+.createDep_Fields {
     width: 250px !important;
     margin-top: 0.5em;
 }
@@ -111,12 +111,12 @@ select,
   margin-left: 13px;
 }
 
-.typeDep-group {
+.createDep_Group {
     margin-left: 14px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
-.typeDep-group-title {
+.createDep_Group_Titles {
     width: 100px;
     margin-right: 15px;
 }
@@ -238,5 +238,13 @@ select,
   color: #fff;
   font-size: 12px;
   text-align: center;
+}
+
+.refreshToken_btn {
+    width: 160px !important;
+    margin-right: 80px !important;
+    background-color: #867A6C !important;
+    color: #fff;
+    font-weight: 400;
 }
 

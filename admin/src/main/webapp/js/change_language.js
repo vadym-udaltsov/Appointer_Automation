@@ -43,6 +43,11 @@ function changeLanguage() {
         element.placeholder = langArr.newPhonePlaceholder[selectedLanguage];
     });
 
+    var enterNewToken = document.querySelectorAll('.enterToken');
+    enterNewToken.forEach(function(element) {
+        element.placeholder = langArr.tokenPlaceholder[selectedLanguage];
+    });
+
     for (var key in langArr) {
         var elem = document.querySelectorAll('.lng-' + key);
         if (elem) {

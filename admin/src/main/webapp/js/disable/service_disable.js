@@ -211,3 +211,78 @@ update_cancelBtn.addEventListener('click', function () {
 });
 
 initializeUpdateForm();
+
+/* Verify that new value not equals to prev.values*/
+var prevUpdateNameValue = "";
+var prevUpdateDurationValue = "";
+var prevUpdatePriceValue = "";
+
+function waitUntil(conditionFn, interval = 100) {
+    return new Promise((resolve) => {
+        const intervalId = setInterval(() => {
+            if (conditionFn()) {
+                clearInterval(intervalId);
+                resolve();
+            }
+        }, interval);
+    });
+}
+
+async function verifyServiceFieldsValue() {
+    await waitUntil(() => window.dataLoaded === true);
+
+    const updateButtons = document.querySelectorAll('.service_updateOpenBtn');
+    updateButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            await waitUntil(() => {
+                const popup = document.getElementById('service_UpdateModal');
+                const popupStyle = window.getComputedStyle(popup);
+                return popupStyle.display === 'block';
+            });
+              prevUpdateNameValue = document.getElementById('update-service_newNameInput').value;
+              prevUpdateDurationValue = document.getElementById('update-service_newDurationInput').value;
+              prevUpdatePriceValue = document.getElementById('update-service_newPriceInput').value;
+
+            const update_fields = [
+                { inputId: 'update-service_newNameInput', prevValue: prevUpdateNameValue },
+                { inputId: 'update-service_newDurationInput', prevValue: prevUpdateDurationValue },
+                { inputId: 'update-service_newPriceInput', prevValue: prevUpdatePriceValue }
+            ];
+
+            update_fields.forEach(field => {
+                const input = document.getElementById(field.inputId);
+                input.addEventListener('input', function () {
+                    verifyServiceFields(field.inputId, field.prevValue);
+                });
+            });
+        });
+    });
+}
+
+verifyServiceFieldsValue();
+
+function verifyServiceFields(inputId, prevValue) {
+    const inputValue = document.getElementById(inputId).value;
+    const updateBtn = document.querySelector('#update-service_UpdateBtn');
+    const errorMessage = document.querySelector(`.${inputId}-error-message`);
+
+
+    if (inputValue === prevValue) {
+        updateBtn.disabled = true;
+        errorMessage.textContent = 'The value cannot be equal to the previous one';
+        errorMessage.style.display = 'block';
+    } else if(inputValue === '') {
+        updateBtn.disabled = true;
+        errorMessage.style.display = 'none';
+    } else {
+        updateBtn.disabled = false;
+        errorMessage.style.display = 'none';
+    }
+}
+
+const service_errorMessages = document.querySelectorAll('.error-message');
+document.getElementById('update-service_CancelBtn').addEventListener('click', function() {
+    service_errorMessages.forEach(function(errorMessage) {
+      errorMessage.style.display = 'none';
+    });
+  });

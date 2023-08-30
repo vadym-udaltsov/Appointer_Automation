@@ -11,8 +11,6 @@ $(window).on('load', function() {
     hideElements();
 
     choose_depNameSelect.append('<option value="Loading...">Loading...</option>');
-    update_timeZoneSelect.append('<option value="Loading...">Loading...</option>');
-    typeSelect.append('<option value="Loading...">Loading...</option>');
 
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
 
@@ -69,11 +67,12 @@ $(window).on('load', function() {
         var department = new Object();
         department.name = $("#depName_create").val();
         department.email = localStorage.getItem('customer');
-        department.tp = $("#update_depTypeSelect").val();
+        department.type = $("#update_depTypeSelect").val();
+        department.zone = $("#create_timeZoneSelect").val();
+        department.botToken = $("#add_depTokenInput").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/create');
         $("#department_CreateModal").modal("hide");
         document.getElementById('notRegisteredContainer').style.display = 'none';
-        document.getElementById('waitMessageContainer').style.display = 'block';
         document.getElementById('department_CreatePopup').disabled = true;
         localStorage.setItem('createBtnClicked', 'true');
         return false;
@@ -89,6 +88,8 @@ $(window).on('load', function() {
 });
 
 var email = localStorage.getItem('customer');
+var create_timeZoneSelect = $("#create_timeZoneSelect");
+
 
 function relocateToPage(depType) {
    switch(depType)
@@ -175,7 +176,7 @@ function loadDataForTables(selectedDepartmentData) {
   window.dataLoaded = true;
 }
 
-function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect, dataLoaded) {
+function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect,  dataLoaded) {
   $.ajax({
     url: url,
     type: 'get',
@@ -184,6 +185,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         document.getElementById('spinner_loading').style.display = 'flex';
         choose_depNameSelect.empty();
         update_timeZoneSelect.empty();
+        create_timeZoneSelect.empty();
         typeSelect.empty();
 
         var createServiceBtn  = document.getElementById('service_createOpenBtn');
@@ -194,7 +196,6 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         if(data.customerDepartments.length === 0) {
             if (data.registered == false) {
                 localStorage.setItem('createBtnClicked', 'false');
-                document.getElementById('waitMessageContainer').style.display = 'none';
                 document.getElementById('notRegisteredContainer').style.display = 'block';
                 document.getElementById('department_CreatePopup').disabled = false;
                 if(data.admin) {
@@ -208,14 +209,16 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                         typeSelect.append(firstType);
                     }
                 }
+                $.each(data.availableZones, function () {
+                    var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
+                    create_timeZoneSelect.append(timeZone);
+                });
             } else {
-                document.getElementById('waitMessageContainer').style.display = 'block';
                 document.getElementById('department_CreatePopup').disabled = true;
                 document.getElementById('notRegisteredContainer').style.display = 'none';
             }
             document.getElementById('department_CreatePopup').style.display = 'block';
             document.getElementById('department_UpdatePopup').style.display = 'none';
-            document.getElementById('bot_name_section').style.display = 'none';
 
             createServiceBtn.disabled = true;
             createSpecialistBtn.disabled = true;
@@ -234,8 +237,6 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             changeLanguage();
             localStorage.setItem('lastSelectedOption', data.customerDepartments[0].n);
             var lastSelectedOption = localStorage.getItem('lastSelectedOption');
-            var botNameSpan = document.getElementById('bot_name_value');
-            botNameSpan.textContent = data.customerDepartments[0].bun;
 
             $.each(data.customerDepartments, function (i, department) {
                 var name = $("<option value='" + JSON.stringify(department) + "'></option>").text(this.n);
@@ -311,49 +312,6 @@ function loadDataFromSelectedDep(url, typeSelect, choose_depNameSelect, update_t
         }
     }
   });
-}
-
-function activateButton() {
-  $('#department_link').addClass('btn-active');
-}
-
-document.getElementById('close_updateDepBtn').addEventListener('click', function () {
-    var updateDepBtn = document.getElementById('update_DepBtn');
-    updateDepBtn.disabled = false;
-});
-
-function validateInput(input) {
-  input.value = input.value.replace(/\D/g, '');
-}
-
-function validateUpdateDepInput(input, inputType) {
-  var value = parseInt(input.value, 10);
-
-  if (value < 1) {
-    input.value = 1;
-  } else if (value > 24) {
-    input.value = 24;
-  }
-
-  var startWork = parseInt(document.getElementById('startWork').value, 10);
-  var finishWork = parseInt(document.getElementById('finishWork').value, 10);
-  var updateDepBtn = document.getElementById('update_DepBtn');
-
-  if (isNaN(startWork) || isNaN(finishWork) || startWork > finishWork) {
-    updateDepBtn.disabled = true;
-  } else if(startWork == '' || finishWork == '') {
-    updateDepBtn.disabled = true;
-  } else {
-    updateDepBtn.disabled = false;
-  }
-}
-
-function updateCharCount() {
-  const depNameInput = document.getElementById("depName_create");
-  const charCount = depNameInput.value.length;
-  const charCounter = document.getElementById("charCounter");
-
-  charCounter.textContent = `${charCount}/30`;
 }
 
 

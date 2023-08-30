@@ -231,3 +231,73 @@ specialist_update_cancelBtn.addEventListener('click', function () {
 });
 
 initializeSpecialistUpdateForm();
+
+/* Verify that new value not equals to prev.values*/
+var prevUpdateNameValue = "";
+var prevUpdatePhoneValue = "";
+
+function waitUntil(conditionFn, interval = 100) {
+    return new Promise((resolve) => {
+        const intervalId = setInterval(() => {
+            if (conditionFn()) {
+                clearInterval(intervalId);
+                resolve();
+            }
+        }, interval);
+    });
+}
+
+async function verifySpecialistFieldsValue() {
+    await waitUntil(() => window.dataLoaded === true);
+
+    const updateButtons = document.querySelectorAll('.specialist_updateOpenBtn');
+    updateButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            await waitUntil(() => {
+                const popup = document.getElementById('specialist_UpdateModal');
+                const popupStyle = window.getComputedStyle(popup);
+                return popupStyle.display === 'block';
+            });
+              prevUpdateNameValue = document.getElementById('update-specialist_newNameInput').value;
+              prevUpdatePhoneValue = document.getElementById('update-specialist_newPhoneInput').value;
+            const specialist_update_fields = [
+                { inputId: 'update-specialist_newNameInput', prevValue: prevUpdateNameValue },
+                { inputId: 'update-specialist_newPhoneInput', prevValue: prevUpdatePhoneValue },
+            ];
+
+            specialist_update_fields.forEach(field => {
+                const input = document.getElementById(field.inputId);
+                input.addEventListener('input', function () {
+                    verifySpecialistFields(field.inputId, field.prevValue);
+                });
+            });
+        });
+    });
+}
+
+verifySpecialistFieldsValue();
+
+function verifySpecialistFields(inputId, prevValue) {
+    const inputValue = document.getElementById(inputId).value;
+    const updateBtn = document.querySelector('#update-specialist_UpdateBtn');
+    const errorMessage = document.querySelector(`.${inputId}-error-message`);
+
+    if (inputValue === prevValue) {
+        updateBtn.disabled = true;
+        errorMessage.textContent = 'The value cannot be equal to the previous one';
+        errorMessage.style.display = 'block';
+    } else if(inputValue === '') {
+        updateBtn.disabled = true;
+        errorMessage.style.display = 'none';
+    } else {
+        updateBtn.disabled = false;
+        errorMessage.style.display = 'none';
+    }
+}
+
+const specialist_errorMessages = document.querySelectorAll('.error-message');
+document.getElementById('update-specialist_CancelBtn').addEventListener('click', function() {
+    specialist_errorMessages.forEach(function(errorMessage) {
+      errorMessage.style.display = 'none';
+    });
+  });

@@ -83,8 +83,6 @@ function loadServiceData(url, value, nameSelect) {
                 document.getElementById("update-service_newNameInput").value = value.name;
                 document.getElementById("update-service_newDurationInput").value = value.duration;
                 document.getElementById("update-service_newPriceInput").value = value.price;
-
-                console.log("Service Data: " + data);
                 resolve();
             },
             error: function(data) {
@@ -94,42 +92,6 @@ function loadServiceData(url, value, nameSelect) {
             reject("Ошибка при выполнении запроса");
             }
         });
-    });
-}
-
-function executePut(data, url) {
-    $.ajax({
-        type: 'put',
-        url: url,
-        contentType: "application/json",
-        dataType: 'JSON',
-        data: data,
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (data) {
-            if (data.status === 0) {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-        }
-    });
-}
-
-function executeDelete(data, url) {
-    $.ajax({
-        type: 'delete',
-        url: url,
-        contentType: "application/json",
-        dataType: 'JSON',
-        data: data,
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (data) {
-            if (data.status === 0) {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-        }
     });
 }
 

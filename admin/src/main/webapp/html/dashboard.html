@@ -38,9 +38,6 @@
                     <button type="submit" class="nav-button lng-reports" id="reportsRef">Reports</button>
                 </li>
             </ul>
-            <div id="bot_name_section" class="bot_name_container">
-                <p class="bot_title"><span class="lng-botName">Bot link:@ </span><span id="bot_name_value"></span></p>
-            </div>
         </div>
         <div id="logout_container">
             <div class="language-container">
@@ -73,7 +70,7 @@
                 </button>
                 <button type="button" class="sub-button create-dep lng-createDepartment" data-toggle="modal"
                         data-target="#department_CreateModal" id="department_CreatePopup">
-                    Create Bot
+                    Create Department
                 </button>
             </div>
         </div>
@@ -81,14 +78,8 @@
 
     <div class="notRegisteredMessage" id="notRegisteredContainer" style="display: none;">
         <span class="close_notRegisteredMessage">×</span>
-        <p class="lng-notRegisteredMessage">You haven't bot. You need to create it.</p>
+        <p class="lng-notRegisteredMessage">You haven't department. You need to create it.</p>
     </div>
-
-    <div class="waitMessage" id="waitMessageContainer" style="display: none;">
-        <span class="close_waitMessage">×</span>
-        <p class="lng-waitMessage">Bot in the process of creation. Refresh the page after 2-3 minutes.</p>
-    </div>
-
 
     <!-- Service Container -->
     <div class="modal_container">
@@ -175,7 +166,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title lng-createDepartment">Create Bot</h5>
+                <h5 class="modal-title lng-createDepartment">Create Department</h5>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -186,9 +177,18 @@
                     <span class="depName_create_message lng-createMessage">The name cannot be changed later.</span>
                 </div>
             </div>
-            <div class="typeDep-group">
-                <p class="typeDep-group-title lng-depType">Type</p>
-                <select class="form-control typeDep-select" id="update_depTypeSelect"></select>
+            <div class="createDep_Group">
+                <p class="createDep_Group_Titles lng-depType">Type</p>
+                <select class="form-control createDep_Fields" id="update_depTypeSelect"></select>
+            </div>
+            <div class="createDep_Group">
+                <p class="createDep_Group_Titles lng-timeZone">Time zone</p>
+                <select class="form-control createDep_Fields" id="create_timeZoneSelect"></select>
+            </div>
+            <div class="createDep_Group">
+                <p class="createDep_Group_Titles lng-depToken">Token</p>
+                <input class="form-control createDep_Fields enterToken lng-tokenPlaceholder" id="add_depTokenInput" placeholder="Enter Token">
+                <small class="error-message lng-requiredField" id="token_addTokenError" style="color: red; display: none;"></small>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
@@ -231,10 +231,10 @@
                     </div>
                     <div class="hour_input-container">
                         <div class="col-md-9 start-hour-input">
-                            <input type="number" class="form-control" id="startWork" oninput="validateUpdateDepInput(this, 'startWork')" min="1" max="24">
+                            <input type="number" class="form-control" id="startWork" oninput="validateUpdateDepInput(this)" min="1" max="24">
                         </div>
                         <div class="col-md-9 finish-hour-input">
-                            <input type="number" class="form-control" id="finishWork" oninput="validateUpdateDepInput(this, 'finishWork')" min="1" max="24">
+                            <input type="number" class="form-control" id="finishWork" oninput="validateUpdateDepInput(this)" min="1" max="24">
                         </div>
                     </div>
                 </div>
@@ -286,9 +286,42 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="sub-button refreshToken_btn lng-refreshToken" data-toggle="modal"
+                        data-target="#department_TokenModal" id="department_UpdateTokenPopup">
+                    Refresh Token
+                </button>
                 <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="close_updateDepBtn">Cancel
                 </button>
                 <button type="button" class="btn btn-primary lng-updateBtn" id="update_DepBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Refresh Token Modal -->
+<div class="modal fade" id="department_TokenModal" tabindex="-1" style="width: 100%" aria-labelledby="department_TokenModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title lng-refreshToken">Refresh Token</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="update_TokenInput" class="update__asterisks lng-addNewToken"
+                               id="update_TokenLabel">Add new token</label>
+                        <input type="text" class="form-control enterToken lng-tokenPlaceholder" id="update_TokenInput"
+                               placeholder="Enter Token">
+                        <small class="error-message lng-requiredField" id="token_nameError" style="color: red; display: none;"></small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="update_Token_CancelBtn">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary lng-refreshBtn" id="token_updateBtn">Refresh</button>
             </div>
         </div>
     </div>
@@ -358,6 +391,7 @@
                                placeholder="Enter New Name">
                         <small class="update_error-message lng-requiredField" id="update_nameError" style="color: red; display: none;"></small>
                         <small class="error-message lng-duplicateServiceName" id="duplicateServiceUpdateError" style="color: red; display: none;"></small>
+                        <small class="error-message update-service_newNameInput-error-message" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="update-service_newDurationInput" class="update__asterisks lng-newDuration"
@@ -365,6 +399,7 @@
                         <input type="number" class="form-control enterDuration lng-durationPlaceholder" id="update-service_newDurationInput"
                                placeholder="Enter Duration">
                         <small class="update_error-message lng-requiredField" id="update_durationError" style="color: red; display: none;"></small>
+                        <small class="error-message update-service_newDurationInput-error-message" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="update-service_newPriceInput" class="update__asterisks lng-newPrice" id="service_updatePrice">New
@@ -372,6 +407,7 @@
                         <input type="number" class="form-control enterPrice lng-pricePlaceholder" id="update-service_newPriceInput"
                                placeholder="Enter Price">
                         <small class="update_error-message lng-requiredField" id="update_priceError" style="color: red; display: none;"></small>
+                        <small class="error-message update-service_newPriceInput-error-message" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
@@ -469,6 +505,7 @@
                                placeholder="Enter New Name">
                         <small class="update_error-message lng-requiredField" id="specialist_update_nameError" style="color: red; display: none;"></small>
                         <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistUpdateError" style="color: red; display: none;"></small>
+                        <small class="error-message update-specialist_newNameInput-error-message" style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="update-specialist_newPhoneInput" class="update__asterisks lng-newPhone"
@@ -477,6 +514,7 @@
                                placeholder="Enter New Phone Number" oninput="validatePhoneNumber(this)">
                         <small class="update_error-message lng-requiredField" id="specialist_update_phoneError" style="color: red; display: none;"></small>
                         <small class="update_error-message lng-notValidPhoneError" id="specialist_update_validPhoneError" style="color: red; display: none;"></small>
+                        <small class="error-message update-specialist_newPhoneInput-error-message" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
@@ -590,6 +628,7 @@
 <script type="text/javascript" src="../js/services/service.js"></script>
 <script type="text/javascript" src="../js/services/specialist.js"></script>
 <script type="text/javascript" src="../js/services/admin.js"></script>
+<script type="text/javascript" src="../js/services/refreshToken.js"></script>
 
 <script type="text/javascript" src="../js/tables/service_table.js"></script>
 <script type="text/javascript" src="../js/tables/specialist_table.js"></script>
@@ -605,7 +644,7 @@
 <script type="text/javascript" src="../js/spinner.js"></script>
 <script type="text/javascript" src="../js/notRegisteredMessage.js"></script>
 <script type="text/javascript" src="../js/logout.js"></script>
-<script type="text/javascript" src="../js/commons.js"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>
 </body>
 </html>

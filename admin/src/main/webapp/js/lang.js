@@ -21,11 +21,11 @@ const langArr = {
         "cnr": "Упдате Салон"
     },
     "createDepartment": {
-        "en": "Create bot",
-        "ua": "Створити бот",
-        "pl": "Utworzyć bot",
-        "ru": "Создать бот",
-        "cnr": "Направите бота"
+        "en": "Create Department",
+        "ua": "Створити Салон",
+        "pl": "Utworzyć Dział",
+        "ru": "Создать Салон",
+        "cnr": "Направите Салон"
     },
     "create": {
         "en": "Add New",
@@ -329,25 +329,11 @@ const langArr = {
         "cnr": "Уклоните администратора"
     },
     "notRegisteredMessage": {
-        "en": "You haven't bot. You need to create it.",
-        "ua": "У вас немає боту. Вам потрібно його створити.",
-        "pl": "Nie masz bota. Musisz go utworzyć.",
-        "ru": "У вас нет бота. Вам нужно создать его.",
-        "cnr": "Немате бота. Морате га креирати."
-    },
-    "waitMessage": {
-        "en": "Bot in the process of creation. Refresh the page after 2-3 minutes.",
-        "ua": "Бот в процесі створення. Оновіть сторінку через 2-3 хвилини.",
-        "pl": "Bot w trakcie tworzenia. Odśwież stronę po 2-3 minutach.",
-        "ru": "Бот в процессе создания. Обновите страницу через 2-3 минуты.",
-        "cnr": "Бот у процесу стварања. Освежите страницу након 2-3 минута."
-    },
-    "botName": {
-        "en": "Bot link: @",
-        "ua": "Посилання на бот: @",
-        "pl": "Link do bota: @",
-        "ru": "Ссылка на бот: @",
-        "cnr": "Линк до бота: @"
+        "en": "You haven't department. You need to create it.",
+        "ua": "У вас немає салону. Вам потрібно його створити.",
+        "pl": "Nie masz działu. Musisz go utworzyć.",
+        "ru": "У вас нет салона. Вам нужно создать его.",
+        "cnr": "Немате салонa. Морате га креирати."
     },
     "createMessage": {
         "en": "The name cannot be changed later.",
@@ -397,5 +383,40 @@ const langArr = {
         "pl": "Napisz nowy numer telefonu",
         "ru": "Введите новый номер телефона",
         "cnr": "Унесите нови број телефона"
+    },
+    "depToken": {
+        "en": "Token",
+        "ua": "Токен",
+        "pl": "Token",
+        "ru": "Токен",
+        "cnr": "Токен"
+    },
+    "refreshToken": {
+        "en": "Refresh Token",
+        "ua": "Оновити токен",
+        "pl": "Odśwież Token",
+        "ru": "Обновить маркер",
+        "cnr": "Освјежи Токен"
+    },
+    "addNewToken": {
+        "en": "Add new token",
+        "ua": "Додати новий токен",
+        "pl": "Dodaj nowy token",
+        "ru": "Добавить новый токен",
+        "cnr": "Додајте нови токен"
+    },
+    "tokenPlaceholder": {
+        "en": "Enter Token",
+        "ua": "Введіть токен",
+        "pl": "Wprowadź token",
+        "ru": "Введите токен",
+        "cnr": "Унесите токен"
+    },
+    "refreshBtn": {
+        "en": "Refresh",
+        "ua": "Оновити",
+        "pl": "Odśwież",
+        "ru": "Обновить",
+        "cnr": "Освјежи"
     }
 }
