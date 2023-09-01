@@ -52,9 +52,13 @@ public enum CommandType {
     GET_ALL_APPOINTMENTS_1(Constants.Processors.GET_ALL_APPOINTMENTS_1),
     GET_ALL_APPOINTMENTS_2(Constants.Processors.GET_ALL_APPOINTMENTS_2),
 
-    MASS_MESSAGING_1(Constants.Processors.MASS_MESSAGING_1),
-    MASS_MESSAGING_2(Constants.Processors.MASS_MESSAGING_2),
-    MASS_MESSAGING_3(Constants.Processors.MASS_MESSAGING_3),
+    SEND_MESSAGE_DASH(Constants.Processors.SEND_MESSAGE_DASH),
+    SEND_MESSAGE_TEXT_1(Constants.Processors.SEND_MESSAGE_TEXT_1),
+    SEND_MESSAGE_TEXT_2(Constants.Processors.SEND_MESSAGE_TEXT_2),
+    SEND_MESSAGE_TEXT_3(Constants.Processors.SEND_MESSAGE_TEXT_3),
+    SEND_MESSAGE_PHOTO_1(Constants.Processors.SEND_MESSAGE_PHOTO_1),
+    SEND_MESSAGE_PHOTO_2(Constants.Processors.SEND_MESSAGE_PHOTO_2),
+    SEND_MESSAGE_PHOTO_3(Constants.Processors.SEND_MESSAGE_PHOTO_3),
 
     DAY_OFF_START(Constants.Processors.DAY_OFF_START),
     DAILY_DAY_OFF_START(Constants.Processors.DAILY_DAY_OFF_START),

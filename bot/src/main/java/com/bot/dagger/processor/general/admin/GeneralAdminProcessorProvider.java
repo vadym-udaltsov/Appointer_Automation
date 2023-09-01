@@ -20,15 +20,20 @@ import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppoint
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentSecondStepProcessor;
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentThirdStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
+import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageFirstStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.SendTextMessageFirstStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageThirdStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageSecondStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.SendTextMessageSecondStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.SendTextMessageThirdStepProcessor;
+import com.bot.processor.impl.general.admin.messaging.ViewSendMessageDashProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffFourthStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffSecondStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.daily.CancelDayOffThirdStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffDashProcessor;
-import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffFourthStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffSecondStepProcessor;
-import com.bot.processor.impl.general.admin.dayoff.cancel.period.DeletePeriodDayOffThirdStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffFifthStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.create.daily.CreateDayOffFourthStepProcessor;
@@ -42,9 +47,6 @@ import com.bot.processor.impl.general.admin.dayoff.create.period.CreatePeriodDay
 import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffFirstStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffSecondStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffThirdStepProcessor;
-import com.bot.processor.impl.general.admin.messaging.MassMessagingFirstStepProcessor;
-import com.bot.processor.impl.general.admin.messaging.MassMessagingSecondStepProcessor;
-import com.bot.processor.impl.general.admin.messaging.MassMessagingThirdStepProcessor;
 import com.bot.service.IContextService;
 import com.bot.service.ISendMessageService;
 import com.commons.service.IAppointmentService;
@@ -200,25 +202,57 @@ public class GeneralAdminProcessorProvider {
     @Provides
     @Singleton
     @IntoMap
-    @CommandKey(CommandType.MASS_MESSAGING_1)
-    public IProcessor getMassMessagingFirst() {
-        return new MassMessagingFirstStepProcessor();
+    @CommandKey(CommandType.SEND_MESSAGE_DASH)
+    public IProcessor startSendMessageDash() {
+        return new ViewSendMessageDashProcessor();
     }
 
     @Provides
     @Singleton
     @IntoMap
-    @CommandKey(CommandType.MASS_MESSAGING_2)
-    public IProcessor getMassMessagingSecond() {
-        return new MassMessagingSecondStepProcessor();
+    @CommandKey(CommandType.SEND_MESSAGE_TEXT_1)
+    public IProcessor getSendMessageTextFirst() {
+        return new SendTextMessageFirstStepProcessor();
     }
 
     @Provides
     @Singleton
     @IntoMap
-    @CommandKey(CommandType.MASS_MESSAGING_3)
-    public IProcessor getMassMessagingThird(IContextService contextService, ISendMessageService sendMessageService) {
-        return new MassMessagingThirdStepProcessor(contextService, sendMessageService);
+    @CommandKey(CommandType.SEND_MESSAGE_TEXT_2)
+    public IProcessor getSendMessageTextSecond() {
+        return new SendTextMessageSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.SEND_MESSAGE_TEXT_3)
+    public IProcessor getSendMessageTextThird(IContextService contextService, ISendMessageService sendMessageService) {
+        return new SendTextMessageThirdStepProcessor(contextService, sendMessageService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.SEND_MESSAGE_PHOTO_1)
+    public IProcessor getSendMessagePhotoFirst() {
+        return new SendPhotoMessageFirstStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.SEND_MESSAGE_PHOTO_2)
+    public IProcessor getSendMessagePhotoSecond() {
+        return new SendPhotoMessageSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.SEND_MESSAGE_PHOTO_3)
+    public IProcessor getSendMessagePhotoThird(IContextService contextService, ISendMessageService sendMessageService) {
+        return new SendPhotoMessageThirdStepProcessor(contextService, sendMessageService);
     }
 
     // --------------------Day off -----------------------

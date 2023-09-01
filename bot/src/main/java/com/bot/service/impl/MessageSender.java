@@ -5,6 +5,8 @@ import com.commons.model.Department;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -21,6 +23,20 @@ public class MessageSender extends TelegramLongPollingBot implements IMessageSen
             execute(sendMessage);
         } catch (TelegramApiException e) {
             log.error("Could not send message to receiver chat: {}", chatId);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendPhoto(Department department, String photoId, String chatId) {
+        botToken = department.getToken();
+        SendPhoto sendPhoto = new SendPhoto();
+        sendPhoto.setChatId(chatId);
+        sendPhoto.setPhoto(new InputFile(photoId));
+        try {
+            execute(sendPhoto);
+        } catch (TelegramApiException e) {
+            log.error("Could not send image to receiver chat: {}", chatId);
             e.printStackTrace();
         }
     }

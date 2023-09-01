@@ -8,7 +8,6 @@ import com.bot.processor.IProcessor;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
-import com.bot.util.StringUtils;
 import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -16,7 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MassMessagingSecondStepProcessor implements IProcessor {
+public class SendTextMessageSecondStepProcessor implements IProcessor {
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
@@ -25,19 +24,19 @@ public class MassMessagingSecondStepProcessor implements IProcessor {
         String textFromUpdate = MessageUtils.getTextFromUpdate(update);
         List<String> buttons = List.of("Submit");
 
-        if (StringUtils.isBlank(textFromUpdate)) {
-            String message = Constants.Messages.INPUT_MESSAGE;
+        if (!update.getMessage().hasText()) {
+            String message = Constants.Messages.INPUT_MESSAGE_TEXT;
             ContextUtils.resetLocationToPreviousStep(context);
             return List.of(MessageUtils.buildKeyboardHolder(message, List.of(), List.of()));
         }
 
+        List<LString> messageLines = new ArrayList<>();
+
+        messageLines.add(LString.builder().title(Constants.Messages.SUBMIT_MESSAGE_TEXT).build());
         List<LString> submitMessageLines = new ArrayList<>();
         submitMessageLines.add(LString.builder().title(Constants.Messages.MASS_MESSAGE_HEADER).build());
         submitMessageLines.add(LString.builder().title(textFromUpdate).build());
         context.getParams().put(Constants.TEXT_FOR_SUBMIT, JsonUtils.convertObjectToString(submitMessageLines));
-
-        List<LString> messageLines = new ArrayList<>();
-        messageLines.add(LString.builder().title(Constants.Messages.SUBMIT_MESSAGE).build());
         messageLines.addAll(submitMessageLines);
 
         return List.of(MessageUtils.buildKeyboardHolder("", messageLines, buttons));

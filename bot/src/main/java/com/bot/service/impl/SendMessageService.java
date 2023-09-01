@@ -42,4 +42,10 @@ public class SendMessageService implements ISendMessageService {
             messageSender.sendMessage(department, message, String.valueOf(a.getUserId()));
         });
     }
+
+    @Override
+    public void sendPhotoToUsers(String photoFileId, List<Context> contextList, Department department) {
+        contextList.parallelStream()
+                .forEach(a -> messageSender.sendPhoto(department, photoFileId, String.valueOf(a.getUserId())));
+    }
 }

@@ -107,17 +107,44 @@
                   ]
                 },
                 {
-                  "name": "massMessaging1",
+                  "name": "sendMessageDash",
                   "key": "Mailing",
                   "nested": [
                     {
-                      "name": "massMessaging2",
-                      "key": "any",
+                      "name": "sendMessageText1",
+                      "key": "Send Text",
                       "nested": [
                         {
-                          "name": "massMessaging3",
-                          "key": "Submit",
-                          "nested": []
+                          "name": "sendMessageText2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "sendMessageText3",
+                              "key": "any",
+                              "nested": [
+
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "sendMessagePhoto1",
+                      "key": "Send Image",
+                      "nested": [
+                        {
+                          "name": "sendMessagePhoto2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "sendMessagePhoto3",
+                              "key": "any",
+                              "nested": [
+
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }

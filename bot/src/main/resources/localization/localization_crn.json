@@ -55,6 +55,11 @@
   "Mailing": "Slanje",
   "⭐ Attention ⭐": "⭐ Пажња ⭐",
   "Submit message text:": "Потврдите текст поруке:",
+  "Send Text": "Пошаљи текст",
+  "Send Image": "Пошаљите слику",
+  "Upload image": "Отпремите слику",
+  "Submit image sending": "Потврдите слање слике",
+
   "Appointment by phone": "Резервација путем телефона",
   "Cancel appointment by phone": "Откажите термин телефоном",
   "Enter client name using keyboard": "Унесите име клијента помоћу тастатуре",

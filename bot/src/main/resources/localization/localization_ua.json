@@ -50,6 +50,11 @@
   "Mailing": "Розсилка",
   "⭐ Attention ⭐": "⭐ Увага ⭐",
   "Submit message text:": "Підтвердіть текст повідомлення:",
+  "Send Text": "Надіслати текст",
+  "Send Image": "Надіслати зображення",
+  "Upload image": "Завантажте зображення",
+  "Submit image sending": "Підтвердіть відправку зображення",
+
   "You have no clients": "У тебе немає клієнтів",
   "Select client": "Вибери клієнта",
   "Select client from proposed": "Вибери доступного клієнта",

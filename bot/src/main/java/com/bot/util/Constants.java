@@ -52,6 +52,7 @@ public class Constants {
     public static final String AVAILABLE_BUTTONS = "availableButtons";
 
     public static final String TEXT_FOR_SUBMIT = "textForSubmit";
+    public static final String PHOTO_ID_FOR_SUBMIT = "photoIdForSubmit";
 
     public static final String NO_DAYS_OFF = "You have no non working days for current and next months";
 
@@ -61,6 +62,7 @@ public class Constants {
 
     public static final List<String> PROFILE_BUTTONS = List.of("Change language");
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
+    public static final List<String> VIEW_ADMIN_MESSAGES_BUTTONS = List.of("Send Text", "Send Image");
     public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
     public static final List<String> START_BLOCK_BUTTONS = List.of("Block user", "Unblock user");
     public static final List<String> START_DAYOFF_BUTTONS = List.of("Daily", "Period");
@@ -106,9 +108,13 @@ public class Constants {
         public static final String GET_ALL_APPOINTMENTS_1 = "getAllAppointments";
         public static final String GET_ALL_APPOINTMENTS_2 = "getAllAppointmentsByDate";
 
-        public static final String MASS_MESSAGING_1 = "massMessaging1";
-        public static final String MASS_MESSAGING_2 = "massMessaging2";
-        public static final String MASS_MESSAGING_3 = "massMessaging3";
+        public static final String SEND_MESSAGE_DASH = "sendMessageDash";
+        public static final String SEND_MESSAGE_TEXT_1 = "sendMessageText1";
+        public static final String SEND_MESSAGE_TEXT_2 = "sendMessageText2";
+        public static final String SEND_MESSAGE_TEXT_3 = "sendMessageText3";
+        public static final String SEND_MESSAGE_PHOTO_1 = "sendMessagePhoto1";
+        public static final String SEND_MESSAGE_PHOTO_2 = "sendMessagePhoto2";
+        public static final String SEND_MESSAGE_PHOTO_3 = "sendMessagePhoto3";
 
         public static final String DAY_OFF_START = "dayOffStart";
         public static final String DAILY_DAY_OFF_START = "dailyDayOffStart";
@@ -216,10 +222,12 @@ public class Constants {
     public static class Messages {
         public static final String SHARE_CONTACT = "Please share your phone number";
         public static final String SELECT_ACTION = "Select action";
-        public static final String INPUT_MESSAGE = "Input message text";
-        public static final String SUBMIT_MESSAGE = "Submit message text:";
+        public static final String INPUT_MESSAGE_TEXT = "Input message text";
+        public static final String INPUT_MESSAGE_IMAGE = "Upload image";
+        public static final String SUBMIT_MESSAGE_TEXT = "Submit message text:";
+        public static final String SUBMIT_MESSAGE_IMAGE = "Submit image sending";
         public static final String MASS_MESSAGE_HEADER = "⭐ Attention ⭐";
-        public static final String MESSAGES_SENT = "All messages sent to recipients";
+        public static final String ALL_MESSAGES_SENT = "All messages sent to recipients";
         public static final String SELECT_SPECIALIST = "Select specialist";
         public static final String INCORRECT_ACTION = "Select available option";
         public static final String INCORRECT_DATE = "Select available date";

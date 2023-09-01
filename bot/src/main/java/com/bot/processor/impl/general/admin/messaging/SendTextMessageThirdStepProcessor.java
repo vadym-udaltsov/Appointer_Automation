@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MassMessagingThirdStepProcessor implements IProcessor {
+public class SendTextMessageThirdStepProcessor implements IProcessor {
 
     private final IContextService contextService;
     private final ISendMessageService sendMessageService;
 
-    public MassMessagingThirdStepProcessor(IContextService contextService, ISendMessageService sendMessageService) {
+    public SendTextMessageThirdStepProcessor(IContextService contextService, ISendMessageService sendMessageService) {
         this.contextService = contextService;
         this.sendMessageService = sendMessageService;
     }
@@ -39,30 +39,28 @@ public class MassMessagingThirdStepProcessor implements IProcessor {
         String strategyKey = ContextUtils.getStrategyKey(context, department);
         List<LString> messages = new ArrayList<>();
         String submittedText = ContextUtils.getStringParam(context, Constants.TEXT_FOR_SUBMIT);
-        List<LString> submittedTextLines = JsonUtils.parseStringToObject(submittedText, new TypeReference<>() {
-        });
-
-        if (!"Submit".equals(textFromUpdate)) {
-            List<String> buttons = List.of("Submit");
-            List<LString> messageLines = new ArrayList<>();
-            messageLines.add(LString.builder().title(Constants.Messages.INCORRECT_ACTION).build());
-            messageLines.add(LString.builder().title(Constants.Messages.SUBMIT_MESSAGE).build());
-            messageLines.addAll(submittedTextLines);
-            ContextUtils.resetLocationToPreviousStep(context);
-            return List.of(MessageUtils.buildKeyboardHolder("", messageLines, buttons));
-        }
-
         List<Context> contextList = contextService.getUserContextsByDepartment(department);
         List<String> admins = department.getAdmins();
         List<Context> recipients = contextList.stream()
                 .filter(r -> !admins.contains(r.getPhoneNumber()))
                 .collect(Collectors.toList());
 
+        List<LString> submittedTextLines = JsonUtils.parseStringToObject(submittedText, new TypeReference<>() {
+        });
+        if (!"Submit".equals(textFromUpdate)) {
+            List<String> buttons = List.of("Submit");
+            List<LString> messageLines = new ArrayList<>();
+            messageLines.add(LString.builder().title(Constants.Messages.INCORRECT_ACTION).build());
+            messageLines.add(LString.builder().title(Constants.Messages.SUBMIT_MESSAGE_TEXT).build());
+            messageLines.addAll(submittedTextLines);
+            ContextUtils.resetLocationToPreviousStep(context);
+            return List.of(MessageUtils.buildKeyboardHolder("", messageLines, buttons));
+        }
+
         sendMessageService.sendNotificationToUsers(submittedTextLines, recipients, department);
 
-        messages.add(LString.builder().title(Constants.Messages.MESSAGES_SENT).build());
+        messages.add(LString.builder().title(Constants.Messages.ALL_MESSAGES_SENT).build());
         messages.add(LString.builder().title(Constants.Messages.SELECT_ACTION).build());
-
         ContextUtils.resetLocationToDashboard(context);
         return List.of(MessageUtils.buildDashboardHolder("", messages, strategyKey));
     }

@@ -49,6 +49,11 @@
   "Mailing": "Рассылка",
   "⭐ Attention ⭐": "⭐ Внимание ⭐",
   "Submit message text:": "Подтвердите текст сообщения:",
+  "Send Text": "Отправить текст",
+  "Send Image": "Отправить картинку",
+  "Upload image": "Загрузите изображение",
+  "Submit image sending": "Подтвердите отправку изображения",
+
   "You have no clients": "У тебя нет клиентов",
   "Select client": "Выбери клиента",
   "Select client from proposed": "Выбери доступного клиента",
