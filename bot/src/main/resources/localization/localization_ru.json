@@ -80,7 +80,7 @@
 
   "Select start date of period": "Выбери дату начала выходного",
   "Select end date of period": "Выбери дату конца выходного",
-  "Finish date should be after start date\nSelect available date": "Дата конца должна быть после даты начала",
+  "Finish date should be after start date\nSelect correct finish date": "Дата конца должна быть после даты начала\nВыбери правильную дату конца периода",
   "Day off period was created": "Выходной период создан",
   "Not needed": "Не отправлять",
   "Your appointment was cancelled": "Ваша запись отменена",

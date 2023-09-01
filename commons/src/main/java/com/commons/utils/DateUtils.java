@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
@@ -92,7 +93,7 @@ public class DateUtils {
     public static List<String> monthNames() {
         DateFormatSymbols format = new DateFormatSymbols();
         String[] months = format.getMonths();
-        return Arrays.stream(months).filter(m -> !"".equals(m)).collect(Collectors.toList());
+        return Arrays.stream(months).filter(m -> !"".equals(m)).map(String::toUpperCase).collect(Collectors.toList());
     }
 
     public static long nowZone(Department department) {
@@ -135,7 +136,6 @@ public class DateUtils {
                 .with(TemporalAdjusters.firstDayOfMonth());
         ZonedDateTime zdt = ZonedDateTime.of(endDateTime, ZoneId.of(department.getZone()));
         return zdt.toEpochSecond();
-//        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
     }
 
     public static long getEndOfMonthDate(Department department, boolean isNextMonth) {
@@ -180,12 +180,10 @@ public class DateUtils {
     }
 
     public static boolean isWholeDayAvailable(Department department, FreeSlot slot) {
-        int currentDay = getNumberOfCurrentDay(department);
         long startPoint = slot.getStartPoint();
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(startPoint), ZoneId.of(department.getZone()));
-//        LocalDate localDate = LocalDate.ofInstant(Instant.ofEpochSecond(startPoint), ZoneId.systemDefault());
-        long wholeDay = getPointOfDay(zonedDateTime.getMonth().getValue(), currentDay, department.getEndWork(), department)
-                - getPointOfDay(zonedDateTime.getMonth().getValue(), currentDay, department.getStartWork(), department);
+        long wholeDay = getPointOfDay(zonedDateTime.getMonth().getValue(), zonedDateTime.getDayOfMonth(), department.getEndWork(), department)
+                - getPointOfDay(zonedDateTime.getMonth().getValue(), zonedDateTime.getDayOfMonth(), department.getStartWork(), department);
         return slot.getDurationSec() == wholeDay;
     }
 

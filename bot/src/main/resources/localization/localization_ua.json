@@ -81,7 +81,7 @@
 
   "Select start date of period": "Вибери дату початку вихідного",
   "Select end date of period": "Вибери дату кінця вхиідного",
-  "Finish date should be after start date\nSelect available date": "Дата кінця повинна буди після дати початку",
+  "Finish date should be after start date\nSelect correct finish date": "Дата кінця повинна буди після дати початку\nВибери правильну дату кінця періода",
   "Day off period was created": "Вихідний період створено",
   "Your appointment was cancelled": "Запис скасовано",
   "Cancelled appointments made by bot.": "Скасовані записи зроблені ботом",

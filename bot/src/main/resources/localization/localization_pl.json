@@ -81,7 +81,7 @@
 
   "Select start date of period": "Wybierz datę rozpoczęcia",
   "Select end date of period": "Wybierz datę zakończenia",
-  "Finish date should be after start date\nSelect available date": "Data zakończenia musi być późniejsza od daty rozpoczęcia",
+  "Finish date should be after start date\nSelect correct finish date": "Data zakończenia musi być późniejsza od daty rozpoczęcia\nWybierz poprawną datę zakończenia",
   "Day off period was created": "Utworzono okres wakacyjny",
   "Your appointment was cancelled": "Twój wpis został anulowany",
   "Cancelled appointments made by bot.": "Anulowane wpisy dokonane przez bota",

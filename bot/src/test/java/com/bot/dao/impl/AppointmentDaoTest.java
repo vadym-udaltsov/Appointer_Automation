@@ -9,6 +9,9 @@ import com.commons.model.Department;
 import com.commons.utils.DateUtils;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class AppointmentDaoTest {
@@ -25,7 +28,7 @@ public class AppointmentDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     void shouldGetAppointmentsByPeriod() {
         Department department = new Department();
         department.setId("rxQdLSBE");
@@ -37,7 +40,7 @@ public class AppointmentDaoTest {
         System.out.println();
     }
 
-//    @Test
+    //    @Test
     void shouldCreateBatchApp() {
         Appointment appointment = new Appointment();
         appointment.setPhoneOrder(false);
@@ -86,14 +89,16 @@ public class AppointmentDaoTest {
         System.out.println();
     }
 
-    //    @Test
+//    @Test
     public void shouldGetAppointmentsByDay() {
-//        long startOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), false);
-//        long endOfDay = DateUtils.getStartOrEndOfDay(Integer.parseInt("7"), Integer.parseInt("20"), true);
+        ZonedDateTime start = ZonedDateTime.of(2023, 9, 4, 9, 0, 0, 0, ZoneId.of("Europe/Berlin"));
+        long startOfDay = start.toEpochSecond();
+        ZonedDateTime finish = start.plusDays(5);
+        long endOfDay = finish.toEpochSecond();
 //        System.out.println(DateUtils.getDateTitle(startOfDay));
 //        System.out.println(DateUtils.getDateTitle(endOfDay));
 
-//        List<Appointment> res = appointmentDao.getAppointmentsByUserId(538025182, startOfDay, endOfDay);
+        List<Appointment> res = appointmentDao.getAppointmentsByUserId(0, startOfDay, endOfDay);
         System.out.println();
     }
 

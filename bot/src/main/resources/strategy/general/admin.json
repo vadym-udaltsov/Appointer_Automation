@@ -264,17 +264,23 @@
                           ]
                         },
                         {
-                          "name": "dayOffView1",
+                          "name": "periodDayOffView1",
                           "key": "View",
                           "nested": [
                             {
-                              "name": "dayOffView2",
+                              "name": "periodDayOffView2",
                               "key": "any",
                               "nested": [
                                 {
-                                  "name": "dayOffView3",
+                                  "name": "periodDayOffView3",
                                   "key": "any",
                                   "nested": [
+                                    {
+                                      "name": "periodDayOffView4",
+                                      "key": "any",
+                                      "nested": [
+                                      ]
+                                    }
                                   ]
                                 }
                               ]

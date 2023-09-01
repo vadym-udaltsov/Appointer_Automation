@@ -37,6 +37,8 @@ public class KeyBoardUtils {
         Department department = (Department) params.get(Constants.DEPARTMENT);
         int selectedMonthNumber = (int) params.get(Constants.SELECTED_MONTH);
         int selectedYear = (int) params.get(Constants.SELECTED_YEAR);
+        List<String> dayOffs = (List) params.get("dayOffs");
+
         Context context = (Context) params.get(Constants.CONTEXT);
 
         Month selectedMonth = Month.of(selectedMonthNumber);
@@ -62,6 +64,7 @@ public class KeyBoardUtils {
 
         LocalDate date = LocalDate.of(selectedYear, selectedMonth, 1);
         int daysInMonth = selectedMonth.length(currentDate.isLeapYear());
+        Map<String, String> specNumbers = Constants.Numbers.SPEC_NUMBERS;
         List<String> availableDates = new ArrayList<>();
         for (int i = 1; i <= daysInMonth; i++) {
             if (i == 1 || date.getDayOfWeek().getValue() == 1) {
@@ -75,8 +78,12 @@ public class KeyBoardUtils {
                 buttonText = date.format(formatter);
                 availableDates.add(buttonText);
             }
+            String buttonTitle = buttonText;
+            if (dayOffs.contains(buttonText)) {
+                buttonTitle = specNumbers.get(buttonText);
+            }
             InlineKeyboardButton dateButton = new InlineKeyboardButton();
-            dateButton.setText(buttonText);
+            dateButton.setText(buttonTitle);
             dateButton.setCallbackData(buttonText.equals(Constants.UNAVAILABLE_DATE) ? Constants.IGNORE : buttonText);
             int previousMonthDays = date.getDayOfWeek().getValue() - i;
             if (i == 1 && previousMonthDays != 0) {
@@ -214,7 +221,6 @@ public class KeyBoardUtils {
         Set<String> busyDays = request.getButtonsMap().keySet();
 
         if (isNextMonth) {
-            System.out.println("Next month ---------------------------------------------");
             currentMonth++;
             today = 1;
             todayIsFinished = false;
@@ -258,8 +264,6 @@ public class KeyBoardUtils {
                     || (i == today && todayIsFinished)
                     || busyDays.contains(String.valueOf(i))
                     || nonWorkingDays.contains(dayOfWeek)) {
-                System.out.println("Busy days --------------------- " + JsonUtils.convertObjectToString(busyDays));
-                System.out.println(String.format("i = %s, today = %s, todayFinished = %s", i, today, todayIsFinished));
                 buttonText = Constants.UNAVAILABLE_DATE;
             } else {
                 buttonText = date.format(formatter);

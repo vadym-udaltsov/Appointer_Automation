@@ -8,6 +8,7 @@ import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.admin.dayoff.AbstractGetCalendarPeriodDayOff;
+import com.bot.processor.impl.general.admin.dayoff.DayOffFourthStepProcessor;
 import com.bot.service.IContextService;
 import com.bot.service.ISendMessageService;
 import com.bot.util.Constants;
@@ -18,7 +19,6 @@ import com.commons.model.Department;
 import com.commons.service.IAppointmentService;
 import com.commons.utils.DateUtils;
 import com.commons.utils.JsonUtils;
-import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -30,54 +30,41 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
-public class CreatePeriodDayOffFourthStepProcessor extends AbstractGetCalendarPeriodDayOff implements IProcessor {
+public class CreatePeriodDayOffFourthStepProcessor extends DayOffFourthStepProcessor implements IProcessor {
 
     private final IAppointmentService appointmentService;
     private final IContextService contextService;
     private final ISendMessageService sendMessageService;
 
+    public CreatePeriodDayOffFourthStepProcessor(IAppointmentService appointmentService, IContextService contextService,
+                                                 ISendMessageService sendMessageService) {
+        super(appointmentService);
+        this.contextService = contextService;
+        this.sendMessageService = sendMessageService;
+        this.appointmentService = appointmentService;
+    }
+
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
-        String message = Constants.Messages.SELECT_END_DATE;
+        return buildCommonResponse(request);
+    }
+
+    @Override
+    protected List<MessageHolder> buildCustomResponse(ProcessRequest request, int finishDay) {
         Department department = request.getDepartment();
         Context context = request.getContext();
-        Update update = request.getUpdate();
-        String selectedDate = MessageUtils.getTextFromUpdate(update);
-        List<String> months = DateUtils.monthNames();
-        if (months.contains(selectedDate)) {
-            ContextUtils.resetLocationToPreviousStep(context);
-            int prevMonth = ContextUtils.getIntParam(context, Constants.SELECTED_MONTH);
-            int prevYear = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
-            int yearOffset = DateUtils.getYearOffset(prevMonth, selectedDate);
-            return buildResponse(department, context, months.indexOf(selectedDate) + 1, message, prevYear + yearOffset);
-        }
-        List<String> availableDates = (List<String>) context.getParams().get(Constants.AVAILABLE_DATES);
-        if (!availableDates.contains(selectedDate)) {
-            ContextUtils.resetLocationToPreviousStep(context);
-            ZonedDateTime now = DateUtils.nowZoneDateTime(department);
-            int currentMonth = now.getMonth().getValue();
-            return buildResponse(department, context, currentMonth, Constants.Messages.INCORRECT_DATE, now.getYear());
-        }
+
         int finishYear = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
         int finishMonth = ContextUtils.getIntParam(context, Constants.SELECTED_MONTH);
-        int finishDate = Integer.parseInt(selectedDate);
 
         int startMonth = ContextUtils.getIntParam(context, "startMonth");
-        int startDate = ContextUtils.getIntParam(context, "startDay");
+        int startDay = ContextUtils.getIntParam(context, "startDay");
         int startYear = ContextUtils.getIntParam(context, "startYear");
 
-        if (finishMonth < startMonth
-                || (finishMonth == startMonth && finishDate <= startDate)) {
-            ContextUtils.resetLocationToPreviousStep(context);
-            ZonedDateTime now = DateUtils.nowZoneDateTime(department);
-            int currentMonth = now.getMonth().getValue();
-            return buildResponse(department, context, currentMonth, "Finish date should be after start " +
-                    "date\nSelect available date", now.getYear());
-        }
         String selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
-        long appStartDate = DateUtils.getStartOrEndOfDay(startYear, startMonth, startDate, false, department);
-        long appFinishDate = DateUtils.getStartOrEndOfDay(finishYear, finishMonth, finishDate, true, department);
+
+        long appStartDate = DateUtils.getStartOrEndOfDay(startYear, startMonth, startDay, false, department);
+        long appFinishDate = DateUtils.getStartOrEndOfDay(finishYear, finishMonth, finishDay, true, department);
         List<Appointment> appointments = appointmentService.getAppointmentsBySpecialist(department, selectedSpecialist,
                 appStartDate, appFinishDate);
         Map<Boolean, List<Appointment>> appointmentsByOrder = appointments.stream()
@@ -110,9 +97,9 @@ public class CreatePeriodDayOffFourthStepProcessor extends AbstractGetCalendarPe
         }
         adminMessages.add(LString.builder().title(adminMessage).build());
 
-        ZonedDateTime start = ZonedDateTime.of(startYear, startMonth, startDate, 0, 1, 0,
+        ZonedDateTime start = ZonedDateTime.of(startYear, startMonth, startDay, 0, 1, 0,
                 0, ZoneId.of(department.getZone()));
-        ZonedDateTime finish = ZonedDateTime.of(finishYear, finishMonth, finishDate, 23, 59, 0,
+        ZonedDateTime finish = ZonedDateTime.of(finishYear, finishMonth, finishDay, 23, 59, 0,
                 0, ZoneId.of(department.getZone()));
 
         createDaysOff(start, finish, selectedSpecialist, department);

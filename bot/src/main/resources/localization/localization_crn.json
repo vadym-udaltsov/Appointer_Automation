@@ -81,7 +81,7 @@
 
   "Select start date of period": "Изаберите датум почетка",
   "Select end date of period": "Изаберите датум завршетка",
-  "Finish date should be after start date\nSelect available date": "Датум завршетка мора бити после датума почетка",
+  "Finish date should be after start date\nSelect correct finish date": "Датум завршетка мора бити после датума почетка\nИзаберите тачан датум завршетка",
   "Day off period was created": "Период одмора креиран",
   "Your appointment was cancelled": "Ваш унос је отказан",
   "Cancelled appointments made by bot.": "Поништени уноси које је направио бот",

@@ -126,6 +126,16 @@ public class Constants {
         public static final String PERIOD_DAY_OFF_CREATE4 = "periodDayOffCreate4";
         public static final String PERIOD_DAY_OFF_CREATE5 = "periodDayOffCreate5";
 
+        public static final String PERIOD_DAY_OFF_DELETE1 = "periodDayOffCancel1";
+        public static final String PERIOD_DAY_OFF_DELETE2 = "periodDayOffCancel2";
+        public static final String PERIOD_DAY_OFF_DELETE3 = "periodDayOffCancel3";
+        public static final String PERIOD_DAY_OFF_DELETE4 = "periodDayOffCancel4";
+
+        public static final String PERIOD_DAY_OFF_VIEW1 = "periodDayOffView1";
+        public static final String PERIOD_DAY_OFF_VIEW2 = "periodDayOffView2";
+        public static final String PERIOD_DAY_OFF_VIEW3 = "periodDayOffView3";
+        public static final String PERIOD_DAY_OFF_VIEW4 = "periodDayOffView4";
+
         public static final String DAY_OFF_CREATE_START = "createDayOffStart";
         public static final String DAY_OFF_CREATE1 = "dayOffCreate1";
         public static final String DAY_OFF_CREATE2 = "dayOffCreate2";
@@ -155,10 +165,6 @@ public class Constants {
         public static final String CHANGE_LANG2 = "changeLanguage2";
 
         public static final String ADMIN_APP_DASH = "appointments";
-        public static final String PERIOD_DAY_OFF_DELETE1 = "periodDayOffCancel1";
-        public static final String PERIOD_DAY_OFF_DELETE2 = "periodDayOffCancel2";
-        public static final String PERIOD_DAY_OFF_DELETE3 = "periodDayOffCancel3";
-        public static final String PERIOD_DAY_OFF_DELETE4 = "periodDayOffCancel4";
     }
 
     public static class Numbers {
@@ -216,6 +222,20 @@ public class Constants {
             PERIOD_TITLES.put(15, "8:00");
             PERIOD_TITLES.put(16, "8:30");
             PERIOD_TITLES.put(17, "9:00");
+            PERIOD_TITLES.put(18, "9:30");
+            PERIOD_TITLES.put(19, "10:00");
+            PERIOD_TITLES.put(20, "10:30");
+            PERIOD_TITLES.put(21, "11:00");
+            PERIOD_TITLES.put(22, "11:30");
+            PERIOD_TITLES.put(23, "12:00");
+            PERIOD_TITLES.put(24, "12:30");
+            PERIOD_TITLES.put(25, "13:00");
+            PERIOD_TITLES.put(26, "13:30");
+            PERIOD_TITLES.put(27, "14:00");
+            PERIOD_TITLES.put(28, "14:30");
+            PERIOD_TITLES.put(29, "15:00");
+            PERIOD_TITLES.put(30, "15:30");
+            PERIOD_TITLES.put(31, "16:00");
         }
     }
 

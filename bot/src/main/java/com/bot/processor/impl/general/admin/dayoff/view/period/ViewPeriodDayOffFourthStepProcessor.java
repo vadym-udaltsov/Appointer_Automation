@@ -1,7 +1,10 @@
-package com.bot.processor.impl.general.admin.dayoff.cancel.period;
+package com.bot.processor.impl.general.admin.dayoff.view.period;
 
 import com.bot.model.Context;
+import com.bot.model.KeyBoardType;
+import com.bot.model.LString;
 import com.bot.model.MessageHolder;
+import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffFourthStepProcessor;
@@ -14,11 +17,12 @@ import com.commons.service.IAppointmentService;
 import com.commons.utils.DateUtils;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class DeletePeriodDayOffFourthStepProcessor extends DayOffFourthStepProcessor implements IProcessor {
+public class ViewPeriodDayOffFourthStepProcessor extends DayOffFourthStepProcessor implements IProcessor {
 
-    public DeletePeriodDayOffFourthStepProcessor(IAppointmentService appointmentService) {
+    public ViewPeriodDayOffFourthStepProcessor(IAppointmentService appointmentService) {
         super(appointmentService);
     }
 
@@ -47,9 +51,29 @@ public class DeletePeriodDayOffFourthStepProcessor extends DayOffFourthStepProce
         List<Appointment> dayOffs = appointmentService.getAppointmentsBySpecialist(department, selectedSpecialist,
                 appStartDate, appFinishDate);
         dayOffs.removeIf(a -> !Constants.DAY_OFF.equals(a.getService()));
-        appointmentService.delete(dayOffs);
-        ContextUtils.resetLocationToDashboard(context);
-        String strategyKey = ContextUtils.getStrategyKey(context, department);
-        return List.of(MessageUtils.buildDashboardHolder("Period day off was deleted", List.of(), strategyKey));
+
+        return getHolders(dayOffs, request);
+    }
+
+    protected List<MessageHolder> getHolders(List<Appointment> appointments, ProcessRequest request) {
+        Context context = request.getContext();
+        Department department = request.getDepartment();
+        List<LString> messagesToLocalize = new ArrayList<>();
+        if (appointments == null || appointments.size() == 0) {
+            messagesToLocalize.add(LString.builder().title("You have no days off for selected period").build());
+            ContextUtils.resetLocationToStep(context, "periodDayOffStart");
+            return MessageUtils.buildCustomKeyboardHolders("", Constants.ADMIN_APPOINTMENT_BUTTONS,
+                    KeyBoardType.TWO_ROW,messagesToLocalize, true);
+        }
+        messagesToLocalize.add(LString.builder().title("Your days off:").build());
+        messagesToLocalize.add(LString.empty());
+        for (Appointment appointment : appointments) {
+            MessageUtils.fillMessagesToLocalize(messagesToLocalize, appointment, null,
+                    MessageTemplate.DAY_OFF_ALL_FIELDS, department);
+            messagesToLocalize.add(LString.empty());
+        }
+        ContextUtils.resetLocationToStep(context, "periodDayOffStart");
+        return MessageUtils.buildCustomKeyboardHolders("", Constants.ADMIN_APPOINTMENT_BUTTONS,
+                KeyBoardType.TWO_ROW,messagesToLocalize, true);
     }
 }

@@ -85,6 +85,5 @@ public class ViewDayOffThirdStepProcessor extends AppointmentsSecondStepProcesso
             messagesToLocalize.add(LString.empty());
         }
         return MessageUtils.buildCustomKeyboardHolders("", List.of(), KeyBoardType.TWO_ROW, messagesToLocalize, false);
-//        return List.of(MessageUtils.buildDashboardHolder("Select action", messagesToLocalize, strategyKey));
     }
 }

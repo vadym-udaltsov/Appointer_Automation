@@ -75,6 +75,11 @@ public enum CommandType {
     PERIOD_DAY_OFF_CREATE4(Constants.Processors.PERIOD_DAY_OFF_CREATE4),
     PERIOD_DAY_OFF_CREATE5(Constants.Processors.PERIOD_DAY_OFF_CREATE5),
 
+    PERIOD_DAY_OFF_VIEW1(Constants.Processors.PERIOD_DAY_OFF_VIEW1),
+    PERIOD_DAY_OFF_VIEW2(Constants.Processors.PERIOD_DAY_OFF_VIEW2),
+    PERIOD_DAY_OFF_VIEW3(Constants.Processors.PERIOD_DAY_OFF_VIEW3),
+    PERIOD_DAY_OFF_VIEW4(Constants.Processors.PERIOD_DAY_OFF_VIEW4),
+
     DAY_OFF_CREATE_START(Constants.Processors.DAY_OFF_CREATE_START),
     DAY_OFF_CREATE1(Constants.Processors.DAY_OFF_CREATE1),
     DAY_OFF_CREATE2(Constants.Processors.DAY_OFF_CREATE2),
