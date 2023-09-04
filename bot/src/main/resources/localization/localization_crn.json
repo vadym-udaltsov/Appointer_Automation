@@ -88,6 +88,7 @@
   "Cancelled appointments made by phone.": "Поништени уноси направљени телефоном",
   "You can send the reason of cancelling appointments?\nType on keyboard": "\nПошаљите поруку са разлогом за отказивање?\nУкуцајте на тастатури",
 
+  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day" : "Максималан унос по дану: ${appNumber}. Више уноса се може извршити телефоном",
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специјалиста: ${specialist}",

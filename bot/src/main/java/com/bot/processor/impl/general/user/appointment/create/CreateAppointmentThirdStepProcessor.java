@@ -4,6 +4,8 @@ import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
 import com.bot.model.DatePickerRequest;
+import com.bot.model.LString;
+import com.commons.model.Appointment;
 import com.commons.model.FreeSlot;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
@@ -15,6 +17,7 @@ import com.bot.util.MessageUtils;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
+import com.commons.utils.DateUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -84,8 +87,23 @@ public class CreateAppointmentThirdStepProcessor extends AbstractGetCalendarProc
         }
 
         int dayNumber = Integer.parseInt(selectedDay);
-
         int year = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
+
+        long startOfDay = DateUtils.getStartOrEndOfDayWithYear(year, monthNumber, dayNumber, false, department);
+        long endOfDay = DateUtils.getStartOrEndOfDayWithYear(year, monthNumber, dayNumber, true, department);
+        List<Appointment> clientAppointments = appointmentService.getAppointmentsByUserId(context.getUserId(), startOfDay, endOfDay);
+
+        int appointmentsSize = clientAppointments.size();
+        if (department.getAppointmentsLimit() != 0 && appointmentsSize >= department.getAppointmentsLimit()) {
+            updateContextData(context, department, false);
+            datePickerRequest.setNextMonth(false);
+            LString message = LString.builder().title("Maximum number of appointments for day: ${appNUmber}. " +
+                            "You can make appointment by phone or select another day")
+                    .placeholders(Map.of("appNumber", String.valueOf(appointmentsSize))).build();
+            datePickerRequest.setLocalizedMessages(List.of(message));
+            return buildResponse(datePickerRequest);
+        }
+
         Map<String, List<FreeSlot>> slotsBySpecialists = appointmentService.getFreeSlotsByDepartment(department,
                 year, monthNumber, dayNumber);
         Integer serviceDurationMinutes = department.getServices().stream()

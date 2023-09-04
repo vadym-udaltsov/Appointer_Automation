@@ -88,6 +88,8 @@
   "Cancelled appointments made by phone.": "Отмененные записи сделанные по телефону",
   "You can send the reason of cancelling appointments?\nType on keyboard": "Отправить сообщение с причиной отмены записи?\nНабери на клавиатуре",
 
+  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day" : "Максимальное количество записей в день: ${appNumber}. Больше записей можно сделать по телефону",
+
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",

@@ -89,7 +89,9 @@ public class AbstractGetCalendarProcessor {
                 .buttonsMap(MessageUtils.buildButtons(List.of(), true))
                 .build();
         String messageText = StringUtils.isEmpty(message) ? "Select date" : message;
-        MessageHolder commonButtonsHolder = MessageUtils.holder(messageText, ButtonsType.KEYBOARD, commonsRequest);
+        MessageHolder commonButtonsHolder = MessageUtils.holder(messageText, ButtonsType.KEYBOARD, commonsRequest,
+                request.getLocalizedMessages());
+
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.TWO_ROW)
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(busyDayTitles), false))

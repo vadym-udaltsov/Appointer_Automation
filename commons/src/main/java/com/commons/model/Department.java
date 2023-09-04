@@ -99,6 +99,9 @@ public class Department extends DynamoDbEntity {
     @JsonProperty("bn")
     private String botName;
 
+    @JsonProperty("al")
+    private int appointmentsLimit;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
