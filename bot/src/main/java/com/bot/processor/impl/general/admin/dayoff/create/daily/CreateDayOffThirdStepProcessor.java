@@ -4,18 +4,18 @@ import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.ButtonsType;
 import com.bot.model.Context;
 import com.bot.model.DatePickerRequest;
-import com.commons.model.FreeSlot;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.processor.impl.general.user.appointment.create.AbstractGetCalendarProcessor;
-import com.commons.service.IAppointmentService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
-import com.commons.utils.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
+import com.commons.model.FreeSlot;
+import com.commons.service.IAppointmentService;
+import com.commons.utils.DateUtils;
 import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -72,7 +72,8 @@ public class CreateDayOffThirdStepProcessor extends AbstractGetCalendarProcessor
             return buildResponse(datePickerRequest);
         }
         int dayNumber = Integer.parseInt(selectedDay);
-        List<FreeSlot> freeSlots = appointmentService.getFreeSlotsBySpecialist(department, selectedSpecialist,
+        int year = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
+        List<FreeSlot> freeSlots = appointmentService.getFreeSlotsBySpecialist(department, selectedSpecialist, year,
                 monthNumber, dayNumber);
         freeSlots.sort(Comparator.comparingLong(FreeSlot::getStartPoint));
 

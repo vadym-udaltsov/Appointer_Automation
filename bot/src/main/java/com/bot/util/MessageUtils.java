@@ -1,6 +1,5 @@
 package com.bot.util;
 
-import com.commons.model.Appointment;
 import com.bot.model.BuildKeyboardRequest;
 import com.bot.model.Button;
 import com.bot.model.ButtonsType;
@@ -10,6 +9,7 @@ import com.bot.model.LString;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
+import com.commons.model.Appointment;
 import com.commons.model.Department;
 import com.commons.utils.DateUtils;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -21,8 +21,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import software.amazon.awssdk.utils.StringUtils;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -118,10 +116,12 @@ public class MessageUtils {
     }
 
     public static List<MessageHolder> buildDatePicker(Set<String> stringSet, String message, boolean isNextMonth,
-                                                      Department department) {
+                                                      Department department, Context context) {
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
                 .params(Map.of(
                         Constants.IS_NEXT_MONTH, isNextMonth,
+                        Constants.DEPARTMENT, department,
+                        Constants.CONTEXT, context,
                         Constants.USER_APPOINTMENTS, stringSet))
                 .build();
         Month month = DateUtils.nowZoneDateTime(department).getMonth();
@@ -143,7 +143,7 @@ public class MessageUtils {
     }
 
     public static List<MessageHolder> buildCustomKeyboardHolders(String message, List<String> buttonTitles, KeyBoardType keyBoardType,
-                                                         boolean withCommon) {
+                                                                 boolean withCommon) {
         ArrayList<MessageHolder> response = new ArrayList<>();
         BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
                 .type(keyBoardType)
@@ -260,10 +260,8 @@ public class MessageUtils {
         String service = appointment.getService();
         int duration = appointment.getDuration();
         long date = appointment.getDate();
-//        String dateTitle = DateUtils.getDateTitle(date);
         String dateTitle = DateUtils.getDateTitle(date, department);
         ZonedDateTime startDate = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.of(department.getZone()));
-//        LocalDateTime startDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
         ZonedDateTime endDate = startDate.plus(duration, ChronoUnit.MINUTES);
         String startTime = startDate.format(DateTimeFormatter.ofPattern("HH:mm"));
         String endTime = endDate.format(DateTimeFormatter.ofPattern("HH:mm"));

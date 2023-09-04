@@ -1,62 +1,31 @@
 package com.commons.utils;
 
-import com.commons.model.FreeSlot;
 import com.commons.model.Department;
+import com.commons.model.FreeSlot;
 
 import java.text.DateFormatSymbols;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 public class DateUtils {
 
-    public static long getPointOfDay(int month, int dayOfMonth, int hourOfDay, Department department) {
-        LocalDateTime localDateTime = LocalDate.now()
-                .atStartOfDay()
-                .withMonth(month)
-                .withDayOfMonth(dayOfMonth)
-                .with(ChronoField.HOUR_OF_DAY, hourOfDay);
-        return ZonedDateTime.of(localDateTime, ZoneId.of(department.getZone())).toEpochSecond();
+    public static long getPointOfDayWithYear(int year, int month, int dayOfMonth, int hourOfDay, Department department) {
+        ZonedDateTime zdt = ZonedDateTime.of(year, month, dayOfMonth, hourOfDay, 0, 0, 0, ZoneId.of(department.getZone()));
+        return zdt.toEpochSecond();
     }
 
-    public static long getPointOfDay(int month, int dayOfMonth, int hourOfDay, int minute, Department department) {
-        LocalDateTime localDateTime = LocalDate.now()
-                .atStartOfDay()
-                .withMonth(month)
-                .withDayOfMonth(dayOfMonth)
-                .with(ChronoField.HOUR_OF_DAY, hourOfDay)
-                .with(ChronoField.MINUTE_OF_HOUR, minute);
-        return ZonedDateTime.of(localDateTime, ZoneId.of(department.getZone())).toEpochSecond();
-    }
-
-    public static long getStartOrEndOfDay(int month, int dayOfMonth, boolean endOfDay, Department department) {
-        LocalDateTime localDateTime = LocalDate.now()
-                .atStartOfDay()
-                .withMonth(month)
-                .withDayOfMonth(dayOfMonth)
-                .plusDays(endOfDay ? 1 : 0);
-        return ZonedDateTime.of(localDateTime, ZoneId.of(department.getZone())).toEpochSecond();
-    }
-
-    public static long getStartOrEndOfDay(int year, int month, int dayOfMonth, boolean endOfDay, Department department) {
-        ZoneId zone = ZoneId.of(department.getZone());
-        return LocalDate.of(year, month, dayOfMonth)
-                .atStartOfDay(zone).plusDays(endOfDay ? 1 : 0)
-                .toEpochSecond();
+    public static long getStartOrEndOfDayWithYear(int year, int month, int dayOfMonth, boolean endOfDay, Department department) {
+        ZonedDateTime zdt = ZonedDateTime.of(year, month, dayOfMonth, 0, 1, 0, 0,
+                ZoneId.of(department.getZone())).plusDays(endOfDay ? 1 : 0);
+        return zdt.toEpochSecond();
     }
 
     public static int getYearOffset(int prevMonth, String newMonthName) {
@@ -99,7 +68,7 @@ public class DateUtils {
     public static long nowZone(Department department) {
         ZoneId zone = ZoneId.of(department.getZone());
         ZonedDateTime now = ZonedDateTime.now(zone);
-        return getPointOfDay(now.getMonthValue(), now.getDayOfMonth(), now.getHour(), now.getMinute(), department);
+        return now.toEpochSecond();
     }
 
     public static ZonedDateTime nowZoneDateTime(Department department) {
@@ -109,20 +78,13 @@ public class DateUtils {
 
     public static String getDayTitle(long date, Department department) {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.of(department.getZone()));
-//        LocalDate localDate = LocalDate.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
         return zonedDateTime.format(DateTimeFormatter.ofPattern("dd"));
     }
 
     public static String getMonthTitle(long date, Department department) {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.of(department.getZone()));
-//        LocalDate localDate = LocalDate.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
         return zonedDateTime.format(DateTimeFormatter.ofPattern("MM"));
     }
-
-//    public static String getDateTitle(long date) {
-//        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
-//        return dateTime.format(DateTimeFormatter.ofPattern("MM/dd,HH:mm"));
-//    }
 
     public static String getDateTitle(long date, Department department) {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.of(department.getZone()));
@@ -130,23 +92,26 @@ public class DateUtils {
     }
 
     public static long getStartOfMonthDate(Department department, boolean isNextMonth) {
-        LocalDateTime endDateTime = LocalDate.now()
-                .plusMonths(isNextMonth ? 1 : 0)
-                .atStartOfDay()
-                .with(TemporalAdjusters.firstDayOfMonth());
-        ZonedDateTime zdt = ZonedDateTime.of(endDateTime, ZoneId.of(department.getZone()));
+        ZoneId zone = ZoneId.of(department.getZone());
+        ZonedDateTime nowZdt = ZonedDateTime.now(zone).plusMonths(isNextMonth ? 1 : 0);
+        ZonedDateTime zdt = ZonedDateTime.of(nowZdt.getYear(), nowZdt.getMonthValue(), 1, 0, 1,
+                0, 0, zone);
         return zdt.toEpochSecond();
     }
 
     public static long getEndOfMonthDate(Department department, boolean isNextMonth) {
-        LocalDateTime endDateTime = LocalDate.now()
-                .plusMonths(isNextMonth ? 1 : 0)
-                .atStartOfDay()
-                .with(TemporalAdjusters.lastDayOfMonth())
-                .plusDays(1);
-        ZonedDateTime zdt = ZonedDateTime.of(endDateTime, ZoneId.of(department.getZone()));
+        ZoneId zone = ZoneId.of(department.getZone());
+        ZonedDateTime nowZdt = ZonedDateTime.now(zone).plusMonths(isNextMonth ? 2 : 1);
+        ZonedDateTime zdt = ZonedDateTime.of(nowZdt.getYear(), nowZdt.getMonthValue(), 1, 0, 1,
+                0, 0, zone);
         return zdt.toEpochSecond();
-//        return endDateTime.toEpochSecond(ZoneOffset.ofHours(-getHourOffset(department)));
+    }
+
+    public static ZonedDateTime getEndOfMonthZoneDateTime(Department department, boolean isNextMonth) {
+        ZoneId zone = ZoneId.of(department.getZone());
+        ZonedDateTime nowZdt = ZonedDateTime.now(zone).plusMonths(isNextMonth ? 2 : 1);
+        return ZonedDateTime.of(nowZdt.getYear(), nowZdt.getMonthValue(), 1, 0, 1,
+                0, 0, zone);
     }
 
     public static boolean isLastDayOfMonth(int year, int month, int day) {
@@ -164,26 +129,25 @@ public class DateUtils {
     public static int getNumberOfCurrentDay(Department department) {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of(department.getZone()));
         return now.getDayOfMonth();
-//        return LocalDateTime.now().plusHours(getHourOffset(department)).getDayOfMonth();
     }
 
     public static int getNumberOfCurrentMonth(Department department) {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of(department.getZone()));
         return now.getMonth().getValue();
-//        return LocalDateTime.now().plusHours(getHourOffset(department)).getMonth().getValue();
     }
 
     public static int getNumberOfCurrentYear(Department department) {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of(department.getZone()));
         return now.getYear();
-//        return LocalDateTime.now().plusHours(getHourOffset(department)).getYear();
     }
 
     public static boolean isWholeDayAvailable(Department department, FreeSlot slot) {
         long startPoint = slot.getStartPoint();
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(startPoint), ZoneId.of(department.getZone()));
-        long wholeDay = getPointOfDay(zonedDateTime.getMonth().getValue(), zonedDateTime.getDayOfMonth(), department.getEndWork(), department)
-                - getPointOfDay(zonedDateTime.getMonth().getValue(), zonedDateTime.getDayOfMonth(), department.getStartWork(), department);
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(startPoint), ZoneId.of(department.getZone()));
+        long wholeDay = getPointOfDayWithYear(zdt.getYear(), zdt.getMonth().getValue(), zdt.getDayOfMonth(),
+                department.getEndWork(), department)
+                - getPointOfDayWithYear(zdt.getYear(), zdt.getMonth().getValue(), zdt.getDayOfMonth(),
+                department.getStartWork(), department);
         return slot.getDurationSec() == wholeDay;
     }
 
@@ -193,7 +157,6 @@ public class DateUtils {
         List<String> titles = new ArrayList<>();
         while (startPoint + serviceDuration <= endPoint) {
             ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(startPoint), ZoneId.of(department.getZone()));
-//            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(startPoint), ZoneId.systemDefault());
             String title = zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
             titles.add(title);
             int currentMinute = zonedDateTime.getMinute();
@@ -215,11 +178,5 @@ public class DateUtils {
             }
         }
         return startMinute;
-    }
-
-    public static int getHourOffset(Department department) {
-        String zoneId = department.getZone();
-        TimeZone timeZone = TimeZone.getTimeZone(zoneId);
-        return timeZone.getOffset(Calendar.ZONE_OFFSET) / 3600 / 1000;
     }
 }

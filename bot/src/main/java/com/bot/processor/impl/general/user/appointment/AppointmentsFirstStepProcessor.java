@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.time.Month;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -47,9 +48,11 @@ public class AppointmentsFirstStepProcessor {
                 .collect(Collectors.toSet());
         appointmentDays.addAll(List.of(Constants.NEXT_MONTH, Constants.SELECTED_MONTH));
         context.getParams().put(Constants.AVAILABLE_DATES, appointmentDays);
-        Month month = DateUtils.nowZoneDateTime(department).getMonth();
+        ZonedDateTime nowZdt = DateUtils.nowZoneDateTime(department);
+        Month month = nowZdt.getMonth();
         context.getParams().put(Constants.MONTH, month.getValue());
-        return MessageUtils.buildDatePicker(appointmentDays, Constants.Messages.INCORRECT_DATE, false, department);
+        return MessageUtils.buildDatePicker(appointmentDays, Constants.Messages.INCORRECT_DATE, false,
+                department, context);
     }
 
     protected String getNoAppointmentsMessage() {

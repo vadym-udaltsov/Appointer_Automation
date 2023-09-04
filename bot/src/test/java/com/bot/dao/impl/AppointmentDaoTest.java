@@ -33,8 +33,8 @@ public class AppointmentDaoTest {
         Department department = new Department();
         department.setId("rxQdLSBE");
         department.setZone("Europe/Berlin");
-        long start = DateUtils.getStartOrEndOfDay(2023, 9, 12, false, department);
-        long finish = DateUtils.getStartOrEndOfDay(2023, 9, 16, true, department);
+        long start = DateUtils.getStartOrEndOfDayWithYear(2023, 9, 12, false, department);
+        long finish = DateUtils.getStartOrEndOfDayWithYear(2023, 9, 16, true, department);
 
         List<Appointment> appointments = appointmentDao.getAppointmentsBySpecialist("Oksana::rxQdLSBE", start, finish);
         System.out.println();

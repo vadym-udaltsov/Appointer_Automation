@@ -63,8 +63,8 @@ public class CreatePeriodDayOffFourthStepProcessor extends DayOffFourthStepProce
 
         String selectedSpecialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
 
-        long appStartDate = DateUtils.getStartOrEndOfDay(startYear, startMonth, startDay, false, department);
-        long appFinishDate = DateUtils.getStartOrEndOfDay(finishYear, finishMonth, finishDay, true, department);
+        long appStartDate = DateUtils.getStartOrEndOfDayWithYear(startYear, startMonth, startDay, false, department);
+        long appFinishDate = DateUtils.getStartOrEndOfDayWithYear(finishYear, finishMonth, finishDay, true, department);
         List<Appointment> appointments = appointmentService.getAppointmentsBySpecialist(department, selectedSpecialist,
                 appStartDate, appFinishDate);
         Map<Boolean, List<Appointment>> appointmentsByOrder = appointments.stream()

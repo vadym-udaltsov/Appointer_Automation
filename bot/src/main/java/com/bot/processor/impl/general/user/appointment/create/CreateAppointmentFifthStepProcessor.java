@@ -14,12 +14,10 @@ import com.commons.model.Appointment;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.service.IAppointmentService;
-import com.commons.utils.DateUtils;
 import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -47,12 +45,12 @@ public class CreateAppointmentFifthStepProcessor extends BaseCreateAppointmentPr
             return MessageUtils.buildCustomKeyboardHolders("Select time from proposed", availableSlots,
                     KeyBoardType.FOUR_ROW, true);
         }
-        int year = DateUtils.getNumberOfCurrentYear(department);
+        int year = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
         String[] timeParts = timeString.split(":");
         int hour = Integer.parseInt(timeParts[0]);
         int minute = Integer.parseInt(timeParts[1]);
-        LocalDateTime localDateTime = LocalDateTime.of(year, month, Integer.parseInt(day), hour, minute);
-        long appointmentDate = ZonedDateTime.of(localDateTime, ZoneId.of(department.getZone())).toEpochSecond();
+        long appointmentDate = ZonedDateTime.of(year, month, Integer.parseInt(day), hour, minute, 0, 0,
+                ZoneId.of(department.getZone())).toEpochSecond();
         CustomerService selectedService = department.getServices().stream()
                 .filter(s -> serviceName.equals(s.getName()))
                 .findFirst()

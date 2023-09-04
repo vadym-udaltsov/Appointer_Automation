@@ -5,13 +5,12 @@ import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.commons.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
-import com.commons.utils.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
+import com.commons.service.IAppointmentService;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -44,7 +43,7 @@ public class CreateDayOffFifthStepProcessor extends CreateDayOffProcessor implem
         int minute = ContextUtils.getIntParam(context, Constants.SELECTED_MINUTE);
 
         String specialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
-        int year = DateUtils.getNumberOfCurrentYear(department);
+        int year = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
 
         String[] timeParts = selectedPeriod.split(":");
         int durationHour = Integer.parseInt(timeParts[0]);

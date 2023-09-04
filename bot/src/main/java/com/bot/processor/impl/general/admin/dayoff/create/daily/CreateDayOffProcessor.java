@@ -1,21 +1,19 @@
 package com.bot.processor.impl.general.admin.dayoff.create.daily;
 
-import com.commons.model.Appointment;
 import com.bot.model.Context;
 import com.bot.model.LString;
 import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
-import com.commons.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
+import com.commons.model.Appointment;
 import com.commons.model.Department;
+import com.commons.service.IAppointmentService;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +26,8 @@ public class CreateDayOffProcessor {
 
     protected List<MessageHolder> createDayOff(Department department, Context context, String specialist, int year,
                                                int month, int day, int hour, int minute, int duration) {
-        LocalDateTime localDateTime = LocalDateTime.of(year, month, day, hour, minute);
-        long appointmentDate = ZonedDateTime.of(localDateTime, ZoneId.of(department.getZone())).toEpochSecond();
+        long appointmentDate = ZonedDateTime.of(year, month, day, hour, minute, 0, 0,
+                ZoneId.of(department.getZone())).toEpochSecond();
         Appointment appointment = Appointment.builder()
                 .id(String.format("%s::%s", specialist, department.getId()))
                 .service(Constants.DAY_OFF)

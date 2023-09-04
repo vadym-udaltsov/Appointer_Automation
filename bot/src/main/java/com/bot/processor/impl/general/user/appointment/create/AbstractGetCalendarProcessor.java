@@ -54,20 +54,19 @@ public class AbstractGetCalendarProcessor {
         }
 
         long startDate = DateUtils.nowZone(department);
-        LocalDateTime endDateTime = LocalDate.now()
-                .atStartOfDay()
-                .with(TemporalAdjusters.lastDayOfMonth())
-                .plusDays(1);
-        long endDate = ZonedDateTime.of(endDateTime, ZoneId.of(department.getZone())).toEpochSecond();
-
-        Month month = DateUtils.nowZoneDateTime(department).getMonth();
+        ZonedDateTime endZdt = DateUtils.getEndOfMonthZoneDateTime(department, false);
+        long endDate = endZdt.toEpochSecond();
+        ZonedDateTime nowZdt = DateUtils.nowZoneDateTime(department);
+        Month month = nowZdt.getMonth();
+        int year = nowZdt.getYear();
         if (isNextMonth) {
             startDate = endDate;
-
-            LocalDateTime dateTimePlusMonth = endDateTime.plusMonths(1);
-            endDate = ZonedDateTime.of(dateTimePlusMonth, ZoneId.of(department.getZone())).toEpochSecond();
+            ZonedDateTime endDateZdt = endZdt.plusMonths(1);
+            endDate = endDateZdt.toEpochSecond();
             month = month.plus(1);
+            year = endDateZdt.getYear();
         }
+        context.getParams().put(Constants.SELECTED_YEAR, year);
 
         List<Appointment> allAppointments;
         if (StringUtils.isNotBlank(selectedSpecialist)) {
@@ -78,7 +77,7 @@ public class AbstractGetCalendarProcessor {
         allAppointments.removeIf(a -> specialists.stream().map(Specialist::getName).noneMatch(n -> n.equals(a.getSpecialist())));
         List<String> busyDayTitles = allAppointments.isEmpty()
                 ? new ArrayList<>()
-                : defineBusyDayTitles(allAppointments, department, month.getValue(), selectedService);
+                : defineBusyDayTitles(allAppointments, department, month.getValue(), selectedService, year);
         if (!isNextMonth) {
             String currentDayTitle = getCurrentDayBusyTitle(department, selectedService);
             if (!"".equals(currentDayTitle)) {
@@ -106,7 +105,8 @@ public class AbstractGetCalendarProcessor {
     private String getCurrentDayBusyTitle(Department department, String serviceName) {
         long serviceDuration = getServiceDuration(department, serviceName);
         ZonedDateTime now = DateUtils.nowZoneDateTime(department);
-        long finishDate = DateUtils.getPointOfDay(now.getMonthValue(), now.getDayOfMonth(), department.getEndWork(), department);
+        long finishDate = DateUtils.getPointOfDayWithYear(now.getYear(), now.getMonthValue(), now.getDayOfMonth(),
+                department.getEndWork(), department);
         long nowLong = DateUtils.nowZone(department);
         if ((finishDate - nowLong) < serviceDuration) {
             return String.valueOf(now.getDayOfMonth());
@@ -115,7 +115,7 @@ public class AbstractGetCalendarProcessor {
     }
 
     public List<String> defineBusyDayTitles(List<Appointment> allAppointments, Department department, int month,
-                                             String serviceName) {
+                                             String serviceName, int year) {
         List<Pair<String, List<Appointment>>> appointmentsBySpecialist = allAppointments.stream()
                 .collect(Collectors.groupingBy(Appointment::getSpecialist))
                 .entrySet().stream()
@@ -135,17 +135,17 @@ public class AbstractGetCalendarProcessor {
         }
 
         Pair<String, List<Appointment>> firstPair = appointmentsBySpecialist.get(0);
-        List<Integer> busyDays = getBusyDays(firstPair.right(), department, month, serviceName);
+        List<Integer> busyDays = getBusyDays(firstPair.right(), department, month, year, serviceName);
         if (!busyDays.isEmpty() && appointmentsBySpecialist.size() > 1) {
             busyDays.removeIf(bd -> appointmentsBySpecialist.stream()
                     .skip(1)
-                    .anyMatch(pair -> isDayAvailableForSpecialist(bd, pair.right(), department, month, serviceName)));
+                    .anyMatch(pair -> isDayAvailableForSpecialist(bd, pair.right(), department, month, serviceName, year)));
         }
         return busyDays.stream().map(String::valueOf).collect(Collectors.toList());
     }
 
     private boolean isDayAvailableForSpecialist(int dayOfMonth, List<Appointment> appointments, Department department,
-                                                int month, String serviceName) {
+                                                int month, String serviceName, int year) {
         if (appointments == null || appointments.size() == 0) {
             return true;
         }
@@ -154,16 +154,17 @@ public class AbstractGetCalendarProcessor {
         if (appointmentsForDay == null) {
             return true;
         }
-        return freeSlotsAvailable(appointmentsForDay, dayOfMonth, department, month, serviceName);
+        return freeSlotsAvailable(appointmentsForDay, dayOfMonth, department, month, serviceName, year);
     }
 
-    private List<Integer> getBusyDays(List<Appointment> appointments, Department department, int month, String serviceName) {
+    private List<Integer> getBusyDays(List<Appointment> appointments, Department department, int month, int year,
+                                      String serviceName) {
         Map<Integer, List<Appointment>> appointmentsByDays = getAppointmentsByDays(appointments);
         List<Integer> busyDays = new ArrayList<>();
         for (Map.Entry<Integer, List<Appointment>> dailyAppointmentsEntry : appointmentsByDays.entrySet()) {
             Integer dayOfMonth = dailyAppointmentsEntry.getKey();
             boolean slotsAvailable = freeSlotsAvailable(dailyAppointmentsEntry.getValue(), dayOfMonth, department,
-                    month, serviceName);
+                    month, serviceName, year);
             if (!slotsAvailable) {
                 busyDays.add(dayOfMonth);
             }
@@ -181,10 +182,10 @@ public class AbstractGetCalendarProcessor {
     }
 
     private boolean freeSlotsAvailable(List<Appointment> dailyAppointments, int dayOfMonth, Department department,
-                                       int month, String serviceName) {
+                                       int month, String serviceName, int year) {
         long serviceDuration = getServiceDuration(department, serviceName);
         dailyAppointments.sort(Comparator.comparing(Appointment::getDate));
-        List<Long> freeSlots = getFreeSlots(dailyAppointments, department, dayOfMonth, month);
+        List<Long> freeSlots = getFreeSlots(dailyAppointments, department, dayOfMonth, month, year);
         long finalServiceDuration = serviceDuration;
         return freeSlots.stream().anyMatch(slot -> slot >= finalServiceDuration);
     }
@@ -201,11 +202,11 @@ public class AbstractGetCalendarProcessor {
         return serviceDuration;
     }
 
-    private List<Long> getFreeSlots(List<Appointment> appointments, Department department, int dayOfMonth, int month) {
+    private List<Long> getFreeSlots(List<Appointment> appointments, Department department, int dayOfMonth, int month, int year) {
         long nowLong = DateUtils.nowZone(department);
-        long finish = DateUtils.getPointOfDay(month, dayOfMonth, department.getEndWork(), department);
+        long finish = DateUtils.getPointOfDayWithYear(year, month, dayOfMonth, department.getEndWork(), department);
         List<Long> result = new ArrayList<>();
-        long currentPoint = DateUtils.getPointOfDay(month, dayOfMonth, department.getStartWork(), department);
+        long currentPoint = DateUtils.getPointOfDayWithYear(year, month, dayOfMonth, department.getStartWork(), department);
         for (Appointment appointment : appointments) {
             long freeSlot = appointment.getDate() - currentPoint;
             if (currentPoint > nowLong) {

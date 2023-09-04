@@ -1,24 +1,22 @@
 package com.bot.processor.impl.general.admin.dayoff.create.daily;
 
 import com.bot.model.Context;
-import com.commons.model.FreeSlot;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.commons.service.IAppointmentService;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
-import com.commons.utils.DateUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
+import com.commons.model.FreeSlot;
+import com.commons.service.IAppointmentService;
 import com.commons.utils.JsonUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class CreateDayOffFourthStepProcessor extends CreateDayOffProcessor imple
         int month = ContextUtils.getIntParam(context, Constants.MONTH);
         int day = ContextUtils.getIntParam(context, Constants.SELECTED_DAY);
         String specialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
-        int year = DateUtils.getNumberOfCurrentYear(department);
+        int year = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
 
         String selectedTimeTitle = MessageUtils.getTextFromUpdate(update);
         List<String> availableSlotTitles = (List<String>) context.getParams().get(Constants.AVAILABLE_SLOT_TITLES);
@@ -63,8 +61,8 @@ public class CreateDayOffFourthStepProcessor extends CreateDayOffProcessor imple
         String[] timeParts = selectedTimeTitle.split(":");
         int hour = Integer.parseInt(timeParts[0]);
         int minute = Integer.parseInt(timeParts[1]);
-        LocalDateTime dayOffDateTime = LocalDateTime.of(year, month, day, hour, minute);
-        long dayOffStart = ZonedDateTime.of(dayOffDateTime, ZoneId.of(department.getZone())).toEpochSecond();
+        long dayOffStart = ZonedDateTime.of(year, month, day, hour, minute, 0, 0,
+                ZoneId.of(department.getZone())).toEpochSecond();
         FreeSlot slot = defineSlot(convertedSlots, dayOffStart);
         List<String> durationTitles = getDurationTitles(slot, dayOffStart);
         context.getParams().put(Constants.AVAILABLE_DURATIONS, durationTitles);

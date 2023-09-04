@@ -50,8 +50,10 @@ public class AppointmentsAdminProcessor {
             return buildAnotherMonthResponse(request, false);
         }
         int month = ContextUtils.getIntParam(context, Constants.MONTH);
-        long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false, department);
-        long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true, department);
+        int year = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
+
+        long startOfDay = DateUtils.getStartOrEndOfDayWithYear(year, month, Integer.parseInt(selectedDay), false, department);
+        long endOfDay = DateUtils.getStartOrEndOfDayWithYear(year, month, Integer.parseInt(selectedDay), true, department);
 
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
         return getHolders(appointments, context, department);
@@ -102,12 +104,6 @@ public class AppointmentsAdminProcessor {
                 KeyBoardType.THREE_ROW, messagesToLocalize, true);
     }
 
-    protected List<MessageHolder> getNoAppointmentsMessage(Context context) {
-        ContextUtils.resetLocationToStep(context, Constants.Processors.START_APP_DASH);
-        return MessageUtils.buildCustomKeyboardHolders(Constants.Messages.NO_APP_FOR_DATE, Constants.VIEW_ADMIN_APP_BUTTONS,
-                KeyBoardType.THREE_ROW, true);
-    }
-
     private List<MessageHolder> buildAnotherMonthResponse(ProcessRequest request, boolean isNextMonth) {
         Department department = request.getDepartment();
         Context context = request.getContext();
@@ -121,10 +117,11 @@ public class AppointmentsAdminProcessor {
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
                 .params(Map.of(
                         Constants.IS_NEXT_MONTH, isNextMonth,
+                        Constants.DEPARTMENT, department,
+                        Constants.CONTEXT, context,
                         Constants.USER_APPOINTMENTS, appointmentDays))
                 .build();
         Month month = DateUtils.nowZoneDateTime(department).getMonth().plus(isNextMonth ? 1 : 0);
-//        Month month = LocalDate.now().getMonth().plus(isNextMonth ? 1 : 0);
         MessageHolder datePicker = MessageUtils.holder(month.name(), ButtonsType.DATE_PICKER_MY_APP, datePickerRequest);
         return List.of(datePicker);
     }
@@ -138,7 +135,6 @@ public class AppointmentsAdminProcessor {
 
     private String getReportDate(List<Appointment> appointments, Department department) {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(appointments.get(0).getDate()), ZoneId.of(department.getZone()));
-//        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(appointments.get(0).getDate()), ZoneId.systemDefault());
         return zonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }

@@ -5,7 +5,6 @@ import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.commons.model.Department;
 import com.commons.utils.DateUtils;
-import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -15,6 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Year;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -134,6 +134,8 @@ public class KeyBoardUtils {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         Map<String, Object> params = request.getParams();
         Set<String> appointments = (Set<String>) params.get(Constants.USER_APPOINTMENTS);
+        Department department = (Department) params.get(Constants.DEPARTMENT);
+        Context context = (Context) params.get(Constants.CONTEXT);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd");
         List<InlineKeyboardButton> dayTitlesRow = new ArrayList<>();
@@ -145,16 +147,17 @@ public class KeyBoardUtils {
         }
         keyboard.add(dayTitlesRow);
 
-        LocalDate currentDate = LocalDate.now();
-        int currentMonth = currentDate.getMonthValue();
-        int currentYear = currentDate.getYear();
         boolean isNextMonth = (boolean) params.get(Constants.IS_NEXT_MONTH);
-        if (isNextMonth) {
-            currentMonth++;
-        }
+
+        ZonedDateTime nowZdt = DateUtils.nowZoneDateTime(department).plusMonths(isNextMonth ? 1 : 0);
+        int currentMonth = nowZdt.getMonthValue();
+        int currentYear = nowZdt.getYear();
         Month month = Month.of(currentMonth);
+
+        context.getParams().put(Constants.SELECTED_YEAR, currentYear);
+
         LocalDate date = LocalDate.of(currentYear, currentMonth, 1);
-        int daysInMonth = month.length(currentDate.isLeapYear());
+        int daysInMonth = month.length(Year.isLeap(currentYear));
         Map<String, String> specificNumbers = Constants.Numbers.SPEC_NUMBERS;
         for (int i = 1; i <= daysInMonth; i++) {
             if (i == 1 || date.getDayOfWeek().getValue() == 1) {
@@ -209,8 +212,7 @@ public class KeyBoardUtils {
         Context context = (Context) params.get(Constants.CONTEXT);
         List<Integer> nonWorkingDays = department.getNonWorkingDays() == null ? List.of() : department.getNonWorkingDays();
 
-        LocalDate currentDate = LocalDate.now();
-        ZonedDateTime now = DateUtils.nowZoneDateTime(department);
+        ZonedDateTime now = DateUtils.nowZoneDateTime(department).plusMonths(isNextMonth ? 1 : 0);
         int currentMonth = now.getMonthValue();
         int currentYear = now.getYear();
         int today = now.getDayOfMonth();
@@ -219,9 +221,8 @@ public class KeyBoardUtils {
 
         boolean todayIsFinished = hourNow >= department.getEndWork();
         Set<String> busyDays = request.getButtonsMap().keySet();
-
+        context.getParams().put(Constants.SELECTED_YEAR, currentYear);
         if (isNextMonth) {
-            currentMonth++;
             today = 1;
             todayIsFinished = false;
         } else {
@@ -251,7 +252,7 @@ public class KeyBoardUtils {
 
         Month month = Month.of(currentMonth);
         LocalDate date = LocalDate.of(currentYear, currentMonth, 1);
-        int daysInMonth = month.length(currentDate.isLeapYear());
+        int daysInMonth = month.length(Year.isLeap(currentYear));
         List<String> availableDates = new ArrayList<>();
         for (int i = 1; i <= daysInMonth; i++) {
             if (i == 1 || date.getDayOfWeek().getValue() == 1) {

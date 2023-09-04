@@ -46,7 +46,9 @@ public class CreateAppointmentSecondStepProcessor extends AbstractGetCalendarPro
             selectedServiceName = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
         }
         int numberOfCurrentMonth = DateUtils.getNumberOfCurrentMonth(department);
+        int numberOfCurrentYear = DateUtils.getNumberOfCurrentYear(department);
         context.getParams().put(Constants.MONTH, numberOfCurrentMonth);
+        context.getParams().put(Constants.SELECTED_YEAR, numberOfCurrentYear);
         ContextUtils.setStringParameter(context, Constants.SELECTED_SERVICE, selectedServiceName);
         DatePickerRequest datePickerRequest = DatePickerRequest.builder()
                 .department(department)

@@ -53,8 +53,10 @@ public abstract class AppointmentsSecondStepProcessor {
         }
 
         int month = ContextUtils.getIntParam(context, Constants.MONTH);
-        long startOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), false, department);
-        long endOfDay = DateUtils.getStartOrEndOfDay(month, Integer.parseInt(selectedDay), true, department);
+        int year = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);
+
+        long startOfDay = DateUtils.getStartOrEndOfDayWithYear(year, month, Integer.parseInt(selectedDay), false, department);
+        long endOfDay = DateUtils.getStartOrEndOfDayWithYear(year, month, Integer.parseInt(selectedDay), true, department);
 
         resetLocationToDashboard(context);
         List<Appointment> appointments = getAppointmentSupplier(request, startOfDay, endOfDay).get();
@@ -84,6 +86,8 @@ public abstract class AppointmentsSecondStepProcessor {
         BuildKeyboardRequest datePickerRequest = BuildKeyboardRequest.builder()
                 .params(Map.of(
                         Constants.IS_NEXT_MONTH, isNextMonth,
+                        Constants.DEPARTMENT, department,
+                        Constants.CONTEXT, context,
                         Constants.USER_APPOINTMENTS, appointmentDays))
                 .build();
         Month month = DateUtils.nowZoneDateTime(department).getMonth().plus(isNextMonth ? 1 : 0);

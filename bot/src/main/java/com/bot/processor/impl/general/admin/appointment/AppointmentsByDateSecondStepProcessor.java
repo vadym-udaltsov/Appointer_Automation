@@ -33,10 +33,12 @@ public class AppointmentsByDateSecondStepProcessor extends AppointmentsAdminProc
         String selectedDay = MessageUtils.getTextFromUpdate(update);
         int currentMonth = DateUtils.getNumberOfCurrentMonth(department);
         int selectedMonth = ContextUtils.getIntParam(context, Constants.MONTH);
-        boolean isNextMonth = currentMonth != selectedMonth;
+
+        boolean isNextMonth = currentMonth < selectedMonth;
         long startDate = DateUtils.getStartOfMonthDate(department, isNextMonth);
-        long nextMonthEndDate = DateUtils.getEndOfMonthDate(department, isNextMonth);
-        List<Appointment> appointments = getAppointmentSupplier(request, startDate, nextMonthEndDate).get();
+        long endDate = DateUtils.getEndOfMonthDate(department, isNextMonth);
+
+        List<Appointment> appointments = getAppointmentSupplier(request, startDate, endDate).get();
         Set<String> appointmentsDates = appointments.stream()
                 .map(a -> DateUtils.getDayTitle(a.getDate(), department))
                 .collect(Collectors.toSet());
@@ -46,6 +48,7 @@ public class AppointmentsByDateSecondStepProcessor extends AppointmentsAdminProc
             return buildResponse(request);
         }
         ContextUtils.resetLocationToPreviousStep(context);
-        return MessageUtils.buildDatePicker(appointmentsDates, Constants.Messages.INCORRECT_DATE, isNextMonth, department);
+        return MessageUtils.buildDatePicker(appointmentsDates, Constants.Messages.INCORRECT_DATE, isNextMonth,
+                department, context);
     }
 }

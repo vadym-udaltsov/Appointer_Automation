@@ -32,13 +32,13 @@ public class AppointmentServiceTest {
 
 //    @Test
     public void getFreeSlotsBySpecialist() {
-        Department department = new Department();
-        department.setId("52c59292");
-        department.setStartWork(10);
-        department.setEndWork(19);
-        department.setZone("Europe/Berlin");
-        List<FreeSlot> slots = appointmentService.getFreeSlotsBySpecialist(department, "Tatiana", 8, 2);
-        System.out.println();
+//        Department department = new Department();
+//        department.setId("52c59292");
+//        department.setStartWork(10);
+//        department.setEndWork(19);
+//        department.setZone("Europe/Berlin");
+//        List<FreeSlot> slots = appointmentService.getFreeSlotsBySpecialist(department, "Tatiana", 8, 2);
+//        System.out.println();
     }
 
 //    @Test
@@ -57,7 +57,7 @@ public class AppointmentServiceTest {
 //        department.setZone("Europe/Berlin");
         Department department = departmentDao.getDepartmentById("52c59292");
         AbstractGetCalendarProcessor processor = new AbstractGetCalendarProcessor(appointmentService);
-        List<String> titles = processor.defineBusyDayTitles(new ArrayList<>(), department, 8, "test");
+        List<String> titles = processor.defineBusyDayTitles(new ArrayList<>(), department, 8, "test", 2023);
         System.out.println();
         Context context = new Context();
         context.setParams(new HashMap<>());
