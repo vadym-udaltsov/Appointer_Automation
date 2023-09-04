@@ -56,6 +56,7 @@ function changeLanguage() {
             }
         }
     }
+    fetchCountriesAndCities();
 }
 
 async function waitOnButtonsLoad() {

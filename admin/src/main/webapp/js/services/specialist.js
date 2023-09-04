@@ -29,10 +29,6 @@ $(window).ready(function () {
         request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.specialist = specialist;
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/specialist');
-        setTimeout(function() {
-            $("#specialist_CreateModal").modal("hide");
-            location.reload();
-         }, 500);
         return false;
     });
 
@@ -45,10 +41,6 @@ $(window).ready(function () {
         request.specialistName = document.getElementById("update-specialist_servNameInput").value;
         request.specialist = specialist;
         executePut(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/specialist');
-        setTimeout(function() {
-            $("#specialist_UpdateModal").modal("hide");
-            location.reload();
-        }, 500);
         return false;
     });
 
@@ -57,10 +49,6 @@ $(window).ready(function () {
         request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.specialistName = $("#delete-specialist_NameInput").val();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/specialist');
-        setTimeout(function() {
-            $("#specialist_DeleteModal").modal("hide");
-            location.reload();
-        }, 500);
         return false;
     });
 });

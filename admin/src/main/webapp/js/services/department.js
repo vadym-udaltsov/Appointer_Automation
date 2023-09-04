@@ -54,12 +54,12 @@ $(window).on('load', function() {
         }
         department.nwd = days;
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
-        $("#department_UpdateModal").modal("hide");
-        location.reload();
         return false;
     });
 
+     localStorage.setItem('createButtonClicked', false);
      $("#create_depBtn").click(function() {
+        localStorage.setItem('createButtonClicked', true);
         const createButton = document.getElementById('create_depBtn');
         if (createButton.classList.contains('disabled')) {
             return false;
@@ -68,13 +68,11 @@ $(window).on('load', function() {
         department.name = $("#depName_create").val();
         department.email = localStorage.getItem('customer');
         department.type = $("#update_depTypeSelect").val();
+        department.country = $("#countryInput").val();
+        department.city = $("#cityInput").val();
         department.zone = $("#create_timeZoneSelect").val();
         department.botToken = $("#add_depTokenInput").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/create');
-        $("#department_CreateModal").modal("hide");
-        document.getElementById('notRegisteredContainer').style.display = 'none';
-        document.getElementById('department_CreatePopup').disabled = true;
-        localStorage.setItem('createBtnClicked', 'true');
         return false;
      });
 
@@ -114,15 +112,15 @@ function loadDataForTables(selectedDepartmentData) {
   serviceTable.find('.service').remove();
   $.each(selectedDepartmentData.s, function (j, item) {
     var row = $("<div class='service'></div>");
-    var nameCell = $("<div class='service_name cell'></div>").text(item.name);
-    var durationCell = $("<div class='service_duration cell'></div>").text(item.duration);
-    var priceCell = $("<div class='service_price cell'></div>").text(item.price);
-    var actionsCell = $("<div class='cell actions'></div>");
+    var nameCell = $("<div class='service_name cell mobile_row'></div>").text(item.name);
+    var durationCell = $("<div class='service_duration cell mobile_row'></div>").text(item.duration);
+    var priceCell = $("<div class='service_price cell mobile_row'></div>").text(item.price);
+    var actionsCell = $("<div class='cell actions mobile_row_actions'></div>");
 
-    var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn lng-updateBtn' data-toggle='modal' data-target='#service_UpdateModal'>")
+    var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn lng-updateBtn mobile_action_btn' data-toggle='modal' data-target='#service_UpdateModal'>")
       .text("Update")
       .val(JSON.stringify(item));
-    var deleteButton = $("<button type='button' class='sub-button service_deleteOpenBtn lng-deleteBtn' data-toggle='modal' data-target='#service_DeleteModal'>")
+    var deleteButton = $("<button type='button' class='sub-button service_deleteOpenBtn lng-deleteBtn mobile_action_btn' data-toggle='modal' data-target='#service_DeleteModal'>")
       .text("Delete")
       .val(JSON.stringify(item));
 
@@ -209,6 +207,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                         typeSelect.append(firstType);
                     }
                 }
+                fetchCountriesAndCities();
                 $.each(data.availableZones, function () {
                     var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
                     create_timeZoneSelect.append(timeZone);

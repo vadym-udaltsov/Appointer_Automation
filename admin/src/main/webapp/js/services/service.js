@@ -35,10 +35,6 @@ $(window).ready(function () {
         request.department = $('option:checked','#department_NameSelect').text();
         request.service = service;
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
-        setTimeout(function() {
-            $("#service_CreateModal").modal("hide");
-            location.reload();
-         }, 500);
         return false;
     });
 
@@ -52,10 +48,6 @@ $(window).ready(function () {
         request.serviceName = document.getElementById("update-service_servNameInput").value;
         request.service = service;
         executePut(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
-        setTimeout(function() {
-            $("#service_UpdateModal").modal("hide");
-            location.reload();
-        }, 500);
         return false;
     });
 
@@ -64,10 +56,6 @@ $(window).ready(function () {
         request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.serviceName = $("#delete-service_NameInput").val();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/service');
-        setTimeout(function() {
-            $("#service_DeleteModal").modal("hide");
-            location.reload();
-        }, 500);
         return false;
     });
 });

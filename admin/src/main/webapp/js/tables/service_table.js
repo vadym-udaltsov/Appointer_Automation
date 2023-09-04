@@ -17,23 +17,23 @@ $(window).ready(function () {
         newServiceBlock.setAttribute('value', service);
 
         var nameDiv = document.createElement('div');
-        nameDiv.classList.add('cell');
+        nameDiv.classList.add('cell', 'mobile_row', 'service_name');
         nameDiv.textContent = service.name;
 
         var durationDiv = document.createElement('div');
-        durationDiv.classList.add('cell');
+        durationDiv.classList.add('cell', 'service_duration', 'mobile_row');
         durationDiv.textContent = service.duration
 
         var priceDiv = document.createElement('div');
-        priceDiv.classList.add('cell');
+        priceDiv.classList.add('cell', 'service_price', 'mobile_row');
         priceDiv.textContent = service.price
 
         var actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('cell', 'actions');
+        actionsDiv.classList.add('cell', 'actions', 'mobile_row_actions');
 
         var updateButton = document.createElement('button');
         updateButton.setAttribute("type", "button");
-        updateButton.className = "sub-button service_updateOpenBtn lng-updateBtn";
+        updateButton.className = "sub-button service_updateOpenBtn lng-updateBtn mobile_action_btn";
         updateButton.setAttribute("data-toggle", "modal");
         updateButton.setAttribute("data-target", "#service_UpdateModal");
         updateButton.setAttribute("value", JSON.stringify(service));
@@ -41,7 +41,7 @@ $(window).ready(function () {
 
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute("type", "button");
-        deleteButton.className = "sub-button service_deleteOpenBtn lng-deleteBtn";
+        deleteButton.className = "sub-button service_deleteOpenBtn lng-deleteBtn mobile_action_btn";
         deleteButton.setAttribute("data-toggle", "modal");
         deleteButton.setAttribute("data-target", "#service_DeleteModal");
         deleteButton.setAttribute("value", JSON.stringify(service));

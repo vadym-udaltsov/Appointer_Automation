@@ -3,33 +3,45 @@ var departmentCancelBtn = document.getElementById('close_depModalBtn');
 var openCreateDepartmentModal = document.getElementById('department_CreatePopup');
 
 var addTokenInput = document.getElementById('add_depTokenInput');
-var addTokenNameError = document.getElementById('token_addTokenError');
+var errors = document.getElementById('add_depTokenInput_error');
 
 const create_depNameInput = document.getElementById("depName_create");
 
+const createDepartmentFields = [
+    { inputId: 'depName_create' },
+    { inputId: 'add_depTokenInput' },
+    { inputId: 'countryInput' },
+    { inputId: 'cityInput' },
+];
+
 function validateInputs() {
-    if (create_depNameInput.value === '' || addTokenInput.value === '') {
-        createDepartmentBtn.disabled = true;
-    } else {
-        createDepartmentBtn.disabled = false;
+    let allFieldsFilled = false;
+    for (const field of createDepartmentFields) {
+        const input = document.getElementById(field.inputId);
+        const errorCreateMessage = document.getElementById(field.inputId + '_error');
+
+        if (input.value === '') {
+            allFieldsFilled = false;
+            errorCreateMessage.style.display = 'block';
+        } else {
+            allFieldsFilled = true;
+            errorCreateMessage.style.display = 'none';
+        }
     }
+    createDepartmentBtn.disabled = !allFieldsFilled;
 }
 
-function showTokenError() {
-    if (addTokenInput.value === '') {
-        addTokenNameError.style.display = 'block';
-    } else {
-        addTokenNameError.style.display = 'none';
-    }
+function disableCreateBtn() {
+    createDepartmentBtn.disabled = true;
 }
 
-openCreateDepartmentModal.addEventListener("click", validateInputs);
+openCreateDepartmentModal.addEventListener("click", disableCreateBtn);
 
-create_depNameInput.addEventListener("input", validateInputs);
+for (const field of createDepartmentFields) {
+    const input = document.getElementById(field.inputId);
+    input.addEventListener('input', validateInputs);
+}
 
-addTokenInput.addEventListener("input", validateInputs);
-addTokenInput.addEventListener("input", showTokenError);
-addTokenInput.addEventListener("input", showTokenError);
 
 function updateCharCount() {
   const depNameInput = document.getElementById("depName_create");

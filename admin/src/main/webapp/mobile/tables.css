@@ -1,0 +1,40 @@
+@media only screen and (max-width: 420px) {
+
+    .table_inner, .table_inner_specialist, .table_inner_admin {
+        display: flex;
+        justify-content: space-between;
+        height: 200px;
+    }
+
+    .columns_titles, .columns_titles_specialist, .columns_titles_admin {
+        width: 200px;
+        min-width: 100px;
+        display: block;
+        border-bottom: none;
+    }
+
+    .columns_titles .cell:nth-child(-n+3) {
+        border-right-width: 0px;
+        border-right-style: none;
+    }
+
+    .service, .specialist, .admin {
+        display: block;
+        width: 400px;
+    }
+
+    .cell, .specCol {
+        text-align: center;
+        padding: 10px;
+        width: 0px;
+    }
+
+    .mobile_row {
+        width: 280px;
+    }
+
+    .mobile_row_actions {
+        width: 280px;
+        padding: 10px;
+    }
+}

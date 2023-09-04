@@ -26,8 +26,6 @@ $(window).ready(function () {
             token.departmentName = $("#department_NameSelect option:selected").text().trim();
             token.botToken = updateTokenInput.value;
             executePut(JSON.stringify(token), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
-            refreshTokenPopup.style.display = 'none';
-            location.reload();
             return false;
     });
 });

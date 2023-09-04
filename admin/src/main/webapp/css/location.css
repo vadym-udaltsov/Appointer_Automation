@@ -1,0 +1,33 @@
+.custom-dropdown {
+  position: relative;
+  width: 200px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+}
+
+.country-list, .city-list {
+  position: absolute;
+  z-index: 1;
+  width: 250px;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  display: none;
+  background-color: #fff;
+}
+
+.country-list li, .city-list li {
+    list-style: none;
+    padding: 5px 0 5px 0;
+    cursor: pointer;
+    position: relative;
+    left: -30px;
+    width: 300px;
+}
+
+.country-list li:hover, .city-list li:hover {
+  background-color: #f0f0f0;
+}

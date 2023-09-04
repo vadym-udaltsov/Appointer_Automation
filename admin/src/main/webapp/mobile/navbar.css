@@ -1,0 +1,54 @@
+@media only screen and (max-width: 420px) {
+
+ img {
+    display: none;
+ }
+
+ #global_container {
+    margin: 0 16px 0 16px;
+ }
+
+ .creator_item {
+    display: none;
+ }
+
+ .bot_name_container {
+    display: none;
+  }
+
+  .navbar-nav, .navbar-dark {
+    margin-left: 0px;
+  }
+
+  #logout_container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .language-container {
+    margin-right: 0px;
+  }
+
+  #logout_button {
+    margin-right: 40px;
+  }
+
+  #department_NameSelect {
+    max-width: 150px !important;
+  }
+
+  .form-control {
+    padding: 0.375rem 1.6rem 0.375rem 0.75rem !important;
+  }
+
+  .arrow-down {
+    left: 130px;
+    display: block;
+    position: relative;
+    top: -28px;
+  }
+
+  .update-dep, .create-dep {
+    width: 185px !important;
+  }
+}

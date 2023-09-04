@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/location.css">
     <link rel="stylesheet" href="../css/popups.css">
     <link rel="stylesheet" href="../css/departmentContainer.css">
     <link rel="stylesheet" href="../css/upper_table_block.css">
     <link rel="stylesheet" href="../css/tables.css">
+    <link rel="stylesheet" href="../mobile/navbar.css">
+    <link rel="stylesheet" href="../mobile/tables.css">
+    <link rel="stylesheet" href="../mobile/slider.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Dashboard</title>
@@ -86,7 +90,8 @@
         <div class="modal_items">
             <div class="modal_title lng-serviceTitle">Service</div>
             <div class="modal_block">
-                <button type="button" class="sub-button lng-create" data-toggle="modal" data-target="#service_CreateModal"
+                <button type="button" class="sub-button lng-create" data-toggle="modal"
+                        data-target="#service_CreateModal"
                         id="service_createOpenBtn">
                     Add New
                 </button>
@@ -103,6 +108,10 @@
                 <div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>
                 <div class="column_actions cell lng-actions"><strong>Actions</strong><span></span></div>
             </div>
+            <div class="slideshow-container" id="slider-container" style="display: none;">
+
+
+            </div>
         </div>
     </div>
 
@@ -111,7 +120,8 @@
         <div class="modal_items">
             <div class="modal_title lng-specialistTitle">Specialist</div>
             <div class="modal_block">
-                <button type="button" class="sub-button lng-create" data-toggle="modal" data-target="#specialist_CreateModal"
+                <button type="button" class="sub-button lng-create" data-toggle="modal"
+                        data-target="#specialist_CreateModal"
                         id="specialist_createOpenBtn">
                     Add New
                 </button>
@@ -162,7 +172,8 @@
 
 <!-- Modals HTML -->
 
-<div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal" aria-hidden="true">
+<div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -171,10 +182,13 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="depName_create" class="lng-Name">Name</label>
-                    <input type="text" maxlength="30" class="form-control enterName lng-namePlaceholder" id="depName_create"
+                    <input type="text" maxlength="30" class="form-control enterName lng-namePlaceholder"
+                           id="depName_create"
                            placeholder="Enter Name" oninput="updateCharCount()">
                     <div id="charCounter">0/30</div>
                     <span class="depName_create_message lng-createMessage">The name cannot be changed later.</span>
+                    <small class="error-message lng-requiredField" id="depName_create_error"
+                           style="color: red; display: none;"></small>
                 </div>
             </div>
             <div class="createDep_Group">
@@ -182,16 +196,40 @@
                 <select class="form-control createDep_Fields" id="update_depTypeSelect"></select>
             </div>
             <div class="createDep_Group">
+                <p class="createDep_Group_Titles lng-country">Country</p>
+                <div class="custom-dropdown">
+                    <input id="countryInput" type="text" placeholder="Select country">
+                    <ul id="countryList" class="country-list">
+                    </ul>
+                </div>
+                <small class="error-message lng-requiredField" id="countryInput_error"
+                       style="color: red; display: none;"></small>
+            </div>
+            <div class="createDep_Group">
+                <p class="createDep_Group_Titles lng-city">City</p>
+                <div class="custom-dropdown">
+                    <input id="cityInput" type="text" placeholder="Select city">
+                    <ul id="cityList" class="city-list">
+                    </ul>
+                </div>
+                <small class="error-message lng-requiredField" id="cityInput_error"
+                       style="color: red; display: none;"></small>
+            </div>
+            <div class="createDep_Group">
                 <p class="createDep_Group_Titles lng-timeZone">Time zone</p>
                 <select class="form-control createDep_Fields" id="create_timeZoneSelect"></select>
             </div>
             <div class="createDep_Group">
                 <p class="createDep_Group_Titles lng-depToken">Token</p>
-                <input class="form-control createDep_Fields enterToken lng-tokenPlaceholder" id="add_depTokenInput" placeholder="Enter Token">
-                <small class="error-message lng-requiredField" id="token_addTokenError" style="color: red; display: none;"></small>
+                <input class="form-control createDep_Fields enterToken lng-tokenPlaceholder" id="add_depTokenInput"
+                       placeholder="Enter Token">
+                <small class="error-message lng-requiredField" id="add_depTokenInput_error"
+                       style="color: red; display: none;"></small>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="close_depModalBtn">Cancel</button>
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="close_depModalBtn">Cancel
+                </button>
                 <button type="button" class="btn btn-primary lng-createBtn" id="create_depBtn">Create</button>
             </div>
         </div>
@@ -231,10 +269,12 @@
                     </div>
                     <div class="hour_input-container">
                         <div class="col-md-9 start-hour-input">
-                            <input type="number" class="form-control" id="startWork" oninput="validateUpdateDepInput(this)" min="1" max="24">
+                            <input type="number" class="form-control" id="startWork"
+                                   oninput="validateUpdateDepInput(this)" min="1" max="24">
                         </div>
                         <div class="col-md-9 finish-hour-input">
-                            <input type="number" class="form-control" id="finishWork" oninput="validateUpdateDepInput(this)" min="1" max="24">
+                            <input type="number" class="form-control" id="finishWork"
+                                   oninput="validateUpdateDepInput(this)" min="1" max="24">
                         </div>
                     </div>
                 </div>
@@ -290,7 +330,8 @@
                         data-target="#department_TokenModal" id="department_UpdateTokenPopup">
                     Refresh Token
                 </button>
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="close_updateDepBtn">Cancel
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="close_updateDepBtn">Cancel
                 </button>
                 <button type="button" class="btn btn-primary lng-updateBtn" id="update_DepBtn">Update</button>
             </div>
@@ -299,7 +340,8 @@
 </div>
 
 <!-- Refresh Token Modal -->
-<div class="modal fade" id="department_TokenModal" tabindex="-1" style="width: 100%" aria-labelledby="department_TokenModal"
+<div class="modal fade" id="department_TokenModal" tabindex="-1" style="width: 100%"
+     aria-labelledby="department_TokenModal"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -313,12 +355,14 @@
                                id="update_TokenLabel">Add new token</label>
                         <input type="text" class="form-control enterToken lng-tokenPlaceholder" id="update_TokenInput"
                                placeholder="Enter Token">
-                        <small class="error-message lng-requiredField" id="token_nameError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="token_nameError"
+                               style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="update_Token_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="update_Token_CancelBtn">
                     Cancel
                 </button>
                 <button type="button" class="btn btn-primary lng-refreshBtn" id="token_updateBtn">Refresh</button>
@@ -340,28 +384,37 @@
                     <div class="form-group">
                         <label for="service_Create-servNameInput" class="update__asterisks lng-Name"
                                id="service_nameField">Name</label>
-                        <input type="text" class="form-control enterName lng-namePlaceholder" id="service_Create-servNameInput"
+                        <input type="text" class="form-control enterName lng-namePlaceholder"
+                               id="service_Create-servNameInput"
                                placeholder="Enter Name">
-                        <small class="error-message lng-requiredField" id="nameError" style="color: red; display: none;"></small>
-                        <small class="error-message lng-duplicateServiceName" id="duplicateServiceError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="nameError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateServiceName" id="duplicateServiceError"
+                               style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="service_Create-servDurationInput" class="update__asterisks lng-serviceDuration"
                                id="service_durationField">Duration</label>
-                        <input type="number" class="form-control enterDuration lng-durationPlaceholder" id="service_Create-servDurationInput"
+                        <input type="number" class="form-control enterDuration lng-durationPlaceholder"
+                               id="service_Create-servDurationInput"
                                placeholder="Enter Duration" oninput="validateInput(this)">
-                        <small class="error-message lng-requiredField" id="durationError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="durationError"
+                               style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice" id="service_priceField">Price</label>
-                        <input type="number" class="form-control enterPrice lng-pricePlaceholder" id="service_Create-servPriceInput"
+                        <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice"
+                               id="service_priceField">Price</label>
+                        <input type="number" class="form-control enterPrice lng-pricePlaceholder"
+                               id="service_Create-servPriceInput"
                                placeholder="Enter Price" oninput="validateInput(this)">
-                        <small class="error-message lng-requiredField" id="priceError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="priceError"
+                               style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="service_Create-CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="service_Create-CancelBtn">
                     Cancel
                 </button>
                 <button type="button" class="btn btn-primary lng-createBtn" id="service_CreateBtn">Create</button>
@@ -385,37 +438,51 @@
                         <input class="form-control" id="update-service_servNameInput" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newNameInput" class="update__asterisks lng-newName" id="service_updateNewName">New
+                        <label for="update-service_newNameInput" class="update__asterisks lng-newName"
+                               id="service_updateNewName">New
                             Name</label>
-                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder" id="update-service_newNameInput"
+                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder"
+                               id="update-service_newNameInput"
                                placeholder="Enter New Name">
-                        <small class="update_error-message lng-requiredField" id="update_nameError" style="color: red; display: none;"></small>
-                        <small class="error-message lng-duplicateServiceName" id="duplicateServiceUpdateError" style="color: red; display: none;"></small>
-                        <small class="error-message update-service_newNameInput-error-message" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-requiredField" id="update_nameError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateServiceName" id="duplicateServiceUpdateError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message update-service_newNameInput-error-message"
+                               style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="update-service_newDurationInput" class="update__asterisks lng-newDuration"
                                id="service_updateDuration">New Duration</label>
-                        <input type="number" class="form-control enterDuration lng-durationPlaceholder" id="update-service_newDurationInput"
+                        <input type="number" class="form-control enterDuration lng-durationPlaceholder"
+                               id="update-service_newDurationInput"
                                placeholder="Enter Duration">
-                        <small class="update_error-message lng-requiredField" id="update_durationError" style="color: red; display: none;"></small>
-                        <small class="error-message update-service_newDurationInput-error-message" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-requiredField" id="update_durationError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message update-service_newDurationInput-error-message"
+                               style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
-                        <label for="update-service_newPriceInput" class="update__asterisks lng-newPrice" id="service_updatePrice">New
+                        <label for="update-service_newPriceInput" class="update__asterisks lng-newPrice"
+                               id="service_updatePrice">New
                             Price</label>
-                        <input type="number" class="form-control enterPrice lng-pricePlaceholder" id="update-service_newPriceInput"
+                        <input type="number" class="form-control enterPrice lng-pricePlaceholder"
+                               id="update-service_newPriceInput"
                                placeholder="Enter Price">
-                        <small class="update_error-message lng-requiredField" id="update_priceError" style="color: red; display: none;"></small>
-                        <small class="error-message update-service_newPriceInput-error-message" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-requiredField" id="update_priceError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message update-service_newPriceInput-error-message"
+                               style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="update-service_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="update-service_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary lng-updateBtn" id="update-service_UpdateBtn">Update</button>
+                <button type="button" class="btn btn-primary lng-updateBtn" id="update-service_UpdateBtn">Update
+                </button>
             </div>
         </div>
     </div>
@@ -432,16 +499,19 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label class="lng-serviceTitle" for="delete-service_NameInput" id="delete_updateName">Service</label>
+                        <label class="lng-serviceTitle" for="delete-service_NameInput"
+                               id="delete_updateName">Service</label>
                         <input class="form-control" id="delete-service_NameInput" disabled>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="delete-service_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="delete-service_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-service_DeleteBtn">Delete</button>
+                <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-service_DeleteBtn">Delete
+                </button>
             </div>
         </div>
     </div>
@@ -458,24 +528,32 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="specialist_CreateNameInput" class="update__asterisks lng-Name" id="specialist_nameField">Name</label>
-                        <input type="text" class="form-control enterName lng-namePlaceholder" id="specialist_CreateNameInput"
+                        <label for="specialist_CreateNameInput" class="update__asterisks lng-Name"
+                               id="specialist_nameField">Name</label>
+                        <input type="text" class="form-control enterName lng-namePlaceholder"
+                               id="specialist_CreateNameInput"
                                placeholder="Enter Name">
-                        <small class="error-message lng-requiredField" id="specialist_nameError" style="color: red; display: none;"></small>
-                        <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="specialist_nameError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistError"
+                               style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="specialist_CreatePhoneInput" class="update__asterisks lng-phone"
                                id="specialist_phoneField">Phone Number</label>
-                        <input type="text" class="form-control enterPhone lng-phonePlaceholder" id="specialist_CreatePhoneInput"
+                        <input type="text" class="form-control enterPhone lng-phonePlaceholder"
+                               id="specialist_CreatePhoneInput"
                                placeholder="Enter Phone Number" oninput="validatePhoneNumber(this)">
-                        <small class="error-message lng-requiredField" id="specialist_phoneError" style="color: red; display: none;"></small>
-                        <small class="update_error-message lng-notValidPhoneError" id="specialist_create_validPhoneError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="specialist_phoneError"
+                               style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-notValidPhoneError"
+                               id="specialist_create_validPhoneError" style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="specialist_Create-CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="specialist_Create-CancelBtn">
                     Cancel
                 </button>
                 <button type="button" class="btn btn-primary lng-createBtn" id="specialist_CreateBtn">Create</button>
@@ -495,34 +573,45 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label class="lng-specialistTitle" for="update-specialist_servNameInput" id="specialist_updateName">Specialist</label>
+                        <label class="lng-specialistTitle" for="update-specialist_servNameInput"
+                               id="specialist_updateName">Specialist</label>
                         <input class="form-control" id="update-specialist_servNameInput" disabled>
                     </div>
                     <div class="form-group">
                         <label for="update-specialist_newNameInput" class="update__asterisks lng-newName"
                                id="specialist_updateNewName">New Name</label>
-                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder" id="update-specialist_newNameInput"
+                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder"
+                               id="update-specialist_newNameInput"
                                placeholder="Enter New Name">
-                        <small class="update_error-message lng-requiredField" id="specialist_update_nameError" style="color: red; display: none;"></small>
-                        <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistUpdateError" style="color: red; display: none;"></small>
-                        <small class="error-message update-specialist_newNameInput-error-message" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-requiredField" id="specialist_update_nameError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistUpdateError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message update-specialist_newNameInput-error-message"
+                               style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
                         <label for="update-specialist_newPhoneInput" class="update__asterisks lng-newPhone"
                                id="specialist_updateDuration">New Phone Number</label>
-                        <input type="text" class="form-control enterNewPhone lng-newPhonePlaceholder" id="update-specialist_newPhoneInput"
+                        <input type="text" class="form-control enterNewPhone lng-newPhonePlaceholder"
+                               id="update-specialist_newPhoneInput"
                                placeholder="Enter New Phone Number" oninput="validatePhoneNumber(this)">
-                        <small class="update_error-message lng-requiredField" id="specialist_update_phoneError" style="color: red; display: none;"></small>
-                        <small class="update_error-message lng-notValidPhoneError" id="specialist_update_validPhoneError" style="color: red; display: none;"></small>
-                        <small class="error-message update-specialist_newPhoneInput-error-message" style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-requiredField" id="specialist_update_phoneError"
+                               style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-notValidPhoneError"
+                               id="specialist_update_validPhoneError" style="color: red; display: none;"></small>
+                        <small class="error-message update-specialist_newPhoneInput-error-message"
+                               style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="update-specialist_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="update-specialist_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary lng-updateBtn" id="update-specialist_UpdateBtn">Update</button>
+                <button type="button" class="btn btn-primary lng-updateBtn" id="update-specialist_UpdateBtn">Update
+                </button>
             </div>
         </div>
     </div>
@@ -546,10 +635,12 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="delete-specialist_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="delete-specialist_CancelBtn">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-specialist_DeleteBtn">Delete</button>
+                <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-specialist_DeleteBtn">Delete
+                </button>
             </div>
         </div>
     </div>
@@ -568,16 +659,21 @@
                     <div class="form-group">
                         <label for="service_Create-servDurationInput" class="update__asterisks lng-phone"
                                id="admin_phoneField">Phone Number</label>
-                        <input type="text" class="form-control enterPhone lng-phonePlaceholder" id="admin_CreatePhoneInput"
+                        <input type="text" class="form-control enterPhone lng-phonePlaceholder"
+                               id="admin_CreatePhoneInput"
                                placeholder="Enter Phone Number" oninput="validatePhoneNumber(this)">
-                        <small class="error-message lng-requiredField" id="admin_phoneError" style="color: red; display: none;"></small>
-                        <small class="update_error-message lng-notValidPhoneError" id="admin_validPhoneError" style="color: red; display: none;"></small>
-                        <small class="error-message lng-duplicateAdminName" id="duplicateAdminError" style="color: red; display: none;"></small>
+                        <small class="error-message lng-requiredField" id="admin_phoneError"
+                               style="color: red; display: none;"></small>
+                        <small class="update_error-message lng-notValidPhoneError" id="admin_validPhoneError"
+                               style="color: red; display: none;"></small>
+                        <small class="error-message lng-duplicateAdminName" id="duplicateAdminError"
+                               style="color: red; display: none;"></small>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="admin_Create-CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="admin_Create-CancelBtn">
                     Cancel
                 </button>
                 <button type="button" class="btn btn-primary lng-createBtn" id="admin_CreateBtn">Create</button>
@@ -598,13 +694,15 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label class="lng-phone" for="delete-admin_PhoneInput" id="delete_adminPhone">Phone Number</label>
+                        <label class="lng-phone" for="delete-admin_PhoneInput" id="delete_adminPhone">Phone
+                            Number</label>
                         <input class="form-control" id="delete-admin_PhoneInput" disabled>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal" id="delete-admin_CancelBtn">
+                <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                        id="delete-admin_CancelBtn">
                     Cancel
                 </button>
                 <button type="button" class="btn btn-primary lng-deleteBtn" id="delete-admin_DeleteBtn">Delete</button>
@@ -612,7 +710,6 @@
         </div>
     </div>
 </div>
-
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -629,6 +726,7 @@
 <script type="text/javascript" src="../js/services/specialist.js"></script>
 <script type="text/javascript" src="../js/services/admin.js"></script>
 <script type="text/javascript" src="../js/services/refreshToken.js"></script>
+<script type="text/javascript" src="../js/services/location.js"></script>
 
 <script type="text/javascript" src="../js/tables/service_table.js"></script>
 <script type="text/javascript" src="../js/tables/specialist_table.js"></script>
@@ -646,5 +744,7 @@
 <script type="text/javascript" src="../js/logout.js"></script>
 <script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>
+
+<script type="text/javascript" src="../js/slider.js"></script>
 </body>
 </html>

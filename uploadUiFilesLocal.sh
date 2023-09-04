@@ -5,7 +5,7 @@ uiBucket="appointer-ui-773974733061"
 
 cd admin/src/main/webapp
 
-for folder in css html js
+for folder in css html js mobile
 do
   cd "$folder"
 

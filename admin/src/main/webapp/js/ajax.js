@@ -6,15 +6,21 @@ function executePost(data, url) {
         dataType: 'JSON',
         data: data,
         success: function (data) {
-            console.log(data);
+            if(localStorage.getItem('createButtonClicked')) {
+                $("#department_CreateModal").modal("hide");
+                document.getElementById('notRegisteredContainer').style.display = 'none';
+                document.getElementById('department_CreatePopup').disabled = true;
+                localStorage.setItem('createBtnClicked', 'true');
+            } else {
+                setTimeout(function() {
+                     location.reload();
+                }, 500);
+            }
         },
         error: function (data) {
-        console.log("Body from error: " +  data.responseText)
-        console.log("Code from error: " +  data.status)
-            if (data.status === 0) {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
-        }
+            $('div.modal.fade').modal('hide');
+            showDataError(JSON.parse(data.responseText).body);
+       }
     });
 }
 
@@ -26,14 +32,13 @@ function executePut(data, url) {
         dataType: 'JSON',
         data: data,
         success: function (data) {
-            console.log(data);
+            setTimeout(function() {
+                location.reload();
+            }, 500);
         },
         error: function (data) {
-         console.log("Body from error: " +  data.responseText)
-         console.log("Code from error: " +  data.status)
-            if (data.status === 0) {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
+            $('div.modal.fade').modal('hide');
+            showDataError(JSON.parse(data.responseText).body);
         }
     });
 }
@@ -46,12 +51,19 @@ function executeDelete(data, url) {
         dataType: 'JSON',
         data: data,
         success: function (data) {
-            console.log(data);
+            setTimeout(function() {
+                location.reload();
+            }, 500);
         },
         error: function (data) {
-            if (data.status === 0) {
-                window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
-            }
+            $('div.modal.fade').modal('hide');
+            showDataError(JSON.parse(data.responseText).body);
         }
     });
+}
+
+function showDataError(text) {
+        var element = document.getElementById('notRegisteredContainer');
+        element.style.display = 'block';
+        element.textContent = text;
 }
