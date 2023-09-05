@@ -11,6 +11,7 @@ import com.bot.util.MessageUtils;
 import com.commons.model.Appointment;
 import com.commons.model.Department;
 import com.commons.service.IAppointmentService;
+import com.commons.utils.DateUtils;
 import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -41,6 +42,7 @@ public class CreateAppointmentSixStepProcessor extends BaseCreateAppointmentProc
         clientContext.setName(client);
         clientContext.setPhoneNumber("n/a");
         clientContext.setCustom(true);
+        clientContext.setExpiration(DateUtils.getExpirationDate(department));
         contextService.create(clientContext);
         appointment.setUserId(clientContext.getUserId());
         appointment.setPhoneOrder(true);

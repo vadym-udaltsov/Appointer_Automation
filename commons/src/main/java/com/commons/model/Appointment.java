@@ -52,6 +52,9 @@ public class Appointment extends DynamoDbEntity {
     @JsonProperty("po")
     private boolean phoneOrder;
 
+    @JsonProperty("exp")
+    private long expiration;
+
     @Override
     @JsonIgnore
     public String getCondition() {
@@ -65,6 +68,7 @@ public class Appointment extends DynamoDbEntity {
                 .withNumber(RANGE_KEY, date)
                 .withNumber("uid", userId)
                 .withNumber("dur", duration)
+                .withNumber("exp", expiration)
                 .withString("did", departmentId)
                 .withBoolean("po", phoneOrder)
                 .withString("serv", service);

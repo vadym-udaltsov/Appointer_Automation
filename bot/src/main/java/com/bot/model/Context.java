@@ -40,6 +40,7 @@ public class Context extends DynamoDbEntity {
     public static final String PHONE_FIELD = "pn";
     public static final String BLOCKED_FIELD = "b";
     public static final String CUSTOM_FIELD = "c";
+    public static final String EXPIRATION_FIELD = "exp";
     public static final String INDEX_NAME = "pn-did-index";
     public static final String DID_ID_INDEX = "did-id-index";
 
@@ -84,6 +85,10 @@ public class Context extends DynamoDbEntity {
     @JsonProperty(CUSTOM_FIELD)
     private boolean custom;
 
+    @DynamoDBAttribute(attributeName = EXPIRATION_FIELD)
+    @JsonProperty(EXPIRATION_FIELD)
+    private long expiration;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -102,6 +107,7 @@ public class Context extends DynamoDbEntity {
                 .withMap(PARAMS_FIELD, params == null ? new HashMap<>() : params)
                 .withBoolean(BLOCKED_FIELD, blocked)
                 .withBoolean(CUSTOM_FIELD, custom)
+                .withNumber(EXPIRATION_FIELD, expiration)
                 .withString("name", name == null ? "n/a" : name)
                 .withList("n", navigation == null ? List.of() : navigation);
     }

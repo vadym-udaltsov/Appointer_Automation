@@ -283,6 +283,9 @@ Resources:
           Projection:
             ProjectionType: ALL
       TableName: context
+      TimeToLiveSpecification:
+        AttributeName: exp
+        Enabled: true
   AppointmentTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:
@@ -319,6 +322,9 @@ Resources:
           Projection:
             ProjectionType: ALL
       TableName: appointment
+      TimeToLiveSpecification:
+        AttributeName: exp
+        Enabled: true
   DepartmentTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:

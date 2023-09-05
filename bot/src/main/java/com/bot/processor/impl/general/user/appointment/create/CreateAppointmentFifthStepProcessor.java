@@ -15,6 +15,7 @@ import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
 import com.commons.service.IAppointmentService;
+import com.commons.utils.DateUtils;
 import com.commons.utils.DepartmentUtils;
 import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -65,6 +66,7 @@ public class CreateAppointmentFifthStepProcessor extends BaseCreateAppointmentPr
                 .service(serviceName)
                 .userId(context.getUserId())
                 .departmentId(department.getId())
+                .expiration(DateUtils.getExpirationDate(department))
                 .date(appointmentDate)
                 .duration(selectedService.getDuration())
                 .build();

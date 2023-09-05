@@ -76,6 +76,11 @@ public class DateUtils {
         return ZonedDateTime.now(zone);
     }
 
+    public static long getExpirationDate(Department department) {
+        ZoneId zone = ZoneId.of(department.getZone());
+        return ZonedDateTime.now(zone).plusMonths(6).toEpochSecond();
+    }
+
     public static String getDayTitle(long date, Department department) {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.of(department.getZone()));
         return zonedDateTime.format(DateTimeFormatter.ofPattern("dd"));

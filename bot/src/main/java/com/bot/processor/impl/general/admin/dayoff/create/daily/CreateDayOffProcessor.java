@@ -12,6 +12,7 @@ import com.commons.model.Appointment;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
 import com.commons.service.IAppointmentService;
+import com.commons.utils.DateUtils;
 import com.commons.utils.DepartmentUtils;
 import lombok.RequiredArgsConstructor;
 
@@ -39,6 +40,7 @@ public class CreateDayOffProcessor {
                 .userId(0)
                 .departmentId(department.getId())
                 .date(appointmentDate)
+                .expiration(DateUtils.getExpirationDate(department))
                 .duration(duration)
                 .build();
         appointmentService.save(appointment);

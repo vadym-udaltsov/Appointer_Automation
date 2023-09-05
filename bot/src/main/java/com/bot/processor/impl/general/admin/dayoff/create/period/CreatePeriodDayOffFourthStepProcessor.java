@@ -127,6 +127,7 @@ public class CreatePeriodDayOffFourthStepProcessor extends DayOffFourthStepProce
                     .userId(0)
                     .departmentId(department.getId())
                     .date(appDate.toEpochSecond())
+                    .expiration(DateUtils.getExpirationDate(department))
                     .duration(duration)
                     .phoneOrder(false)
                     .build();
