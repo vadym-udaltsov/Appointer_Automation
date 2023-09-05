@@ -97,20 +97,20 @@ class ContextDaoTest {
 
     //    @Test
     void testContextList() {
-        List<Appointment> appointments = new ArrayList<>();
-        for (int i = 1; i < 120; i++) {
-            Appointment appointment = new Appointment("", 0L, i, "testDepartment", "", "", 0, false);
-            appointments.add(appointment);
-        }
-        Appointment appointment1 = new Appointment("", 0L, 2006806288L, "790b0de6", "", "", 0, false);
-        Appointment appointment2 = new Appointment("", 0L, 263609752L, "790b0de6", "", "", 0, false);
-        Appointment appointment3 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0, false);
-        Appointment appointment4 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0, false);
-        appointments.add(appointment1);
-        appointments.add(appointment2);
-        appointments.add(appointment3);
-        appointments.add(appointment4);
-        List<Context> list = contextDao.getContextListByAppointments(appointments);
-        System.out.println();
+//        List<Appointment> appointments = new ArrayList<>();
+//        for (int i = 1; i < 120; i++) {
+//            Appointment appointment = new Appointment("", 0L, i, "testDepartment", "", "", 0, false);
+//            appointments.add(appointment);
+//        }
+//        Appointment appointment1 = new Appointment("", 0L, 2006806288L, "790b0de6", "", "", 0, false);
+//        Appointment appointment2 = new Appointment("", 0L, 263609752L, "790b0de6", "", "", 0, false);
+//        Appointment appointment3 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0, false);
+//        Appointment appointment4 = new Appointment("", 0L, 641450521L, "790b0de6", "", "", 0, false);
+//        appointments.add(appointment1);
+//        appointments.add(appointment2);
+//        appointments.add(appointment3);
+//        appointments.add(appointment4);
+//        List<Context> list = contextDao.getContextListByAppointments(appointments);
+//        System.out.println();
     }
 }

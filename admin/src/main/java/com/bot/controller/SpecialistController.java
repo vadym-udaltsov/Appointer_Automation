@@ -3,12 +3,14 @@ package com.bot.controller;
 import com.commons.DbItemUpdateException;
 import com.commons.model.Department;
 import com.commons.model.SimpleResponse;
+import com.commons.model.Specialist;
 import com.commons.request.specialist.CreateSpecialistRequest;
 import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
 import com.commons.service.IAppointmentService;
 import com.commons.service.IDepartmentService;
 import com.commons.utils.DateUtils;
+import com.commons.utils.DepartmentUtils;
 import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +64,10 @@ public class SpecialistController {
         try {
             departmentService.deleteSpecialist(request);
             Department department = departmentService.getDepartmentById(request.getDepartmentId());
+            String specialistName = request.getSpecialistName();
             long endOfMonthDate = DateUtils.getEndOfMonthDate(department, true);
-            appointmentService.deleteAppointmentsBySpecialist(request.getDepartmentId(), request.getSpecialistName(), endOfMonthDate);
+            Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);
+            appointmentService.deleteAppointmentsBySpecialist(request.getDepartmentId(), specialist.getId(), endOfMonthDate);
         } catch (DbItemUpdateException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);

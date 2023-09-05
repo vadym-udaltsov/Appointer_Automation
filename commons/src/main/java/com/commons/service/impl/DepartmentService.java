@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.commons.dao.IDepartmentDao;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.model.Specialist;
 import com.commons.request.admin.AdminRequest;
 import com.commons.request.service.UpdateServiceRequest;
 import com.commons.request.specialist.CreateSpecialistRequest;
@@ -11,6 +12,7 @@ import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
 import com.commons.service.IDepartmentService;
 import com.commons.utils.Constants;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,10 +53,12 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public void addSpecialist(CreateSpecialistRequest request) {
-        String name = request.getSpecialist().getName();
+        Specialist specialist = request.getSpecialist();
+        String name = specialist.getName();
         if ("".equals(name)) {
             throw new IllegalArgumentException("Specialist name should not be empty");
         }
+        specialist.setId(RandomStringUtils.randomAlphabetic(4));
         departmentDao.addSpecialist(request);
     }
 

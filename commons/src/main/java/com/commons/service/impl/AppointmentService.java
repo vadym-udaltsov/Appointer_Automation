@@ -8,6 +8,7 @@ import com.commons.model.FreeSlot;
 import com.commons.model.Specialist;
 import com.commons.service.IAppointmentService;
 import com.commons.utils.DateUtils;
+import com.commons.utils.DepartmentUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -67,22 +68,25 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public List<Appointment> getAppointmentsBySpecialist(Department department, String specialist, long startDate,
+    public List<Appointment> getAppointmentsBySpecialist(Department department, String specialistName, long startDate,
                                                          long finishDate) {
-        String specId = specialist + "::" + department.getId();
+        Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);
+
+        String specId = specialist.getId() + "::" + department.getId();
         return appointmentDao.getAppointmentsBySpecialist(specId, startDate, finishDate);
     }
 
     @Override
-    public List<FreeSlot> getFreeSlotsBySpecialist(Department department, String specialist, int year, int month,
+    public List<FreeSlot> getFreeSlotsBySpecialist(Department department, String specialistName, int year, int month,
                                                    int dayNumber) {
         long startDate = DateUtils.getPointOfDayWithYear(year, month, dayNumber, department.getStartWork(), department);
         long finishDate = DateUtils.getPointOfDayWithYear(year, month, dayNumber, department.getEndWork(), department);
         long now = DateUtils.nowZone(department);
         int todayDayNumber = DateUtils.getNumberOfCurrentDay(department);
-        String specId = specialist + "::" + department.getId();
+        Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);
+        String specId = specialist.getId() + "::" + department.getId();
         List<Appointment> specAppointments = appointmentDao.getAppointmentsBySpecialist(specId, startDate, finishDate);
-        List<FreeSlot> slots = getSlots(specAppointments, startDate, dayNumber, todayDayNumber, specialist, finishDate, now);
+        List<FreeSlot> slots = getSlots(specAppointments, startDate, dayNumber, todayDayNumber, specialistName, finishDate, now);
         if (specAppointments.isEmpty()) {
             if (dayNumber == todayDayNumber && now > startDate) {
                 startDate = now;
@@ -91,7 +95,7 @@ public class AppointmentService implements IAppointmentService {
             return new ArrayList<>(List.of(FreeSlot.builder()
                     .startPoint(startDate)
                     .durationSec(wholeDay)
-                    .specialist(specialist)
+                    .specialist(specialistName)
                     .build()));
         } else {
             return slots;
@@ -109,10 +113,10 @@ public class AppointmentService implements IAppointmentService {
 
         List<Appointment> appointments = appointmentDao.getAppointmentsByDepartment(department, startDate, finishDate)
                 .stream()
-                .filter(a -> specialistNames.contains(a.getSpecialist()))
+                .filter(a -> specialistNames.contains(DepartmentUtils.getSpecialistName(department, a)))
                 .collect(Collectors.toList());
         Map<String, List<Appointment>> appointmentsBySpecialists = appointments.stream()
-                .collect(Collectors.groupingBy(Appointment::getSpecialist));
+                .collect(Collectors.groupingBy(a -> DepartmentUtils.getSpecialistName(department, a)));
 
         Map<String, List<FreeSlot>> result = new HashMap<>();
         for (Map.Entry<String, List<Appointment>> entry : appointmentsBySpecialists.entrySet()) {
@@ -123,17 +127,17 @@ public class AppointmentService implements IAppointmentService {
         }
 
         for (Specialist specialist : departmentSpecialists) {
-            String specId = specialist.getName();
-            List<Appointment> specApp = appointmentsBySpecialists.get(specId);
+            String specName = specialist.getName();
+            List<Appointment> specApp = appointmentsBySpecialists.get(specName);
             if (specApp == null || specApp.isEmpty()) {
                 if (dayNumber == todayDayNumber && now > startDate) {
                     startDate = now;
                 }
                 long wholeDay = finishDate - startDate;
-                result.put(specId, List.of(FreeSlot.builder()
+                result.put(specName, List.of(FreeSlot.builder()
                         .startPoint(startDate)
                         .durationSec(wholeDay)
-                        .specialist(specId)
+                        .specialist(specName)
                         .build()));
             }
         }

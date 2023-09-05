@@ -12,6 +12,7 @@ import com.bot.model.MessageTemplate;
 import com.commons.model.Appointment;
 import com.commons.model.Department;
 import com.commons.utils.DateUtils;
+import com.commons.utils.DepartmentUtils;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Contact;
@@ -256,7 +257,7 @@ public class MessageUtils {
 
     public static void fillMessagesToLocalize(List<LString> messagesToLocalize, Appointment appointment,
                                               Context userContext, MessageTemplate template, Department department) {
-        String specialist = appointment.getSpecialist();
+        String specialist = DepartmentUtils.getSpecialistName(department, appointment);
         String service = appointment.getService();
         int duration = appointment.getDuration();
         long date = appointment.getDate();

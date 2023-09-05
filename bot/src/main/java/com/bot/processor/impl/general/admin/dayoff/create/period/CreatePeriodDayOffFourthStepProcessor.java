@@ -7,7 +7,6 @@ import com.bot.model.MessageHolder;
 import com.bot.model.MessageTemplate;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
-import com.bot.processor.impl.general.admin.dayoff.AbstractGetCalendarPeriodDayOff;
 import com.bot.processor.impl.general.admin.dayoff.DayOffFourthStepProcessor;
 import com.bot.service.IContextService;
 import com.bot.service.ISendMessageService;
@@ -16,10 +15,11 @@ import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Appointment;
 import com.commons.model.Department;
+import com.commons.model.Specialist;
 import com.commons.service.IAppointmentService;
 import com.commons.utils.DateUtils;
+import com.commons.utils.DepartmentUtils;
 import com.commons.utils.JsonUtils;
-import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.ZoneId;
@@ -113,16 +113,17 @@ public class CreatePeriodDayOffFourthStepProcessor extends DayOffFourthStepProce
         return MessageUtils.buildCustomKeyboardHolders("", List.of(), KeyBoardType.VERTICAL, adminMessages, true);
     }
 
-    private void createDaysOff(ZonedDateTime start, ZonedDateTime finish, String specialist, Department department) {
+    private void createDaysOff(ZonedDateTime start, ZonedDateTime finish, String specialistName, Department department) {
         List<Appointment> daysOff = new ArrayList<>();
+        Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);
+
         while (start.isBefore(finish)) {
             ZonedDateTime appDate = ZonedDateTime.of(start.getYear(), start.getMonthValue(), start.getDayOfMonth(),
                     department.getStartWork(), 0, 0, 0, ZoneId.of(department.getZone()));
             int duration = (department.getEndWork() - department.getStartWork()) * 60;
             Appointment appointment = Appointment.builder()
-                    .id(String.format("%s::%s", specialist, department.getId()))
+                    .id(String.format("%s::%s", specialist.getId(), department.getId()))
                     .service(Constants.DAY_OFF)
-                    .specialist(specialist)
                     .userId(0)
                     .departmentId(department.getId())
                     .date(appDate.toEpochSecond())

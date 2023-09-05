@@ -13,7 +13,9 @@ import com.bot.util.MessageUtils;
 import com.commons.model.Appointment;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.model.Specialist;
 import com.commons.service.IAppointmentService;
+import com.commons.utils.DepartmentUtils;
 import com.commons.utils.JsonUtils;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -34,10 +36,13 @@ public class CreateAppointmentFifthStepProcessor extends BaseCreateAppointmentPr
         Update update = request.getUpdate();
         Context context = request.getContext();
         Department department = request.getDepartment();
-        String specialist = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
+        String specialistName = ContextUtils.getStringParam(context, Constants.SELECTED_SPEC);
         String serviceName = ContextUtils.getStringParam(context, Constants.SELECTED_SERVICE);
         int month = ContextUtils.getIntParam(context, Constants.MONTH);
         String day = ContextUtils.getStringParam(context, Constants.SELECTED_DAY);
+
+        Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);
+
         String timeString = MessageUtils.getTextFromUpdate(update);
         List<String> availableSlots = (List<String>) context.getParams().get(Constants.AVAILABLE_SLOT_TITLES);
         if (!availableSlots.contains(timeString)) {
@@ -56,9 +61,8 @@ public class CreateAppointmentFifthStepProcessor extends BaseCreateAppointmentPr
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Could not find service with name " + serviceName));
         Appointment appointment = Appointment.builder()
-                .id(String.format("%s::%s", specialist, department.getId()))
+                .id(String.format("%s::%s", specialist.getId(), department.getId()))
                 .service(serviceName)
-                .specialist(specialist)
                 .userId(context.getUserId())
                 .departmentId(department.getId())
                 .date(appointmentDate)

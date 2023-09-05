@@ -110,11 +110,13 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         String departmentId = request.getDepartmentId();
         Department department = getDepartmentById(departmentId);
         List<Specialist> specialists = department.getAvailableSpecialists();
-        boolean deleted = specialists.removeIf(s -> oldName.equals(s.getName()));
-        if (!deleted) {
-            throw new DbItemUpdateException(String.format("Specialist with name %s not found in department", specialist.getName()));
-        }
-        specialists.add(specialist);
+        Specialist oldSpec = specialists.stream()
+                .filter(s -> oldName.equals(s.getName()))
+                .findFirst()
+                .orElseThrow(() -> new DbItemUpdateException(String.format("Specialist with name %s not found in department", specialist.getName())));
+
+        oldSpec.setName(specialist.getName());
+        oldSpec.setPhoneNumber(specialist.getPhoneNumber());
         overwriteItem(department);
     }
 

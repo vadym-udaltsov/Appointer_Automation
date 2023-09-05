@@ -30,9 +30,9 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
     }
 
     @Override
-    public void deleteSpecialistAppointments(String specialist, String departmentId, long endDate) {
-        String specId = specialist + "::" + departmentId;
-        List<Appointment> appointments = getAppointmentsBySpecialist(specId, 0, endDate);
+    public void deleteSpecialistAppointments(String specialistId, String departmentId, long endDate) {
+        String appId = specialistId + "::" + departmentId;
+        List<Appointment> appointments = getAppointmentsBySpecialist(appId, 0, endDate);
         List<WriteRequest> writeRequests = buildDeleteRequests(appointments);
 
         executeBatchWriteRequests(writeRequests);
@@ -87,14 +87,14 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
     }
 
     @Override
-    public List<Appointment> getAppointmentsBySpecialist(String specId, long startDate, long finishDate) {
+    public List<Appointment> getAppointmentsBySpecialist(String appId, long startDate, long finishDate) {
         QuerySpec spec = new QuerySpec()
                 .withKeyConditionExpression("#hash = :id AND #range BETWEEN :start AND :end")
                 .withNameMap(new NameMap()
                         .with("#hash", "s")
                         .with("#range", "d"))
                 .withValueMap(new ValueMap()
-                        .withString(":id", specId)
+                        .withString(":id", appId)
                         .withNumber(":start", startDate)
                         .withNumber(":end", finishDate));
         return findAllByQuery(spec);
@@ -117,7 +117,6 @@ public class AppointmentDao extends AbstractDao<Appointment> implements IAppoint
                 "uid", new AttributeValue().withN(String.valueOf(appointment.getUserId())),
                 "dur", new AttributeValue().withN(String.valueOf(appointment.getDuration())),
                 "did", new AttributeValue(appointment.getDepartmentId()),
-                "spec", new AttributeValue(appointment.getSpecialist()),
                 "serv", new AttributeValue(appointment.getService()),
                 "po", new AttributeValue().withBOOL(appointment.isPhoneOrder()));
         return item;

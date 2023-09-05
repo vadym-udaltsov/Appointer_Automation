@@ -10,7 +10,9 @@ import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Appointment;
 import com.commons.model.Department;
+import com.commons.model.Specialist;
 import com.commons.service.IAppointmentService;
+import com.commons.utils.DepartmentUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.time.ZoneId;
@@ -24,14 +26,16 @@ public class CreateDayOffProcessor {
     private final IAppointmentService appointmentService;
     private final IContextService contextService;
 
-    protected List<MessageHolder> createDayOff(Department department, Context context, String specialist, int year,
+    protected List<MessageHolder> createDayOff(Department department, Context context, String specialistName, int year,
                                                int month, int day, int hour, int minute, int duration) {
         long appointmentDate = ZonedDateTime.of(year, month, day, hour, minute, 0, 0,
                 ZoneId.of(department.getZone())).toEpochSecond();
+
+        Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);
+
         Appointment appointment = Appointment.builder()
-                .id(String.format("%s::%s", specialist, department.getId()))
+                .id(String.format("%s::%s", specialist.getId(), department.getId()))
                 .service(Constants.DAY_OFF)
-                .specialist(specialist)
                 .userId(0)
                 .departmentId(department.getId())
                 .date(appointmentDate)

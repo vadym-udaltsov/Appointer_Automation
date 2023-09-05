@@ -15,6 +15,7 @@ import com.bot.util.MessageUtils;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
 import com.commons.model.Specialist;
+import com.commons.utils.DepartmentUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.utils.Pair;
@@ -74,7 +75,9 @@ public class AbstractGetCalendarProcessor {
         } else {
             allAppointments = appointmentService.getAppointmentsByDepartment(department, startDate, endDate);
         }
-        allAppointments.removeIf(a -> specialists.stream().map(Specialist::getName).noneMatch(n -> n.equals(a.getSpecialist())));
+        allAppointments.removeIf(a -> specialists.stream()
+                .map(Specialist::getName)
+                .noneMatch(n -> n.equals(DepartmentUtils.getSpecialistName(department, a))));
         List<String> busyDayTitles = allAppointments.isEmpty()
                 ? new ArrayList<>()
                 : defineBusyDayTitles(allAppointments, department, month.getValue(), selectedService, year);
@@ -119,7 +122,7 @@ public class AbstractGetCalendarProcessor {
     public List<String> defineBusyDayTitles(List<Appointment> allAppointments, Department department, int month,
                                              String serviceName, int year) {
         List<Pair<String, List<Appointment>>> appointmentsBySpecialist = allAppointments.stream()
-                .collect(Collectors.groupingBy(Appointment::getSpecialist))
+                .collect(Collectors.groupingBy(a -> DepartmentUtils.getSpecialistName(department, a)))
                 .entrySet().stream()
                 .map(e -> Pair.of(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());

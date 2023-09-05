@@ -46,9 +46,6 @@ public class Appointment extends DynamoDbEntity {
     @JsonProperty("serv")
     private String service;
 
-    @JsonProperty("spec")
-    private String specialist;
-
     @JsonProperty("dur")
     private int duration;
 
@@ -69,7 +66,6 @@ public class Appointment extends DynamoDbEntity {
                 .withNumber("uid", userId)
                 .withNumber("dur", duration)
                 .withString("did", departmentId)
-                .withString("spec", specialist)
                 .withBoolean("po", phoneOrder)
                 .withString("serv", service);
     }

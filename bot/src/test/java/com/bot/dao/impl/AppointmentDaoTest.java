@@ -49,7 +49,6 @@ public class AppointmentDaoTest {
         appointment.setDuration(100);
         appointment.setId("app::id");
         appointment.setService("serv");
-        appointment.setSpecialist("spec");
         appointment.setDepartmentId("jfurhfuhr");
         appointmentDao.createAppointments(List.of(appointment));
     }
@@ -79,7 +78,6 @@ public class AppointmentDaoTest {
                     .id("Tatiana::52c59292")
                     .departmentId("52c59292")
                     .service("TEST")
-                    .specialist("Tatiana")
                     .duration(60)
                     .build();
             appointmentDao.createItem(appointment);

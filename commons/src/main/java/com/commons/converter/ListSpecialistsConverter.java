@@ -16,6 +16,7 @@ public class ListSpecialistsConverter implements DynamoDBTypeConverter<List<Map<
         List<Map<String, AttributeValue>> values = new ArrayList<>();
         for (Specialist specialist : specialists) {
             Map<String, AttributeValue> value = new HashMap<>();
+            value.put("id", new AttributeValue(specialist.getId()));
             value.put("name", new AttributeValue(specialist.getName()));
             value.put("pn", new AttributeValue(specialist.getPhoneNumber()));
             values.add(value);
@@ -29,6 +30,7 @@ public class ListSpecialistsConverter implements DynamoDBTypeConverter<List<Map<
         for (Map<String, AttributeValue> value : values) {
             Specialist specialist = new Specialist();
             specialist.setName(value.get("name").getS());
+            specialist.setId(value.get("id").getS());
             specialist.setPhoneNumber(value.get("pn").getS());
             specialists.add(specialist);
         }

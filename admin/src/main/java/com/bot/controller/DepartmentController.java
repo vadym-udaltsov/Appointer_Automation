@@ -102,6 +102,7 @@ public class DepartmentController {
         DepartmentType departmentType = DepartmentType.fromName(departmentTypeName);
 
         Specialist specialist = new Specialist();
+        specialist.setId(RandomStringUtils.randomAlphabetic(4));
         specialist.setName("owner");
         specialist.setPhoneNumber(customer.getPhone());
 

@@ -16,6 +16,7 @@ import com.commons.model.Appointment;
 import com.commons.model.Department;
 import com.commons.service.IAppointmentService;
 import com.commons.utils.DateUtils;
+import com.commons.utils.DepartmentUtils;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -83,7 +84,7 @@ public class AppointmentsAdminProcessor {
                 .placeholders(Map.of("date", date)).build());
         messagesToLocalize.add(LString.empty());
         Map<String, List<Appointment>> specialistMap = appointments.stream()
-                .collect(Collectors.groupingBy(Appointment::getSpecialist));
+                .collect(Collectors.groupingBy(a -> DepartmentUtils.getSpecialistName(department, a)));
         Map<Long, Context> contextMap = contextService.getContextListByAppointments(appointments)
                 .stream()
                 .collect(Collectors.toMap(Context::getUserId, Function.identity()));
