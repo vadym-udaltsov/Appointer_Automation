@@ -19,6 +19,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import software.amazon.awssdk.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class Context extends DynamoDbEntity {
     public static final String PHONE_FIELD = "pn";
     public static final String BLOCKED_FIELD = "b";
     public static final String CUSTOM_FIELD = "c";
+    public static final String COMMENTS_FIELD = "comm";
     public static final String EXPIRATION_FIELD = "exp";
     public static final String INDEX_NAME = "pn-did-index";
     public static final String DID_ID_INDEX = "did-id-index";
@@ -89,6 +91,10 @@ public class Context extends DynamoDbEntity {
     @JsonProperty(EXPIRATION_FIELD)
     private long expiration;
 
+    @DynamoDBAttribute(attributeName = COMMENTS_FIELD)
+    @JsonProperty(COMMENTS_FIELD)
+    private List<String> comments;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -109,7 +115,8 @@ public class Context extends DynamoDbEntity {
                 .withBoolean(CUSTOM_FIELD, custom)
                 .withNumber(EXPIRATION_FIELD, expiration)
                 .withString("name", name == null ? "n/a" : name)
-                .withList("n", navigation == null ? List.of() : navigation);
+                .withList(COMMENTS_FIELD, comments == null ? new ArrayList<>() : comments)
+                .withList(NAVIGATION_FIELD, navigation == null ? new ArrayList<>() : navigation);
     }
 
     @Override

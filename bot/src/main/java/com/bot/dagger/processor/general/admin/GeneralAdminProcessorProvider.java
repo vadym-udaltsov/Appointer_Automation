@@ -19,6 +19,15 @@ import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppoint
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentFourthStepProcessor;
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentSecondStepProcessor;
 import com.bot.processor.impl.general.admin.cancelappointment.CancelPhoneAppointmentThirdStepProcessor;
+import com.bot.processor.impl.general.admin.comments.CommentsDashboardProcessor;
+import com.bot.processor.impl.general.admin.comments.create.CreateCommentFirstStepProcessor;
+import com.bot.processor.impl.general.admin.comments.create.CreateCommentSecondStepProcessor;
+import com.bot.processor.impl.general.admin.comments.create.CreateCommentThirdStepProcessor;
+import com.bot.processor.impl.general.admin.comments.delete.DeleteCommentFirstStepProcessor;
+import com.bot.processor.impl.general.admin.comments.delete.DeleteCommentSecondStepProcessor;
+import com.bot.processor.impl.general.admin.comments.delete.DeleteCommentThirdStepProcessor;
+import com.bot.processor.impl.general.admin.comments.view.ViewCommentsFirstStepProcessor;
+import com.bot.processor.impl.general.admin.comments.view.ViewCommentsSecondStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffDashProcessor;
 import com.bot.processor.impl.general.admin.dayoff.DayOffStartProcessor;
 import com.bot.processor.impl.general.admin.dayoff.PeriodDayOffCommonFirstStepProcessor;
@@ -59,6 +68,86 @@ import javax.inject.Singleton;
 
 @Module
 public class GeneralAdminProcessorProvider {
+
+    //----------------------------------------Comments------------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.COMMENTS_DASH)
+    public IProcessor adminCommentsDash() {
+        return new CommentsDashboardProcessor();
+    }
+
+    //-------------------------------Create Comment---------------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CREATE_COMMENT1)
+    public IProcessor createComment1(IContextService contextService) {
+        return new CreateCommentFirstStepProcessor(contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CREATE_COMMENT2)
+    public IProcessor createComment2() {
+        return new CreateCommentSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CREATE_COMMENT3)
+    public IProcessor createComment3(IContextService contextService) {
+        return new CreateCommentThirdStepProcessor(contextService);
+    }
+
+    //----------------------------------------View comments-------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.VIEW_COMMENT1)
+    public IProcessor viewComment1(IContextService contextService) {
+        return new ViewCommentsFirstStepProcessor(contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.VIEW_COMMENT2)
+    public IProcessor viewComment2(IContextService contextService) {
+        return new ViewCommentsSecondStepProcessor(contextService);
+    }
+
+    //--------------------------------------Delete Comments-------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DELETE_COMMENT1)
+    public IProcessor deleteComment1(IContextService contextService) {
+        return new DeleteCommentFirstStepProcessor(contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DELETE_COMMENT2)
+    public IProcessor deleteComment2(IContextService contextService) {
+        return new DeleteCommentSecondStepProcessor(contextService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DELETE_COMMENT3)
+    public IProcessor deleteComment3(IContextService contextService) {
+        return new DeleteCommentThirdStepProcessor(contextService);
+    }
 
     //----------------------------------------Appointments -------------------------
 

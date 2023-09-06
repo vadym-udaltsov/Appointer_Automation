@@ -53,7 +53,6 @@
   "Send Image": "Отправить картинку",
   "Upload image": "Загрузите изображение",
   "Submit image sending": "Подтвердите отправку изображения",
-
   "You have no clients": "У тебя нет клиентов",
   "Select client": "Выбери клиента",
   "Select client from proposed": "Выбери доступного клиента",
@@ -74,10 +73,8 @@
   "You have no blocked clients": "У тебя нет заблокированных клиентов",
   "Submit client unblocking": "Подтверди разблокировку клиента",
   "Client was unblocked": "Клиент был разблокирован",
-
   "Period": "Период",
   "Daily": "День",
-
   "Select start date of period": "Выбери дату начала выходного",
   "Select end date of period": "Выбери дату конца выходного",
   "Finish date should be after start date\nSelect correct finish date": "Дата конца должна быть после даты начала\nВыбери правильную дату конца периода",
@@ -87,8 +84,17 @@
   "Cancelled appointments made by bot.": "Отмененные записи сделанные ботом",
   "Cancelled appointments made by phone.": "Отмененные записи сделанные по телефону",
   "You can send the reason of cancelling appointments?\nType on keyboard": "Отправить сообщение с причиной отмены записи?\nНабери на клавиатуре",
+  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Максимальное количество записей в день: ${appNumber}. Больше записей можно сделать по телефону",
 
-  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day" : "Максимальное количество записей в день: ${appNumber}. Больше записей можно сделать по телефону",
+  "Comments": "Комментарии",
+  "Type comment using keyboard": "Напиши комментарий на клавиатуре",
+  "Comment for user ${user} was created": "Комментарий для клиента ${user} добавлен",
+  "You have no clients with comments": "У тебя нет клиентов с комментариями",
+  "User does not have comments": "У клиента нет комментариев",
+  "Comments for user ${user}": "Комментарии клиента ${user}",
+  "All user comments were deleted": "Все комментарии клиента удалены",
+  "Select number from proposed": "Выбери доступный номер",
+  "Select number to delete comment": "Чтобы удалить выбери номер",
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",

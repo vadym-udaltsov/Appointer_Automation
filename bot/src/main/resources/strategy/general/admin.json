@@ -381,6 +381,57 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "name": "commentsDash",
+                  "key": "Comments",
+                  "nested": [
+                    {
+                      "name": "createComment1",
+                      "key": "Create",
+                      "nested": [
+                        {
+                          "name": "createComment2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "createComment3",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "viewComment1",
+                      "key": "View",
+                      "nested": [
+                        {
+                          "name": "viewComment2",
+                          "key": "any",
+                          "nested": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "deleteComment1",
+                      "key": "Delete",
+                      "nested": [
+                        {
+                          "name": "deleteComment2",
+                          "key": "any",
+                          "nested": [
+                            {
+                              "name": "deleteComment3",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }

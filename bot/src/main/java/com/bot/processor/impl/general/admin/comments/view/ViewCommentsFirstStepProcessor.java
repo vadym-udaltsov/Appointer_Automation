@@ -1,10 +1,11 @@
-package com.bot.processor.impl.general.admin.block;
+package com.bot.processor.impl.general.admin.comments.view;
 
 import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
+import com.bot.processor.impl.general.admin.block.AbstractUserFirstStepProcessor;
 import com.bot.service.IContextService;
 import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
@@ -14,9 +15,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 
-public class UnblockUserFirstStepProcessor extends AbstractUserFirstStepProcessor implements IProcessor {
+public class ViewCommentsFirstStepProcessor extends AbstractUserFirstStepProcessor implements IProcessor {
 
-    public UnblockUserFirstStepProcessor(IContextService contextService) {
+    public ViewCommentsFirstStepProcessor(IContextService contextService) {
         super(contextService);
     }
 
@@ -27,15 +28,16 @@ public class UnblockUserFirstStepProcessor extends AbstractUserFirstStepProcesso
 
     @Override
     protected List<MessageHolder> getNoUsersResponse(Context context, Department department) {
-        ContextUtils.resetLocationToDashboard(context);
-        String strategyKey = ContextUtils.getStrategyKey(context, department);
-        return MessageUtils.buildCustomKeyboardHolders("You have no blocked clients",
-                Constants.DASHBOARD_BUTTONS.get(strategyKey), KeyBoardType.TWO_ROW, false);
+        ContextUtils.resetLocationToStep(context, Constants.Processors.COMMENTS_DASH);
+        return MessageUtils.buildCustomKeyboardHolders("You have no clients with comments", Constants.ADMIN_APPOINTMENT_BUTTONS, KeyBoardType.TWO_ROW,
+                List.of(), true);
     }
-
 
     @Override
     protected void filterContexts(List<Context> userContexts) {
-        userContexts.removeIf(c -> !c.isBlocked());
+        userContexts.removeIf(uc -> uc.isBlocked()
+                || uc.isCustom()
+                || uc.getComments() == null
+                || uc.getComments().size() == 0);
     }
 }

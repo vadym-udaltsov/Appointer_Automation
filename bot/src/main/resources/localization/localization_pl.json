@@ -59,7 +59,6 @@
   "Send Image": "Prześlij zdjęcie",
   "Upload image": "Prześlij obraz",
   "Submit image sending": "Potwierdź przesłanie obrazu",
-
   "Appointment by phone": "Umów wizytę telefonicznie",
   "Cancel appointment by phone": "Anuluj wizytę telefonicznie",
   "Enter client name using keyboard": "Wprowadź imię klienta za pomocą klawiatury",
@@ -75,9 +74,18 @@
   "You have no blocked clients": "Nie masz zablokowanych klientów",
   "Submit client unblocking": "Potwierdź odblokowanie klienta",
   "Client was unblocked": "Klient został odblokowany",
-
   "Period": "Okres",
   "Daily": "Dzień",
+
+  "Comments": "Komentarze",
+  "Type comment using keyboard": "Napisz komentarz za pomocą klawiatury",
+  "Comment for user ${user} was created": "Komentarz dla użytkownika ${user} został utworzony",
+  "You have no clients with comments": "Nie masz klientów z komentarzami",
+  "User does not have comments": "Użytkownik nie ma komentarzy",
+  "Comments for user ${user}": "Komentarze dla użytkownika ${user}",
+  "All user comments were deleted": "Wszystkie komentarze użytkownika zostały usunięte",
+  "Select number from proposed": "Wybierz numer spośród dostępnych",
+  "Select number to delete comment": "Aby usunąć, wybierz numer",
 
   "Select start date of period": "Wybierz datę rozpoczęcia",
   "Select end date of period": "Wybierz datę zakończenia",
@@ -87,9 +95,7 @@
   "Cancelled appointments made by bot.": "Anulowane wpisy dokonane przez bota",
   "Cancelled appointments made by phone.": "Anulowane wpisy dokonane telefonicznie",
   "You can send the reason of cancelling appointments?\nType on keyboard": "\nWyślij wiadomość z powodem anulowania?\nWpisz na klawiaturze",
-
-  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day" : "Maksymalna liczba wejść dziennie: ${appNumber}. Więcej wpisów można dokonać telefonicznie",
-
+  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Maksymalna liczba wejść dziennie: ${appNumber}. Więcej wpisów można dokonać telefonicznie",
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",
   "Date: ${date}": "Data: ${date}",

@@ -10,7 +10,6 @@ import com.bot.util.Constants;
 import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
-import com.commons.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -29,8 +28,8 @@ public abstract class AbstractBlockUserThirdStepProcessor {
         String strategyKey = ContextUtils.getStrategyKey(context, department);
         if (Constants.SUBMIT.equals(cancelSubmit)) {
             String selectedTitle = ContextUtils.getStringParam(context, Constants.SELECTED_TITLE);
-            String selectedContextString = ContextUtils.getStringParam(context, selectedTitle);
-            Context selectedContext = JsonUtils.parseStringToObject(selectedContextString, Context.class);
+            long selectedContextId = ContextUtils.getLongParam(context, selectedTitle);
+            Context selectedContext = contextService.getContext(selectedContextId, department.getId());
             executeContextAction(selectedContext);
             contextService.updateContext(selectedContext);
             ContextUtils.resetLocationToDashboard(context);

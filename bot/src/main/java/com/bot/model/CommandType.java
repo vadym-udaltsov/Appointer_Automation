@@ -52,6 +52,18 @@ public enum CommandType {
     GET_ALL_APPOINTMENTS_1(Constants.Processors.GET_ALL_APPOINTMENTS_1),
     GET_ALL_APPOINTMENTS_2(Constants.Processors.GET_ALL_APPOINTMENTS_2),
 
+    COMMENTS_DASH(Constants.Processors.COMMENTS_DASH),
+    CREATE_COMMENT1(Constants.Processors.CREATE_COMMENT1),
+    CREATE_COMMENT2(Constants.Processors.CREATE_COMMENT2),
+    CREATE_COMMENT3(Constants.Processors.CREATE_COMMENT3),
+
+    VIEW_COMMENT1(Constants.Processors.VIEW_COMMENT1),
+    VIEW_COMMENT2(Constants.Processors.VIEW_COMMENT2),
+
+    DELETE_COMMENT1(Constants.Processors.DELETE_COMMENT1),
+    DELETE_COMMENT2(Constants.Processors.DELETE_COMMENT2),
+    DELETE_COMMENT3(Constants.Processors.DELETE_COMMENT3),
+
     SEND_MESSAGE_DASH(Constants.Processors.SEND_MESSAGE_DASH),
     SEND_MESSAGE_TEXT_1(Constants.Processors.SEND_MESSAGE_TEXT_1),
     SEND_MESSAGE_TEXT_2(Constants.Processors.SEND_MESSAGE_TEXT_2),

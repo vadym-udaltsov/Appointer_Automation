@@ -54,7 +54,6 @@
   "Send Image": "Надіслати зображення",
   "Upload image": "Завантажте зображення",
   "Submit image sending": "Підтвердіть відправку зображення",
-
   "You have no clients": "У тебе немає клієнтів",
   "Select client": "Вибери клієнта",
   "Select client from proposed": "Вибери доступного клієнта",
@@ -75,9 +74,18 @@
   "You have no blocked clients": "У тебе немає заблокованих клієнтів",
   "Submit client unblocking": "Підтверди розблокування клієнта",
   "Client was unblocked": "Клієнта було розблоковано",
-
   "Period": "Період",
   "Daily": "День",
+
+  "Comments": "Коментарі",
+  "Type comment using keyboard": "Напиши коментарій на клавіатурі",
+  "Comment for user ${user} was created": "Коментар для клієнта ${user} добавлено",
+  "You have no clients with comments": "У тебе немає клиентів с коментарями",
+  "User does not have comments": "У клієнта немає коментарів",
+  "Comments for user ${user}": "Коментарі клієнта ${user}",
+  "All user comments were deleted": "Всі коментарі клієнта видалено",
+  "Select number from proposed": "Вибери доступний номер",
+  "Select number to delete comment": "Вибери номер щоб видалити",
 
   "Select start date of period": "Вибери дату початку вихідного",
   "Select end date of period": "Вибери дату кінця вхиідного",
@@ -87,9 +95,7 @@
   "Cancelled appointments made by bot.": "Скасовані записи зроблені ботом",
   "Cancelled appointments made by phone.": "Скасовані записи зроблені по телефону",
   "You can send the reason of cancelling appointments?\nType on keyboard": "Відправити повідомлення причини скасування запису?\nНабери на клавіатурі",
-
-  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day" : "Максимальна кількість записів в день: ${appNumber}. Більше записів можна зробити за телефоном",
-
+  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Максимальна кількість записів в день: ${appNumber}. Більше записів можна зробити за телефоном",
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",

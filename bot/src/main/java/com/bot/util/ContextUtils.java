@@ -21,6 +21,14 @@ public class ContextUtils {
         return ((BigDecimal) context.getParams().get(paramName)).intValue();
     }
 
+    public static long getLongParam(Context context, String paramName) {
+        Object paramValue = context.getParams().get(paramName);
+        if (paramValue == null) {
+            return 0;
+        }
+        return ((BigDecimal) paramValue).longValue();
+    }
+
     public static String getStringParam(Context context, String paramName) {
         return (String) context.getParams().get(paramName);
     }
@@ -75,6 +83,12 @@ public class ContextUtils {
 
     public static void resetLocationToStep(Context context, String step) {
         context.setParams(Map.of());
+        List<String> navigation = context.getNavigation();
+        List<String> newNavigation = navigation.subList(0, navigation.indexOf(step) + 1);
+        context.setNavigation(newNavigation);
+    }
+
+    public static void resetLocationToStepSaveParams(Context context, String step) {
         List<String> navigation = context.getNavigation();
         List<String> newNavigation = navigation.subList(0, navigation.indexOf(step) + 1);
         context.setNavigation(newNavigation);

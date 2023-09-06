@@ -7,6 +7,7 @@ import java.util.Map;
 public class Constants {
 
     public static final String ANY = "any";
+    public static final String ALL = "All";
     public static final String BACK = "Back";
     public static final String HOME = "Home";
 
@@ -37,7 +38,7 @@ public class Constants {
     public static final String SELECTED_MINUTE = "selectedMinute";
     public static final String SELECTED_APPOINTMENT = "selectedAppointment";
     public static final String SELECTED_YEAR = "selectedYear";
-    public static final String SELECTED_FINISH_YEAR = "selectedFinishYear";
+    public static final String SELECTED_CONTEXT = "selectedContext";
 
     public static final String DEPARTMENT = "department";
     public static final String CONTEXT = "context";
@@ -49,7 +50,7 @@ public class Constants {
     public static final String AVAILABLE_SLOTS = "availableSlots";
     public static final String AVAILABLE_APPOINTMENTS = "availableAppointments";
     public static final String AVAILABLE_DURATIONS = "availableDurations";
-    public static final String AVAILABLE_BUTTONS = "availableButtons";
+    public static final String AVAILABLE_NUMBERS = "availableNumbers";
 
     public static final String TEXT_FOR_SUBMIT = "textForSubmit";
     public static final String PHOTO_ID_FOR_SUBMIT = "photoIdForSubmit";
@@ -68,7 +69,7 @@ public class Constants {
     public static final List<String> START_DAYOFF_BUTTONS = List.of("Daily", "Period");
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
-            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block", "Mailing", "Profile"),
+            "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block", "Mailing", "Comments", "Profile"),
             "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment", "Profile")
     );
 
@@ -107,6 +108,19 @@ public class Constants {
         public static final String GET_ALL_APP_TODAY_TOMORROW = "getAppointmentsTodayTomorrow";
         public static final String GET_ALL_APPOINTMENTS_1 = "getAllAppointments";
         public static final String GET_ALL_APPOINTMENTS_2 = "getAllAppointmentsByDate";
+
+        public static final String COMMENTS_DASH = "commentsDash";
+
+        public static final String CREATE_COMMENT1 = "createComment1";
+        public static final String CREATE_COMMENT2 = "createComment2";
+        public static final String CREATE_COMMENT3 = "createComment3";
+
+        public static final String VIEW_COMMENT1 = "viewComment1";
+        public static final String VIEW_COMMENT2 = "viewComment2";
+
+        public static final String DELETE_COMMENT1 = "deleteComment1";
+        public static final String DELETE_COMMENT2 = "deleteComment2";
+        public static final String DELETE_COMMENT3 = "deleteComment3";
 
         public static final String SEND_MESSAGE_DASH = "sendMessageDash";
         public static final String SEND_MESSAGE_TEXT_1 = "sendMessageText1";

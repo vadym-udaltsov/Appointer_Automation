@@ -12,6 +12,8 @@ public interface IContextService {
 
     Context getContext(Update update, String departmentId);
 
+    Context getContext(long userId, String departmentId);
+
     void create(Context context);
 
     void delete(Context context);

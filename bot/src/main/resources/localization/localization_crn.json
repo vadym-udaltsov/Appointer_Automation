@@ -59,7 +59,6 @@
   "Send Image": "Пошаљите слику",
   "Upload image": "Отпремите слику",
   "Submit image sending": "Потврдите слање слике",
-
   "Appointment by phone": "Резервација путем телефона",
   "Cancel appointment by phone": "Откажите термин телефоном",
   "Enter client name using keyboard": "Унесите име клијента помоћу тастатуре",
@@ -75,9 +74,18 @@
   "You have no blocked clients": "Немате блокиране клијенте",
   "Submit client unblocking": "Потврдите откључавање клијента",
   "Client was unblocked": "Клијент је откључан",
-
   "Period": "Раздобље",
   "Daily": "Дан",
+
+  "Comments": "Коментари",
+  "Type comment using keyboard": "Унесите коментар на тастатури",
+  "Comment for user ${user} was created": "Додан је коментар за клијента ${user}",
+  "You have no clients with comments": "Немате клијената са коментарима",
+  "User does not have comments": "Клијент нема коментара",
+  "Comments for user ${user}": "Коментари клијената ${user}",
+  "All user comments were deleted": "Сви коментари клијената су избрисани",
+  "Select number from proposed": "Изаберите доступан број",
+  "Select number to delete comment": "Изаберите број за брисање",
 
   "Select start date of period": "Изаберите датум почетка",
   "Select end date of period": "Изаберите датум завршетка",
@@ -87,9 +95,7 @@
   "Cancelled appointments made by bot.": "Поништени уноси које је направио бот",
   "Cancelled appointments made by phone.": "Поништени уноси направљени телефоном",
   "You can send the reason of cancelling appointments?\nType on keyboard": "\nПошаљите поруку са разлогом за отказивање?\nУкуцајте на тастатури",
-
-  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day" : "Максималан унос по дану: ${appNumber}. Више уноса се може извршити телефоном",
-
+  "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Максималан унос по дану: ${appNumber}. Више уноса се може извршити телефоном",
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специјалиста: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Датум: ${date}",

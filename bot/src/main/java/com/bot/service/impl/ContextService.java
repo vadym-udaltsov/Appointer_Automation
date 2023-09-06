@@ -32,6 +32,11 @@ public class ContextService implements IContextService {
     }
 
     @Override
+    public Context getContext(long userId, String departmentId) {
+        return contextDao.getContext(userId, departmentId);
+    }
+
+    @Override
     public void updateContext(Context context) {
         if (context != null) {
             contextDao.updateContext(context);
