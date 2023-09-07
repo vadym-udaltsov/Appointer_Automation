@@ -377,6 +377,8 @@ Resources:
       Enabled: true
       EventSourceArn: !GetAtt [ BotQueue, Arn ]
       FunctionName: !Ref RegisterBotLambdaName
+    DependsOn:
+      - RegisterBotLambda
 #Api Gateway
   BotApi:
     Type: 'AWS::ApiGateway::RestApi'
