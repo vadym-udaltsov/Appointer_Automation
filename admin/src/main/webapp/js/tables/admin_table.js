@@ -15,11 +15,11 @@ $(window).ready(function () {
         newAdminBlock.setAttribute('value', admin);
 
         var phoneDiv = document.createElement('div');
-        phoneDiv.classList.add('admCol centerPos');
+        phoneDiv.classList.add('admCol', 'centerPos');
         phoneDiv.textContent = admin.pn;
 
         var actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('admCol centerPos', 'actions');
+        actionsDiv.classList.add('admCol', 'centerPos', 'actions');
 
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute("type", "button");

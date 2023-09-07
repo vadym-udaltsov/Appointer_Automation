@@ -57,9 +57,9 @@ $(window).on('load', function() {
         return false;
     });
 
-     localStorage.setItem('createButtonClicked', false);
+     localStorage.setItem('createDepartmentButtonClicked', false);
      $("#create_depBtn").click(function() {
-        localStorage.setItem('createButtonClicked', true);
+        localStorage.setItem('createDepartmentButtonClicked', true);
         const createButton = document.getElementById('create_depBtn');
         if (createButton.classList.contains('disabled')) {
             return false;
@@ -193,7 +193,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
 
         if(data.customerDepartments.length === 0) {
             if (data.registered == false) {
-                localStorage.setItem('createBtnClicked', 'false');
+                localStorage.setItem('createDepartmentButtonClicked', 'false');
                 document.getElementById('notRegisteredContainer').style.display = 'block';
                 document.getElementById('department_CreatePopup').disabled = false;
                 if(data.admin) {

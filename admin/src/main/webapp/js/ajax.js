@@ -6,11 +6,10 @@ function executePost(data, url) {
         dataType: 'JSON',
         data: data,
         success: function (data) {
-            if(localStorage.getItem('createButtonClicked')) {
+            if(localStorage.getItem('createDepartmentButtonClicked') === true) {
                 $("#department_CreateModal").modal("hide");
                 document.getElementById('notRegisteredContainer').style.display = 'none';
                 document.getElementById('department_CreatePopup').disabled = true;
-                localStorage.setItem('createBtnClicked', 'true');
             } else {
                 setTimeout(function() {
                      location.reload();
