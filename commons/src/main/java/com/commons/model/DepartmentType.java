@@ -1,7 +1,14 @@
 package com.commons.model;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Getter
 public enum DepartmentType {
-    GENERAL;
+    GENERAL("general");
+
+    private final String title;
 
     public static DepartmentType fromName(String name) {
         for (DepartmentType value : values()) {

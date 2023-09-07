@@ -6,6 +6,7 @@ accountId="$1"
 verifiedEmail="$2"
 deploymentBucket="appointer-deployment-${accountId}"
 uiBucket="appointer-ui-${accountId}"
+localizationBucket="appointer-localization-${accountId}"
 
 #Uploading needed lambda artefacts
 for lambda_pair in $lambdas
@@ -72,4 +73,16 @@ for folder in *
 do
   echo "Uploading files from folder ${folder}"
   aws s3 sync $folder s3://${uiBucket}/$folder/ --acl public-read
+done
+
+echo "Going out of admin..."
+cd ../../../../
+
+echo "Uploading localization files..."
+cd bot/src/main/resources/localization
+
+for folder in *
+do
+  echo "Uploading files from folder ${folder}"
+  aws s3 sync $folder s3://${localizationBucket}/$folder/
 done

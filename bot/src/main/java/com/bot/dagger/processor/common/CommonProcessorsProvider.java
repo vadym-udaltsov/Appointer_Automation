@@ -6,6 +6,7 @@ import com.bot.processor.IProcessor;
 import com.bot.processor.impl.common.ChangeLanguageFirstStepProcessor;
 import com.bot.processor.impl.common.ChangeLanguageSecondStepProcessor;
 import com.bot.processor.impl.common.ProfileProcessor;
+import com.bot.service.IDictionaryService;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
@@ -29,15 +30,15 @@ public class CommonProcessorsProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CHANGE_LANG1)
-    public IProcessor changeLang1() {
-        return new ChangeLanguageFirstStepProcessor();
+    public IProcessor changeLang1(IDictionaryService dictionaryService) {
+        return new ChangeLanguageFirstStepProcessor(dictionaryService);
     }
 
     @Provides
     @Singleton
     @IntoMap
     @CommandKey(CommandType.CHANGE_LANG2)
-    public IProcessor changeLang2() {
-        return new ChangeLanguageSecondStepProcessor();
+    public IProcessor changeLang2(IDictionaryService dictionaryService) {
+        return new ChangeLanguageSecondStepProcessor(dictionaryService);
     }
 }

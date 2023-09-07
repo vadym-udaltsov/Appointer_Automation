@@ -1,39 +1,37 @@
 package com.bot.model;
 
-import java.util.Locale;
-
 public enum Language {
-    UA("\uD83C\uDDFA\uD83C\uDDE6", Locale.forLanguageTag("UA"), "localization/localization_ua.json", "keys/keys_ua.json"),
-    PL("\uD83C\uDDF5\uD83C\uDDF1", Locale.forLanguageTag("PL"), "localization/localization_pl.json", "keys/keys_pl.json"),
-    CRN("\uD83C\uDDF2\uD83C\uDDEA", Locale.forLanguageTag("CRN"), "localization/localization_crn.json", "keys/keys_crn.json"),
-    US("\uD83C\uDDFA\uD83C\uDDF8", Locale.forLanguageTag("USA"), "localization.json", ""),
-    RU("\uD83C\uDDF7\uD83C\uDDFA", Locale.forLanguageTag("RU"), "localization/localization_ru.json", "keys/keys_ru.json");
+    UA("\uD83C\uDDFA\uD83C\uDDE6"),
+    PL("\uD83C\uDDF5\uD83C\uDDF1"),
+    CRN("\uD83C\uDDF2\uD83C\uDDEA"),
+    US("\uD83C\uDDFA\uD83C\uDDF8"),
+
+    DE("\uD83C\uDDE9\uD83C\uDDEA"),
+    FR("\uD83C\uDDEB\uD83C\uDDF7"),
+    CZ("\uD83C\uDDE8\uD83C\uDDFF"),
+    IT("\uD83C\uDDEE\uD83C\uDDF9"),
+    BE("\uD83C\uDDE7\uD83C\uDDEA"),
+    BY("\uD83C\uDDE7\uD83C\uDDFE"),
+    HR("\uD83C\uDDED\uD83C\uDDF7"),
+    SK("\uD83C\uDDF8\uD83C\uDDF0"),
+    PT("\uD83C\uDDF5\uD83C\uDDF9"),
+    ES("\uD83C\uDDEA\uD83C\uDDF8"),
+    TR("\uD83C\uDDF9\uD83C\uDDF7"),
+
+    RU("\uD83C\uDDF7\uD83C\uDDFA");
 
     private final String value;
-    private final Locale locale;
-    private final String localizationFilePath;
-    private final String deLocalizationPath;
 
-    Language(String value, Locale locale, String localizationFilePath, String deLocalizationPath) {
+    Language(String value) {
         this.value = value;
-        this.locale = locale;
-        this.localizationFilePath = localizationFilePath;
-        this.deLocalizationPath = deLocalizationPath;
     }
 
     public String getValue() {
         return value;
     }
-    public Locale getLocale() {
-        return locale;
-    }
 
     public String getLocalizationFilePath() {
-        return localizationFilePath;
-    }
-
-    public String getDeLocalizationPath() {
-        return deLocalizationPath;
+        return String.format("%s/%s/localization_%s.json", "%s", this.name().toLowerCase(), this.name().toLowerCase());
     }
 
     public static Language fromValue(String value) {

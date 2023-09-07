@@ -1,5 +1,9 @@
 package com.bot.util;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.ListObjectsRequest;
+import com.amazonaws.services.s3.model.ObjectListing;
 import com.bot.dagger.AwsClientProvider;
 import com.bot.dagger.DaoProvider;
 import com.bot.dao.IContextDao;
@@ -40,5 +44,10 @@ public class WarmUpUtils {
                 "    }\n" +
                 "}";
         JsonUtils.parseStringToObject(updateStr, Update.class);
+        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().build();
+        String account = System.getenv("ACCOUNT");
+        ListObjectsRequest request = new ListObjectsRequest();
+        request.setBucketName("appointer-localization-" + account);
+        ObjectListing result = s3Client.listObjects(request);
     }
 }

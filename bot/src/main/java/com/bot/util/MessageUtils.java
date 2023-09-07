@@ -19,6 +19,7 @@ import org.telegram.telegrambots.meta.api.objects.Contact;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
+import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 import software.amazon.awssdk.utils.StringUtils;
 
 import java.time.Instant;
@@ -36,17 +37,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MessageUtils {
 
-    public static MessageHolder getLanguageMessageHolder() {
-        return getLanguageMessageHolder("Select language");
+    public static MessageHolder getLanguageMessageHolder(List<Language> availableLanguages) {
+        return getLanguageMessageHolder("Select language", availableLanguages);
     }
 
-    public static MessageHolder getLanguageMessageHolder(String message) {
+    public static MessageHolder getLanguageMessageHolder(String message, List<Language> availableLanguages) {
+        List<String> availableFlags = availableLanguages.stream().map(Language::getValue).collect(Collectors.toList());
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.VERTICAL)
-                .buttonsMap(buildButtons(commonButtons(getFlags()), false))
+                .buttonsMap(buildButtons(commonButtons(availableFlags), false))
                 .build();
         return holder(message, ButtonsType.INLINE, request);
     }
@@ -305,5 +308,12 @@ public class MessageUtils {
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttons), true))
                 .build();
         return MessageUtils.holder(message, ButtonsType.KEYBOARD, request, messageLines);
+    }
+
+    public static List<Language> filterLanguages(List<String> dictKeys, Department department) {
+        return Stream.of(Language.values())
+                .filter(l -> dictKeys.contains(String.format(Constants.DICTIONARY_PATTERN, department.getType().getTitle(),
+                        l.name().toLowerCase(), l.name().toLowerCase())) || Language.US == l)
+                .collect(Collectors.toList());
     }
 }

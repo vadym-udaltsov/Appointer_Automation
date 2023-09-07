@@ -75,6 +75,9 @@ Resources:
         ApplyOn: PublishedVersions
       Runtime: java11
       Timeout: 300
+      Environment:
+        Variables:
+          ACCOUNT: !Ref AccountId
     DependsOn:
       - AdminLayer
 #Lambda versions
@@ -227,6 +230,10 @@ Resources:
             AllowedMethods:
               - GET
             MaxAge: 3000
+  LocalizationBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join [ "", [ "appointer-localization-", !Ref AccountId ] ]
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:

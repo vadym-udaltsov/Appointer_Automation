@@ -18,6 +18,8 @@ public class Constants {
     public static final String IGNORE = "ignore";
     public static final String SUBMIT = "Submit";
 
+    public static final String DICTIONARY_PATTERN = "%s/%s/localization_%s.json";
+
     public static final String TODAY = "Today";
     public static final String TOMORROW = "Tomorrow";
     public static final String WHOLE_DAY = "Whole day";

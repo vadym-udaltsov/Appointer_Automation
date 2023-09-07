@@ -4,8 +4,8 @@ import com.bot.model.Context;
 import com.bot.model.LString;
 import com.bot.model.Language;
 import com.bot.model.MessageHolder;
-import com.commons.utils.JsonUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.bot.service.IDictionaryService;
+import com.commons.model.Department;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.text.StrSubstitutor;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,7 +20,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import software.amazon.awssdk.utils.StringUtils;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +28,13 @@ import java.util.Map;
 public class Localizer implements ILocalizer {
     private static final String LS = System.lineSeparator();
 
-    private final Map<Language, Map<String, String>> dictionaries = new HashMap<>();
-    private final Map<Language, Map<String, String>> keysDictionaries = new HashMap<>();
+    private static final Map<String, Map<String, String>> DICTIONARIES = new HashMap<>();
+
+    private final IDictionaryService dictionaryService;
 
     @Override
-    public String localizeMessage(List<LString> messages, Context context) {
-        Map<String, String> dictionary = getDictionary(context.getLanguage());
+    public String localizeMessage(List<LString> messages, Context context, Department department) {
+        Map<String, String> dictionary = getDictionary(context.getLanguage(), department);
         StringBuilder result = new StringBuilder();
         for (LString message : messages) {
             result.append(localize(message.getTitle(), dictionary, message.getPlaceholders())).append(LS);
@@ -43,7 +43,7 @@ public class Localizer implements ILocalizer {
     }
 
     @Override
-    public void localizeRequest(Update update, Context context) {
+    public void localizeRequest(Update update, Context context, Department department) {
         if (context == null) {
             return;
         }
@@ -51,12 +51,12 @@ public class Localizer implements ILocalizer {
         if (language == null || Language.US == language) {
             return;
         }
-        Map<String, String> keysDictionary = getKeysDictionary(language);
+        Map<String, String> keysDictionary = getDictionary(language, department);
         localizeUpdate(update, keysDictionary);
     }
 
     @Override
-    public void localizeResponseMessage(List<MessageHolder> holders, Context context) {
+    public void localizeResponseMessage(List<MessageHolder> holders, Context context, Department department) {
         Language language;
         if (context == null || context.getLanguage() == null) {
             language = Language.US;
@@ -64,7 +64,7 @@ public class Localizer implements ILocalizer {
             language = context.getLanguage();
         }
 
-        Map<String, String> dictionary = getDictionary(language);
+        Map<String, String> dictionary = getDictionary(language, department);
         for (MessageHolder holder : holders) {
             List<LString> messages = holder.getMessagesToLocalize();
             if (messages != null && messages.size() > 0) {
@@ -80,14 +80,14 @@ public class Localizer implements ILocalizer {
     }
 
     @Override
-    public void localizeResponseButtons(SendMessage method, Context context) {
+    public void localizeResponseButtons(SendMessage method, Context context, Department department) {
         Language language;
         if (context == null || context.getLanguage() == null) {
             language = Language.US;
         } else {
             language = context.getLanguage();
         }
-        Map<String, String> dictionary = getDictionary(language);
+        Map<String, String> dictionary = getDictionary(language, department);
         ReplyKeyboard keyboard = method.getReplyMarkup();
         if (keyboard instanceof ReplyKeyboardMarkup) {
             ReplyKeyboardMarkup replyMarkup = (ReplyKeyboardMarkup) keyboard;
@@ -122,27 +122,14 @@ public class Localizer implements ILocalizer {
         }
     }
 
-    private Map<String, String> getKeysDictionary(Language language) {
-        Map<String, String> fromCache = keysDictionaries.get(language);
+    private Map<String, String> getDictionary(Language language, Department department) {
+        String dictKey = department.getType().name() + "::" + language.name();
+        Map<String, String> fromCache = DICTIONARIES.get(dictKey);
         if (fromCache != null) {
             return fromCache;
         }
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(language.getDeLocalizationPath());
-        Map<String, String> dict = JsonUtils.parseInputStreamToObject(resourceAsStream, new TypeReference<>() {
-        });
-        keysDictionaries.put(language, dict);
-        return dict;
-    }
-
-    private Map<String, String> getDictionary(Language language) {
-        Map<String, String> fromCache = dictionaries.get(language);
-        if (fromCache != null) {
-            return fromCache;
-        }
-        InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(language.getLocalizationFilePath());
-        Map<String, String> dict = JsonUtils.parseInputStreamToObject(resourceAsStream, new TypeReference<>() {
-        });
-        dictionaries.put(language, dict);
+        Map<String, String> dict = dictionaryService.getDictionary(language, department);
+        DICTIONARIES.put(dictKey, dict);
         return dict;
     }
 
@@ -168,7 +155,6 @@ public class Localizer implements ILocalizer {
         Map<String, String> localizedPlaceholders = new HashMap<>();
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
             localizedPlaceholders.put(entry.getKey(), localizeString(entry.getValue(), dictionary));
-//            entry.setValue(localizeString(entry.getValue(), dictionary));
         }
         return localizedPlaceholders;
     }

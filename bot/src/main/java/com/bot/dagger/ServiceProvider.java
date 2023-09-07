@@ -1,5 +1,9 @@
 package com.bot.dagger;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.bot.model.S3Property;
+import com.bot.service.IDictionaryService;
+import com.bot.service.impl.DictionaryService;
 import com.commons.dao.IAppointmentDao;
 import com.bot.dao.IContextDao;
 import com.bot.lambda.TelegramBot;
@@ -66,8 +70,14 @@ public class ServiceProvider {
 
     @Provides
     @Singleton
-    ILocalizer localizer() {
-        return new Localizer();
+    IDictionaryService dictionaryService(AmazonS3 client, S3Property s3Property) {
+        return new DictionaryService(client, s3Property);
+    }
+
+    @Provides
+    @Singleton
+    ILocalizer localizer(IDictionaryService dictionaryService) {
+        return new Localizer(dictionaryService);
     }
 
 }

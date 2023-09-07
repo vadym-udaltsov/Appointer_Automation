@@ -30,7 +30,7 @@ public class SendMessageService implements ISendMessageService {
                 log.error("Context not found for admin number: " + a);
                 return;
             }
-            String message = localizer.localizeMessage(localizedMessages, adminContext);
+            String message = localizer.localizeMessage(localizedMessages, adminContext, department);
             messageSender.sendMessage(department, message, String.valueOf(adminContext.getUserId()));
         });
     }
@@ -38,7 +38,7 @@ public class SendMessageService implements ISendMessageService {
     @Override
     public void sendNotificationToUsers(List<LString> localizedMessages, List<Context> contextList, Department department) {
         contextList.parallelStream().forEach(a -> {
-            String message = localizer.localizeMessage(localizedMessages, a);
+            String message = localizer.localizeMessage(localizedMessages, a, department);
             messageSender.sendMessage(department, message, String.valueOf(a.getUserId()));
         });
     }

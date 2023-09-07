@@ -22,6 +22,7 @@ import com.bot.processor.impl.start.SetContactProcessor;
 import com.bot.processor.impl.start.SetLanguageAskContactsProcessor;
 import com.bot.processor.impl.start.StartDashProcessor;
 import com.bot.service.IContextService;
+import com.bot.service.IDictionaryService;
 import com.bot.service.ISendMessageService;
 import com.commons.service.IAppointmentService;
 import dagger.Module;
@@ -183,15 +184,15 @@ public class GeneralUserProcessorProvider {
     @Singleton
     @IntoMap
     @CommandKey(CommandType.SET_LANG_ASK_CONT)
-    public IProcessor setLangAskCont(IContextService contextService) {
-        return new SetLanguageAskContactsProcessor(contextService);
+    public IProcessor setLangAskCont(IContextService contextService, IDictionaryService dictionaryService) {
+        return new SetLanguageAskContactsProcessor(contextService, dictionaryService);
     }
 
     @Provides
     @Singleton
     @IntoMap
     @CommandKey(CommandType.ASK_LANGUAGE)
-    public IProcessor askLanguage(IContextService contextService) {
-        return new AskLanguageProcessor(contextService);
+    public IProcessor askLanguage(IContextService contextService, IDictionaryService dictionaryService) {
+        return new AskLanguageProcessor(contextService, dictionaryService);
     }
 }

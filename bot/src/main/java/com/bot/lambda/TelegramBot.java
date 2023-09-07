@@ -50,7 +50,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             Context context = contextService.getContext(update, department.getId());
             log.info("Got context --------------------------------------- " + JsonUtils.convertObjectToString(context));
-            localizer.localizeRequest(update, context);
+            localizer.localizeRequest(update, context, department);
             IProcessor processor = factory.getProcessor(update, context, department);
             ProcessRequest request = ProcessRequest.builder()
                     .update(update)
@@ -58,11 +58,11 @@ public class TelegramBot extends TelegramLongPollingBot {
                     .department(department)
                     .build();
             List<MessageHolder> result = processor.processRequest(request);
-            localizer.localizeResponseMessage(result, context);
+            localizer.localizeResponseMessage(result, context, department);
             for (MessageHolder holder : result) {
                 SendMessage method = MessageUtils.buildMessage(holder, userId);
                 contextService.updateContext(context);
-                localizer.localizeResponseButtons(method, context);
+                localizer.localizeResponseButtons(method, context, department);
                 execute(method);
             }
             contextService.updateContext(context);

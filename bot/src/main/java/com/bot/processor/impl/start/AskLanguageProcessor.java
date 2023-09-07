@@ -1,10 +1,12 @@
 package com.bot.processor.impl.start;
 
 import com.bot.model.Context;
+import com.bot.model.Language;
 import com.bot.model.MessageHolder;
 import com.bot.model.ProcessRequest;
 import com.bot.processor.IProcessor;
 import com.bot.service.IContextService;
+import com.bot.service.IDictionaryService;
 import com.bot.util.Constants;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
@@ -13,16 +15,18 @@ import lombok.RequiredArgsConstructor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class AskLanguageProcessor implements IProcessor {
 
     private final IContextService contextService;
+    private final IDictionaryService dictionaryService;
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) {
         long userId = MessageUtils.getUserIdFromUpdate(request.getUpdate());
-        MessageHolder messageHolder = MessageUtils.getLanguageMessageHolder();
         Context context = request.getContext();
         Department department = request.getDepartment();
         if (departmentNotReady(department)) {
@@ -32,6 +36,10 @@ public class AskLanguageProcessor implements IProcessor {
             context = buildContext(userId, department.getId());
             contextService.create(context);
         }
+
+        List<String> dictKeys = dictionaryService.getDictionaryFileKeys(department);
+
+        MessageHolder messageHolder = MessageUtils.getLanguageMessageHolder(MessageUtils.filterLanguages(dictKeys, department));
         return Collections.singletonList(messageHolder);
     }
 
