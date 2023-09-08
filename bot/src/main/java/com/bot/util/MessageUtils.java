@@ -76,7 +76,7 @@ public class MessageUtils {
     }
 
     public static List<MessageHolder> buildUserProfileDashboard(String message) {
-        return buildCustomKeyboardHolders(message, Constants.ADMIN_PROFILE_BUTTONS,
+        return buildCustomKeyboardHolders(message, Constants.USER_PROFILE_BUTTONS,
                 KeyBoardType.TWO_ROW, true);
     }
 

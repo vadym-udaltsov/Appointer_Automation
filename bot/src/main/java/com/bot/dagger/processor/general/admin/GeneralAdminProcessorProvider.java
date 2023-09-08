@@ -49,6 +49,12 @@ import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffFirstSte
 import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffSecondStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.view.daily.ViewDayOffThirdStepProcessor;
 import com.bot.processor.impl.general.admin.dayoff.view.period.ViewPeriodDayOffFourthStepProcessor;
+import com.bot.processor.impl.general.admin.description.DescriptionDashProcessor;
+import com.bot.processor.impl.general.admin.description.create.CreateDescriptionFirstStepProcessor;
+import com.bot.processor.impl.general.admin.description.create.CreateDescriptionSecondStepProcessor;
+import com.bot.processor.impl.general.admin.description.delete.DeleteDescriptionFirstStepProcessor;
+import com.bot.processor.impl.general.admin.description.delete.DeleteDescriptionSecondStepProcessor;
+import com.bot.processor.impl.general.admin.description.view.ViewDescriptionAdminProcessor;
 import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageFirstStepProcessor;
 import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageSecondStepProcessor;
 import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageThirdStepProcessor;
@@ -59,6 +65,7 @@ import com.bot.processor.impl.general.admin.messaging.ViewSendMessageDashProcess
 import com.bot.service.IContextService;
 import com.bot.service.ISendMessageService;
 import com.commons.service.IAppointmentService;
+import com.commons.service.IDepartmentService;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
@@ -68,6 +75,62 @@ import javax.inject.Singleton;
 
 @Module
 public class GeneralAdminProcessorProvider {
+
+    // ---------------------------------------Description -------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DESCRIPTION_DASH)
+    public IProcessor descriptionDash() {
+        return new DescriptionDashProcessor();
+    }
+
+    // --------------------------------------Create Description--------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CREATE_DESCRIPTION1)
+    public IProcessor descriptionCreate1() {
+        return new CreateDescriptionFirstStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.CREATE_DESCRIPTION2)
+    public IProcessor descriptionCreate2(IDepartmentService departmentService) {
+        return new CreateDescriptionSecondStepProcessor(departmentService);
+    }
+
+    // --------------------------------------Delete Description--------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DELETE_DESCRIPTION1)
+    public IProcessor descriptionDelete1() {
+        return new DeleteDescriptionFirstStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.DELETE_DESCRIPTION2)
+    public IProcessor descriptionDelete2(IDepartmentService departmentService) {
+        return new DeleteDescriptionSecondStepProcessor(departmentService);
+    }
+
+    // --------------------------------------Delete Description--------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.VIEW_DESCRIPTION)
+    public IProcessor descriptionView() {
+        return new ViewDescriptionAdminProcessor();
+    }
 
     //----------------------------------------Comments------------------------------
 

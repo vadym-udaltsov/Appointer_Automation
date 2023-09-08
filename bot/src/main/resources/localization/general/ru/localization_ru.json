@@ -108,6 +108,14 @@
   "View description": "Посмотреть описание",
   "View social media": "Социальные сети",
 
+  "Description": "Описание",
+  "Type description using keyboard": "Набери описание на клавиатуре",
+  "Description added": "Описание добавлено",
+  "Submit description deletion": "Подтверди удаление описания",
+  "Description deleted": "Описание удалено",
+  "Description is not set yet": "Описание пока не добавлено",
+
+
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",
@@ -181,5 +189,6 @@
   "Локация":"Location",
   "Посмотреть локацию":  "View location",
   "Посмотреть описание": "View description",
-  "Социальные сети": "View social media"
+  "Социальные сети": "View social media",
+  "Описание": "Description"
 }

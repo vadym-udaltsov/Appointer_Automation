@@ -203,11 +203,15 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
                 new AttributeValue().withS(department.getZone()), AttributeAction.PUT);
         updates.put("zone", zone);
         Location location = department.getLocation();
+        AttributeValueUpdate description = new AttributeValueUpdate(
+                new AttributeValue().withS(department.getDescription()), AttributeAction.PUT);
+        updates.put("desc", description);
         AttributeValueUpdate locationUpdate = new AttributeValueUpdate(new AttributeValue().withM(Map.of(
                 "longitude", new AttributeValue().withN(String.valueOf(location.getLongitude())),
                 "latitude", new AttributeValue().withN(String.valueOf(location.getLatitude())))),
                 AttributeAction.PUT);
         updates.put("loc", locationUpdate);
+
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Department.TABLE_NAME)
                 .withKey(Map.of(

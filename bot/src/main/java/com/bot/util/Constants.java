@@ -63,7 +63,7 @@ public class Constants {
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
-    public static final List<String> ADMIN_PROFILE_BUTTONS = List.of("Change language", "Location");
+    public static final List<String> ADMIN_PROFILE_BUTTONS = List.of("Change language", "Location", "Description");
     public static final List<String> USER_PROFILE_BUTTONS = List.of("Change language");
     public static final List<String> SALON_INFO_BUTTONS = List.of("View location", "View description", "View social media");
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
@@ -125,6 +125,16 @@ public class Constants {
         public static final String DELETE_COMMENT1 = "deleteComment1";
         public static final String DELETE_COMMENT2 = "deleteComment2";
         public static final String DELETE_COMMENT3 = "deleteComment3";
+
+        public static final String DESCRIPTION_DASH = "descriptionDash";
+
+        public static final String CREATE_DESCRIPTION1 = "descriptionCreate1";
+        public static final String CREATE_DESCRIPTION2 = "descriptionCreate2";
+
+        public static final String DELETE_DESCRIPTION1 = "descriptionDelete1";
+        public static final String DELETE_DESCRIPTION2 = "descriptionDelete2";
+
+        public static final String VIEW_DESCRIPTION = "descriptionView";
 
         public static final String SEND_MESSAGE_DASH = "sendMessageDash";
         public static final String SEND_MESSAGE_TEXT_1 = "sendMessageText1";
@@ -192,6 +202,7 @@ public class Constants {
 
         public static final String LOCATION_VIEW1 = "locationView1";
         public static final String LOCATION_VIEW_USER = "viewLocation";
+        public static final String DESCRIPTION_VIEW_USER = "viewDescription";
 
         public static final String SALON_INFO_USER = "salonDash";
 

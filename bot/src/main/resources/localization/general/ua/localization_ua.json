@@ -109,6 +109,13 @@
   "View description": "Подивитись опис",
   "View social media": "Соціальні мережі",
 
+  "Description": "Опис",
+  "Type description using keyboard": "Набери опис на клавіатурі",
+  "Description added": "Опис добавлено",
+  "Submit description deletion": "Підтверди видалення опису",
+  "Description deleted": "Опис видалено",
+  "Description is not set yet": "Опис поки що не добавлено",
+
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",
@@ -182,5 +189,6 @@
   "Локація":"Location",
   "Подивитись локацію":  "View location",
   "Подивитись опис": "View description",
-  "Соціальні мережі": "View social media"
+  "Соціальні мережі": "View social media",
+  "Опис": "Description"
 }

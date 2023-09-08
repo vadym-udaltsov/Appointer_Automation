@@ -56,6 +56,7 @@ public enum CommandType {
     ADMIN_APP_DASH(Constants.Processors.ADMIN_APP_DASH),
 
     LOCATION_VIEW_USER(Constants.Processors.LOCATION_VIEW_USER),
+    DESCRIPTION_VIEW_USER(Constants.Processors.DESCRIPTION_VIEW_USER),
     SALON_INFO_USER(Constants.Processors.SALON_INFO_USER),
 
     //admin
@@ -77,6 +78,16 @@ public enum CommandType {
     DELETE_COMMENT1(Constants.Processors.DELETE_COMMENT1),
     DELETE_COMMENT2(Constants.Processors.DELETE_COMMENT2),
     DELETE_COMMENT3(Constants.Processors.DELETE_COMMENT3),
+
+    DESCRIPTION_DASH(Constants.Processors.DESCRIPTION_DASH),
+
+    CREATE_DESCRIPTION1(Constants.Processors.CREATE_DESCRIPTION1),
+    CREATE_DESCRIPTION2(Constants.Processors.CREATE_DESCRIPTION2),
+
+    DELETE_DESCRIPTION1(Constants.Processors.DELETE_DESCRIPTION1),
+    DELETE_DESCRIPTION2(Constants.Processors.DELETE_DESCRIPTION2),
+
+    VIEW_DESCRIPTION(Constants.Processors.VIEW_DESCRIPTION),
 
     SEND_MESSAGE_DASH(Constants.Processors.SEND_MESSAGE_DASH),
     SEND_MESSAGE_TEXT_1(Constants.Processors.SEND_MESSAGE_TEXT_1),

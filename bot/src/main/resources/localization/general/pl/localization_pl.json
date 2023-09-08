@@ -109,6 +109,13 @@
   "View description": "Zobacz opis",
   "View social media": "Media społecznościowe",
 
+  "Description": "Opis",
+  "Type description using keyboard": "Wpisz opis na klawiaturze",
+  "Description added": "Dodano opis",
+  "Submit description deletion": "Potwierdź usunięcie opisu",
+  "Description deleted": "Opis usunięty",
+  "Description is not set yet": "Nie dodano jeszcze żadnego opisu",
+
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",
   "Date: ${date}": "Data: ${date}",
@@ -182,5 +189,6 @@
   "Lokalizacja":"Location",
   "Zobacz lokalizację": "View location",
   "Zobacz opis": "View description",
-  "Media społecznościowe": "View social media"
+  "Media społecznościowe": "View social media",
+  "Opis": "Description"
 }

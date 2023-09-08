@@ -106,6 +106,9 @@ public class Department extends DynamoDbEntity {
     @JsonProperty("loc")
     private Location location;
 
+    @JsonProperty("desc")
+    private String description;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -130,6 +133,7 @@ public class Department extends DynamoDbEntity {
                 .withList("adm", admins == null ? new ArrayList<>() : admins)
                 .withMap("dof", daysOff == null ? new HashMap<>() : daysOff)
                 .with("loc", location)
+                .withString("desc", description == null ? "" : description)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()));
     }
 

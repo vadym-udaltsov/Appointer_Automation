@@ -99,6 +99,13 @@
   "View description": "Погледај опис",
   "View social media": "Друштвени медији",
 
+  "Description": "Опис",
+  "Type description using keyboard": "Унесите опис на тастатури",
+  "Description added": "Опис је додат",
+  "Submit description deletion": "Потврдите брисање описа",
+  "Description deleted": "Опис је уклоњен",
+  "Description is not set yet": "Још увек није додат опис",
+
   "Select start date of period": "Изаберите датум почетка",
   "Select end date of period": "Изаберите датум завршетка",
   "Finish date should be after start date\nSelect correct finish date": "Датум завршетка мора бити после датума почетка\nИзаберите тачан датум завршетка",
@@ -180,5 +187,6 @@
   "Локација":"Location",
   "Прикажи локацију": "View location",
    "Погледај опис": "View description",
-   "Друштвени медији": "View social media"
+   "Друштвени медији": "View social media",
+   "Опис":  "Description"
 }

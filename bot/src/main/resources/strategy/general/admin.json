@@ -401,6 +401,41 @@
                           ]
                         }
                       ]
+                    },
+                    {
+                      "name": "descriptionDash",
+                      "key": "Description",
+                      "nested": [
+                        {
+                          "name": "descriptionCreate1",
+                          "key": "Create",
+                          "nested": [
+                            {
+                              "name": "descriptionCreate2",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "descriptionDelete1",
+                          "key": "Delete",
+                          "nested": [
+                            {
+                              "name": "descriptionDelete2",
+                              "key": "Delete",
+                              "nested": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "descriptionView",
+                          "key": "View",
+                          "nested": [
+
+                          ]
+                        }
+                      ]
                     }
                   ]
                 },
