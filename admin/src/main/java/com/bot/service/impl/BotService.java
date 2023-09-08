@@ -25,6 +25,7 @@ public class BotService implements IBotService {
         String botUrl = ssmService.getParameterValue("bot_url");
 
         String url = "https://api.telegram.org/bot" + botToken + "/setWebhook?url=" + botUrl + departmentId;
+        System.out.println("Webhook url ------------------------------------ " + url);
         return httpService.getRequest(url, new TypeReference<>() {
         });
     }
