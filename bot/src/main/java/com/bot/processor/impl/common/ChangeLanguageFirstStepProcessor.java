@@ -26,7 +26,7 @@ public class ChangeLanguageFirstStepProcessor implements IProcessor {
         String selectedButton = MessageUtils.getTextFromUpdate(update);
         if (!"Change language".equals(selectedButton)) {
             ContextUtils.resetLocationToPreviousStep(context);
-            return MessageUtils.buildProfileDashboard("Select available option");
+            return MessageUtils.buildAdminProfileDashboard("Select available option");
         }
         Department department = request.getDepartment();
         List<String> dictionaryFileKeys = dictionaryService.getDictionaryFileKeys(department);

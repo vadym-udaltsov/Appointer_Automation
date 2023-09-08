@@ -21,6 +21,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
+import org.telegram.telegrambots.meta.api.objects.Location;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +103,9 @@ public class Department extends DynamoDbEntity {
     @JsonProperty("al")
     private int appointmentsLimit;
 
+    @JsonProperty("loc")
+    private Location location;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -125,6 +129,7 @@ public class Department extends DynamoDbEntity {
                 .withList("nwd", nonWorkingDays == null ? new ArrayList<>() : nonWorkingDays)
                 .withList("adm", admins == null ? new ArrayList<>() : admins)
                 .withMap("dof", daysOff == null ? new HashMap<>() : daysOff)
+                .with("loc", location)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()));
     }
 

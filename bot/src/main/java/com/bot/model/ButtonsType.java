@@ -12,6 +12,7 @@ import java.util.function.Function;
 @Getter
 public enum ButtonsType {
     KEYBOARD(KeyBoardUtils::buildReplyKeyboard),
+    LOCATION(KeyBoardUtils::buildReplyKeyboard),
     CONTACTS(KeyBoardUtils::buildContactsKeyboard),
     DATE_PICKER(KeyBoardUtils::buildDatePickerCreateAppointment),
     DATE_PICKER_MY_APP(KeyBoardUtils::buildDatePickerMyAppointments),

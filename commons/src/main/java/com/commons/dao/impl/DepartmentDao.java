@@ -21,6 +21,7 @@ import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.telegram.telegrambots.meta.api.objects.Location;
 
 import java.util.HashMap;
 import java.util.List;
@@ -201,6 +202,12 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         AttributeValueUpdate zone = new AttributeValueUpdate(
                 new AttributeValue().withS(department.getZone()), AttributeAction.PUT);
         updates.put("zone", zone);
+        Location location = department.getLocation();
+        AttributeValueUpdate locationUpdate = new AttributeValueUpdate(new AttributeValue().withM(Map.of(
+                "longitude", new AttributeValue().withN(String.valueOf(location.getLongitude())),
+                "latitude", new AttributeValue().withN(String.valueOf(location.getLatitude())))),
+                AttributeAction.PUT);
+        updates.put("loc", locationUpdate);
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Department.TABLE_NAME)
                 .withKey(Map.of(

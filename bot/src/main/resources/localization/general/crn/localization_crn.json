@@ -87,6 +87,18 @@
   "Select number from proposed": "Изаберите доступан број",
   "Select number to delete comment": "Изаберите број за брисање",
 
+  "Salon info": "О салону",
+  "Send your current location": "Пошаљите своју тренутну локацију",
+  "Location added": "Локација је додата",
+  "Submit Location deletion": "Потврдите брисање локације",
+  "Location deleted": "Локација је избрисана",
+  "Salon location": "Локација салона",
+  "Location is not set yet": "Локација још није утврђена",
+  "Location": "Локација",
+  "View location": "Прикажи локацију",
+  "View description": "Погледај опис",
+  "View social media": "Друштвени медији",
+
   "Select start date of period": "Изаберите датум почетка",
   "Select end date of period": "Изаберите датум завршетка",
   "Finish date should be after start date\nSelect correct finish date": "Датум завршетка мора бити после датума почетка\nИзаберите тачан датум завршетка",
@@ -163,5 +175,10 @@
   "Пошаљите слику": "Send Image",
   "Раздобље": "Period",
   "Дан": "Daily",
-  "Коментари": "Comments"
+  "Коментари": "Comments",
+  "О салону":"Salon info",
+  "Локација":"Location",
+  "Прикажи локацију": "View location",
+   "Погледај опис": "View description",
+   "Друштвени медији": "View social media"
 }

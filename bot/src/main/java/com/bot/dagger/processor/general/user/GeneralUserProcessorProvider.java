@@ -5,6 +5,7 @@ import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
+import com.bot.processor.impl.general.user.UserProfileProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFourthStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentSecondStepProcessor;
@@ -17,6 +18,8 @@ import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentS
 import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentThirdStepProcessor;
 import com.bot.processor.impl.general.user.appointment.view.ViewAppointmentsFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.view.ViewAppointmentsSecondStepProcessor;
+import com.bot.processor.impl.general.user.location.ViewLocationStepProcessor;
+import com.bot.processor.impl.general.user.salon.SalonDashStepProcessor;
 import com.bot.processor.impl.start.AskLanguageProcessor;
 import com.bot.processor.impl.start.SetContactProcessor;
 import com.bot.processor.impl.start.SetLanguageAskContactsProcessor;
@@ -35,6 +38,34 @@ import java.util.Map;
 
 @Module
 public class GeneralUserProcessorProvider {
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.USER_PROFILE)
+    public IProcessor profile() {
+        return new UserProfileProcessor();
+    }
+
+    //----------------------Salon info ------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.SALON_INFO_USER)
+    public IProcessor salonInfo() {
+        return new SalonDashStepProcessor();
+    }
+
+    // ------------------------View Location -------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LOCATION_VIEW_USER)
+    public IProcessor viewLocation(ISendMessageService sendMessageService) {
+        return new ViewLocationStepProcessor(sendMessageService);
+    }
 
     @Provides
     @Singleton

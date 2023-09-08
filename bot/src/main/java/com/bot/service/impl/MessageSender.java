@@ -4,9 +4,11 @@ import com.bot.service.IMessageSender;
 import com.commons.model.Department;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendLocation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -38,6 +40,22 @@ public class MessageSender extends TelegramLongPollingBot implements IMessageSen
         } catch (TelegramApiException e) {
             log.error("Could not send image to receiver chat: {}", chatId);
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendLocation(Department department, String chatId) {
+        botToken = department.getToken();
+        SendLocation sendLocation = new SendLocation();
+        sendLocation.setChatId(chatId);
+        Location location = department.getLocation();
+        sendLocation.setLatitude(location.getLatitude());
+        sendLocation.setLongitude(location.getLongitude());
+        try {
+            execute(sendLocation);
+        } catch (TelegramApiException e) {
+            log.error("Could not send location to receiver chat: {}", chatId);
+            throw new RuntimeException("Could not send location to receiver chat: " + chatId);
         }
     }
 

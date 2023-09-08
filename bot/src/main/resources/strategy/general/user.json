@@ -80,7 +80,7 @@
                   ]
                 },
                 {
-                  "name": "profile",
+                  "name": "userProfile",
                   "key": "Profile",
                   "nested": [
                     {
@@ -103,6 +103,32 @@
                           "key": "any",
                           "nested": []
                         }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "salonDash",
+                  "key": "Salon info",
+                  "nested": [
+                    {
+                      "name": "viewLocation",
+                      "key": "View location",
+                      "nested": [
+                      ]
+                    },
+                    {
+                      "name": "viewDescription",
+                      "key": "View description",
+                      "nested": [
+
+                      ]
+                    },
+                    {
+                      "name": "viewLinks",
+                      "key": "View social media",
+                      "nested": [
+
                       ]
                     }
                   ]

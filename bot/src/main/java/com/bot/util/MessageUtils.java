@@ -16,10 +16,10 @@ import com.commons.utils.DepartmentUtils;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Contact;
+import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import software.amazon.awssdk.services.sqs.endpoints.internal.Value;
 import software.amazon.awssdk.utils.StringUtils;
 
 import java.time.Instant;
@@ -70,8 +70,13 @@ public class MessageUtils {
         return holder("You are blocked", ButtonsType.KEYBOARD, request);
     }
 
-    public static List<MessageHolder> buildProfileDashboard(String message) {
-        return buildCustomKeyboardHolders(message, Constants.PROFILE_BUTTONS,
+    public static List<MessageHolder> buildAdminProfileDashboard(String message) {
+        return buildCustomKeyboardHolders(message, Constants.ADMIN_PROFILE_BUTTONS,
+                KeyBoardType.TWO_ROW, true);
+    }
+
+    public static List<MessageHolder> buildUserProfileDashboard(String message) {
+        return buildCustomKeyboardHolders(message, Constants.ADMIN_PROFILE_BUTTONS,
                 KeyBoardType.TWO_ROW, true);
     }
 
@@ -230,6 +235,14 @@ public class MessageUtils {
             return callbackQuery.getData();
         }
         return update.getMessage().getText();
+    }
+
+    public static Location getLocationFromUpdate(Update update) {
+        Message message = update.getMessage();
+        if (message == null) {
+            return null;
+        }
+        return message.getLocation();
     }
 
     public static void setTextToUpdate(Update update, String text) {

@@ -37,12 +37,26 @@ public enum CommandType {
     CANCEL_PHONE_APP3(Constants.Processors.CANCEL_PHONE_APP3),
     CANCEL_PHONE_APP4(Constants.Processors.CANCEL_PHONE_APP4),
 
-    PROFILE(Constants.Processors.PROFILE),
+    ADMIN_PROFILE(Constants.Processors.ADMIN_PROFILE),
+    USER_PROFILE(Constants.Processors.USER_PROFILE),
 
     CHANGE_LANG1(Constants.Processors.CHANGE_LANG1),
     CHANGE_LANG2(Constants.Processors.CHANGE_LANG2),
 
+    LOCATION_DASH(Constants.Processors.LOCATION_DASH),
+
+    LOCATION_CREATE1(Constants.Processors.LOCATION_CREATE1),
+    LOCATION_CREATE2(Constants.Processors.LOCATION_CREATE2),
+
+    LOCATION_DELETE1(Constants.Processors.LOCATION_DELETE1),
+    LOCATION_DELETE2(Constants.Processors.LOCATION_DELETE2),
+
+    LOCATION_VIEW1(Constants.Processors.LOCATION_VIEW1),
+
     ADMIN_APP_DASH(Constants.Processors.ADMIN_APP_DASH),
+
+    LOCATION_VIEW_USER(Constants.Processors.LOCATION_VIEW_USER),
+    SALON_INFO_USER(Constants.Processors.SALON_INFO_USER),
 
     //admin
     START_APP_DASH(Constants.Processors.START_APP_DASH),

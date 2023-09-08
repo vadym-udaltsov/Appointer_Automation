@@ -122,7 +122,6 @@
                               "name": "sendMessageText3",
                               "key": "any",
                               "nested": [
-
                               ]
                             }
                           ]
@@ -141,7 +140,6 @@
                               "name": "sendMessagePhoto3",
                               "key": "any",
                               "nested": [
-
                               ]
                             }
                           ]
@@ -355,7 +353,7 @@
                   ]
                 },
                 {
-                  "name": "profile",
+                  "name": "adminProfile",
                   "key": "Profile",
                   "nested": [
                     {
@@ -370,13 +368,37 @@
                       ]
                     },
                     {
-                      "name": "support1",
-                      "key": "Report a bug",
+                      "name": "locationDash",
+                      "key": "Location",
                       "nested": [
                         {
-                          "name": "support2",
-                          "key": "any",
-                          "nested": []
+                          "name": "locationCreate1",
+                          "key": "Create",
+                          "nested": [
+                            {
+                              "name": "locationCreate2",
+                              "key": "any",
+                              "nested": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "locationDelete1",
+                          "key": "Delete",
+                          "nested": [
+                            {
+                              "name": "locationDelete2",
+                              "key": "Delete",
+                              "nested": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "locationView1",
+                          "key": "View",
+                          "nested": [
+
+                          ]
                         }
                       ]
                     }

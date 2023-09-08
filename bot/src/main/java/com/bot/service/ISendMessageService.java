@@ -11,5 +11,8 @@ public interface ISendMessageService {
     void sendNotificationToAdmins(List<LString> localizedMessages, Department department);
 
     void sendNotificationToUsers(List<LString> localizedMessages, List<Context> contextList, Department department);
+
     void sendPhotoToUsers(String photoFileId, List<Context> contextList, Department department);
+
+    void sendLocationToUser(Department department, long userId);
 }

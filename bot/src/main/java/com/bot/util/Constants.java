@@ -63,7 +63,9 @@ public class Constants {
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
-    public static final List<String> PROFILE_BUTTONS = List.of("Change language");
+    public static final List<String> ADMIN_PROFILE_BUTTONS = List.of("Change language", "Location");
+    public static final List<String> USER_PROFILE_BUTTONS = List.of("Change language");
+    public static final List<String> SALON_INFO_BUTTONS = List.of("View location", "View description", "View social media");
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
     public static final List<String> VIEW_ADMIN_MESSAGES_BUTTONS = List.of("Send Text", "Send Image");
     public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
@@ -72,7 +74,7 @@ public class Constants {
 
     public static final Map<String, List<String>> DASHBOARD_BUTTONS = Map.of(
             "GENERAL::ADMIN", List.of("Appointments", "DayOff", "Block", "Mailing", "Comments", "Profile"),
-            "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment", "Profile")
+            "GENERAL::USER", List.of("Create appointment", "My appointments", "Cancel appointment", "Profile", "Salon info")
     );
 
     public static class Processors {
@@ -176,9 +178,22 @@ public class Constants {
         public static final String BLOCK_USER2 = "blockUser2";
         public static final String BLOCK_USER3 = "blockUser3";
 
-        public static final String PROFILE = "profile";
+        public static final String ADMIN_PROFILE = "adminProfile";
+        public static final String USER_PROFILE = "userProfile";
         public static final String CHANGE_LANG1 = "changeLanguage1";
         public static final String CHANGE_LANG2 = "changeLanguage2";
+
+        public static final String LOCATION_DASH = "locationDash";
+        public static final String LOCATION_CREATE1 = "locationCreate1";
+        public static final String LOCATION_CREATE2 = "locationCreate2";
+
+        public static final String LOCATION_DELETE1 = "locationDelete1";
+        public static final String LOCATION_DELETE2 = "locationDelete2";
+
+        public static final String LOCATION_VIEW1 = "locationView1";
+        public static final String LOCATION_VIEW_USER = "viewLocation";
+
+        public static final String SALON_INFO_USER = "salonDash";
 
         public static final String ADMIN_APP_DASH = "appointments";
     }

@@ -96,6 +96,19 @@
   "Cancelled appointments made by phone.": "Anulowane wpisy dokonane telefonicznie",
   "You can send the reason of cancelling appointments?\nType on keyboard": "\nWyślij wiadomość z powodem anulowania?\nWpisz na klawiaturze",
   "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Maksymalna liczba wejść dziennie: ${appNumber}. Więcej wpisów można dokonać telefonicznie",
+
+  "Salon info": "O salonie",
+  "Send your current location": "Wyślij swoją aktualną lokalizację",
+  "Location added": "Dodano lokalizację",
+  "Submit Location deletion": "Potwierdź usunięcie lokalizacji",
+  "Location deleted": "Lokalizacja została usunięta",
+  "Salon location": "Lokalizacja salonu",
+  "Location is not set yet": "Lokalizacja nie została jeszcze ustalona",
+  "Location": "Lokalizacja",
+  "View location": "Zobacz lokalizację",
+  "View description": "Zobacz opis",
+  "View social media": "Media społecznościowe",
+
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",
   "Date: ${date}": "Data: ${date}",
@@ -164,5 +177,10 @@
   "Dzień": "Daily",
   "Wyslij wiadomość": "Send Text",
   "Prześlij zdjęcie": "Send Image",
-  "Komentarze": "Comments"
+  "Komentarze": "Comments",
+  "O salonie":"Salon info",
+  "Lokalizacja":"Location",
+  "Zobacz lokalizację": "View location",
+  "Zobacz opis": "View description",
+  "Media społecznościowe": "View social media"
 }

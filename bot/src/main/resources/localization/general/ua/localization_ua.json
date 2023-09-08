@@ -96,6 +96,19 @@
   "Cancelled appointments made by phone.": "Скасовані записи зроблені по телефону",
   "You can send the reason of cancelling appointments?\nType on keyboard": "Відправити повідомлення причини скасування запису?\nНабери на клавіатурі",
   "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Максимальна кількість записів в день: ${appNumber}. Більше записів можна зробити за телефоном",
+
+  "Salon info": "Про салон",
+  "Send your current location": "Надішли локацію",
+  "Location added": "Локацію добавлено",
+  "Submit Location deletion": "Підтверди видалення локації",
+  "Location deleted": "Локацію видалено",
+  "Salon location": "Розташування салону",
+  "Location is not set yet": "Локацію ще не додано",
+  "Location": "Локація",
+  "View location": "Подивитись локацію",
+  "View description": "Подивитись опис",
+  "View social media": "Соціальні мережі",
+
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",
@@ -164,5 +177,10 @@
   "Надіслати зображення": "Send Image",
   "Період": "Period",
   "День": "Daily",
-  "Коментарі": "Comments"
+  "Коментарі": "Comments",
+  "Про салон":"Salon info",
+  "Локація":"Location",
+  "Подивитись локацію":  "View location",
+  "Подивитись опис": "View description",
+  "Соціальні мережі": "View social media"
 }

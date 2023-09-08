@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class DepartmentService implements IDepartmentService {
 
-    private IDepartmentDao departmentDao;
+    private final IDepartmentDao departmentDao;
 
     @Autowired
     public DepartmentService(IDepartmentDao departmentDao) {

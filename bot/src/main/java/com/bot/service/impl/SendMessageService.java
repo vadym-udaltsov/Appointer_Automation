@@ -36,6 +36,11 @@ public class SendMessageService implements ISendMessageService {
     }
 
     @Override
+    public void sendLocationToUser(Department department, long userId) {
+        messageSender.sendLocation(department, String.valueOf(userId));
+    }
+
+    @Override
     public void sendNotificationToUsers(List<LString> localizedMessages, List<Context> contextList, Department department) {
         contextList.parallelStream().forEach(a -> {
             String message = localizer.localizeMessage(localizedMessages, a, department);
