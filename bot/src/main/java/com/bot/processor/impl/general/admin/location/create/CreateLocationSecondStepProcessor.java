@@ -10,6 +10,7 @@ import com.bot.util.ContextUtils;
 import com.bot.util.MessageUtils;
 import com.commons.model.Department;
 import com.commons.service.IDepartmentService;
+import com.commons.utils.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -34,6 +35,7 @@ public class CreateLocationSecondStepProcessor implements IProcessor {
                     KeyBoardType.TWO_ROW, true);
         }
         department.setLocation(location);
+        System.out.println("In processor ------------------ " + JsonUtils.convertObjectToString(department));
         departmentService.updateDepartment(department);
         ContextUtils.resetLocationToStep(context, "locationDash");
         return MessageUtils.buildCustomKeyboardHolders("Location added", Constants.ADMIN_APPOINTMENT_BUTTONS,

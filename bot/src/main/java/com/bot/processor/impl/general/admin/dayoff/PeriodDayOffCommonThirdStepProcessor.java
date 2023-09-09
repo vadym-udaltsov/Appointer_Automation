@@ -31,7 +31,9 @@ public class PeriodDayOffCommonThirdStepProcessor extends AbstractGetCalendarPer
         Update update = request.getUpdate();
         String selectedDate = MessageUtils.getTextFromUpdate(update);
         List<String> months = DateUtils.monthNames();
-        if (months.contains(selectedDate)) {
+        System.out.println("Months ---------------- " + months);
+        System.out.println("Selected date --------------------" + selectedDate);
+        if (months.contains(selectedDate.toUpperCase())) {
             ContextUtils.resetLocationToPreviousStep(context);
             int prevMonth = ContextUtils.getIntParam(context, Constants.SELECTED_MONTH);
             int prevYear = ContextUtils.getIntParam(context, Constants.SELECTED_YEAR);

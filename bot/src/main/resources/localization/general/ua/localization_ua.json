@@ -115,6 +115,8 @@
   "Submit description deletion": "Підтверди видалення опису",
   "Description deleted": "Опис видалено",
   "Description is not set yet": "Опис поки що не добавлено",
+  "Period day off was deleted": "Неробочий період видалено",
+  "Messages were sent": "Повідомлення відправлені",
 
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",
@@ -190,5 +192,17 @@
   "Подивитись локацію":  "View location",
   "Подивитись опис": "View description",
   "Соціальні мережі": "View social media",
-  "Опис": "Description"
+  "Опис": "Description",
+  "Січень" :"JANUARY",
+  "Лютий": "FEBRUARY",
+   "Березень": "MARCH",
+  "Квітень": "APRIL",
+  "Травень": "MAY",
+   "Червень": "JUNE",
+  "Липень": "JULY",
+   "Серпень": "AUGUST",
+   "Вересень": "SEPTEMBER",
+  "Жовтень": "OCTOBER",
+  "Листопад": "NOVEMBER",
+   "Грудень": "DECEMBER"
 }

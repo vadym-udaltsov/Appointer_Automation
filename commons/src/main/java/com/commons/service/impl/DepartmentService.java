@@ -12,6 +12,7 @@ import com.commons.request.specialist.DeleteSpecialistRequest;
 import com.commons.request.specialist.UpdateSpecialistRequest;
 import com.commons.service.IDepartmentService;
 import com.commons.utils.Constants;
+import com.commons.utils.JsonUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public boolean updateDepartment(Department department) {
+        System.out.println("Department to update ------------------- " + JsonUtils.convertObjectToString(department));
         return departmentDao.updateDepartment(department);
     }
 

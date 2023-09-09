@@ -38,7 +38,7 @@ public class AppointmentsTodayAndTomorrowProcessor extends AppointmentsAdminProc
             currentDate = currentDate + TimeUnit.DAYS.toSeconds(1);
             nowZdt.plusDays(1);
         }
-        context.getParams().put(Constants.SELECTED_YEAR, nowZdt.getYear());
+        context.getParams().put(Constants.SELECTED_YEAR, new BigDecimal(nowZdt.getYear()));
         String selectedDay = DateUtils.getDayTitle(currentDate, department);
         BigDecimal selectedMonth = BigDecimal.valueOf(Integer.parseInt(DateUtils.getMonthTitle(currentDate, department)));
         message.setText(selectedDay);

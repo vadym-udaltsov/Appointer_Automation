@@ -27,7 +27,7 @@ public class ViewLocationStepProcessor implements IProcessor {
         Department department = request.getDepartment();
         Location location = department.getLocation();
         String message = "Location is not set yet";
-        if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+        if (location != null && location.getLatitude() != 0 && location.getLongitude() != 0) {
             message = "Salon location";
             sendMessageService.sendLocationToUser(department, context.getUserId());
         }

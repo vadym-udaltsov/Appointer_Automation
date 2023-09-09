@@ -104,6 +104,7 @@ public class Localizer implements ILocalizer {
             for (List<InlineKeyboardButton> row : rows) {
                 for (InlineKeyboardButton button : row) {
                     button.setText(localizeString(button.getText(), dictionary));
+                    button.setCallbackData(localizeString(button.getCallbackData(), dictionary));
                 }
             }
         }

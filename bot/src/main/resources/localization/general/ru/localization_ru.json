@@ -85,7 +85,6 @@
   "Cancelled appointments made by phone.": "Отмененные записи сделанные по телефону",
   "You can send the reason of cancelling appointments?\nType on keyboard": "Отправить сообщение с причиной отмены записи?\nНабери на клавиатуре",
   "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Максимальное количество записей в день: ${appNumber}. Больше записей можно сделать по телефону",
-
   "Comments": "Комментарии",
   "Type comment using keyboard": "Напиши комментарий на клавиатуре",
   "Comment for user ${user} was created": "Комментарий для клиента ${user} добавлен",
@@ -95,7 +94,6 @@
   "All user comments were deleted": "Все комментарии клиента удалены",
   "Select number from proposed": "Выбери доступный номер",
   "Select number to delete comment": "Чтобы удалить выбери номер",
-
   "Salon info": "О салоне",
   "Send your current location": "Отправь текущую локацию",
   "Location added": "Локация добавлена",
@@ -107,14 +105,14 @@
   "View location": "Посмотреть локацию",
   "View description": "Посмотреть описание",
   "View social media": "Социальные сети",
-
   "Description": "Описание",
   "Type description using keyboard": "Набери описание на клавиатуре",
   "Description added": "Описание добавлено",
   "Submit description deletion": "Подтверди удаление описания",
   "Description deleted": "Описание удалено",
   "Description is not set yet": "Описание пока не добавлено",
-
+  "Period day off was deleted": "Нерабочий период удален",
+  "Messages were sent": "Сообщения отправлены",
 
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
@@ -154,8 +152,6 @@
   "Fri": "Пт",
   "Sat": "Сб",
   "Sun": "Вс",
-
-
   "Записаться": "Create appointment",
   "Мои записи": "My appointments",
   "Назад": "Back",
@@ -185,10 +181,22 @@
   "Период": "Period",
   "День": "Daily",
   "Комментарии": "Comments",
-  "О салоне":"Salon info",
-  "Локация":"Location",
-  "Посмотреть локацию":  "View location",
+  "О салоне": "Salon info",
+  "Локация": "Location",
+  "Посмотреть локацию": "View location",
   "Посмотреть описание": "View description",
   "Социальные сети": "View social media",
-  "Описание": "Description"
+  "Описание": "Description",
+  "Январь": "JANUARY",
+  "Февраль": "FEBRUARY",
+  "Март": "MARCH",
+  "Апрель": "APRIL",
+  "Май": "MAY",
+  "Июнь": "JUNE",
+  "Июль": "JULY",
+  "Август": "AUGUST",
+  "Сентябрь": "SEPTEMBER",
+  "Октябрь": "OCTOBER",
+  "Ноябрь": "NOVEMBER",
+  "Декабрь": "DECEMBER"
 }

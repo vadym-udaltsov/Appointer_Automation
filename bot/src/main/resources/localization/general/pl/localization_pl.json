@@ -76,7 +76,6 @@
   "Client was unblocked": "Klient został odblokowany",
   "Period": "Okres",
   "Daily": "Dzień",
-
   "Comments": "Komentarze",
   "Type comment using keyboard": "Napisz komentarz za pomocą klawiatury",
   "Comment for user ${user} was created": "Komentarz dla użytkownika ${user} został utworzony",
@@ -86,7 +85,6 @@
   "All user comments were deleted": "Wszystkie komentarze użytkownika zostały usunięte",
   "Select number from proposed": "Wybierz numer spośród dostępnych",
   "Select number to delete comment": "Aby usunąć, wybierz numer",
-
   "Select start date of period": "Wybierz datę rozpoczęcia",
   "Select end date of period": "Wybierz datę zakończenia",
   "Finish date should be after start date\nSelect correct finish date": "Data zakończenia musi być późniejsza od daty rozpoczęcia\nWybierz poprawną datę zakończenia",
@@ -96,7 +94,6 @@
   "Cancelled appointments made by phone.": "Anulowane wpisy dokonane telefonicznie",
   "You can send the reason of cancelling appointments?\nType on keyboard": "\nWyślij wiadomość z powodem anulowania?\nWpisz na klawiaturze",
   "Maximum number of appointments for day: ${appNUmber}. You can make appointment by phone or select another day": "Maksymalna liczba wejść dziennie: ${appNumber}. Więcej wpisów można dokonać telefonicznie",
-
   "Salon info": "O salonie",
   "Send your current location": "Wyślij swoją aktualną lokalizację",
   "Location added": "Dodano lokalizację",
@@ -108,14 +105,14 @@
   "View location": "Zobacz lokalizację",
   "View description": "Zobacz opis",
   "View social media": "Media społecznościowe",
-
   "Description": "Opis",
   "Type description using keyboard": "Wpisz opis na klawiaturze",
   "Description added": "Dodano opis",
   "Submit description deletion": "Potwierdź usunięcie opisu",
   "Description deleted": "Opis usunięty",
   "Description is not set yet": "Nie dodano jeszcze żadnego opisu",
-
+  "Period day off was deleted": "Usunięto okres wolny od pracy",
+  "Messages were sent": "Wiadomości wysłane",
   "Service: ${service}": "Usługa: ${service}",
   "Specialist: ${specialist}": "Specjalista: ${specialist}",
   "Date: ${date}": "Data: ${date}",
@@ -154,8 +151,6 @@
   "Fri": "Pt",
   "Sat": "Sb",
   "Sun": "Nd",
-
-
   "Zapisać się": "Create appointment",
   "Moje wizyty": "My appointments",
   "Powrót": "Back",
@@ -185,10 +180,22 @@
   "Wyslij wiadomość": "Send Text",
   "Prześlij zdjęcie": "Send Image",
   "Komentarze": "Comments",
-  "O salonie":"Salon info",
-  "Lokalizacja":"Location",
+  "O salonie": "Salon info",
+  "Lokalizacja": "Location",
   "Zobacz lokalizację": "View location",
   "Zobacz opis": "View description",
   "Media społecznościowe": "View social media",
-  "Opis": "Description"
+  "Opis": "Description",
+  "Styczeń": "JANUARY",
+  "Luty": "FEBRUARY",
+  "Marzec": "MARCH",
+  "Kwiecień": "APRIL",
+  "Maj": "MAY",
+  "Czerwiec": "JUNE",
+  "Lipiec": "JULY",
+  "Sierpień": "AUGUST",
+  "Wrzesień": "SEPTEMBER",
+  "Październik": "OCTOBER",
+  "Listopad": "NOVEMBER",
+  "Grudzień": "DECEMBER"
 }

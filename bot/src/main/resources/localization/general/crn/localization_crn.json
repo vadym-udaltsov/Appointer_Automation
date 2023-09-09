@@ -76,7 +76,6 @@
   "Client was unblocked": "Клијент је откључан",
   "Period": "Раздобље",
   "Daily": "Дан",
-
   "Comments": "Коментари",
   "Type comment using keyboard": "Унесите коментар на тастатури",
   "Comment for user ${user} was created": "Додан је коментар за клијента ${user}",
@@ -86,7 +85,6 @@
   "All user comments were deleted": "Сви коментари клијената су избрисани",
   "Select number from proposed": "Изаберите доступан број",
   "Select number to delete comment": "Изаберите број за брисање",
-
   "Salon info": "О салону",
   "Send your current location": "Пошаљите своју тренутну локацију",
   "Location added": "Локација је додата",
@@ -98,14 +96,14 @@
   "View location": "Прикажи локацију",
   "View description": "Погледај опис",
   "View social media": "Друштвени медији",
-
   "Description": "Опис",
   "Type description using keyboard": "Унесите опис на тастатури",
   "Description added": "Опис је додат",
   "Submit description deletion": "Потврдите брисање описа",
   "Description deleted": "Опис је уклоњен",
   "Description is not set yet": "Још увек није додат опис",
-
+  "Period day off was deleted": "Нерадни период је уклоњен",
+  "Messages were sent": "Поруке су послате",
   "Select start date of period": "Изаберите датум почетка",
   "Select end date of period": "Изаберите датум завршетка",
   "Finish date should be after start date\nSelect correct finish date": "Датум завршетка мора бити после датума почетка\nИзаберите тачан датум завршетка",
@@ -153,7 +151,6 @@
   "Fri": "Пт",
   "Sat": "Сб",
   "Sun": "Нд",
-
   "Пријави се": "Create appointment",
   "Моје белешке": "My appointments",
   "Назад": "Back",
@@ -183,10 +180,22 @@
   "Раздобље": "Period",
   "Дан": "Daily",
   "Коментари": "Comments",
-  "О салону":"Salon info",
-  "Локација":"Location",
+  "О салону": "Salon info",
+  "Локација": "Location",
   "Прикажи локацију": "View location",
-   "Погледај опис": "View description",
-   "Друштвени медији": "View social media",
-   "Опис":  "Description"
+  "Погледај опис": "View description",
+  "Друштвени медији": "View social media",
+  "Опис": "Description",
+  "Jануара": "JANUARY",
+  "Фебруара": "FEBRUARY",
+  "Mарта": "MARCH",
+  "Април": "APRIL",
+  "Може": "MAY",
+  "Jуна": "JUNE",
+  "Јул": "JULY",
+  "Aвгуста": "AUGUST",
+  "Cептембар": "SEPTEMBER",
+  "Октобар": "OCTOBER",
+  "Новембра": "NOVEMBER",
+  "Децембар": "DECEMBER"
 }
