@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/location.css">
+    <!--<link rel="stylesheet" href="../css/location.css">-->
     <link rel="stylesheet" href="../css/popups.css">
     <link rel="stylesheet" href="../css/departmentContainer.css">
     <link rel="stylesheet" href="../css/upper_table_block.css">
@@ -63,7 +63,7 @@
     <!-- Department Container -->
     <div class="department_container">
         <div class="department_inner">
-            <div class="department_dropdown">
+            <div class="department_dropdown" style="display: none;">
                 <select class="form-control" id="department_NameSelect"></select>
                 <img src="../pictures/arrow-down.png" alt="Arrow down" class="arrow-down">
             </div>
@@ -105,7 +105,7 @@
             <div class="columns_titles">
                 <div class="column_name cell lng-Name"><strong>Name</strong><span></span></div>
                 <div class="column_duration cell lng-serviceDuration"><strong>Duration</strong><span></span></div>
-                <div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>
+                <!--<div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>-->
                 <div class="column_actions cell lng-actions"><strong>Actions</strong><span></span></div>
             </div>
             <div class="slideshow-container" id="slider-container" style="display: none;">
@@ -191,11 +191,11 @@
                            style="color: red; display: none;"></small>
                 </div>
             </div>
-            <div class="createDep_Group">
+            <!--<div class="createDep_Group">
                 <p class="createDep_Group_Titles lng-depType">Type</p>
                 <select class="form-control createDep_Fields" id="update_depTypeSelect"></select>
-            </div>
-            <div class="createDep_Group">
+            </div>-->
+            <!--<div class="createDep_Group">
                 <p class="createDep_Group_Titles lng-country">Country</p>
                 <div class="custom-dropdown">
                     <input id="countryInput" type="text" placeholder="Select country">
@@ -214,7 +214,7 @@
                 </div>
                 <small class="error-message lng-requiredField" id="cityInput_error"
                        style="color: red; display: none;"></small>
-            </div>
+            </div>-->
             <div class="createDep_Group">
                 <p class="createDep_Group_Titles lng-timeZone">Time zone</p>
                 <select class="form-control createDep_Fields" id="create_timeZoneSelect"></select>
@@ -256,10 +256,10 @@
                     <p class="popup-field-title lng-timeZone">Time zone</p>
                     <select class="form-control" id="update_timeZoneSelect"></select>
                 </div>
-                <div class="popup-row last-row">
+               <!-- <div class="popup-row last-row">
                     <p class="popup-field-title lng-depType">Type</p>
                     <input class="form-control" id="update_depTypeInput" disabled>
-                </div>
+                </div>-->
                 <div class="row">
                     <div class="col-md-3 start-hour">
                         <p class="lng-startWorkHour">Start work hour</p>
@@ -401,7 +401,7 @@
                         <small class="error-message lng-requiredField" id="durationError"
                                style="color: red; display: none;"></small>
                     </div>
-                    <div class="form-group">
+                   <!-- <div class="form-group">
                         <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice"
                                id="service_priceField">Price</label>
                         <input type="number" class="form-control enterPrice lng-pricePlaceholder"
@@ -409,7 +409,7 @@
                                placeholder="Enter Price" oninput="validateInput(this)">
                         <small class="error-message lng-requiredField" id="priceError"
                                style="color: red; display: none;"></small>
-                    </div>
+                    </div>-->
                 </form>
             </div>
             <div class="modal-footer">
@@ -459,10 +459,10 @@
                                placeholder="Enter Duration">
                         <small class="update_error-message lng-requiredField" id="update_durationError"
                                style="color: red; display: none;"></small>
-                        <small class="error-message update-service_newDurationInput-error-message"
+                        <small class="error-message update-service_newDurationInput-error-message lng-prevValueError"
                                style="color: red; display: none;"></small>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="update-service_newPriceInput" class="update__asterisks lng-newPrice"
                                id="service_updatePrice">New
                             Price</label>
@@ -473,7 +473,7 @@
                                style="color: red; display: none;"></small>
                         <small class="error-message update-service_newPriceInput-error-message"
                                style="color: red; display: none;"></small>
-                    </div>
+                    </div>-->
                 </form>
             </div>
             <div class="modal-footer">
@@ -587,7 +587,7 @@
                                style="color: red; display: none;"></small>
                         <small class="error-message lng-duplicateSpecialistName" id="duplicateSpecialistUpdateError"
                                style="color: red; display: none;"></small>
-                        <small class="error-message update-specialist_newNameInput-error-message"
+                        <small class="error-message lng-prevValueError update-specialist_newNameInput-error-message"
                                style="color: red; display: none;"></small>
                     </div>
                     <div class="form-group">
@@ -600,7 +600,7 @@
                                style="color: red; display: none;"></small>
                         <small class="update_error-message lng-notValidPhoneError"
                                id="specialist_update_validPhoneError" style="color: red; display: none;"></small>
-                        <small class="error-message update-specialist_newPhoneInput-error-message"
+                        <small class="error-message update-specialist_newPhoneInput-error-message lng-prevValueError"
                                style="color: red; display: none;"></small>
                     </div>
                 </form>
@@ -726,7 +726,7 @@
 <script type="text/javascript" src="../js/services/specialist.js"></script>
 <script type="text/javascript" src="../js/services/admin.js"></script>
 <script type="text/javascript" src="../js/services/refreshToken.js"></script>
-<script type="text/javascript" src="../js/services/location.js"></script>
+<!--<script type="text/javascript" src="../js/services/location.js"></script>-->
 
 <script type="text/javascript" src="../js/tables/service_table.js"></script>
 <script type="text/javascript" src="../js/tables/specialist_table.js"></script>
@@ -737,10 +737,11 @@
 <script type="text/javascript" src="../js/disable/specialist_disable.js"></script>
 <script type="text/javascript" src="../js/disable/admin_disable.js"></script>
 
-<script type="text/javascript" src="../js/lang.js"></script>
-<script type="text/javascript" src="../js/change_language.js"></script>
+<script type="text/javascript" src="../js/features/lang.js"></script>
+<script type="text/javascript" src="../js/features/change_language.js"></script>
+<script type="text/javascript" src="../js/features/notRegisteredMessage.js"></script>
+
 <script type="text/javascript" src="../js/spinner.js"></script>
-<script type="text/javascript" src="../js/notRegisteredMessage.js"></script>
 <script type="text/javascript" src="../js/logout.js"></script>
 <script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>

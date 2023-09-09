@@ -284,7 +284,7 @@ function verifySpecialistFields(inputId, prevValue) {
 
     if (inputValue === prevValue) {
         updateBtn.disabled = true;
-        errorMessage.textContent = 'The value cannot be equal to the previous one';
+        errorMessage.textContent = langArr.prevValueError[localStorage.getItem('selectedLanguage')];
         errorMessage.style.display = 'block';
     } else if(inputValue === '') {
         updateBtn.disabled = true;

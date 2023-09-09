@@ -13,7 +13,7 @@
         border-bottom: none;
     }
 
-    .columns_titles .cell:nth-child(-n+3) {
+    .columns_titles .cell:nth-child(-n+2) {
         border-right-width: 0px;
         border-right-style: none;
     }

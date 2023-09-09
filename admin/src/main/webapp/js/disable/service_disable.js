@@ -1,7 +1,7 @@
 var create_fields = [
   { inputId: 'service_Create-servNameInput', errorId: 'nameError' },
   { inputId: 'service_Create-servDurationInput', errorId: 'durationError' },
-  { inputId: 'service_Create-servPriceInput', errorId: 'priceError' }
+  //{ inputId: 'service_Create-servPriceInput', errorId: 'priceError' }
 ];
 
 var createBtn = document.getElementById('service_CreateBtn');
@@ -112,7 +112,7 @@ initializeCreateForm();
 var update_fields = [
   { inputId: 'update-service_newNameInput', errorId: 'update_nameError' },
   { inputId: 'update-service_newDurationInput', errorId: 'update_durationError' },
-  { inputId: 'update-service_newPriceInput', errorId: 'update_priceError' }
+  //{ inputId: 'update-service_newPriceInput', errorId: 'update_priceError' }
 ];
 
 var updateBtn = document.querySelector('#update-service_UpdateBtn');
@@ -215,7 +215,7 @@ initializeUpdateForm();
 /* Verify that new value not equals to prev.values*/
 var prevUpdateNameValue = "";
 var prevUpdateDurationValue = "";
-var prevUpdatePriceValue = "";
+//var prevUpdatePriceValue = "";
 
 function waitUntil(conditionFn, interval = 100) {
     return new Promise((resolve) => {
@@ -241,12 +241,12 @@ async function verifyServiceFieldsValue() {
             });
               prevUpdateNameValue = document.getElementById('update-service_newNameInput').value;
               prevUpdateDurationValue = document.getElementById('update-service_newDurationInput').value;
-              prevUpdatePriceValue = document.getElementById('update-service_newPriceInput').value;
+              //prevUpdatePriceValue = document.getElementById('update-service_newPriceInput').value;
 
             const update_fields = [
                 { inputId: 'update-service_newNameInput', prevValue: prevUpdateNameValue },
                 { inputId: 'update-service_newDurationInput', prevValue: prevUpdateDurationValue },
-                { inputId: 'update-service_newPriceInput', prevValue: prevUpdatePriceValue }
+                //{ inputId: 'update-service_newPriceInput', prevValue: prevUpdatePriceValue }
             ];
 
             update_fields.forEach(field => {
@@ -269,7 +269,7 @@ function verifyServiceFields(inputId, prevValue) {
 
     if (inputValue === prevValue) {
         updateBtn.disabled = true;
-        errorMessage.textContent = 'The value cannot be equal to the previous one';
+        errorMessage.textContent = langArr.prevValueError[localStorage.getItem('selectedLanguage')];
         errorMessage.style.display = 'block';
     } else if(inputValue === '') {
         updateBtn.disabled = true;

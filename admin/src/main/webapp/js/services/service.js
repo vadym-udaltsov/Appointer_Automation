@@ -30,7 +30,7 @@ $(window).ready(function () {
         var service = new Object();
         service.name = $("#service_Create-servNameInput").val();
         service.duration = $("#service_Create-servDurationInput").val();
-        service.price = $("#service_Create-servPriceInput").val();
+        //service.price = $("#service_Create-servPriceInput").val();
         request.customer = email;
         request.department = $('option:checked','#department_NameSelect').text();
         request.service = service;
@@ -43,7 +43,7 @@ $(window).ready(function () {
         var service = new Object();
         service.name = $("#update-service_newNameInput").val();
         service.duration = $("#update-service_newDurationInput").val();
-        service.price = $("#update-service_newPriceInput").val();
+        //service.price = $("#update-service_newPriceInput").val();
         request.departmentId = JSON.parse($('option:checked','#department_NameSelect').val()).id;
         request.serviceName = document.getElementById("update-service_servNameInput").value;
         request.service = service;
@@ -70,7 +70,7 @@ function loadServiceData(url, value, nameSelect) {
                 nameSelect.value = value.name;
                 document.getElementById("update-service_newNameInput").value = value.name;
                 document.getElementById("update-service_newDurationInput").value = value.duration;
-                document.getElementById("update-service_newPriceInput").value = value.price;
+                //document.getElementById("update-service_newPriceInput").value = value.price;
                 resolve();
             },
             error: function(data) {

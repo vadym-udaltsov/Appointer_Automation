@@ -10,8 +10,8 @@ const create_depNameInput = document.getElementById("depName_create");
 const createDepartmentFields = [
     { inputId: 'depName_create' },
     { inputId: 'add_depTokenInput' },
-    { inputId: 'countryInput' },
-    { inputId: 'cityInput' },
+    //{ inputId: 'countryInput' },
+    //{ inputId: 'cityInput' },
 ];
 
 function validateInputs() {

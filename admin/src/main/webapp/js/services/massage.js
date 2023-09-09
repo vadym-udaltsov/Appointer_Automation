@@ -4,14 +4,14 @@ $(window).on('load', function() {
     });
     var email = localStorage.getItem('customer');
 
-    var typeSelect = $("#update_depTypeSelect");
+    //var typeSelect = $("#update_depTypeSelect");
     var choose_depNameSelect = $("#department_NameSelect");
 
     var update_timeZoneSelect = $("#update_timeZoneSelect");
 
     choose_depNameSelect.append('<option value="Loading...">Loading...</option>');
     update_timeZoneSelect.append('<option value="Loading...">Loading...</option>');
-    typeSelect.append('<option value="Loading...">Loading...</option>');
+    //typeSelect.append('<option value="Loading...">Loading...</option>');
 
     var url = 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/data/' + email;
     window.dataLoaded;

@@ -392,11 +392,11 @@ const langArr = {
         "cnr": "Токен"
     },
     "refreshToken": {
-        "en": "Refresh Token",
+        "en": "Refresh token",
         "ua": "Оновити токен",
-        "pl": "Odśwież Token",
-        "ru": "Обновить маркер",
-        "cnr": "Освјежи Токен"
+        "pl": "Odśwież token",
+        "ru": "Обновить токен",
+        "cnr": "Освјежи токен"
     },
     "addNewToken": {
         "en": "Add new token",
@@ -418,5 +418,12 @@ const langArr = {
         "pl": "Odśwież",
         "ru": "Обновить",
         "cnr": "Освјежи"
+    },
+    "prevValueError": {
+        "en": "The value cannot be equal to the previous one",
+        "ua": "Значення не може дорівнювати попередньому",
+        "pl": "Znaczenie nie może być równa poprzedniej",
+        "ru": "Значение не может быть равно предыдущему",
+        "cnr": "Вартосћ ние мозе бић ровна попрзедниеј"
     }
 }

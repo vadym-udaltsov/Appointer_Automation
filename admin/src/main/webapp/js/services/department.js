@@ -196,7 +196,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                 localStorage.setItem('createDepartmentButtonClicked', 'false');
                 document.getElementById('notRegisteredContainer').style.display = 'block';
                 document.getElementById('department_CreatePopup').disabled = false;
-                if(data.admin) {
+                /*if(data.admin) {
                     $.each(data.availableTypes, function () {
                         var type = $("<option value='" + this + "'></option>").text(this);
                         typeSelect.append(type);
@@ -206,8 +206,8 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
                         var firstType = $("<option value='" + data.availableTypes[0] + "'></option>").text(data.availableTypes[0]);
                         typeSelect.append(firstType);
                     }
-                }
-                fetchCountriesAndCities();
+                }*/
+                //fetchCountriesAndCities();
                 $.each(data.availableZones, function () {
                     var timeZone = $("<option value='" + this.id + "'></option>").text(this.title);
                     create_timeZoneSelect.append(timeZone);
@@ -233,7 +233,6 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             createSpecialistBtn.disabled = false;
             createAdminBtn.disabled = false;
             console.log(data);
-            changeLanguage();
             localStorage.setItem('lastSelectedOption', data.customerDepartments[0].n);
             var lastSelectedOption = localStorage.getItem('lastSelectedOption');
 
@@ -255,6 +254,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
             var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
             loadDataForTables(selectedDepartmentData);
             document.getElementById('spinner_loading').style.display = 'none';
+            changeLanguage();
         }
     },
     error: function (data) {
@@ -274,7 +274,7 @@ function loadDepUpdateData(url) {
         var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
         document.getElementById("update_selectedDepartment").value = selectedDepartmentData.n;
         document.getElementById("update_timeZoneSelect").value = selectedDepartmentData.zone;
-        document.getElementById("update_depTypeInput").value = selectedDepartmentData.tp;
+        //document.getElementById("update_depTypeInput").value = selectedDepartmentData.tp;
         document.getElementById("startWork").value = selectedDepartmentData.sw;
         document.getElementById("finishWork").value = selectedDepartmentData.ew;
 
@@ -296,7 +296,7 @@ function loadDepUpdateData(url) {
   });
 }
 
-function loadDataFromSelectedDep(url, typeSelect, choose_depNameSelect, update_timeZoneSelect, dataLoaded) {
+function loadDataFromSelectedDep(url, choose_depNameSelect, update_timeZoneSelect, dataLoaded) {
   $.ajax({
     url: url,
     type: 'get',

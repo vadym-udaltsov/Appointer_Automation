@@ -26,6 +26,8 @@ $(window).ready(function () {
             token.departmentName = $("#department_NameSelect option:selected").text().trim();
             token.botToken = updateTokenInput.value;
             executePut(JSON.stringify(token), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
+            resetTokenData();
+            openUpdatePopup();
             return false;
     });
 });
@@ -66,8 +68,6 @@ updateTokenInput.addEventListener("input", validateInput);
 refreshTokenPopup.addEventListener("click", closeUpdateDepPopup);
 cancelRefreshBtn.addEventListener("click", openUpdatePopup);
 cancelRefreshBtn.addEventListener("click", resetTokenData);
-updateTokenBtn.addEventListener("click", openUpdatePopup);
-updateTokenBtn.addEventListener("click", resetTokenData);
 
 
 /*Styles for Refresh Token Btn*/

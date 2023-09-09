@@ -28,10 +28,10 @@ function changeLanguage() {
         element.placeholder = langArr.durationPlaceholder[selectedLanguage];
     });
 
-    var enterPrice = document.querySelectorAll('.enterPrice');
+    /*var enterPrice = document.querySelectorAll('.enterPrice');
     enterPrice.forEach(function(element) {
         element.placeholder = langArr.pricePlaceholder[selectedLanguage];
-    });
+    });*/
 
     var enterPhone = document.querySelectorAll('.enterPhone');
     enterPhone.forEach(function(element) {
@@ -56,7 +56,7 @@ function changeLanguage() {
             }
         }
     }
-    fetchCountriesAndCities();
+    //fetchCountriesAndCities();
 }
 
 async function waitOnButtonsLoad() {

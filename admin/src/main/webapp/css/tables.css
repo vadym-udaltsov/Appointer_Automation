@@ -21,7 +21,7 @@
 
 .service, .specialist, .admin {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: white;
     min-width: 900px;
 }
@@ -38,7 +38,7 @@
     position: relative;
 }
 
-.columns_titles .cell:nth-child(-n+3) {
+.columns_titles .cell:nth-child(-n+2) {
     border-right-width: 2px;
     border-right-style: outset;
 }
