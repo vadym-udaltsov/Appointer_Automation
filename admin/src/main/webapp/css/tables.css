@@ -13,7 +13,7 @@
 
 .columns_titles, .columns_titles_specialist, .columns_titles_admin {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   border-bottom: 1px solid black;
   background-color: #ebebeb;
   min-width: 900px;

@@ -114,7 +114,7 @@ function loadDataForTables(selectedDepartmentData) {
     var row = $("<div class='service'></div>");
     var nameCell = $("<div class='service_name cell mobile_row'></div>").text(item.name);
     var durationCell = $("<div class='service_duration cell mobile_row'></div>").text(item.duration);
-    var priceCell = $("<div class='service_price cell mobile_row'></div>").text(item.price);
+    //var priceCell = $("<div class='service_price cell mobile_row'></div>").text(item.price);
     var actionsCell = $("<div class='cell actions mobile_row_actions'></div>");
 
     var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn lng-updateBtn mobile_action_btn' data-toggle='modal' data-target='#service_UpdateModal'>")
@@ -126,7 +126,7 @@ function loadDataForTables(selectedDepartmentData) {
 
     actionsCell.append(updateButton, deleteButton);
 
-    row.append(nameCell, durationCell, priceCell, actionsCell);
+    row.append(nameCell, durationCell, actionsCell);
 
     serviceTable.append(row);
   });

@@ -26,8 +26,6 @@ $(window).ready(function () {
             token.departmentName = $("#department_NameSelect option:selected").text().trim();
             token.botToken = updateTokenInput.value;
             executePut(JSON.stringify(token), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
-            resetTokenData();
-            openUpdatePopup();
             return false;
     });
 });
@@ -40,6 +38,12 @@ function closeUpdateDepPopup() {
 function openUpdatePopup() {
    updateDepPopup.style.display = 'block';
 }
+
+window.addEventListener('click', function(event) {
+    if (event.target == document.getElementById('department_TokenModal')) {
+        $('div.modal.fade').modal('hide');
+    }
+});
 
 openRefreshTokenModal.addEventListener('click', function () {
     if(updateTokenInput.value === '') {
