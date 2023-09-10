@@ -1,6 +1,7 @@
 package com.bot.controller;
 
 import com.bot.model.AuthData;
+import com.bot.model.ChangePasswordData;
 import com.bot.service.ICognitoService;
 import com.bot.service.ISesService;
 import com.bot.service.impl.SesService;
@@ -56,6 +57,30 @@ public class AdminController {
                     .body(String.format("User: %s is not authorized", email))
                     .build(), HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("password-reset")
+    public ResponseEntity<SimpleResponse> resetPasswordInit(@RequestParam("email") String email) {
+        try {
+            cognitoService.resetPasswordInit(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(SimpleResponse.builder().body("Failed to reset password").build(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(SimpleResponse.builder().body("Initiated").build(), HttpStatus.OK);
+    }
+
+    @PostMapping("password-confirm")
+    public ResponseEntity<SimpleResponse> resetPasswordConfirm(@RequestBody ChangePasswordData data) {
+        try {
+            cognitoService.confirmPassword(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(SimpleResponse.builder().body("Failed to confirm").build(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(SimpleResponse.builder().body("Changed").build(), HttpStatus.OK);
     }
 
     @GetMapping("email-verify")

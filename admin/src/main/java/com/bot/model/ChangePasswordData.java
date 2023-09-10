@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class AuthData {
-    private String email;
-    private String password;
+public class ChangePasswordData extends AuthData {
+    private String code;
 }
