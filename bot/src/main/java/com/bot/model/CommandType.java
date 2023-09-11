@@ -57,6 +57,7 @@ public enum CommandType {
 
     LOCATION_VIEW_USER(Constants.Processors.LOCATION_VIEW_USER),
     DESCRIPTION_VIEW_USER(Constants.Processors.DESCRIPTION_VIEW_USER),
+    LINKS_VIEW_USER(Constants.Processors.LINKS_VIEW_USER),
     SALON_INFO_USER(Constants.Processors.SALON_INFO_USER),
 
     //admin

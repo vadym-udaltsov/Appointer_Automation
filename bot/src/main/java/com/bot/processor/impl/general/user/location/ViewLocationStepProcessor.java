@@ -31,7 +31,7 @@ public class ViewLocationStepProcessor implements IProcessor {
             message = "Salon location";
             sendMessageService.sendLocationToUser(department, context.getUserId());
         }
-        ContextUtils.resetLocationToStep(context, "salonDash");
+        ContextUtils.resetLocationToStep(context, Constants.Processors.SALON_INFO_USER);
         return MessageUtils.buildCustomKeyboardHolders(message, Constants.SALON_INFO_BUTTONS,
                 KeyBoardType.TWO_ROW, true);
     }

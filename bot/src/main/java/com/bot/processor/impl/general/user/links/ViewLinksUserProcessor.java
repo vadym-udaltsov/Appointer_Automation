@@ -1,4 +1,4 @@
-package com.bot.processor.impl.general.user.description;
+package com.bot.processor.impl.general.user.links;
 
 import com.bot.model.Context;
 import com.bot.model.KeyBoardType;
@@ -12,20 +12,18 @@ import com.commons.model.Department;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
+import java.util.Map;
 
-public class ViewDescriptionStepProcessor implements IProcessor {
+public class ViewLinksUserProcessor implements IProcessor {
 
     @Override
     public List<MessageHolder> processRequest(ProcessRequest request) throws TelegramApiException {
         Context context = request.getContext();
         Department department = request.getDepartment();
-        String message = "Description is not set yet";
-        String description = department.getDescription();
-        if (description != null && !"".equals(description)) {
-            message = description;
-        }
+        Map<String, String> linksMap = department.getLinks();
+
         ContextUtils.resetLocationToStep(context, Constants.Processors.SALON_INFO_USER);
-        return MessageUtils.buildCustomKeyboardHolders(message, Constants.SALON_INFO_BUTTONS,
-                KeyBoardType.TWO_ROW, true);
+        return MessageUtils.buildSocialLinksViewHolders(linksMap, "View social media", Constants.Messages.SELECT_ACTION,
+                Constants.SALON_INFO_BUTTONS, KeyBoardType.TWO_ROW, true);
     }
 }

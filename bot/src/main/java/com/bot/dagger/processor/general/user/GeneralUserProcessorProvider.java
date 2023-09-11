@@ -19,6 +19,7 @@ import com.bot.processor.impl.general.user.appointment.create.CreateAppointmentT
 import com.bot.processor.impl.general.user.appointment.view.ViewAppointmentsFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.view.ViewAppointmentsSecondStepProcessor;
 import com.bot.processor.impl.general.user.description.ViewDescriptionStepProcessor;
+import com.bot.processor.impl.general.user.links.ViewLinksUserProcessor;
 import com.bot.processor.impl.general.user.location.ViewLocationStepProcessor;
 import com.bot.processor.impl.general.user.salon.SalonDashStepProcessor;
 import com.bot.processor.impl.start.AskLanguageProcessor;
@@ -68,6 +69,16 @@ public class GeneralUserProcessorProvider {
         return new ViewLocationStepProcessor(sendMessageService);
     }
 
+    // -----------------------View Links ----------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_VIEW_USER)
+    public IProcessor viewLinks() {
+        return new ViewLinksUserProcessor();
+    }
+
     // ----------------------View description -----------------------
 
     @Provides
@@ -86,7 +97,7 @@ public class GeneralUserProcessorProvider {
     }
 
     //----------------Appointment-----------------------
-    //             ----------------Cancel-------------------
+    //------------------Cancel--------------------------
 
     @Provides
     @Singleton

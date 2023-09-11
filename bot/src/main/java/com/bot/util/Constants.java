@@ -206,6 +206,7 @@ public class Constants {
         public static final String LOCATION_VIEW1 = "locationView1";
         public static final String LOCATION_VIEW_USER = "viewLocation";
         public static final String DESCRIPTION_VIEW_USER = "viewDescription";
+        public static final String LINKS_VIEW_USER = "viewLinks";
 
         public static final String SALON_INFO_USER = "salonDash";
 
