@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.UserNotFoundException;
 
 import javax.ws.rs.NotAuthorizedException;
 
@@ -63,6 +64,10 @@ public class AdminController {
     public ResponseEntity<SimpleResponse> resetPasswordInit(@RequestParam("email") String email) {
         try {
             cognitoService.resetPasswordInit(email);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(SimpleResponse.builder().body("User not found").build(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(SimpleResponse.builder().body("Failed to reset password").build(),
@@ -77,8 +82,6 @@ public class AdminController {
             cognitoService.confirmPassword(data);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(SimpleResponse.builder().body("Failed to confirm").build(),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(SimpleResponse.builder().body("Changed").build(), HttpStatus.OK);
     }

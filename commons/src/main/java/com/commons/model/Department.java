@@ -111,7 +111,7 @@ public class Department extends DynamoDbEntity {
 
     @JsonProperty("sml")
     @DynamoDBAttribute(attributeName = "sml")
-    private Map<String, String> links;
+    private Map<String, String> links = new HashMap<>();
 
     @Override
     @JsonIgnore
