@@ -62,12 +62,12 @@ public class SpecialistController {
     public ResponseEntity<SimpleResponse> deleteSpecialist(@RequestBody DeleteSpecialistRequest request) {
         log.info("Got request for deleting specialist: {}", JsonUtils.convertObjectToString(request));
         try {
-            departmentService.deleteSpecialist(request);
             Department department = departmentService.getDepartmentById(request.getDepartmentId());
             String specialistName = request.getSpecialistName();
             long endOfMonthDate = DateUtils.getEndOfMonthDate(department, true);
             Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);
             appointmentService.deleteAppointmentsBySpecialist(request.getDepartmentId(), specialist.getId(), endOfMonthDate);
+            departmentService.deleteSpecialist(request);
         } catch (DbItemUpdateException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(SimpleResponse.builder().body(e.getMessage()).build(), HttpStatus.BAD_REQUEST);
