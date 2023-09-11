@@ -323,6 +323,25 @@ public class KeyBoardUtils {
         return markupInline;
     }
 
+    public static InlineKeyboardMarkup buildInlineLinksKeyboard(BuildKeyboardRequest request) {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+        for (Map.Entry<String, String> entry : request.getButtonsMap().entrySet()) {
+            if (rowInline.size() == request.getType().getElementsInRow()) {
+                rowsInline.add(rowInline);
+                rowInline = new ArrayList<>();
+            }
+            InlineKeyboardButton button = new InlineKeyboardButton();
+            button.setText(entry.getKey());
+            button.setUrl(entry.getValue());
+            rowInline.add(button);
+        }
+        rowsInline.add(rowInline);
+        markupInline.setKeyboard(rowsInline);
+        return markupInline;
+    }
+
     public static ReplyKeyboardMarkup buildReplyKeyboard(BuildKeyboardRequest request) {
         Map<String, String> buttonsMap = request.getButtonsMap();
         KeyBoardType type = request.getType();

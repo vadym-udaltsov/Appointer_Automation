@@ -57,18 +57,21 @@ public class Constants {
     public static final String TEXT_FOR_SUBMIT = "textForSubmit";
     public static final String PHOTO_ID_FOR_SUBMIT = "photoIdForSubmit";
 
+    public static final String LINK_TYPE = "linkType";
+
     public static final String NO_DAYS_OFF = "You have no non working days for current and next months";
 
     public static final String USER_APPOINTMENTS = "userAppointments";
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
-    public static final List<String> ADMIN_PROFILE_BUTTONS = List.of("Change language", "Location", "Description");
+    public static final List<String> ADMIN_PROFILE_BUTTONS = List.of("Change language", "Location", "Description", "Social media");
     public static final List<String> USER_PROFILE_BUTTONS = List.of("Change language");
     public static final List<String> SALON_INFO_BUTTONS = List.of("View location", "View description", "View social media");
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
     public static final List<String> VIEW_ADMIN_MESSAGES_BUTTONS = List.of("Send Text", "Send Image");
     public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
+    public static final List<String> LINKS_BUTTONS = List.of("Instagram", "Facebook", "Website");
     public static final List<String> START_BLOCK_BUTTONS = List.of("Block user", "Unblock user");
     public static final List<String> START_DAYOFF_BUTTONS = List.of("Daily", "Period");
 
@@ -207,6 +210,14 @@ public class Constants {
         public static final String SALON_INFO_USER = "salonDash";
 
         public static final String ADMIN_APP_DASH = "appointments";
+
+        public static final String LINKS_DASH = "linksDash";
+        public static final String LINKS_VIEW = "linksView";
+        public static final String LINKS_CREATE_1 = "linksCreate1";
+        public static final String LINKS_CREATE_2 = "linksCreate2";
+        public static final String LINKS_CREATE_3 = "linksCreate3";
+        public static final String LINKS_DELETE_1 = "linksDelete1";
+        public static final String LINKS_DELETE_2 = "linksDelete2";
     }
 
     public static class Numbers {
@@ -300,6 +311,10 @@ public class Constants {
         public static final String APP_SPECIALIST = "Specialist: ${specialist}";
         public static final String APP_CLIENT_INFO = "Client: ${client}\n Phone: ${phone}";
         public static final String CLIENT_INFO = "Client: ${client}";
+        public static final String LINK_CREATE_PROMPT = "Enter your ${media} link";
+        public static final String LINK_CREATE_SUCCESS = "Your ${media} link created";
+        public static final String LINK_DELETE_SUCCESS = "Your ${media} link deleted";
+        public static final String LINKS_NOT_EXIST = "Any links are not set yet";
 
         public static final String INCORRECT_SPECIALIST = "Select specialist from proposed";
 

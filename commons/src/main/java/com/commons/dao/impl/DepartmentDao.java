@@ -217,6 +217,12 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
                 AttributeAction.PUT);
         updates.put("loc", locationUpdate);
 
+        Map<String, AttributeValue> attributeValueMap = department.getLinks().entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e->new AttributeValue().withS(e.getValue())));
+        AttributeValueUpdate linksUpdate = new AttributeValueUpdate(new AttributeValue().withM(attributeValueMap),
+                AttributeAction.PUT);
+        updates.put("sml", linksUpdate);
+
         UpdateItemRequest request = new UpdateItemRequest()
                 .withTableName(Department.TABLE_NAME)
                 .withKey(Map.of(

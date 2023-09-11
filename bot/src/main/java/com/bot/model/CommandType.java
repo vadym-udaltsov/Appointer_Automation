@@ -141,7 +141,17 @@ public enum CommandType {
 
     BLOCK_USER1(Constants.Processors.BLOCK_USER1),
     BLOCK_USER2(Constants.Processors.BLOCK_USER2),
-    BLOCK_USER3(Constants.Processors.BLOCK_USER3);
+    BLOCK_USER3(Constants.Processors.BLOCK_USER3),
+
+    LINKS_DASH(Constants.Processors.LINKS_DASH),
+    LINKS_VIEW(Constants.Processors.LINKS_VIEW),
+    LINKS_CREATE_1(Constants.Processors.LINKS_CREATE_1),
+    LINKS_CREATE_2(Constants.Processors.LINKS_CREATE_2),
+    LINKS_CREATE_3(Constants.Processors.LINKS_CREATE_3),
+    LINKS_DELETE_1(Constants.Processors.LINKS_DELETE_1),
+    LINKS_DELETE_2(Constants.Processors.LINKS_DELETE_2);
+
+
 
 
     private final String value;

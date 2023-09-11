@@ -436,6 +436,48 @@
                           ]
                         }
                       ]
+                    },
+                    {
+                      "name": "linksDash",
+                      "key": "Social media",
+                      "nested": [
+                        {
+                          "name": "linksView",
+                          "key": "View",
+                          "nested": [
+                          ]
+                        },
+                        {
+                          "name": "linksCreate1",
+                          "key": "Create",
+                          "nested": [
+                            {
+                              "name": "linksCreate2",
+                              "key": "any",
+                              "nested": [
+                                {
+                                  "name": "linksCreate3",
+                                  "key": "any",
+                                  "nested": [
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "linksDelete1",
+                          "key": "Delete",
+                          "nested": [
+                            {
+                              "name": "linksDelete2",
+                              "key": "any",
+                              "nested": [
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 },

@@ -55,6 +55,13 @@ import com.bot.processor.impl.general.admin.description.create.CreateDescription
 import com.bot.processor.impl.general.admin.description.delete.DeleteDescriptionFirstStepProcessor;
 import com.bot.processor.impl.general.admin.description.delete.DeleteDescriptionSecondStepProcessor;
 import com.bot.processor.impl.general.admin.description.view.ViewDescriptionAdminProcessor;
+import com.bot.processor.impl.general.admin.links.create.CreateLinkFirstStepProcessor;
+import com.bot.processor.impl.general.admin.links.create.CreateLinkSecondStepProcessor;
+import com.bot.processor.impl.general.admin.links.create.CreateLinkThirdStepProcessor;
+import com.bot.processor.impl.general.admin.links.delete.DeleteLinkFirstStepProcessor;
+import com.bot.processor.impl.general.admin.links.LinksDashProcessor;
+import com.bot.processor.impl.general.admin.links.delete.DeleteLinkSecondStepProcessor;
+import com.bot.processor.impl.general.admin.links.view.ViewLinksProcessor;
 import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageFirstStepProcessor;
 import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageSecondStepProcessor;
 import com.bot.processor.impl.general.admin.messaging.SendPhotoMessageThirdStepProcessor;
@@ -75,6 +82,64 @@ import javax.inject.Singleton;
 
 @Module
 public class GeneralAdminProcessorProvider {
+
+    // ---------------------------------------Links -------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_DASH)
+    public IProcessor linksDash() {
+        return new LinksDashProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_VIEW)
+    public IProcessor linksView() {
+        return new ViewLinksProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_CREATE_1)
+    public IProcessor linkCreate1() {
+        return new CreateLinkFirstStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_CREATE_2)
+    public IProcessor linkCreate2() {
+        return new CreateLinkSecondStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_CREATE_3)
+    public IProcessor linkCreate3(IDepartmentService departmentService) {
+        return new CreateLinkThirdStepProcessor(departmentService);
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_DELETE_1)
+    public IProcessor linkDelete1() {
+        return new DeleteLinkFirstStepProcessor();
+    }
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.LINKS_DELETE_2)
+    public IProcessor linkDelete2(IDepartmentService departmentService) {
+        return new DeleteLinkSecondStepProcessor(departmentService);
+    }
 
     // ---------------------------------------Description -------------------------
 
@@ -122,7 +187,7 @@ public class GeneralAdminProcessorProvider {
         return new DeleteDescriptionSecondStepProcessor(departmentService);
     }
 
-    // --------------------------------------Delete Description--------------------
+    // --------------------------------------View Description--------------------
 
     @Provides
     @Singleton

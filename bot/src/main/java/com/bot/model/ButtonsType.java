@@ -17,7 +17,8 @@ public enum ButtonsType {
     DATE_PICKER(KeyBoardUtils::buildDatePickerCreateAppointment),
     DATE_PICKER_MY_APP(KeyBoardUtils::buildDatePickerMyAppointments),
     DATE_PICKER_PERIOD_DAY_OFF(KeyBoardUtils::buildDatePickerDayOffPeriod),
-    INLINE(KeyBoardUtils::buildInlineKeyboard);
+    INLINE(KeyBoardUtils::buildInlineKeyboard),
+    INLINE_LINKS(KeyBoardUtils::buildInlineLinksKeyboard);
 
     private final Function<BuildKeyboardRequest, ReplyKeyboard> buttonsFunction;
 

@@ -54,6 +54,14 @@ public class MessageUtils {
         return holder(message, ButtonsType.INLINE, request);
     }
 
+    public static MessageHolder getLinksMessageHolder(String message, Map<String, String> buttonsMap) {
+        BuildKeyboardRequest request = BuildKeyboardRequest.builder()
+                .type(KeyBoardType.VERTICAL)
+                .buttonsMap(buttonsMap)
+                .build();
+        return holder(message, ButtonsType.INLINE_LINKS, request);
+    }
+
     public static MessageHolder getBotNotReadyMessageHolder() {
         BuildKeyboardRequest request = BuildKeyboardRequest.builder()
                 .type(KeyBoardType.VERTICAL)
@@ -171,6 +179,29 @@ public class MessageUtils {
                 .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttonTitles), withCommon))
                 .build();
         response.add(MessageUtils.holder(message, ButtonsType.KEYBOARD, holderRequest, messageLines));
+        return response;
+    }
+
+    public static List<MessageHolder> buildSocialLinksViewHolders(Map<String, String> linksMap, String linksMessage,
+                                                                  String message, List<String> buttonTitles,
+                                                                  KeyBoardType keyBoardType, boolean withCommon) {
+        ArrayList<MessageHolder> response = new ArrayList<>();
+        List<LString> messageLines = new ArrayList<>();
+        if (linksMap != null && linksMap.size() > 0) {
+            Map<String, String> links = linksMap.entrySet().stream()
+                    .collect(Collectors.toMap(e -> "\uD83C\uDF0E " + e.getKey(), Map.Entry::getValue));
+            MessageHolder linksHolder = MessageUtils.getLinksMessageHolder(linksMessage, links);
+            response.add(linksHolder);
+        } else {
+            messageLines.add(LString.builder().title(Constants.Messages.LINKS_NOT_EXIST).build());
+        }
+
+        BuildKeyboardRequest holderRequest = BuildKeyboardRequest.builder()
+                .type(keyBoardType)
+                .buttonsMap(MessageUtils.buildButtons(MessageUtils.commonButtons(buttonTitles), withCommon))
+                .build();
+        response.add(MessageUtils.holder(message, ButtonsType.KEYBOARD, holderRequest, messageLines));
+
         return response;
     }
 
