@@ -1,6 +1,9 @@
-$(window).ready(function () {
+var spinnerContainer = document.getElementById('spinner_loading');
+spinnerContainer.style.display = 'none';
 
+$(window).ready(function () {
     $('#register').prop('disabled', true);
+
     $("#verify").click(function() {
            var email = $("#verifyEmailValue").val();
            console.log(email)
@@ -45,6 +48,7 @@ function executeGet(url) {
 }
 
 function executePost(data, url) {
+    spinnerContainer.style.display = 'flex';
     $.ajax({
         type: 'post',
         url: url,
@@ -53,12 +57,14 @@ function executePost(data, url) {
         data: data,
         success: function (data) {
             console.log(data)
+            spinnerContainer.style.display = 'none';
             localStorage.setItem('token', data.body);
             $(location).attr('href', 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/dashboard.html');
         },
         error: function (data) {
-        var errorPassword = document.getElementById("notValidPassword");
-        errorPassword.style.display = 'block';
+            spinnerContainer.style.display = 'none';
+            var errorPassword = document.getElementById("notValidPassword");
+            errorPassword.style.display = 'block';
         }
     });
 }

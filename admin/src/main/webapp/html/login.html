@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/loginSpinner.css">
+    <link rel="stylesheet" href="../css/popups.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
@@ -33,6 +35,17 @@
 <img src="../pictures/circle.svg" alt="Circle6" class="login_circle_6">
 
 <div class="main">
+
+    <div id="spinner_loading">
+        <div class="spinner_item"></div>
+    </div>
+
+    <div class="notRegisteredMessage" id="notRegisteredContainer" style="display: none;">
+        <span class="close_notRegisteredMessage">×</span>
+        <p class="lng-notRegisteredMessage">You haven't department. You need to create it.</p>
+    </div>
+
+
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
             <form>
@@ -41,14 +54,20 @@
                     <input type="text" class="form-control" id="email" placeholder="Email">
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <div class="labels-group">
+                        <label>Password</label>
+                        <label class="forgot_password" id="sendCode_label" data-toggle="modal">
+                            Forgot Password?
+                        </label>
+                    </div>
                     <input type="password" class="form-control" id="pass" placeholder="Password">
                 </div>
                 <div id="notValidPassword" style="display: none;">
                     <p>Password or login was incorrect. Please try again.</p>
                 </div>
                 <button type="submit" class="btn btn-black" id="log">Login</button>
-                <button type="button" class="btn btn-primary registration" data-toggle="modal" data-target="#emailModal">
+                <button type="button" class="btn btn-primary registration" data-toggle="modal"
+                        data-target="#emailModal">
                     Register
                 </button>
             </form>
@@ -62,6 +81,9 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title lng-refreshToken">Registration</h5>
+                </div>
                 <div class="modal-body">
                     <p>Please, enter your email and click 'Verify email' button. Then check you email and follow the
                         link in verification email.
@@ -70,11 +92,9 @@
                 <div id="spinner-container">
                 </div>
                 <div class="row" style="margin: 25px;">
-                    <div class="col-md-3">
-                        <p>Email:</p>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" id="verifyEmailValue" style="width: 300px">
+                    <div class="form-group email_block">
+                        <label for="verifyEmailValue" class="update__asterisks" id="email_input">Email:</label>
+                        <input type="text" class="form-control" id="verifyEmailValue" style="width: 300px">
                     </div>
                     <button type="button" class="btn btn-primary" id="verify">Verify email</button>
                 </div>
@@ -86,11 +106,87 @@
         </div>
     </div>
 
+    <!-- Send Reset Code -->
+    <div class="modal fade" id="sendCode" tabindex="-1" style="width: 100%" aria-labelledby="sendCode"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title lng-refreshToken">Email</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="enterPassword_Input" class="update__asterisks">Email:</label>
+                            <input type="text" class="form-control" id="emailInput_Code" placeholder="Enter your email">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                            id="close_SendCodeModal">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary lng-refreshBtn" data-toggle="modal"
+                            id="sendCodeForReset">
+                        Send Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Reset Password-->
+    <div class="modal fade" id="resetModal" tabindex="-1" style="width: 100%" aria-labelledby="openResetPassword_Modal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title lng-refreshToken">Reset Password</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="enterPassword_Input" class="update__asterisks">Enter new
+                                password</label>
+                            <input type="text" class="form-control" id="enterPassword_Input"
+                                   placeholder="Enter New Password" value="">
+                            <i class="fa fa-eye" id="togglePasswordBtn"></i>
+                            <i class="fa fa-eye-slash hidden" id="togglePasswordHiddenBtn"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword_Input" class="update__asterisks">Confirm new password</label>
+                            <input type="text" class="form-control" id="confirmPassword_Input"
+                                   placeholder="Confirm New Password" value="">
+                            <i class="fa fa-eye" id="confirmTogglePasswordBtn"></i>
+                            <i class="fa fa-eye-slash hidden" id="confirmTogglePasswordHiddenBtn"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="enterCode_Input" class="update__asterisks" id="code_Input">Enter code</label>
+                            <input type="text" class="form-control" id="enterCode_Input" placeholder="Enter Code">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary lng-cancelBtn" data-dismiss="modal"
+                            id="resetPassword_Cancel">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary lng-refreshBtn" id="resetPassword_btn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="../js/ajax.js"></script>
 <script type="text/javascript" src="../js/login.js"></script>
+<script type="text/javascript" src="../js/features/passwordInputs.js"></script>
+<script type="text/javascript" src="../js/features/sendCode.js"></script>
 <script type="text/javascript" src="../js/vars.js"></script>
 </html>

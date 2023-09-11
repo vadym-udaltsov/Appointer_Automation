@@ -67,6 +67,7 @@ function validateForm() {
     if (input.value.length < 11) {
         setError(document.getElementById('admin_validPhoneError'));
         adminCreateBtn.disabled = true;
+        return;
     } else {
         hideError(document.getElementById('admin_validPhoneError'));
     }

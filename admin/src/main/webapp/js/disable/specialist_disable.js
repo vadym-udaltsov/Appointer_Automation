@@ -282,6 +282,15 @@ function verifySpecialistFields(inputId, prevValue) {
     const updateBtn = document.querySelector('#update-specialist_UpdateBtn');
     const errorMessage = document.querySelector(`.${inputId}-error-message`);
 
+    if(inputId == "update-specialist_newPhoneInput") {
+        if (inputValue.length < 11) {
+            specialistSetError(document.getElementById('specialist_update_validPhoneError'));
+            specialist_updateBtn.disabled = true;
+            return;
+        } else {
+            specialistHideError(document.getElementById('specialist_update_validPhoneError'));
+        }
+    }
     if (inputValue === prevValue) {
         updateBtn.disabled = true;
         errorMessage.textContent = langArr.prevValueError[localStorage.getItem('selectedLanguage')];

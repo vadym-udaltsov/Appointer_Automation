@@ -36,9 +36,9 @@ const langArr = {
     },
     "serviceTitle": {
         "en": "Service",
-        "ua": "Сервіс",
+        "ua": "Послуга",
         "pl": "Usługa",
-        "ru": "Сервис",
+        "ru": "Услуга",
         "cnr": "Услуга"
     },
     "Name": {
@@ -211,9 +211,9 @@ const langArr = {
     },
     "createService": {
         "en": "Create Service",
-        "ua": "Створити Сервіс",
+        "ua": "Створити Послугу",
         "pl": "Utworzyć Usługe",
-        "ru": "Создать Сервис",
+        "ru": "Создать Услугу",
         "cnr": "Креирајте услугу"
     },
     "requiredField": {
@@ -225,9 +225,9 @@ const langArr = {
     },
     "duplicateServiceName": {
         "en": "Service already exists",
-        "ua": "Сервіс вже існує",
+        "ua": "Послуга вже існує",
         "pl": "Usługa już istnieje",
-        "ru": "Сервис уже существует",
+        "ru": "Услуга уже существует",
         "cnr": "Услуга већ постоји"
     },
     "duplicateSpecialistName": {
@@ -253,9 +253,9 @@ const langArr = {
     },
     "updateService": {
         "en": "Update Service",
-        "ua": "Оновити Сервіс",
+        "ua": "Оновити Послугу",
         "pl": "Aktualizować Usługe",
-        "ru": "Обновить Сервис",
+        "ru": "Обновить Услугу",
         "cnr": "Услуга ажурирања"
     },
     "newName": {
@@ -281,9 +281,9 @@ const langArr = {
     },
     "deleteService": {
         "en": "Delete Service",
-        "ua": "Видалити Сервіс",
+        "ua": "Видалити Послугу",
         "pl": "Usuń Usługe",
-        "ru": "Удалить Сервис",
+        "ru": "Удалить Услугу",
         "cnr": "Избриши услугу"
     },
     "createSpecialist": {

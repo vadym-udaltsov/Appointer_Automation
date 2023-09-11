@@ -7,6 +7,12 @@ body {
     background: #FFF;
 }
 
+.notRegisteredMessage {
+    top: -70%;
+    left: 20%;
+    width: 30%;
+}
+
 .sidenav {
     height: 100%;
     background-color: #000;
@@ -19,6 +25,14 @@ body {
     position: relative;
 }
 
+.btn {
+    padding: 5px 15px !important;
+}
+
+.form-group {
+    margin-bottom: 20px !important;
+}
+
 
 .login-form {
     margin-left: 20px;
@@ -26,10 +40,24 @@ body {
 
 #email {
     margin-bottom: 15px;
+    width: 360px !important;
+    border: none;
 }
 
 #pass {
     margin-bottom: 20px;
+    width: 360px !important;
+    border: none;
+}
+
+.labels-group {
+    display: flex;
+    width: 360px;
+    justify-content: space-between;
+}
+
+.forgot_password {
+    cursor: pointer;
 }
 
 #log {
@@ -81,6 +109,34 @@ body {
     font-weight: 300;
 }
 
+/*Register Modal */
+#togglePasswordBtn, #confirmTogglePasswordBtn, #togglePasswordHiddenBtn, #confirmTogglePasswordHiddenBtn {
+    position: absolute;
+    top: 21%;
+    right: 240px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+#confirmTogglePasswordBtn, #confirmTogglePasswordHiddenBtn {
+    top: 51% !important;
+    right: 240px !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.email_block {
+    display: flex;
+    height: 30px;
+    margin-left: 30px;
+}
+
+#verifyEmailValue {
+    margin-left: 10px;
+}
+
 #verify {
     height: 40px;
     margin-top: 30px;
@@ -89,9 +145,10 @@ body {
     width: 180px;
     position: relative;
     top: 20px;
-    left: -75px;
+    left: -345px;
 }
 
+/* Pictures */
 .login_circle_1, .login_circle_2, .login_circle_3,
 .login_circle_4, .login_circle_5, .login_circle_6 {
     position: absolute;

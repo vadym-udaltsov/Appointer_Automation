@@ -21,7 +21,6 @@ $(window).ready(function () {
         request.cn = JSON.parse($('option:checked','#department_NameSelect').val()).c;
         request.pn = $("#admin_CreatePhoneInput").val();
         executePost(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/admins');
-        return false;
     });
 
     $("#delete-admin_DeleteBtn").click(function() {
@@ -30,7 +29,6 @@ $(window).ready(function () {
         request.cn = JSON.parse($('option:checked','#department_NameSelect').val()).c;
         request.pn = $("#delete-admin_PhoneInput").val();
         executeDelete(JSON.stringify(request), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/admins');
-        return false;
     });
 });
 
