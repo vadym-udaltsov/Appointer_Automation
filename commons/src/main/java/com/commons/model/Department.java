@@ -136,7 +136,10 @@ public class Department extends DynamoDbEntity {
                 .withList("nwd", nonWorkingDays == null ? new ArrayList<>() : nonWorkingDays)
                 .withList("adm", admins == null ? new ArrayList<>() : admins)
                 .withMap("dof", daysOff == null ? new HashMap<>() : daysOff)
-                .with("loc", location)
+                .withMap("loc", Map.of(
+                        "longitude", location == null ? 0 : location.getLongitude(),
+                        "latitude", location == null ? 0 : location.getLatitude()
+                ))
                 .withString("desc", description == null ? "" : description)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
                 .withMap("sml", links == null ? new HashMap<>() : links);

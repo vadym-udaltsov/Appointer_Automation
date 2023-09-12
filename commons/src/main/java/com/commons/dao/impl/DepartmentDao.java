@@ -202,21 +202,20 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         AttributeValueUpdate zone = new AttributeValueUpdate(
                 new AttributeValue().withS(department.getZone()), AttributeAction.PUT);
         updates.put("zone", zone);
-        AttributeValueUpdate description = new AttributeValueUpdate(
-                new AttributeValue().withS(department.getDescription() == null ? "" : department.getDescription()), AttributeAction.PUT);
-        updates.put("desc", description);
-        Location location = department.getLocation();
-        if (location == null) {
-            location = new Location();
-            location.setLongitude(0.0);
-            location.setLatitude(0.0);
+        String description = department.getDescription();
+        if (description != null) {
+            AttributeValueUpdate descriptionUpd = new AttributeValueUpdate(
+                    new AttributeValue().withS(description), AttributeAction.PUT);
+            updates.put("desc", descriptionUpd);
         }
-        AttributeValueUpdate locationUpdate = new AttributeValueUpdate(new AttributeValue().withM(Map.of(
-                "longitude", new AttributeValue().withN(String.valueOf(location.getLongitude())),
-                "latitude", new AttributeValue().withN(String.valueOf(location.getLatitude())))),
-                AttributeAction.PUT);
-        updates.put("loc", locationUpdate);
-
+        Location location = department.getLocation();
+        if (location != null) {
+            AttributeValueUpdate locationUpdate = new AttributeValueUpdate(new AttributeValue().withM(Map.of(
+                    "longitude", new AttributeValue().withN(String.valueOf(location.getLongitude())),
+                    "latitude", new AttributeValue().withN(String.valueOf(location.getLatitude())))),
+                    AttributeAction.PUT);
+            updates.put("loc", locationUpdate);
+        }
 
         Map<String, String> links = department.getLinks();
         if (links != null) {
