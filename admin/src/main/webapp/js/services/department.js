@@ -43,6 +43,7 @@ $(window).on('load', function() {
         department.c = email;
 
         department.zone = $("#update_timeZoneSelect").val();
+        department.al = $("#appointment_Input").val();
         department.sw = $("#startWork").val();
         department.ew = $("#finishWork").val();
         var checkboxes = document.getElementsByName("dayCheck");
@@ -67,9 +68,9 @@ $(window).on('load', function() {
         var department = new Object();
         department.name = $("#depName_create").val();
         department.email = localStorage.getItem('customer');
-        department.type = $("#update_depTypeSelect").val();
-        department.country = $("#countryInput").val();
-        department.city = $("#cityInput").val();
+        department.type = localStorage.getItem('type');
+      /*  department.country = $("#countryInput").val();
+        department.city = $("#cityInput").val();*/
         department.zone = $("#create_timeZoneSelect").val();
         department.botToken = $("#add_depTokenInput").val();
         executePost(JSON.stringify(department), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department/create');
@@ -189,7 +190,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         var createServiceBtn  = document.getElementById('service_createOpenBtn');
         var createSpecialistBtn  = document.getElementById('specialist_createOpenBtn');
         var createAdminBtn  = document.getElementById('admin_createOpenBtn');
-
+        localStorage.setItem('type', data.availableTypes[0]);
 
         if(data.customerDepartments.length === 0) {
             if (data.registered == false) {
@@ -274,6 +275,7 @@ function loadDepUpdateData(url) {
         var selectedDepartmentData = JSON.parse($('option:checked', '#department_NameSelect').val());
         document.getElementById("update_selectedDepartment").value = selectedDepartmentData.n;
         document.getElementById("update_timeZoneSelect").value = selectedDepartmentData.zone;
+        document.getElementById("appointment_Input").value = selectedDepartmentData.al;
         //document.getElementById("update_depTypeInput").value = selectedDepartmentData.tp;
         document.getElementById("startWork").value = selectedDepartmentData.sw;
         document.getElementById("finishWork").value = selectedDepartmentData.ew;

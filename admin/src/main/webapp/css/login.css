@@ -58,12 +58,16 @@ body {
 
 .forgot_password {
     cursor: pointer;
+    position: relative;
+    top: 65px;
 }
 
 #log {
     margin-right: 20px;
     background-color: #393330 !important;
     color: #fff;
+    position: absolute;
+    top: 160px;
 }
 
 #log:hover, .registration:hover {
@@ -74,6 +78,9 @@ body {
 .registration {
     background-color: #867A6C
     color: #fff;
+    position: absolute;
+    top: 160px;
+    margin-left: 90px;
 }
 
 #messageDiv {

@@ -9,7 +9,7 @@ sendCode_Btn.addEventListener("click", function() {
     var email = email_Input.value
     userEmail.email = email;
     localStorage.setItem('customer', email);
-    executeGet('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/password-reset?email=' + email);
+    sendCode('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/password-reset?email=' + email);
     email_Input.value = '';
     sendCode_Btn.disabled = true;
 });
@@ -37,7 +37,7 @@ email_Input.addEventListener('input', function() {
 });
 
 
-function executeGet(url) {
+function sendCode(url) {
     $.ajax({
         type: 'get',
         url: url,

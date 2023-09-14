@@ -245,7 +245,7 @@
             </div>
             <div class="modal-body">
                 <div class="popup-row-dep">
-                    <div class="col-md-3">
+                    <div class="col-md-3 department_updateField">
                         <p class="lng-disabledDep">Department</p>
                     </div>
                     <div class="col-md-9">
@@ -270,11 +270,11 @@
                     <div class="hour_input-container">
                         <div class="col-md-9 start-hour-input">
                             <input type="number" class="form-control" id="startWork"
-                                   oninput="validateUpdateDepInput(this)" min="1" max="24">
+                                   oninput="validateWorkDaysValue(this); validateInput(this);" min="1" max="24">
                         </div>
                         <div class="col-md-9 finish-hour-input">
                             <input type="number" class="form-control" id="finishWork"
-                                   oninput="validateUpdateDepInput(this)" min="1" max="24">
+                                   oninput="validateWorkDaysValue(this); validateInput(this);" min="1" max="24">
                         </div>
                     </div>
                 </div>
@@ -323,6 +323,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="popup-row appointment_row">
+                    <p class="popup-field-title lng-appointment">Appointment limit</p>
+                    <input class="form-control" oninput="validateInput(this)" id="appointment_Input">
                 </div>
             </div>
             <div class="modal-footer">

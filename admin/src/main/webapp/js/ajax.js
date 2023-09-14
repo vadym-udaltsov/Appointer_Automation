@@ -8,6 +8,9 @@ function executeRequest(data, url, method) {
     data: data,
     success: function (data) {
       if (localStorage.getItem('createButtonClicked') == true) {
+        if(document.getElementById('spinner_loading').style.display == 'flex') {
+            document.getElementById('spinner_loading').style.display = 'none';
+        }
         $("#department_CreateModal").modal("hide");
         document.getElementById('notRegisteredContainer').style.display = 'none';
         document.getElementById('department_CreatePopup').disabled = true;
@@ -17,6 +20,9 @@ function executeRequest(data, url, method) {
       }
     },
     error: function (data) {
+        if(document.getElementById('spinner_loading').style.display == 'flex') {
+            document.getElementById('spinner_loading').style.display = 'none';
+        }
       $('div.modal.fade').modal('hide');
       if (data.responseText == undefined) {
         showDataError("Unsuccessful operation");
@@ -32,6 +38,11 @@ function executePost(data, url) {
 }
 
 function executePut(data, url) {
+  executeRequest(data, url, 'put');
+}
+
+function updateToken(data, url) {
+  document.getElementById('spinner_loading').style.display = 'flex';
   executeRequest(data, url, 'put');
 }
 

@@ -66,7 +66,7 @@ function validateInput(input) {
   input.value = input.value.replace(/\D/g, '');
 }
 
-function validateUpdateDepInput(input) {
+function validateWorkDaysValue(input) {
   var value = parseInt(input.value, 10);
 
   if (value < 1) {
@@ -91,6 +91,7 @@ function validateUpdateDepInput(input) {
 
 /* Verify that new value not equals to prev.values*/
 var prevUpdateTimeZoneValue = "";
+var prevAppointmentLimitValue = "";
 var prevUpdateStartHour = "";
 var prevUpdateFinishHour = "";
 var prevUpdateWorkDays = [];
@@ -118,6 +119,7 @@ async function verifyDepartmentFieldsValue() {
             return popupStyle.display === 'block';
         });
         prevUpdateTimeZoneValue = document.getElementById('update_timeZoneSelect').value;
+        prevAppointmentLimitValue = document.getElementById('appointment_Input').value;
         prevUpdateStartHour = document.getElementById('startWork').value;
         prevUpdateFinishHour = document.getElementById('finishWork').value;
 
@@ -125,6 +127,7 @@ async function verifyDepartmentFieldsValue() {
 
         const department_update_fields = [
             { inputId: 'update_timeZoneSelect', prevValue: prevUpdateTimeZoneValue },
+            { inputId: 'appointment_Input', prevValue: prevAppointmentLimitValue },
             { inputId: 'startWork', prevValue: prevUpdateStartHour },
             { inputId: 'finishWork', prevValue: prevUpdateFinishHour },
         ];
@@ -152,12 +155,14 @@ verifyDepartmentFieldsValue();
 function updateButtonStatus(changedInputId, prevValue) {
     const updateBtn = document.querySelector('#update_DepBtn');
     const timeZoneValue = document.getElementById('update_timeZoneSelect').value;
+    const appointmentLimitValue = document.getElementById('appointment_Input').value;
     const startHour = document.getElementById('startWork').value;
     const finishHour = document.getElementById('finishWork').value;
     const selectedDays = Array.from(document.querySelectorAll('.custom-checkbox:checked')).map(checkbox => checkbox.value);
 
     const timeChanged =
         timeZoneValue !== prevUpdateTimeZoneValue ||
+        appointmentLimitValue !== prevAppointmentLimitValue ||
         startHour !== prevUpdateStartHour ||
         finishHour !== prevUpdateFinishHour ||
         JSON.stringify(selectedDays) !== JSON.stringify(prevUpdateWorkDays);
@@ -169,13 +174,13 @@ function updateButtonStatus(changedInputId, prevValue) {
     }
 
     if (timeChanged && (changedInputId === 'startWork' || changedInputId === 'finishWork') && changedInputId !== 'checkboxes') {
-        validateAndUpdate(changedInputId, changedInputId === 'startWork');
+        validateDays(changedInputId, changedInputId === 'startWork');
     }
 }
 
-function validateAndUpdate(inputId, isStart) {
+function validateDays(inputId, isStart) {
     const inputElement = document.getElementById(inputId);
-    if (validateUpdateDepInput(inputElement)) {
+    if (validateWorkDaysValue(inputElement)) {
         if (isStart) {
             prevUpdateStartHour = inputElement.value;
         } else {

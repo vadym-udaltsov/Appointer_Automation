@@ -97,6 +97,10 @@ select,
     margin-top: 0.5em;
 }
 
+.department_updateField {
+    padding-left: 0px !important;
+}
+
 .popup-row-dep {
   display: flex;
   justify-content: space-between;
@@ -109,7 +113,6 @@ select,
   align-items: center;
   justify-content: space-between;
   margin-right: 14px;
-  margin-left: 13px;
 }
 
 .createDep_Group {
@@ -127,7 +130,7 @@ select,
 }
 
 .popup-field-title {
-  width: 100px;
+  width: 150px;
   margin-right: 15px;
 }
 
@@ -136,12 +139,24 @@ select,
   max-width: 35%;
 }
 
+.appointment_row {
+    margin-top: 15px !important;
+}
+
+#appointment_Input {
+    height: 30px;
+    width: 60px !important;
+    position: relative;
+    left: -244px;
+}
+
 #startWork,
 #finishWork {
-  width: 60px !important;
-  border-color: black;
-  border: 1px solid rgb(101 92 92);
-  border-radius: 4px;
+    width: 60px !important;
+    border-color: black;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 /* Work hours */
@@ -173,10 +188,6 @@ select,
 .calendar {
   width: 100% !important;
   margin: 0 auto;
-}
-
-.calendar_container {
-  margin: 0 15px;
 }
 
 .out-of-work-days {

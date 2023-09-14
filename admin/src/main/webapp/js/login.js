@@ -1,4 +1,5 @@
 var spinnerContainer = document.getElementById('spinner_loading');
+var loginContainer = document.getElementById('login_container');
 spinnerContainer.style.display = 'none';
 
 $(window).ready(function () {
@@ -10,9 +11,11 @@ $(window).ready(function () {
            var params = new Object();
            var body = new Object();
            var additionalParams = new Object();
-           executeGet('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/email-verify?email=' + email)
+           verifyEmail('https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/email-verify?email=' + email)
            $('#spinner-container').html('<div class="spinner"></div>');
-           return false;
+           setTimeout(function() {
+                document.getElementsByClassName('spinner')[0].style.display = 'none'
+           }, 8000);
     });
 
     $("#register").click(function() {
@@ -26,28 +29,29 @@ $(window).ready(function () {
         customer.password = $("#pass").val();
         localStorage.setItem('customer', customer.email);
         console.log("put email to storage: " + customer.email);
-        executePost(JSON.stringify(customer), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/auth')
+        login(JSON.stringify(customer), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/auth')
         return false;
     });
 });
 
-function executeGet(url) {
+function verifyEmail(url) {
     $.ajax({
         type: 'get',
         url: url,
         contentType: "application/json",
         success: function (data) {
             alert('Please, check your email and follow the confirmation link.')
-            $('#register').prop('disabled', false);
+            document.getElementById('register').disabled = false;
         },
         error: function (data) {
             alert('Please, enter valid email.')
-            $('#register').prop('disabled', true);
+            document.getElementById('register').disabled = true;
         }
     });
 }
 
-function executePost(data, url) {
+function login(data, url) {
+    loginContainer.style.display = 'none';
     spinnerContainer.style.display = 'flex';
     $.ajax({
         type: 'post',
@@ -63,8 +67,14 @@ function executePost(data, url) {
         },
         error: function (data) {
             spinnerContainer.style.display = 'none';
-            var errorPassword = document.getElementById("notValidPassword");
-            errorPassword.style.display = 'block';
+            loginContainer.style.display = 'block';
+            if (data.responseText == undefined) {
+                showDataError("Unsuccessful operation");
+            } else {
+                spinnerContainer.style.display = 'none';
+                var errorPassword = document.getElementById("notValidPassword");
+                errorPassword.style.display = 'block';
+            }
         }
     });
 }

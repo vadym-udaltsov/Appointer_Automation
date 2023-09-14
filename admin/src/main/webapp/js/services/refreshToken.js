@@ -25,7 +25,7 @@ $(window).ready(function () {
             token.email = localStorage.getItem('customer');
             token.departmentName = $("#department_NameSelect option:selected").text().trim();
             token.botToken = updateTokenInput.value;
-            executePut(JSON.stringify(token), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
+            updateToken(JSON.stringify(token), 'https://' + apiGatewayId + '.execute-api.eu-central-1.amazonaws.com/dev/admin/department');
             return false;
     });
 });
@@ -51,7 +51,7 @@ openRefreshTokenModal.addEventListener('click', function () {
     }
 });
 
-function validateInput() {
+function verifyUpdateTokenInput() {
     if (updateTokenInput.value === '') {
         tokenNameError.style.display = 'block';
         updateTokenBtn.disabled = true;
@@ -67,7 +67,7 @@ function resetTokenData() {
    tokenNameError.style.display = 'none';
 }
 
-updateTokenInput.addEventListener("input", validateInput);
+updateTokenInput.addEventListener("input", verifyUpdateTokenInput);
 
 refreshTokenPopup.addEventListener("click", closeUpdateDepPopup);
 cancelRefreshBtn.addEventListener("click", openUpdatePopup);
