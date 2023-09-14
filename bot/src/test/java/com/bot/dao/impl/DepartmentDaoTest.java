@@ -41,13 +41,16 @@ public class DepartmentDaoTest {
         request.setPhoneNumber("test2");
         departmentDao.addAdmin(request);
     }
-    //    @Test
+//        @Test
     public void shouldUpdateDepartment() {
         Department department = new Department();
-        department.setId("fc871929");
+        department.setId("RmKbeHxL");
         department.setCustomer("sergii.udaltsov@gmail.com");
-        department.setName("Default");
-        department.setStartWork(12);
+        department.setName("Лучший массаж в Баре");
+        department.setStartWork(9);
+        department.setEndWork(18);
+        department.setAppointmentsLimit(2);
+        department.setZone("Europe/Berlin");
         department.setNonWorkingDays(List.of(6, 7));
         departmentDao.updateDepartment(department);
     }

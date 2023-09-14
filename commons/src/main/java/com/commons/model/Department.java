@@ -140,6 +140,7 @@ public class Department extends DynamoDbEntity {
                         "longitude", location == null ? 0 : location.getLongitude(),
                         "latitude", location == null ? 0 : location.getLatitude()
                 ))
+                .withNumber("al", appointmentsLimit)
                 .withString("desc", description == null ? "" : description)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
                 .withMap("sml", links == null ? new HashMap<>() : links);
