@@ -47,9 +47,6 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     public void deleteSpecialist(DeleteSpecialistRequest request) {
-        if (Constants.OWNER.equalsIgnoreCase(request.getSpecialistName())) {
-            throw new IllegalArgumentException("Owner can not be deleted");
-        }
         departmentDao.deleteSpecialist(request);
     }
 

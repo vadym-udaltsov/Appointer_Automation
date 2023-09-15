@@ -63,6 +63,10 @@ public class SpecialistController {
         log.info("Got request for deleting specialist: {}", JsonUtils.convertObjectToString(request));
         try {
             Department department = departmentService.getDepartmentById(request.getDepartmentId());
+            if (department.getAvailableSpecialists().size() == 1) {
+                return new ResponseEntity<>(SimpleResponse.builder().body("Last specialist can not be deleted").build(),
+                        HttpStatus.BAD_REQUEST);
+            }
             String specialistName = request.getSpecialistName();
             long endOfMonthDate = DateUtils.getEndOfMonthDate(department, true);
             Specialist specialist = DepartmentUtils.getSelectedSpecialist(department, specialistName);

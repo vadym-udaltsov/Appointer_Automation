@@ -127,9 +127,6 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         Department department = getDepartmentById(departmentId);
         String specialistName = request.getSpecialistName();
         List<Specialist> specialists = department.getAvailableSpecialists();
-        if (specialists.size() < 2) {
-            throw new DbItemUpdateException("Last specialist can not be removed from department");
-        }
         boolean deleted = specialists.removeIf(s -> specialistName.equals(s.getName()));
         if (!deleted) {
             throw new DbItemUpdateException(String.format("Specialist with name %s not found in department", specialistName));
@@ -160,6 +157,9 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
     public void deleteCustomerService(UpdateServiceRequest request) {
         String departmentId = request.getDepartmentId();
         Department department = getDepartmentById(departmentId);
+        if (department.getServices().size() == 1) {
+            throw new DbItemUpdateException("Last service can not be deleted");
+        }
         String serviceName = request.getServiceName();
         boolean deleted = department.getServices().removeIf(s -> serviceName.equals(s.getName()));
         if (!deleted) {
