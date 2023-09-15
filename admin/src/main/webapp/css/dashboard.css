@@ -14,7 +14,7 @@ body {
 .creator_container {
     display: flex;
     align-items: center;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .creator_item {
@@ -45,7 +45,6 @@ body {
     cursor: pointer;
     border: none;
     padding: 0 12px;
-    width: 100%;
     transition: 0.5s;
     border-left: 1px solid #393330;
     border-right: 1px solid #393330;

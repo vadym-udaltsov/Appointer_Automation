@@ -27,6 +27,7 @@
         text-align: center;
         padding: 10px;
         width: 0px;
+        word-wrap: break-word;
     }
 
     .mobile_row {

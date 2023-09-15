@@ -36,7 +36,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <div class="creator_container">
-            <p class="creator_item">Appointer - The Udaltsovs</p>
+            <p class="creator_item">Appointer</p>
             <ul class="navbar-nav">
                 <li class="nav-item active">
                     <button type="submit" class="nav-button lng-reports" id="reportsRef">Reports</button>
@@ -104,7 +104,7 @@
         <div class="table_inner" id="servicesTable">
             <div class="columns_titles">
                 <div class="column_name cell lng-Name"><strong>Name</strong><span></span></div>
-                <div class="column_duration cell lng-serviceDuration"><strong>Duration</strong><span></span></div>
+                <div class="column_duration cell lng-serviceDuration"><strong>Duration (min)</strong><span></span></div>
                 <!--<div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>-->
                 <div class="column_actions cell lng-actions"><strong>Actions</strong><span></span></div>
             </div>
@@ -256,10 +256,10 @@
                     <p class="popup-field-title lng-timeZone">Time zone</p>
                     <select class="form-control" id="update_timeZoneSelect"></select>
                 </div>
-               <!-- <div class="popup-row last-row">
-                    <p class="popup-field-title lng-depType">Type</p>
-                    <input class="form-control" id="update_depTypeInput" disabled>
-                </div>-->
+                <!-- <div class="popup-row last-row">
+                     <p class="popup-field-title lng-depType">Type</p>
+                     <input class="form-control" id="update_depTypeInput" disabled>
+                 </div>-->
                 <div class="row">
                     <div class="col-md-3 start-hour">
                         <p class="lng-startWorkHour">Start work hour</p>
@@ -277,6 +277,11 @@
                                    oninput="validateWorkDaysValue(this); validateInput(this);" min="1" max="24">
                         </div>
                     </div>
+                </div>
+                <div class="popup-row appointment_row">
+                    <p class="popup-field-title lng-appointment">Daily appointments limit</p>
+                    <input type='number' class="form-control" id="appointment_Input"
+                           oninput="validateInput(this); inputLimitation(this, 0, 5);">
                 </div>
                 <div class="calendar mt-4">
                     <div class="calendar_container">
@@ -323,10 +328,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="popup-row appointment_row">
-                    <p class="popup-field-title lng-appointment">Appointment limit</p>
-                    <input class="form-control" oninput="validateInput(this)" id="appointment_Input">
                 </div>
             </div>
             <div class="modal-footer">
@@ -388,7 +389,7 @@
                     <div class="form-group">
                         <label for="service_Create-servNameInput" class="update__asterisks lng-Name"
                                id="service_nameField">Name</label>
-                        <input type="text" class="form-control enterName lng-namePlaceholder"
+                        <input type="text" class="form-control enterName inputs_for_names lng-namePlaceholder"
                                id="service_Create-servNameInput"
                                placeholder="Enter Name">
                         <small class="error-message lng-requiredField" id="nameError"
@@ -398,22 +399,22 @@
                     </div>
                     <div class="form-group">
                         <label for="service_Create-servDurationInput" class="update__asterisks lng-serviceDuration"
-                               id="service_durationField">Duration</label>
+                               id="service_durationField">Duration (min)</label>
                         <input type="number" class="form-control enterDuration lng-durationPlaceholder"
-                               id="service_Create-servDurationInput"
-                               placeholder="Enter Duration" oninput="validateInput(this)">
+                               id="service_Create-servDurationInput" placeholder="Enter Duration"
+                               oninput="validateInput(this); inputLimitation(this, 1, 300);">
                         <small class="error-message lng-requiredField" id="durationError"
                                style="color: red; display: none;"></small>
                     </div>
-                   <!-- <div class="form-group">
-                        <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice"
-                               id="service_priceField">Price</label>
-                        <input type="number" class="form-control enterPrice lng-pricePlaceholder"
-                               id="service_Create-servPriceInput"
-                               placeholder="Enter Price" oninput="validateInput(this)">
-                        <small class="error-message lng-requiredField" id="priceError"
-                               style="color: red; display: none;"></small>
-                    </div>-->
+                    <!-- <div class="form-group">
+                         <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice"
+                                id="service_priceField">Price</label>
+                         <input type="number" class="form-control enterPrice lng-pricePlaceholder"
+                                id="service_Create-servPriceInput"
+                                placeholder="Enter Price" oninput="validateInput(this)">
+                         <small class="error-message lng-requiredField" id="priceError"
+                                style="color: red; display: none;"></small>
+                     </div>-->
                 </form>
             </div>
             <div class="modal-footer">
@@ -439,13 +440,12 @@
                 <form>
                     <div class="form-group">
                         <label class="lng-serviceTitle" for="update-service_servNameInput" id="service_updateName">Service</label>
-                        <input class="form-control" id="update-service_servNameInput" disabled>
+                        <input class="form-control inputs_for_names" id="update-service_servNameInput" disabled>
                     </div>
                     <div class="form-group">
                         <label for="update-service_newNameInput" class="update__asterisks lng-newName"
-                               id="service_updateNewName">New
-                            Name</label>
-                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder"
+                               id="service_updateNewName">New Name</label>
+                        <input type="text" class="form-control enterNewName inputs_for_names lng-newNamePlaceholder"
                                id="update-service_newNameInput"
                                placeholder="Enter New Name">
                         <small class="update_error-message lng-requiredField" id="update_nameError"
@@ -457,10 +457,10 @@
                     </div>
                     <div class="form-group">
                         <label for="update-service_newDurationInput" class="update__asterisks lng-newDuration"
-                               id="service_updateDuration">New Duration</label>
+                               id="service_updateDuration">New Duration (min)</label>
                         <input type="number" class="form-control enterDuration lng-durationPlaceholder"
-                               id="update-service_newDurationInput"
-                               placeholder="Enter Duration">
+                               id="update-service_newDurationInput" placeholder="Enter Duration"
+                               oninput="inputLimitation(this, 1, 300)">
                         <small class="update_error-message lng-requiredField" id="update_durationError"
                                style="color: red; display: none;"></small>
                         <small class="error-message update-service_newDurationInput-error-message lng-prevValueError"
@@ -505,7 +505,7 @@
                     <div class="form-group">
                         <label class="lng-serviceTitle" for="delete-service_NameInput"
                                id="delete_updateName">Service</label>
-                        <input class="form-control" id="delete-service_NameInput" disabled>
+                        <input class="form-control inputs_for_names" id="delete-service_NameInput" disabled>
                     </div>
                 </form>
             </div>
@@ -534,7 +534,7 @@
                     <div class="form-group">
                         <label for="specialist_CreateNameInput" class="update__asterisks lng-Name"
                                id="specialist_nameField">Name</label>
-                        <input type="text" class="form-control enterName lng-namePlaceholder"
+                        <input type="text" class="form-control enterName inputs_for_names lng-namePlaceholder"
                                id="specialist_CreateNameInput"
                                placeholder="Enter Name">
                         <small class="error-message lng-requiredField" id="specialist_nameError"
@@ -579,12 +579,12 @@
                     <div class="form-group">
                         <label class="lng-specialistTitle" for="update-specialist_servNameInput"
                                id="specialist_updateName">Specialist</label>
-                        <input class="form-control" id="update-specialist_servNameInput" disabled>
+                        <input class="form-control inputs_for_names" id="update-specialist_servNameInput" disabled>
                     </div>
                     <div class="form-group">
                         <label for="update-specialist_newNameInput" class="update__asterisks lng-newName"
                                id="specialist_updateNewName">New Name</label>
-                        <input type="text" class="form-control enterNewName lng-newNamePlaceholder"
+                        <input type="text" class="form-control enterNewName inputs_for_names lng-newNamePlaceholder"
                                id="update-specialist_newNameInput"
                                placeholder="Enter New Name">
                         <small class="update_error-message lng-requiredField" id="specialist_update_nameError"
@@ -634,7 +634,7 @@
                 <form>
                     <div class="form-group">
                         <label class="lng-specialistTitle" for="delete-specialist_NameInput" id="delete_specialistName">Specialist</label>
-                        <input class="form-control" id="delete-specialist_NameInput" disabled>
+                        <input class="form-control inputs_for_names" id="delete-specialist_NameInput" disabled>
                     </div>
                 </form>
             </div>

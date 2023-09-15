@@ -49,11 +49,11 @@ const langArr = {
         "cnr": "Име"
     },
     "serviceDuration": {
-        "en": "Duration",
-        "ua": "Тривалість",
-        "pl": "Czas trwania",
-        "ru": "Продолжительность",
-        "cnr": "Трајање"
+        "en": "Duration (min)",
+        "ua": "Тривалість (хв)",
+        "pl": "Czas trwania (min)",
+        "ru": "Продолжительность (мин)",
+        "cnr": "Трајање (мин)"
     },
     "servicePrice": {
         "en": "Price",
@@ -266,11 +266,11 @@ const langArr = {
         "cnr": "Ново име"
     },
     "newDuration": {
-        "en": "New Duration",
-        "ua": "Нова Тривалість",
-        "pl": "Nowy czas trwania",
-        "ru": "Новая Продолжительность",
-        "cnr": "Ново трајање"
+        "en": "New Duration (min)",
+        "ua": "Нова Тривалість (хв)",
+        "pl": "Nowy czas trwania (min)",
+        "ru": "Новая Продолжительность (мин)",
+        "cnr": "Ново трајање (мин)"
     },
     "newPrice": {
         "en": "New Price",
@@ -425,5 +425,12 @@ const langArr = {
         "pl": "Znaczenie nie może być równa poprzedniej",
         "ru": "Значение не может быть равно предыдущему",
         "cnr": "Вартосћ ние мозе бић ровна попрзедниеј"
+    },
+    "appointment": {
+        "en": "Daily appointments limit",
+        "ua": "Денний ліміт записів",
+        "pl": "Dzienny limit wizyt",
+        "ru": "Дневной лимит записей",
+        "cnr": "Дневни лимит уласка"
     }
 }

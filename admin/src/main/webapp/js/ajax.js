@@ -24,8 +24,9 @@ function executeRequest(data, url, method) {
             document.getElementById('spinner_loading').style.display = 'none';
         }
       $('div.modal.fade').modal('hide');
-      if (data.responseText == undefined) {
+      if (data.responseText == undefined || data.responseText == "") {
         showDataError("Unsuccessful operation");
+        location.reload();
       } else {
         showDataError(JSON.parse(data.responseText).body);
       }

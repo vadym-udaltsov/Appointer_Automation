@@ -88,6 +88,17 @@ function validateWorkDaysValue(input) {
   }
 }
 
+function inputLimitation(input, min, max) {
+  var value = parseInt(input.value, 10);
+  if (value < min || value > max) {
+    input.value = min;
+  } else if (value > max) {
+    input.value = max;
+  }
+}
+
+
+
 
 /* Verify that new value not equals to prev.values*/
 var prevUpdateTimeZoneValue = "";

@@ -9,6 +9,7 @@
     min-height: 106px;
     overflow-y: auto;
     max-height: 341px !important;
+    text-align: center;
 }
 
 .columns_titles, .columns_titles_specialist, .columns_titles_admin {
@@ -27,9 +28,16 @@
 }
 
 .cell, .specCol {
-    width: 300px;
+    width: 600px;
     padding: 10px;
     position: relative;
+    word-wrap: break-word;
+}
+
+.column_name,
+.service_name,
+.specialist_name {
+    text-align: left !important;
 }
 
 .admCol {
@@ -55,6 +63,7 @@
 
 .actions {
     display: flex;
+    justify-content: center;
 }
 
 .centerPos {
