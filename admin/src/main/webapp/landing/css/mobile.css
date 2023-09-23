@@ -1,48 +1,4 @@
-@media (max-width: 1750px) {
-    .appointer_functions-container {
-        margin-bottom: 100px;
-    }
-}
-
-@media (max-width: 1750px) {
-    .phones_container {
-        margin-top: -110px;
-    }
-}
-
-@media (max-width: 1720px) {
-    .phones_container {
-        margin-top: 100px;
-    }
-}
-
-@media (max-width: 1450px) {
-    .phones_container {
-        margin-top: 150px;
-    }
-}
-
-@media (max-width: 1360px) {
-    .phones_container {
-        margin-top: 210px;
-    }
-}
-
-@media (max-width: 1300px) {
-    .appointer_functions-container {
-        margin-bottom: 300px;
-    }
-
-    .phones_container {
-        margin-top: -70px;
-    }
-}
-
 @media (max-width: 1100px) {
-    .appointer_functions-container {
-        margin-bottom: 380px;
-    }
-
     .description_steps {
             font-size: 16px;
             line-height: 30px;
@@ -53,47 +9,48 @@
     .circle-container {
         rotate: -90deg;
         right: 216px;
-        top: 20px;
+        top: 18px;
     }
 
     .circle-container a {
         rotate: 90deg;
     }
+
+    .thirdPh {
+        margin-top: 15px;
+    }
 }
 
 @media (max-width: 980px) {
-    .appointer_functions-container {
-        margin-bottom: 400px;
-    }
-
     .global_title {
         font-size: 70px !important;
     }
-}
 
-@media (max-width: 900px) {
-    .phones_container {
-        margin-top: -30px;
-    }
+        .footer_inner {
+            flex-direction: column;
+        }
+
+        .contact {
+            right: -300px;
+            width: 220px;
+        }
+
+        #logo_footer {
+            bottom: 80px;
+        }
+
+        .thirdPh {
+            margin-top: 10px;
+        }
 }
 
 @media (max-width: 800px) {
-    .first_phone, .second_phone {
-          width: 320px;
-    }
-}
-
-@media (max-width: 700px) {
-    .phones_container {
-        margin-top: 50px;
+    .phone {
+        width: 220px;
     }
 }
 
 @media (max-width: 660px) {
-    .appointer_functions-container {
-        margin-bottom: 800px;
-    }
-
     .functions_header {
         margin-bottom: 50px !important;
     }
@@ -102,26 +59,16 @@
         display: none;
     }
 
-    .phones_container {
-        margin-top: -170px;
+    .phone {
+            width: 240px;
     }
 
-    .first_phone, .second_phone {
-        width: 240px;
-    }
-}
-
-@media (max-width: 550px) {
-    .phones_container {
-        margin-top: -100px;
+    .thirdPh {
+        margin-top: 3px;
     }
 }
 
 @media (max-width: 510px) {
-    .appointer_functions-container {
-        margin-bottom: 980px;
-    }
-
      .page-component__bg_image_box {
             min-height: 4400px !important;
      }
@@ -130,22 +77,16 @@
             font-size: 50px !important;
      }
 
-     .phones_container {
-            margin-top: -210px;
-     }
-}
+     .secondPh {
+              margin-top: 3px;
+    }
 
-@media (max-width: 480px) {
-    .phones_container {
-         margin-top: -170px;
+    #appointer_text_box {
+        margin-top: 40px;
     }
 }
 
 @media (max-width: 450px) {
-    .appointer_functions-container {
-        margin-bottom: 950px;
-    }
-
      .global_title {
             font-size: 50px !important;
      }
@@ -154,8 +95,21 @@
          bottom: 80px;
      }
 
+     .footer_menu-item {
+        height: 25px;
+     }
+
+     .footer__menu-title {
+        margin-bottom: 0px;
+     }
+
+     .footer_menu-item p {
+        margin-bottom: 0;
+        margin-top: 0;
+     }
+
      .footer {
-         min-height: 320px;
+         min-height: 220px;
      }
 
      .footer_inner {
@@ -164,7 +118,7 @@
 
     #logo_footer {
         width: 200px;
-        bottom: 130px;
+        bottom: 80px;
         left: -40px;
     }
 
@@ -185,41 +139,27 @@
         font-size: 10px;
     }
 
-    .phones_container {
-        margin-top: -150px;
-    }
-
-    .first_phone, .second_phone {
-        width: 160px;
+    .phone {
+        width: 100px;
     }
 }
 
-@media (max-width: 430px){
-    .phones_container {
-        margin-top: -80px;
+@media (max-width: 390px) {
+    .footer {
+         min-height: 180px;
     }
-}
 
-@media (max-width: 410px){
-   .phones_container {
-        margin-top: -30px;
-   }
+     #logo_footer {
+        bottom: 60px;
+     }
 }
 
 @media (max-width: 360px) {
-    .appointer_functions-container {
-        margin-bottom: 1020px;
-    }
-
      .global_title {
             font-size: 40px !important;
      }
 
      .scroll-button {
               bottom: 30px;
-     }
-
-     .phones_container {
-         margin-top: -100px;
      }
 }

@@ -39,3 +39,18 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("load", checkScrollPosition);
     window.addEventListener("scroll", checkScrollPosition);
 });
+
+ function toggleElement() {
+            var screenWidth = window.innerWidth;
+            var element = document.querySelector('#footer_title');
+
+            if (screenWidth < 850 && element) {
+                element.style.display = 'none';
+            } else {
+                element.style.display = 'block';
+            }
+}
+
+window.addEventListener('load', toggleElement);
+window.addEventListener('resize', toggleElement);
+
