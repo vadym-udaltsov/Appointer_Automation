@@ -65,6 +65,7 @@ sed -i'' -e 's/botApiId/'${apiId}'/g' admin/src/main/webapp/js/vars.js
 sed -i'' -e 's/poolClientId/'${poolId}'/g' admin/src/main/webapp/js/vars.js
 sed -i'' -e 's/uiBucketName/'${uiBucket}'/g' admin/src/main/webapp/js/vars.js
 sed -i'' -e 's/userPoolDomainName/'appointer-${accountId}'/g' admin/src/main/webapp/js/vars.js
+sed -i'' -e 's/envId/'${accountId}'/g' admin/src/main/webapp/js/vars.js
 
 echo "Uploading UI files for admin functionality..."
 cd admin/src/main/webapp
