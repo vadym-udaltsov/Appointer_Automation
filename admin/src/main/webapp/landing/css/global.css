@@ -1,0 +1,386 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('../fonts/KudryashevDisplay-Sans.woff2') format('woff2'),
+         url('../fonts/KudryashevDisplay-Sans.woff') format('woff');
+}
+
+body {
+   font-family: 'MyFont', Helvetica, sans-serif !important;
+   color: white !important;
+   outline: none;
+}
+
+li {
+    list-style: none;
+}
+
+video {
+    border-radius: 10px;
+}
+
+.custom_fonts .custom-google-fonts-enabled h1,
+.custom_fonts .custom-google-fonts-enabled h2,
+.custom_fonts .custom-google-fonts-enabled h3,
+.custom_fonts .custom-google-fonts-enabled h4,
+.custom_fonts .custom-google-fonts-enabled h5,
+.custom_fonts .custom-google-fonts-enabled h6 {
+    font-family: 'MyFont', Helvetica, sans-serif !important;
+}
+
+.first_component {
+    background-image: url('../pictures/fon.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#appointer_text_box {
+    top: -70px;
+    position: relative;
+}
+
+.actions_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#registrationButton, #registrationButtonBottom {
+    display: inline-flex;
+    text-decoration: none;
+    border: 2px solid #BFE2FF;
+    position: relative;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 20px;
+    padding: 22px 30px;
+    color: #FFF;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', Тahoma, sans-serif;
+    cursor: pointer;
+    border-radius: 30px;
+    background: linear-gradient(-45deg, transparent, rgba(191, 226, 255, 0.6), transparent); /* Увеличиваем прозрачность */
+    background-size: 200% 100%;
+    animation: gradientAnimation 3s linear infinite;
+    margin-bottom: 30px;
+    position: relative;
+    top: -70px;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+#registrationButton:hover, #registrationButtonBottom:hover,
+#registrationButton:active, #registrationButtonBottom:active,
+#registrationButton:focus, #registrationButtonBottom:focus {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
+    color: #FFF;
+    animation: none;
+}
+
+#registrationButtonBottom {
+    margin-top: 20px;
+    top: 0px;
+}
+
+.language_container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 70px;
+    padding-top: 70px;
+}
+
+#languageIcon {
+    width: 45px;
+}
+
+#languageSelect {
+    position: absolute;
+    font-size: 20px;
+    right: 117px;
+    top: 82px;
+    width: 50px;
+    height: 30px;
+    border-radius: 30px;
+    font-family: 'Roboto';
+    text-align: center;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+
+.circle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    font-family: 'Roboto';
+    position: absolute;
+    right: 126px;
+    top: 100px;
+    z-index: 999;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #fff;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    position: relative;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.circle a {
+    width: 100%;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
+
+.circle:not(:last-child)::after {
+    content: '';
+    width: 2px;
+    height: 30px;
+    background-color: #fff;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+#appointer_header {
+    max-width: 100% !important;
+}
+
+#appointer_text_box {
+    max-width: 70% !important;
+}
+
+#font_description {
+    padding: 30px 0 30px 0;
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 20px;
+    border-bottom: 1px solid white;
+}
+
+.appointer_functions-container {
+    margin-bottom: 70px;
+    margin-top: 40px;
+    min-height: 500px;
+    z-index: 999;
+    position: relative;
+}
+
+.functions_header {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 200px;
+}
+
+.vertical-lines {
+    position: absolute;
+    top: 80px;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    height: 110px;
+    background-color: white;
+}
+
+.line2 {
+    left: 18%;
+}
+
+.line3 {
+    left: 34.5%;
+}
+
+.line4 {
+    left: 66.5%;
+}
+
+.line5 {
+    left: 82%;
+}
+
+.functions_container {
+    max-width: 100% !important;
+    height: 270px;
+}
+
+#steps {
+    background-image: url(../pictures/.svg);
+    background-repeat: no-repeat;
+}
+
+.arrows {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 32px;
+    width: 80%;
+    margin: 30px auto;
+}
+
+.arrow-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid black;
+    background-color: rgb(91 105 204 / 70%);
+    border-radius: 10px;
+}
+
+.text {
+    font-family: sans-serif;
+    text-align: center;
+    width: 100%;
+    font-size: 19px;
+    padding: 15px;
+    color: #d7d7d7;
+}
+
+.phones_container {
+    display: flex;
+    justify-content: center;
+    margin-top: -50px;
+}
+
+.first_phone, .second_phone {
+    width: 400px;
+}
+
+.second_phone {
+    margin-left: 30px;
+}
+
+.steps-01__text {
+    font-size: 25px !important;
+}
+
+.steps-01__item:nth-child(odd) .steps-01__img_box {
+    padding-right: 10px !important;
+    text-align: left !important;
+}
+
+.description_steps {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    list-style: none;
+    font-size: 19px;
+}
+
+.description_steps li {
+    list-style: decimal;
+    padding-left: 10px;
+}
+
+.footer {
+    min-height: 200px;
+    background: white;
+    position: relative;
+}
+
+.footer_container {
+    max-width: 1124px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.footer_inner {
+    display: flex;
+    justify-content: space-between;
+}
+
+#logo_footer {
+    width: 300px;
+    position: absolute;
+    bottom: 26px;
+}
+
+.footer__menu {
+    width: 220px;
+    position: relative;
+    right: -300px;
+    max-height: 200px;
+}
+
+.contact {
+    right: 200px;
+    width: 305px;
+}
+
+.footer__menu-title {
+    margin-bottom: 15px;
+    font-size: 20px;
+    line-height: 30px;
+    color: #2F281E;
+}
+
+.footer__list li {
+    list-style: none;
+}
+
+.footer__menu-link {
+    font-size: 20px;
+    line-height: 37px;
+    color: #544837;
+    font-family: 'Roboto';
+    text-decoration: none;
+}
+
+.scroll-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.scroll-button:hover {
+    background-color: #0056b3;
+}
+
+.arrow-down::before {
+    content: "↓";
+    font-size: 24px;
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.arrow-up::before {
+    content: "↑";
+    font-size: 24px;
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}

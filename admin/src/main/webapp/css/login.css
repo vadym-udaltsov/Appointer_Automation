@@ -66,8 +66,6 @@ body {
     margin-right: 20px;
     background-color: #393330 !important;
     color: #fff;
-    position: absolute;
-    top: 160px;
 }
 
 #log:hover, .registration:hover {
@@ -78,9 +76,6 @@ body {
 .registration {
     background-color: #867A6C
     color: #fff;
-    position: absolute;
-    top: 160px;
-    margin-left: 90px;
 }
 
 #messageDiv {
@@ -125,9 +120,19 @@ body {
     cursor: pointer;
 }
 
+i.error, i.confirmError {
+    top: 15% !important;
+    right: 250px !important;
+}
+
 #confirmTogglePasswordBtn, #confirmTogglePasswordHiddenBtn {
-    top: 51% !important;
-    right: 240px !important;
+    top: 51%;
+    right: 240px;
+}
+
+i.confirmError {
+    top: 65% !important;
+    right: 250px !important;
 }
 
 .hidden {

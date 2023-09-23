@@ -49,6 +49,17 @@
   }
 
   .update-dep, .create-dep {
-    width: 185px !important;
+    width: 205px !important;
+  }
+
+  .department_container {
+      width: 200px;
+      margin-top: 60px;
+      display: inline-block;
+  }
+
+  .department_inner {
+    display: inline-block;
+    width: 200px;
   }
 }

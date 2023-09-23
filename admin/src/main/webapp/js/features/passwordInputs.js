@@ -36,14 +36,41 @@ function togglePasswordVisibility(inputField, toggleButton) {
 function validatePassword() {
     const password = enterPasswordInput.value;
     const confirmPassword = confirmPasswordInput.value;
+    const validationMessages = document.getElementById('validationMessages');
 
+    const hasLength = password.length >= 8;
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password);
     const hasNumber = /\d/.test(password);
+    const hasLeadingTrailingSpace = /^\s|\s$/.test(password);
 
-    const isValid = hasUppercase && hasLowercase && hasSpecialChar && hasNumber && password === confirmPassword;
-    if(codeInput.value !== '' && isValid == true) {
+    const messages = [
+        { isValid: hasLength, message: '✓ Password must contain at least 8 characters', color: 'green' },
+        { isValid: hasUppercase, message: '✓ Password must contain an upper case letter', color: 'green' },
+        { isValid: hasLowercase, message: '✓ Password must contain a lower case letter', color: 'green' },
+        { isValid: hasNumber, message: '✓ Password must contain a number', color: 'green' },
+        { isValid: hasSpecialChar, message: '✓ Password must contain a special character', color: 'green' },
+        { isValid: !hasLeadingTrailingSpace, message: '✓ Password must not contain leading or trailing spaces', color: 'green' }
+    ];
+
+    let isValid = true;
+    validationMessages.innerHTML = '';
+
+    for (const message of messages) {
+        document.getElementById('togglePasswordBtn').classList.add('error');
+        document.getElementById('togglePasswordHiddenBtn').classList.add('error');
+        document.getElementById('confirmTogglePasswordBtn').classList.add('confirmError');
+        document.getElementById('confirmTogglePasswordHiddenBtn').classList.add('confirmError');
+        if (!message.isValid) {
+            isValid = false;
+            validationMessages.innerHTML += `<p style="color: red">${message.message}</p>`;
+        } else {
+            validationMessages.innerHTML += `<p style="color: green">${message.message}</p>`;
+        }
+    }
+
+    if (isValid && password === confirmPassword && codeInput.value !== '') {
         resetPassword.disabled = false;
     } else {
         resetPassword.disabled = true;
@@ -51,6 +78,11 @@ function validatePassword() {
 }
 
 cancelBtn.addEventListener("click", function() {
+    document.getElementById('validationMessages').style.display = 'none';
+    document.getElementById('togglePasswordBtn').classList.remove('error');
+    document.getElementById('togglePasswordHiddenBtn').classList.remove('error');
+    document.getElementById('confirmTogglePasswordBtn').classList.remove('confirmError');
+    document.getElementById('confirmTogglePasswordHiddenBtn').classList.remove('confirmError');
     enterPasswordInput.value = '';
     confirmPasswordInput.value = '';
     codeInput.value = '';

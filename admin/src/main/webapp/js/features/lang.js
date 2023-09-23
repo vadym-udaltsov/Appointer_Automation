@@ -14,14 +14,14 @@ const langArr = {
         "cnr": "Изађи"
     },
     "updateDepartment": {
-        "en": "Update Department",
-        "ua": "Оновити Салон",
-        "pl": "Zaktualizuj Dział",
-        "ru": "Обновить Салон",
-        "cnr": "Упдате Салон"
+        "en": "Adjust Salon",
+        "ua": "Налаштувати Салон",
+        "pl": "Dostosuj Dział",
+        "ru": "Настроить Салон",
+        "cnr": "Подесите Салон"
     },
     "createDepartment": {
-        "en": "Create Department",
+        "en": "Create salon",
         "ua": "Створити Салон",
         "pl": "Utworzyć Dział",
         "ru": "Создать Салон",
@@ -105,7 +105,7 @@ const langArr = {
         "cnr": "Избриши"
     },
     "disabledDep": {
-        "en": "Department",
+        "en": "Salon",
         "ua": "Салон",
         "pl": "Dział",
         "ru": "Салон",
@@ -329,7 +329,7 @@ const langArr = {
         "cnr": "Уклоните администратора"
     },
     "notRegisteredMessage": {
-        "en": "You haven't department. You need to create it.",
+        "en": "You haven't salon. You need to create it.",
         "ua": "У вас немає салону. Вам потрібно його створити.",
         "pl": "Nie masz działu. Musisz go utworzyć.",
         "ru": "У вас нет салона. Вам нужно создать его.",
