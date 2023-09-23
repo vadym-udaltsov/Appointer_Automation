@@ -29,10 +29,10 @@ pipeline {
                         }
                         if (params.withLayer) {
                             sh "chmod +x ./updateLambdasWithLayer.sh"
-                            sh './updateLambdasWithLayer.sh ' + lambdaName
+                            sh './updateLambdasWithLayer.sh ' + lambdaName + ' ' + params.Account
                         } else {
                             sh "chmod +x ./updateOnlyLambdasCode.sh"
-                            sh './updateOnlyLambdasCode.sh ' + lambdaName
+                            sh './updateOnlyLambdasCode.sh ' + lambdaName + ' ' + params.Account
                         }
                     }
                 }

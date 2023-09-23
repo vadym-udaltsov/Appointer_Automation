@@ -2,11 +2,11 @@
 
 source ${WORKSPACE}/deployment.config
 
-accountId="$1"
+accountId="$2"
 
 deploymentBucket="appointer-deployment-${accountId}"
 
-echo "Copying 3rd party dependency layer jar to s3..."
+echo "Copying 3rd party dependency layer jar to s3 bucket ${deploymentBucket}"
 aws s3 cp ${layerArtefact} s3://${deploymentBucket}
 
 echo "Publishing new version of layer..."
