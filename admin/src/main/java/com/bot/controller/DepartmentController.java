@@ -13,6 +13,7 @@ import com.commons.model.Specialist;
 import com.commons.model.TimeZone;
 import com.commons.service.ICustomerService;
 import com.commons.service.IDepartmentService;
+import com.commons.utils.DateUtils;
 import com.commons.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -124,6 +125,7 @@ public class DepartmentController {
         department.setServices(List.of());
         department.setToken(botToken);
         department.setAdmins(List.of(customer.getPhone()));
+        department.setCreationDate(DateUtils.nowZone(department));
         department.setAvailableSpecialists(List.of(specialist));
 
         departmentService.createDepartment(department);

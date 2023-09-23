@@ -6,8 +6,10 @@ import com.commons.dao.impl.DepartmentDao;
 import com.commons.dao.impl.DynamoDbFactory;
 import com.commons.model.CustomerService;
 import com.commons.model.Department;
+import com.commons.model.DepartmentType;
 import com.commons.request.admin.AdminRequest;
 import com.commons.request.service.UpdateServiceRequest;
+import com.commons.utils.DateUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -18,6 +20,39 @@ public class DepartmentDaoTest {
     private static DynamoDbFactory dynamoDbFactory = new DynamoDbFactory(dynamoDb);
     private static DepartmentDao departmentDao = new DepartmentDao(dynamoDbFactory);
 
+//    @Test
+    void shouldCreateDepartment() {
+        Department department = new Department();
+        department.setId("RmKbeHxL555");
+        department.setCustomer("sergii.udaltsov555@gmail.com");
+        department.setName("Лучший массаж в Баре55");
+        department.setStartWork(9);
+        department.setEndWork(18);
+        department.setAppointmentsLimit(2);
+        department.setZone("Europe/Berlin");
+        department.setType(DepartmentType.GENERAL);
+        department.setToken("ljnjnj");
+        department.setBotName("jknvjnfjvn");
+        department.setBotUserName("kjjkrvjkrbv");
+        department.setNonWorkingDays(List.of(6, 7));
+        department.setCreationDate(DateUtils.nowZone(department));
+        departmentDao.createItem(department);
+    }
+
+//    @Test
+    void shouldGetDepartment() {
+        Department departmentById = departmentDao.getDepartmentById("RmKbeHxL555");
+        System.out.println();
+    }
+
+//    @Test
+    void shouldDeleteDepartment() {
+        Department department = new Department();
+        department.setId("RmKbeHxL555");
+        department.setName("Лучший массаж в Баре55");
+        department.setCustomer("sergii.udaltsov555@gmail.com");
+        departmentDao.deleteItem(department);
+    }
 
 //    @Test
     public void shouldDeleteAdmin() {
