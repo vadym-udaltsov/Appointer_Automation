@@ -2,6 +2,8 @@
 
 source ${WORKSPACE}/deployment.config
 
+accountId="$1"
+
 deploymentBucket="appointer-deployment-${accountId}"
 
 echo "Copying 3rd party dependency layer jar to s3..."
