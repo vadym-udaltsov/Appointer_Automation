@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Функция для проверки положения прокрутки и скрытия/отображения стрелки
     function checkScrollPosition() {
         if (window.scrollY <= 1800) {
             scrollUpButton.style.display = "none";
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Вызываем функцию при загрузке страницы и при прокрутке
     window.addEventListener("load", checkScrollPosition);
     window.addEventListener("scroll", checkScrollPosition);
 });

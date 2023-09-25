@@ -58,9 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.getElementById('registrationButton').addEventListener('click', function() {
-    window.location.href = 'https://appointer-ui-773974733061.s3.eu-central-1.amazonaws.com/html/login.html';
+    window.location.href = `https://appointer-ui-${accountId}.s3.eu-central-1.amazonaws.com/html/login.html`;
 });
 
 document.getElementById('registrationButtonBottom').addEventListener('click', function() {
-    window.location.href = 'https://appointer-ui-773974733061.s3.eu-central-1.amazonaws.com/html/login.html';
+    window.location.href = `https://appointer-ui-${accountId}.s3.eu-central-1.amazonaws.com/html/login.html`;
 });
