@@ -97,14 +97,12 @@ function inputLimitation(input, min, max) {
   }
 }
 
-
-
-
 /* Verify that new value not equals to prev.values*/
 var prevUpdateTimeZoneValue = "";
 var prevAppointmentLimitValue = "";
 var prevUpdateStartHour = "";
 var prevUpdateFinishHour = "";
+var prevUpdateCurrency = "";
 var prevUpdateWorkDays = [];
 var selectedDays = [];
 
@@ -131,6 +129,7 @@ async function verifyDepartmentFieldsValue() {
         });
         prevUpdateTimeZoneValue = document.getElementById('update_timeZoneSelect').value;
         prevAppointmentLimitValue = document.getElementById('appointment_Input').value;
+        prevUpdateCurrency = document.getElementById('update_currencySelect').value;
         prevUpdateStartHour = document.getElementById('startWork').value;
         prevUpdateFinishHour = document.getElementById('finishWork').value;
 
@@ -139,6 +138,7 @@ async function verifyDepartmentFieldsValue() {
         const department_update_fields = [
             { inputId: 'update_timeZoneSelect', prevValue: prevUpdateTimeZoneValue },
             { inputId: 'appointment_Input', prevValue: prevAppointmentLimitValue },
+            { inputId: 'update_currencySelect', prevValue: prevUpdateCurrency},
             { inputId: 'startWork', prevValue: prevUpdateStartHour },
             { inputId: 'finishWork', prevValue: prevUpdateFinishHour },
         ];
@@ -166,6 +166,7 @@ verifyDepartmentFieldsValue();
 function updateButtonStatus(changedInputId, prevValue) {
     const updateBtn = document.querySelector('#update_DepBtn');
     const timeZoneValue = document.getElementById('update_timeZoneSelect').value;
+    const currencyValue = document.getElementById('update_currencySelect').value;
     const appointmentLimitValue = document.getElementById('appointment_Input').value;
     const startHour = document.getElementById('startWork').value;
     const finishHour = document.getElementById('finishWork').value;
@@ -174,6 +175,7 @@ function updateButtonStatus(changedInputId, prevValue) {
     const timeChanged =
         timeZoneValue !== prevUpdateTimeZoneValue ||
         appointmentLimitValue !== prevAppointmentLimitValue ||
+        currencyValue !== prevUpdateCurrency ||
         startHour !== prevUpdateStartHour ||
         finishHour !== prevUpdateFinishHour ||
         JSON.stringify(selectedDays) !== JSON.stringify(prevUpdateWorkDays);

@@ -33,6 +33,12 @@
     width: 200px;
 }
 
+.myTooltip {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+}
+
 #department_UpdatePopup,
 #department_CreatePopup {
     background: #393330;

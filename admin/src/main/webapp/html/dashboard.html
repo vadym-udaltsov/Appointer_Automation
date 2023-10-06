@@ -244,7 +244,7 @@
             <div class="modal-body">
                 <div class="popup-row-dep">
                     <div class="col-md-3 department_updateField">
-                        <p class="lng-disabledDep">Department</p>
+                        <p class="lng-disabledDep" id="updateDep_Field">Department</p>
                     </div>
                     <div class="col-md-9">
                         <input class="form-control" id="update_selectedDepartment" disabled>
@@ -255,7 +255,9 @@
                     <select class="form-control" id="update_timeZoneSelect"></select>
                 </div>
                 <div class="popup-row last-row">
-                    <p class="popup-field-title lng-currency">Currency</p>
+                    <img src="../pictures/tooltip.svg" alt="currency_tooltip" style="cursor: pointer;" class="myTooltip tlp-currency">
+                    <p data-lang-key="lng-currencyTooltipMessage" style="margin-left: 30px; cursor: pointer;"
+                       class="popup-field-title lng-currency">Currency</p>
                     <div class="select-wrapper">
                         <select class="form-control" id="update_currencySelect"></select>
                     </div>
@@ -283,7 +285,9 @@
                     </div>
                 </div>
                 <div class="popup-row appointment_row">
-                    <p class="popup-field-title lng-appointment">Daily appointments limit</p>
+                    <img src="../pictures/tooltip.svg" alt="limit_tooltip" style="cursor: pointer" class="myTooltip tlp-limit">
+                    <p data-lang-key="lng-dailyALTooltipMessage" style="margin-left: 30px; cursor: pointer;"
+                       class="popup-field-title lng-appointment">Daily appointments limit</p>
                     <input type='number' class="form-control" id="appointment_Input"
                            oninput="validateInput(this); inputLimitation(this, 0, 5);">
                 </div>

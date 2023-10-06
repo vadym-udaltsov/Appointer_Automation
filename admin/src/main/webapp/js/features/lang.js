@@ -432,5 +432,26 @@ const langArr = {
         "pl": "Dzienny limit wizyt",
         "ru": "Дневной лимит записей",
         "cnr": "Дневни лимит уласка"
+    },
+    "currency": {
+        "en": "Currency",
+        "ua": "Валюта",
+        "pl": "Waluta",
+        "ru": "Валюта",
+        "cnr": "Валута"
+    },
+    "dailyALTooltipMessage": {
+        "en": "Limit on the creation of records by one client per day",
+        "ua": "Ліміт на створення записів одним клієнтом за один день",
+        "pl": "Limit tworzenia rekordów przez jednego klienta dziennie",
+        "ru": "Лимит на создание записей одним клиентом в один день",
+        "cnr": "Ограничење креирања записа од стране једног клијента дневно"
+    },
+    "currencyTooltipMessage": {
+        "en": "Currency will be displayed in the price list with services",
+        "ua": "Валюта відображатиметься в прайсі з послугами",
+        "pl": "Waluta będzie wyświetlana w cenniku wraz z usługami",
+        "ru": "Валюта будет отображаться в прайсе с услугами",
+        "cnr": "Валута ће бити приказана у ценовнику заједно са услугама"
     }
 }

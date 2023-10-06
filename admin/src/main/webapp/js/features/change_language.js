@@ -10,6 +10,23 @@ function changeUrlLanguage() {
     changeLanguage();
 }
 
+$(window).on('load', function() {
+var elementsWithLangKey = document.querySelectorAll('[data-lang-key]');
+        if (elementsWithLangKey) {
+            elementsWithLangKey.forEach(function(element) {
+                var langKey = element.getAttribute('data-lang-key');
+                var cleanLangKey = langKey.replace('lng-', '');
+                if (langArr[cleanLangKey] && langArr[cleanLangKey][selectedLanguage]) {
+                    element.setAttribute('title', langArr[cleanLangKey][selectedLanguage]);
+                    var adjacentImg = element.previousElementSibling;
+                    if (adjacentImg && adjacentImg.tagName.toLowerCase() === 'img') {
+                        adjacentImg.setAttribute('title', langArr[cleanLangKey][selectedLanguage]);
+                    }
+                }
+            });
+        }
+});
+
 function changeLanguage() {
     var selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
 
@@ -54,6 +71,20 @@ function changeLanguage() {
             for (var element of elem) {
                 element.innerHTML = langArr[key][selectedLanguage];
             }
+        }
+        var elementsWithLangKey = document.querySelectorAll('[data-lang-key]');
+        if (elementsWithLangKey) {
+            elementsWithLangKey.forEach(function(element) {
+                var langKey = element.getAttribute('data-lang-key');
+                var cleanLangKey = langKey.replace('lng-', '');
+                if (langArr[cleanLangKey] && langArr[cleanLangKey][selectedLanguage]) {
+                    element.setAttribute('title', langArr[cleanLangKey][selectedLanguage]);
+                    var adjacentImg = element.previousElementSibling;
+                    if (adjacentImg && adjacentImg.tagName.toLowerCase() === 'img') {
+                        adjacentImg.setAttribute('title', langArr[cleanLangKey][selectedLanguage]);
+                    }
+                }
+            });
         }
     }
     //fetchCountriesAndCities();
