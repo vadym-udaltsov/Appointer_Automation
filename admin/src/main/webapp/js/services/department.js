@@ -27,6 +27,7 @@ $(window).on('load', function() {
 
     $("#department_UpdatePopup").click(function() {
         loadDepUpdateData(url);
+        fetchCurrencies();
     });
 
     $("#update_DepBtn").click(function() {
@@ -43,6 +44,7 @@ $(window).on('load', function() {
         department.c = email;
 
         department.zone = $("#update_timeZoneSelect").val();
+        department.currency = $("#update_currencySelect").val();
         department.al = $("#appointment_Input").val();
         department.sw = $("#startWork").val();
         department.ew = $("#finishWork").val();
@@ -115,7 +117,7 @@ function loadDataForTables(selectedDepartmentData) {
     var row = $("<div class='service'></div>");
     var nameCell = $("<div class='service_name cell mobile_row'></div>").text(item.name);
     var durationCell = $("<div class='service_duration cell mobile_row'></div>").text(item.duration);
-    //var priceCell = $("<div class='service_price cell mobile_row'></div>").text(item.price);
+    var priceCell = $("<div class='service_price cell mobile_row'></div>").text(item.price);
     var actionsCell = $("<div class='cell actions mobile_row_actions'></div>");
 
     var updateButton = $("<button type='button' class='sub-button service_updateOpenBtn lng-updateBtn mobile_action_btn' data-toggle='modal' data-target='#service_UpdateModal'>")
@@ -127,7 +129,7 @@ function loadDataForTables(selectedDepartmentData) {
 
     actionsCell.append(updateButton, deleteButton);
 
-    row.append(nameCell, durationCell, actionsCell);
+    row.append(nameCell, durationCell, priceCell, actionsCell);
 
     serviceTable.append(row);
   });
@@ -136,9 +138,9 @@ function loadDataForTables(selectedDepartmentData) {
   specialistTable.find('.specialist').remove();
   $.each(selectedDepartmentData.as, function (j, item) {
     var row = $("<div class='specialist'></div>");
-    var nameCell = $("<div class='specialist_name specCol'></div>").text(item.name);
-    var durationCell = $("<div class='specialist_phone specCol'></div>").text(item.pn);
-    var actionsCell = $("<div class='specCol actions'></div>");
+    var nameCell = $("<div class='specialist_name specCol mobile_row'></div>").text(item.name);
+    var durationCell = $("<div class='specialist_phone specCol mobile_row'></div>").text(item.pn);
+    var actionsCell = $("<div class='specCol actions mobile_row_actions'></div>");
 
     var updateButton = $("<button type='button' class='sub-button specialist_updateOpenBtn lng-updateBtn' data-toggle='modal' data-target='#specialist_UpdateModal'>")
       .text("Update")
@@ -158,7 +160,7 @@ function loadDataForTables(selectedDepartmentData) {
   adminTable.find('.admin').remove();
   $.each(selectedDepartmentData.adm, function (j, item) {
     var row = $("<div class='admin'></div>");
-    var phoneCell = $("<div class='admin_phone admCol centerPos'></div>").text(item);
+    var phoneCell = $("<div class='admin_phone admCol centerPos mobile_row'></div>").text(item);
     var actionsCell = $("<div class='admCol actions  centerPos'></div>");
 
     var deleteButton = $("<button type='button' class='sub-button admin_deleteOpenBtn lng-deleteBtn' data-toggle='modal' data-target='#admin_DeleteModal'>")
@@ -176,12 +178,12 @@ function loadDataForTables(selectedDepartmentData) {
 }
 
 function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZoneSelect,  dataLoaded) {
+ document.getElementById('spinner_loading').style.display = 'flex';
   $.ajax({
     url: url,
     type: 'get',
     dataType: 'json',
     success: function (data) {
-        document.getElementById('spinner_loading').style.display = 'flex';
         choose_depNameSelect.empty();
         update_timeZoneSelect.empty();
         create_timeZoneSelect.empty();
@@ -259,6 +261,7 @@ function loadDepartmentData(url, typeSelect, choose_depNameSelect, update_timeZo
         }
     },
     error: function (data) {
+        document.getElementById('spinner_loading').style.display = 'none';
       if (data.status === 0) {
          window.location.href = 'https://' + uiBucket + '.s3.eu-central-1.amazonaws.com/html/login.html?buttonClicked=true';
       }

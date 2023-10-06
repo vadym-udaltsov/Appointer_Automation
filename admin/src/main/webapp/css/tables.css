@@ -46,7 +46,7 @@
     position: relative;
 }
 
-.columns_titles .cell:nth-child(-n+2) {
+.columns_titles .cell:nth-child(-n+3) {
     border-right-width: 2px;
     border-right-style: outset;
 }

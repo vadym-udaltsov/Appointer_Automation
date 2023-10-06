@@ -10,7 +10,10 @@ $(window).ready(function () {
         var service = new Object();
         service.name = $("#service_Create-servNameInput").val();
         service.duration = $("#service_Create-servDurationInput").val();
-        //service.price = $("#service_Create-servPriceInput").val();
+        service.price = $("#service_Create-servPriceInput").val();
+        if(service.price == "") {
+            service.price = 0;
+        }
 
         var newServiceBlock = document.createElement('div');
         newServiceBlock.classList.add('service');
@@ -22,11 +25,11 @@ $(window).ready(function () {
 
         var durationDiv = document.createElement('div');
         durationDiv.classList.add('cell', 'service_duration', 'mobile_row');
-        durationDiv.textContent = service.duration
+        durationDiv.textContent = service.duration;
 
-        //var priceDiv = document.createElement('div');
-        //priceDiv.classList.add('cell', 'service_price', 'mobile_row');
-        //priceDiv.textContent = service.price
+        var priceDiv = document.createElement('div');
+        priceDiv.classList.add('cell', 'service_price', 'mobile_row');
+        priceDiv.textContent = service.price;
 
         var actionsDiv = document.createElement('div');
         actionsDiv.classList.add('cell', 'actions', 'mobile_row_actions');
@@ -52,7 +55,7 @@ $(window).ready(function () {
 
         newServiceBlock.appendChild(nameDiv);
         newServiceBlock.appendChild(durationDiv);
-        //newServiceBlock.appendChild(priceDiv);
+        newServiceBlock.appendChild(priceDiv);
         newServiceBlock.appendChild(actionsDiv);
 
         var column = document.querySelector('.columns_titles');

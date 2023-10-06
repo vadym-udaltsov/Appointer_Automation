@@ -105,12 +105,10 @@
             <div class="columns_titles">
                 <div class="column_name cell lng-Name"><strong>Name</strong><span></span></div>
                 <div class="column_duration cell lng-serviceDuration"><strong>Duration (min)</strong><span></span></div>
-                <!--<div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>-->
+                <div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>
                 <div class="column_actions cell lng-actions"><strong>Actions</strong><span></span></div>
             </div>
             <div class="slideshow-container" id="slider-container" style="display: none;">
-
-
             </div>
         </div>
     </div>
@@ -191,7 +189,7 @@
                            style="color: red; display: none;"></small>
                 </div>
             </div>
-            <!--<div class="createDep_Group">
+           <!-- <div class="createDep_Group">
                 <p class="createDep_Group_Titles lng-depType">Type</p>
                 <select class="form-control createDep_Fields" id="update_depTypeSelect"></select>
             </div>-->
@@ -255,6 +253,12 @@
                 <div class="popup-row">
                     <p class="popup-field-title lng-timeZone">Time zone</p>
                     <select class="form-control" id="update_timeZoneSelect"></select>
+                </div>
+                <div class="popup-row last-row">
+                    <p class="popup-field-title lng-currency">Currency</p>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="update_currencySelect"></select>
+                    </div>
                 </div>
                 <!-- <div class="popup-row last-row">
                      <p class="popup-field-title lng-depType">Type</p>
@@ -406,15 +410,15 @@
                         <small class="error-message lng-requiredField" id="durationError"
                                style="color: red; display: none;"></small>
                     </div>
-                    <!-- <div class="form-group">
-                         <label for="service_Create-servPriceInput" class="update__asterisks lng-servicePrice"
+                     <div class="form-group">
+                         <label for="service_Create-servPriceInput" class="lng-servicePrice"
                                 id="service_priceField">Price</label>
                          <input type="number" class="form-control enterPrice lng-pricePlaceholder"
-                                id="service_Create-servPriceInput"
-                                placeholder="Enter Price" oninput="validateInput(this)">
+                                id="service_Create-servPriceInput" placeholder="Enter Price"
+                                oninput="validateInput(this)" value="0">
                          <small class="error-message lng-requiredField" id="priceError"
                                 style="color: red; display: none;"></small>
-                     </div>-->
+                     </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -466,18 +470,16 @@
                         <small class="error-message update-service_newDurationInput-error-message lng-prevValueError"
                                style="color: red; display: none;"></small>
                     </div>
-                    <!--<div class="form-group">
-                        <label for="update-service_newPriceInput" class="update__asterisks lng-newPrice"
-                               id="service_updatePrice">New
-                            Price</label>
+                    <div class="form-group">
+                        <label for="update-service_newPriceInput" class="lng-newPrice"
+                               id="service_updatePrice">New Price</label>
                         <input type="number" class="form-control enterPrice lng-pricePlaceholder"
-                               id="update-service_newPriceInput"
-                               placeholder="Enter Price">
+                               id="update-service_newPriceInput" placeholder="Enter Price">
                         <small class="update_error-message lng-requiredField" id="update_priceError"
                                style="color: red; display: none;"></small>
                         <small class="error-message update-service_newPriceInput-error-message"
                                style="color: red; display: none;"></small>
-                    </div>-->
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -744,6 +746,7 @@
 <script type="text/javascript" src="../js/features/lang.js"></script>
 <script type="text/javascript" src="../js/features/change_language.js"></script>
 <script type="text/javascript" src="../js/features/notRegisteredMessage.js"></script>
+<script type="text/javascript" src="../js/features/currencies.js"></script>
 
 <script type="text/javascript" src="../js/spinner.js"></script>
 <script type="text/javascript" src="../js/logout.js"></script>

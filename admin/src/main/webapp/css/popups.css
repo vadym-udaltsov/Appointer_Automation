@@ -133,10 +133,10 @@ select,
   margin-bottom: 30px !important;
 }
 
-.popup-field-title {
+/*.popup-field-title {
     width: 200px;
     margin-right: 15px;
-}
+}*/
 
 .col-md-3 {
   flex: 0 0 35%;
