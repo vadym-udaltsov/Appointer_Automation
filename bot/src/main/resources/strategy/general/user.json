@@ -128,7 +128,12 @@
                       "name": "viewLinks",
                       "key": "View social media",
                       "nested": [
-
+                      ]
+                    },
+                    {
+                      "name": "viewPrice",
+                      "key": "Prices",
+                      "nested": [
                       ]
                     }
                   ]

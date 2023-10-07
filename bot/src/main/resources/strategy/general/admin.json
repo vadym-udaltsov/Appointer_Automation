@@ -478,6 +478,12 @@
                           ]
                         }
                       ]
+                    },
+                    {
+                      "name": "viewPrice",
+                      "key": "Prices",
+                      "nested": [
+                      ]
                     }
                   ]
                 },

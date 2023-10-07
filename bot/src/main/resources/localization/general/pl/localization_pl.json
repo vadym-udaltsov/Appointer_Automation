@@ -114,6 +114,9 @@
   "Select type of link to delete": "Wybierz typ łącza do usunięcia",
   "Enter correct link": "Wprowadź poprawny link",
   "Description": "Opis",
+  "Prices": "Ceny",
+  "⭐ Our prices ⭐": "⭐ Nasze ceny ⭐",
+
   "Type description using keyboard": "Wpisz opis na klawiaturze",
   "Description added": "Dodano opis",
   "Submit description deletion": "Potwierdź usunięcie opisu",
@@ -195,6 +198,7 @@
   "Media społecznościowe": "View social media",
   "Media": "Social media",
   "Opis": "Description",
+  "Ceny": "Prices",
   "Styczeń": "JANUARY",
   "Luty": "FEBRUARY",
   "Marzec": "MARCH",

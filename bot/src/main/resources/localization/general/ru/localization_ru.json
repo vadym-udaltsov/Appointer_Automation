@@ -121,7 +121,8 @@
   "Description is not set yet": "Описание пока не добавлено",
   "Period day off was deleted": "Нерабочий период удален",
   "Messages were sent": "Сообщения отправлены",
-
+  "Prices": "Цены",
+  "⭐ Our prices ⭐": "⭐ Наши цены ⭐",
   "Service: ${service}": "  \uD83D\uDC49 Услуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Специалист: ${specialist}",
   "Date: ${date}": "\uD83D\uDCC5 Дата: ${date}",
@@ -196,6 +197,7 @@
   "Социальные сети": "View social media",
   "Соцсети": "Social media",
   "Описание": "Description",
+  "Цены": "Prices",
   "Январь": "JANUARY",
   "Февраль": "FEBRUARY",
   "Март": "MARCH",

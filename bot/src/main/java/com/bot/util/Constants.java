@@ -13,7 +13,8 @@ public class Constants {
 
     public static final String UNAVAILABLE_DATE = "❌";
     public static final String STAR_SIGN = "⭐⭐⭐⭐⭐";
-    public static final String LONE_STAR_SIGN = "⭐";
+    public static final String PIN = "\uD83D\uDCCC";
+    public static final String STAR = "⭐";
     public static final String EMPTY_DATE = "--";
     public static final String IGNORE = "ignore";
     public static final String SUBMIT = "Submit";
@@ -65,9 +66,11 @@ public class Constants {
 
     public static final List<String> DAY_TITLES = List.of("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun");
 
-    public static final List<String> ADMIN_PROFILE_BUTTONS = List.of("Change language", "Location", "Description", "Social media");
+    public static final List<String> ADMIN_PROFILE_BUTTONS = List.of("Change language", "Location", "Description",
+            "Social media", "Prices");
     public static final List<String> USER_PROFILE_BUTTONS = List.of("Change language");
-    public static final List<String> SALON_INFO_BUTTONS = List.of("View location", "View description", "View social media");
+    public static final List<String> SALON_INFO_BUTTONS = List.of("View location", "View description", "View social media",
+            "Prices");
     public static final List<String> VIEW_ADMIN_APP_BUTTONS = List.of("Today", "Tomorrow", "By Date");
     public static final List<String> VIEW_ADMIN_MESSAGES_BUTTONS = List.of("Send Text", "Send Image");
     public static final List<String> ADMIN_APPOINTMENT_BUTTONS = List.of("View", "Create", "Delete");
@@ -207,6 +210,7 @@ public class Constants {
         public static final String LOCATION_VIEW_USER = "viewLocation";
         public static final String DESCRIPTION_VIEW_USER = "viewDescription";
         public static final String LINKS_VIEW_USER = "viewLinks";
+        public static final String VIEW_PRICE = "viewPrice";
 
         public static final String SALON_INFO_USER = "salonDash";
 

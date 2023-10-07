@@ -97,6 +97,9 @@
   "View description": "Погледај опис",
   "View social media": "Друштвени медији",
   "Social media": "Медији",
+  "Prices": "Цене",
+  "⭐ Our prices ⭐": "⭐ Наше цене ⭐",
+
   "Enter your ${media} link": "Унесите своју везу до ${media}",
   "Your ${media} link created": "Веза до ${media} је направљена",
   "Your ${media} link deleted": "Веза до ${media} је уклоњена",
@@ -195,6 +198,7 @@
   "Друштвени медији": "View social media",
   "Медији": "Social media",
   "Опис": "Description",
+  "Цене": "Prices",
   "Jануара": "JANUARY",
   "Фебруара": "FEBRUARY",
   "Mарта": "MARCH",

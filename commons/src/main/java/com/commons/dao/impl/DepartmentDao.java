@@ -205,6 +205,9 @@ public class DepartmentDao extends AbstractDao<Department> implements IDepartmen
         AttributeValueUpdate appLimitUpdate = new AttributeValueUpdate(new AttributeValue()
                 .withN(String.valueOf(department.getAppointmentsLimit())), AttributeAction.PUT);
         updates.put("al", appLimitUpdate);
+        AttributeValueUpdate currencyUpdate = new AttributeValueUpdate(new AttributeValue(department.getCurrency()),
+                AttributeAction.PUT);
+        updates.put("currency", currencyUpdate);
         String description = department.getDescription();
         if (description != null) {
             AttributeValueUpdate descriptionUpd = new AttributeValueUpdate(

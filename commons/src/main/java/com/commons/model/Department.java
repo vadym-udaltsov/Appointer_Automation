@@ -116,6 +116,8 @@ public class Department extends DynamoDbEntity {
     @JsonProperty("cd")
     private long creationDate;
 
+    private String currency;
+
     @Override
     @JsonIgnore
     public PrimaryKey getPrimaryKey() {
@@ -146,6 +148,7 @@ public class Department extends DynamoDbEntity {
                 .withNumber("al", appointmentsLimit)
                 .withNumber("cd", creationDate)
                 .withString("desc", description == null ? "" : description)
+                .withString("currency", currency == null ? "" : currency)
                 .withList("s", services.stream().map(JsonUtils::parseObjectToMap).collect(Collectors.toList()))
                 .withMap("sml", links == null ? new HashMap<>() : links);
     }

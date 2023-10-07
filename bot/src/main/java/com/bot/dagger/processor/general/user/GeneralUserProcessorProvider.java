@@ -5,6 +5,7 @@ import com.bot.model.CommandType;
 import com.bot.processor.IProcessor;
 import com.bot.processor.IProcessorFactory;
 import com.bot.processor.impl.ProcessorFactory;
+import com.bot.processor.impl.general.ViewPriceProcessor;
 import com.bot.processor.impl.general.user.UserProfileProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFirstStepProcessor;
 import com.bot.processor.impl.general.user.appointment.cancel.CancelAppointmentFourthStepProcessor;
@@ -67,6 +68,15 @@ public class GeneralUserProcessorProvider {
     @CommandKey(CommandType.LOCATION_VIEW_USER)
     public IProcessor viewLocation(ISendMessageService sendMessageService) {
         return new ViewLocationStepProcessor(sendMessageService);
+    }
+    // -----------------------View price ----------------------------
+
+    @Provides
+    @Singleton
+    @IntoMap
+    @CommandKey(CommandType.PRICE_VIEW)
+    public IProcessor viewPrice() {
+        return new ViewPriceProcessor();
     }
 
     // -----------------------View Links ----------------------------

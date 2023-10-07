@@ -125,6 +125,8 @@
   "Description is not set yet": "Опис поки що не добавлено",
   "Period day off was deleted": "Неробочий період видалено",
   "Messages were sent": "Повідомлення відправлені",
+  "Prices": "Ціни",
+  "⭐ Our prices ⭐": "⭐ Наші ціни ⭐",
 
   "Service: ${service}": "  \uD83D\uDC49 Послуга: ${service}",
   "Specialist: ${specialist}": "\uD83D\uDC64 Спеціаліст: ${specialist}",
@@ -202,6 +204,8 @@
   "Соціальні мережі": "View social media",
   "Соцмережі": "Social media",
   "Опис": "Description",
+  "Ціни": "Prices",
+
   "Січень" :"JANUARY",
   "Лютий": "FEBRUARY",
    "Березень": "MARCH",
