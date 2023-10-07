@@ -27,7 +27,6 @@ $(window).on('load', function() {
 
     $("#department_UpdatePopup").click(function() {
         loadDepUpdateData(url);
-        fetchCurrencies();
     });
 
     $("#update_DepBtn").click(function() {
@@ -283,6 +282,7 @@ function loadDepUpdateData(url) {
         document.getElementById("startWork").value = selectedDepartmentData.sw;
         document.getElementById("finishWork").value = selectedDepartmentData.ew;
 
+        fetchCurrencies(selectedDepartmentData.currency);
         var checkedDateFromData = selectedDepartmentData.nwd;
         var daysCheckboxes = document.querySelectorAll('input[name="dayCheck"]');
         daysCheckboxes.forEach(function (checkbox) {
