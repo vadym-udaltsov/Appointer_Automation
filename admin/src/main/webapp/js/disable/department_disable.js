@@ -66,6 +66,13 @@ function validateInput(input) {
   input.value = input.value.replace(/\D/g, '');
 }
 
+function validateStartsWithZero(input) {
+   let inputValue = input.value.toString();
+     if (inputValue.startsWith('0')) {
+       input.value = inputValue.charAt(inputValue.length - 1);
+     }
+}
+
 function validateWorkDaysValue(input) {
   var value = parseInt(input.value, 10);
 

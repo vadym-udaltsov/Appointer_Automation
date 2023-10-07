@@ -417,7 +417,7 @@
                                 id="service_priceField">Price</label>
                          <input type="number" class="form-control enterPrice lng-pricePlaceholder"
                                 id="service_Create-servPriceInput" placeholder="Enter Price"
-                                oninput="validateInput(this)" value="0">
+                                oninput="validateInput(this); validateStartsWithZero(this);" value="0">
                          <small class="error-message lng-requiredField" id="priceError"
                                 style="color: red; display: none;"></small>
                      </div>
@@ -476,7 +476,8 @@
                         <label for="update-service_newPriceInput" class="lng-newPrice"
                                id="service_updatePrice">New Price</label>
                         <input type="number" class="form-control enterPrice lng-pricePlaceholder"
-                               id="update-service_newPriceInput" placeholder="Enter Price">
+                               id="update-service_newPriceInput" oninput="validateStartsWithZero(this);"
+                                placeholder="Enter Price">
                         <small class="update_error-message lng-requiredField" id="update_priceError"
                                style="color: red; display: none;"></small>
                         <small class="error-message update-service_newPriceInput-error-message"

@@ -9,14 +9,8 @@ for folder in css html js mobile
 do
   cd "$folder"
 
-  for file in $(find . -type f)
-  do
-    if [ "$file" != './vars.js' ]
-    then
-       echo "$file"
-       aws s3 cp "$file" "s3://${uiBucket}/${folder}/${file#./}"
-    fi
-  done
+  aws s3 sync . "s3://${uiBucket}/${folder}/" --exclude 'vars.js'
+
   cd ../
 done
 

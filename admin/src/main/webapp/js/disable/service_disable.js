@@ -79,6 +79,7 @@ function resetCreateForm() {
     hideError(error);
     hideError(document.getElementById('duplicateServiceError'));
   }
+  document.getElementById('service_Create-servPriceInput').value = 0;
 }
 
 function initializeCreateForm() {
@@ -241,12 +242,12 @@ async function verifyServiceFieldsValue() {
             });
               prevUpdateNameValue = document.getElementById('update-service_newNameInput').value;
               prevUpdateDurationValue = document.getElementById('update-service_newDurationInput').value;
-              //prevUpdatePriceValue = document.getElementById('update-service_newPriceInput').value;
+              prevUpdatePriceValue = document.getElementById('update-service_newPriceInput').value;
 
             const update_fields = [
                 { inputId: 'update-service_newNameInput', prevValue: prevUpdateNameValue },
                 { inputId: 'update-service_newDurationInput', prevValue: prevUpdateDurationValue },
-                //{ inputId: 'update-service_newPriceInput', prevValue: prevUpdatePriceValue }
+                { inputId: 'update-service_newPriceInput', prevValue: prevUpdatePriceValue }
             ];
 
             update_fields.forEach(field => {
@@ -265,18 +266,38 @@ function verifyServiceFields(inputId, prevValue) {
     const inputValue = document.getElementById(inputId).value;
     const updateBtn = document.querySelector('#update-service_UpdateBtn');
     const errorMessage = document.querySelector(`.${inputId}-error-message`);
+    var errors = document.getElementsByClassName('error-message');
 
-
-    if (inputValue === prevValue) {
-        updateBtn.disabled = true;
-        errorMessage.textContent = langArr.prevValueError[localStorage.getItem('selectedLanguage')];
-        errorMessage.style.display = 'block';
-    } else if(inputValue === '') {
-        updateBtn.disabled = true;
-        errorMessage.style.display = 'none';
+    if(inputId === 'update-service_newPriceInput') {
+        var hasHiddenErrors = false;
+        var emptyError = document.getElementsByClassName('lng-requiredField');
+        for (var i = 0; i < emptyError.length; i++) {
+            if (window.getComputedStyle(emptyError[i]).display !== 'none') {
+                hasHiddenErrors = true;
+                break;
+            }
+        }
+        if(hasHiddenErrors == false) {
+            for (const error of errors) {
+                error.style.display = 'none';
+            };
+        }
+        updateBtn.disabled = hasHiddenErrors;
     } else {
-        updateBtn.disabled = false;
-        errorMessage.style.display = 'none';
+        if (inputValue === prevValue) {
+            updateBtn.disabled = true;
+            errorMessage.textContent = langArr.prevValueError[localStorage.getItem('selectedLanguage')];
+            errorMessage.style.display = 'block';
+        } else if(inputValue === '') {
+            updateBtn.disabled = true;
+            errorMessage.style.display = 'none';
+        } else {
+            for (const error of errors) {
+                error.style.display = 'none';
+            };
+            updateBtn.disabled = false;
+            errorMessage.style.display = 'none';
+        }
     }
 }
 
