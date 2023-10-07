@@ -79,10 +79,6 @@ function changeLanguage() {
                 var cleanLangKey = langKey.replace('lng-', '');
                 if (langArr[cleanLangKey] && langArr[cleanLangKey][selectedLanguage]) {
                     element.setAttribute('title', langArr[cleanLangKey][selectedLanguage]);
-                    var adjacentImg = element.previousElementSibling;
-                    if (adjacentImg && adjacentImg.tagName.toLowerCase() === 'img') {
-                        adjacentImg.setAttribute('title', langArr[cleanLangKey][selectedLanguage]);
-                    }
                 }
             });
         }
