@@ -32,7 +32,12 @@ public class SetContactProcessor implements IProcessor {
             ContextUtils.resetLocationToPreviousStep(context);
             return List.of(MessageUtils.getContactsMessageHolder());
         }
-        context.setPhoneNumber("+" + contact.getPhoneNumber());
+
+        String phoneNumber = contact.getPhoneNumber();
+        if (!phoneNumber.startsWith("+")) {
+            phoneNumber = "+" + phoneNumber;
+        }
+        context.setPhoneNumber(phoneNumber);
         String firstName = contact.getFirstName() == null ? EMPTY : contact.getFirstName();
         String lastName = contact.getLastName() == null ? EMPTY : contact.getLastName();
         String delimiter = lastName.equals(EMPTY) || firstName.equals(EMPTY) ? EMPTY : " ";
