@@ -32,142 +32,145 @@
 <img src="../pictures/group.svg" alt="Group_1" class="group_1">
 <img src="../pictures/group.svg" alt="Group_2" class="group_2">
 
-
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <div class="creator_container">
-            <p class="creator_item">Appointer</p>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <button type="submit" class="nav-button lng-reports" id="reportsRef">Reports</button>
-                </li>
-            </ul>
-        </div>
-        <div id="logout_container">
-            <div class="language-container">
-                <select class="change-lang">
-                    <option value="en" selected>EN</option>
-                    <option value="ua">UA</option>
-                    <option value="pl">PL</option>
-                    <option value="ru">RU</option>
-                    <option value="cnr">CNR</option>
-                </select>
+<div id="global_container_page">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="creator_container">
+                <p class="creator_item">Appointer</p>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <button type="submit" class="nav-button lng-reports" id="reportsRef">Reports</button>
+                    </li>
+                </ul>
             </div>
-            <button class="nav-button lng-logout" id="logout_button">Log out</button>
-        </div>
-    </div>
-</nav>
-
-<div id="global_container">
-
-    <!-- Department Container -->
-    <div class="department_container">
-        <div class="department_inner">
-            <div class="department_dropdown" style="display: none;">
-                <select class="form-control" id="department_NameSelect"></select>
-                <img src="../pictures/arrow-down.png" alt="Arrow down" class="arrow-down">
-            </div>
-            <div class="department_update">
-                <button type="button" class="sub-button update-dep lng-updateDepartment" data-toggle="modal"
-                        data-target="#department_UpdateModal" id="department_UpdatePopup">
-                    Update Department
-                </button>
-                <button type="button" class="sub-button create-dep lng-createDepartment" data-toggle="modal"
-                        data-target="#department_CreateModal" id="department_CreatePopup">
-                    Create Department
-                </button>
+            <div id="logout_container">
+                <div class="language-container">
+                    <select class="change-lang">
+                        <option value="en" selected>EN</option>
+                        <option value="ua">UA</option>
+                        <option value="pl">PL</option>
+                        <option value="ru">RU</option>
+                        <option value="cnr">CNR</option>
+                    </select>
+                </div>
+                <button class="nav-button lng-logout" id="logout_button">Log out</button>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="notRegisteredMessage" id="notRegisteredContainer" style="display: none;">
-        <span class="close_notRegisteredMessage">×</span>
-        <p class="lng-notRegisteredMessage">You haven't department. You need to create it.</p>
-    </div>
+    <div id="global_container">
 
-    <!-- Service Container -->
-    <div class="modal_container">
-        <div class="modal_items">
-            <div class="modal_title lng-serviceTitle">Service</div>
-            <div class="modal_block">
-                <button type="button" class="sub-button lng-create" data-toggle="modal"
-                        data-target="#service_CreateModal"
-                        id="service_createOpenBtn">
-                    Add New
-                </button>
+        <!-- Department Container -->
+        <div class="department_container">
+            <div class="department_inner">
+                <div class="department_dropdown" style="display: none;">
+                    <select class="form-control" id="department_NameSelect"></select>
+                    <img src="../pictures/arrow-down.png" alt="Arrow down" class="arrow-down">
+                </div>
+                <div class="department_update">
+                    <button type="button" class="sub-button update-dep lng-updateDepartment" data-toggle="modal"
+                            data-target="#department_UpdateModal" id="department_UpdatePopup">
+                        Update Department
+                    </button>
+                    <button type="button" class="sub-button create-dep lng-createDepartment" data-toggle="modal"
+                            data-target="#department_CreateModal" id="department_CreatePopup">
+                        Create Department
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Service Table -->
-    <div class="table-container">
-        <div class="table_inner" id="servicesTable">
-            <div class="columns_titles">
-                <div class="column_name cell lng-Name"><strong>Name</strong><span></span></div>
-                <div class="column_duration cell lng-serviceDuration"><strong>Duration (min)</strong><span></span></div>
-                <div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>
-                <div class="column_actions cell lng-actions"><strong>Actions</strong><span></span></div>
-            </div>
-            <div class="slideshow-container" id="slider-container" style="display: none;">
+        <div class="notRegisteredMessage" id="notRegisteredContainer" style="display: none;">
+            <span class="close_notRegisteredMessage">×</span>
+            <p class="lng-notRegisteredMessage">You haven't department. You need to create it.</p>
+        </div>
+
+        <!-- Service Container -->
+        <div class="modal_container">
+            <div class="modal_items">
+                <div class="modal_title lng-serviceTitle">Service</div>
+                <div class="modal_block">
+                    <button type="button" class="sub-button lng-create" data-toggle="modal"
+                            data-target="#service_CreateModal"
+                            id="service_createOpenBtn">
+                        Add New
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Specialist Container -->
-    <div class="modal_container">
-        <div class="modal_items">
-            <div class="modal_title lng-specialistTitle">Specialist</div>
-            <div class="modal_block">
-                <button type="button" class="sub-button lng-create" data-toggle="modal"
-                        data-target="#specialist_CreateModal"
-                        id="specialist_createOpenBtn">
-                    Add New
-                </button>
+        <!-- Service Table -->
+        <div class="table-container">
+            <div class="table_inner" id="servicesTable">
+                <div class="columns_titles">
+                    <div class="column_name cell lng-Name"><strong>Name</strong><span></span></div>
+                    <div class="column_duration cell lng-serviceDuration"><strong>Duration (min)</strong><span></span>
+                    </div>
+                    <div class="column_price cell lng-servicePrice"><strong>Price</strong><span></span></div>
+                    <div class="column_actions cell lng-actions"><strong>Actions</strong><span></span></div>
+                </div>
+                <div class="slideshow-container" id="slider-container" style="display: none;">
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Specialist Table -->
-    <div class="table-container_specialist">
-        <div class="table_inner_specialist" id="specialistTable">
-            <div class="columns_titles_specialist">
-                <div class="column_name specCol lng-Name"><strong>Name</strong><span></span></div>
-                <div class="column_phone specCol lng-phone"><strong>Phone Number</strong><span></span></div>
-                <div class="column_actions specCol lng-actions"><strong>Actions</strong><span></span></div>
+        <!-- Specialist Container -->
+        <div class="modal_container">
+            <div class="modal_items">
+                <div class="modal_title lng-specialistTitle">Specialist</div>
+                <div class="modal_block">
+                    <button type="button" class="sub-button lng-create" data-toggle="modal"
+                            data-target="#specialist_CreateModal"
+                            id="specialist_createOpenBtn">
+                        Add New
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Admin Container -->
-    <div class="modal_container">
-        <div class="modal_items">
-            <div class="modal_title lng-adminTitle">Admin</div>
-            <div class="modal_block">
-                <button type="button" class="sub-button lng-create" data-toggle="modal" data-target="#admin_CreateModal"
-                        id="admin_createOpenBtn">
-                    Add New
-                </button>
+        <!-- Specialist Table -->
+        <div class="table-container_specialist">
+            <div class="table_inner_specialist" id="specialistTable">
+                <div class="columns_titles_specialist">
+                    <div class="column_name specCol lng-Name"><strong>Name</strong><span></span></div>
+                    <div class="column_phone specCol lng-phone"><strong>Phone Number</strong><span></span></div>
+                    <div class="column_actions specCol lng-actions"><strong>Actions</strong><span></span></div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Admin Table -->
-    <div class="table-container_admin">
-        <div class="table_inner_admin" id="adminTable">
-            <div class="columns_titles_admin">
-                <div class="column_phone admCol centerPos lng-phone"><strong>Phone Number</strong><span></span></div>
-                <div class="column_actions admCol centerPos lng-actions"><strong>Actions</strong><span></span></div>
+        <!-- Admin Container -->
+        <div class="modal_container">
+            <div class="modal_items">
+                <div class="modal_title lng-adminTitle">Admin</div>
+                <div class="modal_block">
+                    <button type="button" class="sub-button lng-create" data-toggle="modal"
+                            data-target="#admin_CreateModal"
+                            id="admin_createOpenBtn">
+                        Add New
+                    </button>
+                </div>
             </div>
         </div>
+
+        <!-- Admin Table -->
+        <div class="table-container_admin">
+            <div class="table_inner_admin" id="adminTable">
+                <div class="columns_titles_admin">
+                    <div class="column_phone admCol centerPos lng-phone"><strong>Phone Number</strong><span></span>
+                    </div>
+                    <div class="column_actions admCol centerPos lng-actions"><strong>Actions</strong><span></span></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <footer class="user-info">
+        <p>Email: sergii.udaltsov@gmail.com</p>
+        <p style="margin-left: 40px;">Telegram: @Sergudal</p>
+    </footer>
 </div>
-
-<footer class="user-info">
-    <p>Email: sergii.udaltsov@gmail.com</p>
-    <p style="margin-left: 40px;">Telegram: @Sergudal</p>
-</footer>
-
 <!-- Modals HTML -->
 
 <div class="modal fade" id="department_CreateModal" tabindex="-1" aria-labelledby="department_CreateModal"
@@ -189,10 +192,10 @@
                            style="color: red; display: none;"></small>
                 </div>
             </div>
-           <!-- <div class="createDep_Group">
-                <p class="createDep_Group_Titles lng-depType">Type</p>
-                <select class="form-control createDep_Fields" id="update_depTypeSelect"></select>
-            </div>-->
+            <!-- <div class="createDep_Group">
+                 <p class="createDep_Group_Titles lng-depType">Type</p>
+                 <select class="form-control createDep_Fields" id="update_depTypeSelect"></select>
+             </div>-->
             <!--<div class="createDep_Group">
                 <p class="createDep_Group_Titles lng-country">Country</p>
                 <div class="custom-dropdown">
@@ -412,15 +415,15 @@
                         <small class="error-message lng-requiredField" id="durationError"
                                style="color: red; display: none;"></small>
                     </div>
-                     <div class="form-group">
-                         <label for="service_Create-servPriceInput" class="lng-servicePrice"
-                                id="service_priceField">Price</label>
-                         <input type="number" class="form-control enterPrice lng-pricePlaceholder"
-                                id="service_Create-servPriceInput" placeholder="Enter Price"
-                                oninput="validateInput(this); validateStartsWithZero(this);" value="0">
-                         <small class="error-message lng-requiredField" id="priceError"
-                                style="color: red; display: none;"></small>
-                     </div>
+                    <div class="form-group">
+                        <label for="service_Create-servPriceInput" class="lng-servicePrice"
+                               id="service_priceField">Price</label>
+                        <input type="number" class="form-control enterPrice lng-pricePlaceholder"
+                               id="service_Create-servPriceInput" placeholder="Enter Price"
+                               oninput="validateInput(this); validateStartsWithZero(this);" value="0">
+                        <small class="error-message lng-requiredField" id="priceError"
+                               style="color: red; display: none;"></small>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -477,7 +480,7 @@
                                id="service_updatePrice">New Price</label>
                         <input type="number" class="form-control enterPrice lng-pricePlaceholder"
                                id="update-service_newPriceInput" oninput="validateStartsWithZero(this);"
-                                placeholder="Enter Price">
+                               placeholder="Enter Price">
                         <small class="update_error-message lng-requiredField" id="update_priceError"
                                style="color: red; display: none;"></small>
                         <small class="error-message update-service_newPriceInput-error-message"

@@ -278,7 +278,8 @@ async function verifySpecialistFieldsValue() {
 verifySpecialistFieldsValue();
 
 function verifySpecialistFields(inputId, prevValue) {
-    const inputValue = document.getElementById(inputId).value;
+    const inputValue = document.getElementById(inputId).value.trim();
+     const prevValueTrimmed = prevValue.trim();
     const updateBtn = document.querySelector('#update-specialist_UpdateBtn');
     const errorMessage = document.querySelector(`.${inputId}-error-message`);
 
@@ -291,7 +292,7 @@ function verifySpecialistFields(inputId, prevValue) {
             specialistHideError(document.getElementById('specialist_update_validPhoneError'));
         }
     }
-    if (inputValue === prevValue) {
+    if (inputValue === prevValueTrimmed) {
         updateBtn.disabled = true;
         errorMessage.textContent = langArr.prevValueError[localStorage.getItem('selectedLanguage')];
         errorMessage.style.display = 'block';

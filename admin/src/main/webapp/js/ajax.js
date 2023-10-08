@@ -7,9 +7,10 @@ function executeRequest(data, url, method) {
     dataType: 'JSON',
     data: data,
     success: function (data) {
-      if (localStorage.getItem('createButtonClicked') == true) {
+      if (localStorage.getItem('createDepartmentButtonClicked') == true) {
         if(document.getElementById('spinner_loading').style.display == 'flex') {
             document.getElementById('spinner_loading').style.display = 'none';
+            document.getElementById('global_container_page').style.display = 'block';
         }
         $("#department_CreateModal").modal("hide");
         document.getElementById('notRegisteredContainer').style.display = 'none';
@@ -22,6 +23,7 @@ function executeRequest(data, url, method) {
     error: function (data) {
         if(document.getElementById('spinner_loading').style.display == 'flex') {
             document.getElementById('spinner_loading').style.display = 'none';
+            document.getElementById('global_container_page').style.display = 'block';
         }
       $('div.modal.fade').modal('hide');
       if (data.responseText == undefined || data.responseText == "") {
@@ -35,6 +37,8 @@ function executeRequest(data, url, method) {
 }
 
 function executePost(data, url) {
+  document.getElementById('spinner_loading').style.display = 'flex';
+  document.getElementById('global_container_page').style.display = 'none';
   executeRequest(data, url, 'post');
 }
 
@@ -44,6 +48,7 @@ function executePut(data, url) {
 
 function updateToken(data, url) {
   document.getElementById('spinner_loading').style.display = 'flex';
+  document.getElementById('global_container_page').style.display = 'block';
   executeRequest(data, url, 'put');
 }
 

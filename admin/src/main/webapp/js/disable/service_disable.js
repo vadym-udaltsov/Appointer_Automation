@@ -263,7 +263,8 @@ async function verifyServiceFieldsValue() {
 verifyServiceFieldsValue();
 
 function verifyServiceFields(inputId, prevValue) {
-    const inputValue = document.getElementById(inputId).value;
+    const inputValue = document.getElementById(inputId).value.trim();
+    const prevValueTrimmed = prevValue.trim();
     const updateBtn = document.querySelector('#update-service_UpdateBtn');
     const errorMessage = document.querySelector(`.${inputId}-error-message`);
     var errors = document.getElementsByClassName('error-message');
@@ -284,7 +285,7 @@ function verifyServiceFields(inputId, prevValue) {
         }
         updateBtn.disabled = hasHiddenErrors;
     } else {
-        if (inputValue === prevValue) {
+        if (inputValue === prevValueTrimmed) {
             updateBtn.disabled = true;
             errorMessage.textContent = langArr.prevValueError[localStorage.getItem('selectedLanguage')];
             errorMessage.style.display = 'block';
