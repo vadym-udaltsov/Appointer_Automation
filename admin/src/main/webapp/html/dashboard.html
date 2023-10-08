@@ -469,7 +469,7 @@
                                id="service_updateDuration">New Duration (min)</label>
                         <input type="number" class="form-control enterDuration lng-durationPlaceholder"
                                id="update-service_newDurationInput" placeholder="Enter Duration"
-                               oninput="inputLimitation(this, 1, 300)">
+                               oninput="validateInput(this); inputLimitation(this, 1, 300);">
                         <small class="update_error-message lng-requiredField" id="update_durationError"
                                style="color: red; display: none;"></small>
                         <small class="error-message update-service_newDurationInput-error-message lng-prevValueError"
@@ -479,7 +479,7 @@
                         <label for="update-service_newPriceInput" class="lng-newPrice"
                                id="service_updatePrice">New Price</label>
                         <input type="number" class="form-control enterPrice lng-pricePlaceholder"
-                               id="update-service_newPriceInput" oninput="validateStartsWithZero(this);"
+                               id="update-service_newPriceInput" oninput="validateInput(this); validateStartsWithZero(this);"
                                placeholder="Enter Price">
                         <small class="update_error-message lng-requiredField" id="update_priceError"
                                style="color: red; display: none;"></small>
