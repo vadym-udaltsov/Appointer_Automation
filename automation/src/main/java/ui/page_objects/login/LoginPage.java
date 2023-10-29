@@ -3,7 +3,7 @@ package ui.page_objects.login;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import ui.page_objects.BasePageObject;
-import ui.page_objects.admin.NonDepartmentPage;
+import ui.page_objects.admin.AdjustSalonPage;
 import ui.page_objects.register.RegisterModal;
 import ui.page_objects.reset_password.ResetPasswordModal;
 
@@ -48,12 +48,14 @@ public class LoginPage extends BasePageObject {
         return isElementCondition(forgotPassword, condition);
     }
 
-    public void setEmail(String email) {
+    public LoginPage setEmail(String email) {
         setValueToTextField(emailInput, email);
+        return this;
     }
 
-    public void setPassword(String password) {
+    public LoginPage setPassword(String password) {
         setValueToTextField(passwordInput, password);
+        return this;
     }
 
     public boolean isTitleCondition(Condition condition) {
@@ -64,9 +66,10 @@ public class LoginPage extends BasePageObject {
         return isElementCondition(subTitle, condition);
     }
 
-    public NonDepartmentPage clickLogin() {
+    public AdjustSalonPage clickLogin() {
         loginBtn.shouldBe(Condition.visible).click();
-        return new NonDepartmentPage();
+        waitForSpinnerToDisappear();
+        return new AdjustSalonPage();
     }
 
     public RegisterModal clickRegister() {

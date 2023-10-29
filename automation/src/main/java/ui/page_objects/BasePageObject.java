@@ -1,6 +1,7 @@
 package ui.page_objects;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -8,10 +9,8 @@ import org.openqa.selenium.NoSuchElementException;
 import java.time.Duration;
 import java.util.Objects;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 import static java.lang.String.format;
 import static java.util.stream.LongStream.range;
 import static utils.PropertiesReader.getProperty;
@@ -19,8 +18,8 @@ import static utils.PropertiesReader.getProperty;
 public abstract class BasePageObject {
 
     public final long shortWait = Long.parseLong(getProperty("web.driver.short_wait"));
-
     public final long longWait = Long.parseLong(getProperty("web.driver.long_wait"));
+    private final SelenideElement spinner = $("#spinner_loading");
 
     protected BasePageObject() {
     }
@@ -80,5 +79,10 @@ public abstract class BasePageObject {
             System.out.println(elementTwo.toString() + " is not displayed");
         }
         return elOneDisplayed && elTwoDisplayed;
+    }
+
+    public void waitForSpinnerToDisappear() {
+        Selenide.sleep(1000);
+        waitUntilElementCondition(spinner, disappear, longWait * 14);
     }
 }
