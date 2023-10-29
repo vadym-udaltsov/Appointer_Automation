@@ -169,6 +169,12 @@
                 <url>https://appointer-ui-773974733061.s3.eu-central-1.amazonaws.com/html/login.html</url>
             </properties>
         </profile>
+        <profile>
+            <id>appointer_prod</id>
+            <properties>
+                <url>https://appointer-ui-143936507261.s3.eu-central-1.amazonaws.com/html/login.html</url>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
