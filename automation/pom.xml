@@ -153,7 +153,7 @@
                 <version>2.10.0</version>
                 <configuration>
                     <reportVersion>${allure.version}</reportVersion>
-                    <resultsDirectory>allure-results/resultsgit config --global user.name vadym-udaltsov</resultsDirectory>
+                    <resultsDirectory>allure-results/results</resultsDirectory>
                     <allureDownloadUrl>
                         https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip
                     </allureDownloadUrl>
