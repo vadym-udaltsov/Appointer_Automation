@@ -124,8 +124,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler.plugin.version}</version>
                 <configuration>
-                    <source>22</source>
-                    <target>22</target>
+                    <source>11</source>
+                    <target>11</target>
                     <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
