@@ -1,6 +1,17 @@
 HELP.md
-target/
 !.mvn/wrapper/maven-wrapper.jar
+
+
+target/*
+automation/target/site/allure-maven-plugin/*
+automation/target/*
+/automation/.allure/*
+bot/target
+admin/target
+commons/target
+layer/target
+
+!automation/target/site/
 !**/src/main/**/target/
 !**/src/test/**/target/
 

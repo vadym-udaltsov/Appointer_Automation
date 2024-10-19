@@ -1,6 +1,6 @@
-package appointer_tests.login_page;
+package tests.login_page;
 
-import appointer_tests.BaseWebTest;
+import tests.BaseWebTest;
 import io.qameta.allure.Step;
 import io.qameta.allure.TmsLink;
 import org.testng.annotations.Test;

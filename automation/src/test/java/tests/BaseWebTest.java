@@ -1,9 +1,9 @@
-package appointer_tests;
+package tests;
 
 import com.codeborne.selenide.Selenide;
 import engine.MaestroWebDriverFactory;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.lang.reflect.Method;
@@ -26,7 +26,7 @@ public class BaseWebTest {
         Selenide.open(getProperty(URL));
     }
 
-    @AfterTest(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void closeBrowser() {
         try {
             getWebDriver().close();
