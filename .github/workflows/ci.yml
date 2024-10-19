@@ -30,17 +30,17 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven
 
-      - name: Install the latest Chrome browser
+      - name: Install dependencies
+        run: mvn install -DskipTests -pl automation -am
+
+      - name: Install Google Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y wget gnupg2
           wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
-
-      - name: Install dependencies
-        run: mvn install -DskipTests -pl automation -am
 
       - name: Run Tests for automation module
         run: mvn clean test -pl automation -am -Denv=remote -e

@@ -24,6 +24,7 @@ public final class MaestroWebDriverFactory {
         WebDriver driver;
         switch (driverType) {
             case CHROME:
+                WebDriverManager.chromedriver().clearResolutionCache();
                 WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver(getChromeOptions());
                 break;
