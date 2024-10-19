@@ -11,14 +11,13 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import static enums.EnumUtil.searchEnum;
 import static utils.PropertiesReader.getProperty;
 
 public final class MaestroWebDriverFactory {
     private static final String WEB_DRIVER_TYPE_PROPERTY = "web.driver.type";
-    private static final String DRIVER_MAXIMIZE_PROPERTY = "web.driver.maximize";
 
     public WebDriver getDriver() {
         var driverType = searchEnum(Browser.class, getProperty(WEB_DRIVER_TYPE_PROPERTY));
@@ -26,10 +25,7 @@ public final class MaestroWebDriverFactory {
         switch (driverType) {
             case CHROME:
                 WebDriverManager.chromedriver().setup();
-                chromeConfiguration();
-                var options = new ChromeOptions();
-                options.addArguments("--remote-allow-origins=*");
-                driver = new ChromeDriver(options);
+                driver = new ChromeDriver(getChromeOptions());
                 break;
             case FIREFOX:
                 WebDriverManager.firefoxdriver().setup();
@@ -44,20 +40,30 @@ public final class MaestroWebDriverFactory {
                 break;
             default:
                 throw new IllegalArgumentException(
-                        "No implementation for '" + driverType + "'. Available: " +
-                                Browser.getValues());
+                        "No implementation for '" + driverType + "'. Available: " + driverType.name());
         }
 
-        if (Boolean.parseBoolean(getProperty(DRIVER_MAXIMIZE_PROPERTY)))
-            driver.manage().window().maximize();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(Configuration.timeout));
+
         return driver;
     }
 
-    private static void chromeConfiguration() {
-        Configuration.browser = "chrome";
-        Configuration.driverManagerEnabled = true;
-        Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
-        Configuration.holdBrowserOpen = false;
+    private ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--use-fake-ui-for-media-stream");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-dev-shm-usage");
+
+        if (isRunningInGitHubActions()) {
+            options.addArguments("--no-sandbox");
+            options.addArguments("--headless");
+            options.addArguments("--disable-gpu");
+        }
+        return options;
+    }
+
+    private boolean isRunningInGitHubActions() {
+        return "true".equals(System.getenv("GITHUB_ACTIONS"));
     }
 }
