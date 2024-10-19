@@ -1,6 +1,6 @@
-package appointer_tests.login_page;
+package tests.login_page;
 
-import appointer_tests.BaseWebTest;
+import tests.BaseWebTest;
 import io.qameta.allure.Step;
 import io.qameta.allure.TmsLink;
 import org.testng.annotations.Test;
@@ -11,7 +11,7 @@ import static ui.helpers.LoginHelper.loginAsAdmin;
 import static ui.models.CredentialsProvider.getAdminCredentials;
 
 public class VerifyLoginAsAdministratorTest extends BaseWebTest {
-    @TmsLink("4")
+    @TmsLink("2")
     @Test(description = "Verify information on the Login Page", groups = {LOGIN_PAGE})
     public void testVerifyInformationOnTheLoginPage() {
         verifyLoginPage();
